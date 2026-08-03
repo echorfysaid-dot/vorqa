@@ -1,0 +1,27 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# Next.js build output
+/.next/
+/out/
+
+# Local and production environment files
+.env*
+!.env.example
+
+# Logs and local caches
+*.log
+/.npm-cache/
+*.tsbuildinfo
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local generated and recovery output
+/.next-corrupt-*/
+/work/
