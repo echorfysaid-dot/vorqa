@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureProfile, missingSupabaseResponse, supabaseAuth, isSupabaseServerConfigured } from "@/lib/supabase-server";
+import { ensureProfile, friendlyAuthError, missingSupabaseResponse, supabaseAuth, isSupabaseServerConfigured } from "@/lib/supabase-server";
 import { auditEvent, checkRateLimitAsync, parseJsonObject, rateLimitResponse, sanitizeText, validateEmail, validatePassword } from "@/lib/security";
 import { normalizeAccountIdentity, workspaceTypeForIdentity } from "@/lib/onboarding";
 
@@ -28,7 +28,19 @@ export async function POST(request: Request) {
   if (!identity) return NextResponse.json({ error: "Select a valid account type and role or organization type." }, { status: 400 });
   const workspaceType = workspaceTypeForIdentity(identity);
 
-  const data = await supabaseAuth("/signup", {
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  let siteUrl = "";
+  if (configuredSiteUrl) {
+    try {
+      const parsedSiteUrl = new URL(configuredSiteUrl);
+      if (["http:", "https:"].includes(parsedSiteUrl.protocol)) siteUrl = parsedSiteUrl.origin;
+    } catch {
+      siteUrl = "";
+    }
+  }
+  const redirectTo = siteUrl ? `${siteUrl}/login?confirmed=1` : "";
+  const signupPath = redirectTo ? `/signup?redirect_to=${encodeURIComponent(redirectTo)}` : "/signup";
+  const data = await supabaseAuth(signupPath, {
     method: "POST",
     body: JSON.stringify({
       email,
@@ -39,7 +51,7 @@ export async function POST(request: Request) {
 
   if ("error" in data) {
     auditEvent("register.failed", { email, status: data.status });
-    return NextResponse.json({ error: data.error }, { status: data.status });
+    return NextResponse.json({ error: friendlyAuthError(data.error, "register") }, { status: data.status });
   }
 
   const session = data as { access_token?: string; user?: { id: string; email?: string } };
@@ -56,6 +68,7 @@ export async function POST(request: Request) {
   return NextResponse.json({
     session: session.access_token ? data : null,
     user: session.user,
-    message: session.access_token ? "Registered successfully." : "Registration created. Check email confirmation settings in Supabase."
+    confirmationRequired: !session.access_token,
+    message: session.access_token ? "Registered successfully." : "Account created. Confirm your email before signing in."
   });
 }

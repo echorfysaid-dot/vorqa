@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { AuthSession, authFetch, clearSession, getValidSession, normalizeSession, storeSession } from "@/lib/auth-client";
+import { AuthSession, authFetch, authSessionChangedEvent, clearSession, getValidSession, normalizeSession, storeSession } from "@/lib/auth-client";
 
 type AuthContextValue = {
   session: AuthSession | null;
@@ -10,7 +10,7 @@ type AuthContextValue = {
   error: string;
   login: (email: string, password: string) => Promise<boolean>;
   register: (input: { email: string; password: string; firstName: string; lastName: string; phone: string; country: string; preferredLanguage: string; accountType: string; primaryRole?: string; organizationType?: string }) => Promise<{ success: boolean; authenticated: boolean; message?: string }>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<AuthSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [onboardingState, setOnboardingState] = useState<"unknown" | "complete" | "incomplete" | "unavailable">("unknown");
+  const [initialized, setInitialized] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -49,8 +49,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
       })
+      .catch(() => {
+        if (active) setSession(null);
+      })
       .finally(() => {
-        if (active) setLoading(false);
+        if (active) {
+          setLoading(false);
+          setInitialized(true);
+        }
       });
 
     return () => {
@@ -59,37 +65,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!loading && !session && !publicRoutes.has(pathname)) {
+    if (initialized && !session && !publicRoutes.has(pathname)) {
       router.replace(`/login?next=${encodeURIComponent(pathname)}`);
     }
-  }, [loading, pathname, router, session]);
+  }, [initialized, pathname, router, session]);
 
   useEffect(() => {
-    if (!session?.access_token) { setOnboardingState("unknown"); return; }
-    let active = true;
-    setOnboardingState("unknown");
-    authFetch("/api/onboarding")
-      .then(async (response) => {
-        if (!active) return;
-        if (!response.ok) { setOnboardingState("unavailable"); return; }
-        const data = await response.json().catch(() => ({}));
-        if (!active) return;
-        setOnboardingState(data.profile?.status === "completed" ? "complete" : "incomplete");
-      })
-      .catch(() => { if (active) setOnboardingState("unavailable"); });
-    return () => { active = false; };
-  }, [session?.access_token]);
+    if (initialized && session && ["/login", "/register"].includes(pathname)) router.replace("/dashboard");
+  }, [initialized, pathname, router, session]);
 
   useEffect(() => {
-    if (!session || onboardingState === "unknown" || onboardingState === "unavailable") return;
-    if (onboardingState === "incomplete" && pathname !== "/onboarding") router.replace("/onboarding");
-    if (onboardingState === "complete" && ["/onboarding", "/register", "/login"].includes(pathname)) router.replace("/dashboard");
-  }, [onboardingState, pathname, router, session]);
-
-  useEffect(() => {
-    const completed = () => setOnboardingState("complete");
-    window.addEventListener("vorqa-onboarding-completed", completed);
-    return () => window.removeEventListener("vorqa-onboarding-completed", completed);
+    const syncSession = () => { void getValidSession().then(setSession).catch(() => undefined); };
+    window.addEventListener("storage", syncSession);
+    window.addEventListener("pageshow", syncSession);
+    window.addEventListener(authSessionChangedEvent, syncSession);
+    return () => {
+      window.removeEventListener("storage", syncSession);
+      window.removeEventListener("pageshow", syncSession);
+      window.removeEventListener(authSessionChangedEvent, syncSession);
+    };
   }, []);
 
   const value = useMemo<AuthContextValue>(
@@ -155,16 +149,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           message: data.message
         };
       },
-      logout: () => {
-        clearSession();
-        setSession(null);
-        router.replace("/login");
+      logout: async () => {
+        try {
+          await authFetch("/api/auth/logout", { method: "POST" });
+        } finally {
+          clearSession();
+          setSession(null);
+          router.replace("/login");
+          router.refresh();
+        }
       }
     }),
     [error, loading, router, session]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const redirectingToLogin = initialized && !session && !publicRoutes.has(pathname);
+  const redirectingToDashboard = initialized && Boolean(session) && ["/login", "/register"].includes(pathname);
+
+  return (
+    <AuthContext.Provider value={value}>
+      {initialized && !redirectingToLogin && !redirectingToDashboard ? children : <AuthInitializing />}
+    </AuthContext.Provider>
+  );
+}
+
+function AuthInitializing() {
+  return (
+    <div className="grid min-h-screen place-items-center bg-[#08090A] text-[#D6B36A]" role="status" aria-live="polite">
+      <span className="h-9 w-9 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true" />
+      <span className="sr-only">Loading</span>
+    </div>
+  );
 }
 
 export function useAuth() {

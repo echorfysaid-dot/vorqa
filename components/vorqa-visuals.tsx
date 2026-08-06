@@ -76,13 +76,13 @@ export function BlueprintOverlay({ className = "" }: { className?: string }) {
   </AutoLocalizedContent>);
 }
 
-export function VillaBackdrop({ src = vorqaAssets.villa, priority = false, overlay = true }: { src?: string; priority?: boolean; overlay?: boolean }) {
+export function VillaBackdrop({ src = vorqaAssets.villa, priority = false, overlay = true, blueprint = true }: { src?: string; priority?: boolean; overlay?: boolean; blueprint?: boolean }) {
   return (<AutoLocalizedContent>
     <div className="absolute inset-0 overflow-hidden">
       <Image src={src} alt="Vorqa AI architectural villa" fill priority={priority} sizes="100vw" className="object-cover" />
       {overlay && <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,8,0.92),rgba(5,7,11,0.48)_42%,rgba(5,7,11,0.34)_70%,rgba(2,4,8,0.86))]" />}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_77%_30%,rgba(81,216,255,0.16),transparent_30%),radial-gradient(circle_at_24%_28%,rgba(215,180,90,0.18),transparent_28%)]" />
-      <BlueprintOverlay />
+      {blueprint && <BlueprintOverlay />}
     </div>
   </AutoLocalizedContent>);
 }

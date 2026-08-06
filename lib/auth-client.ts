@@ -16,6 +16,7 @@ export type AuthSession = {
 };
 
 const storageKey = "vorqa-auth-session";
+export const authSessionChangedEvent = "vorqa-auth-session-changed";
 const refreshSkewMs = 60_000;
 
 function normalizeExpiresAt(value?: number) {
@@ -59,10 +60,24 @@ export function getStoredSession() {
 
 export function storeSession(session: AuthSession) {
   window.localStorage.setItem(storageKey, JSON.stringify(withExpiry(session)));
+  window.dispatchEvent(new Event(authSessionChangedEvent));
 }
 
 export function clearSession() {
   window.localStorage.removeItem(storageKey);
+  window.dispatchEvent(new Event(authSessionChangedEvent));
+}
+
+export function safeAuthRedirect(value: string | null | undefined, fallback = "/dashboard") {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return fallback;
+  try {
+    const url = new URL(value, "https://vorqa.local");
+    if (url.origin !== "https://vorqa.local") return fallback;
+    if (["/login", "/register"].includes(url.pathname)) return fallback;
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return fallback;
+  }
 }
 
 function shouldRefresh(session: AuthSession) {
@@ -72,18 +87,26 @@ function shouldRefresh(session: AuthSession) {
 
 export async function refreshStoredSession() {
   const session = getStoredSession();
-  if (!session?.refresh_token) return session;
+  if (!session?.refresh_token) return null;
 
-  const response = await fetch("/api/auth/refresh", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refresh_token: session.refresh_token })
-  });
+  let response: Response;
+  try {
+    response = await fetch("/api/auth/refresh", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: session.refresh_token })
+    });
+  } catch {
+    return session;
+  }
 
   const data = await response.json().catch(() => ({}));
   if (!response.ok || !data.session?.access_token) {
-    clearSession();
-    return null;
+    if (response.status === 400 || response.status === 401) {
+      clearSession();
+      return null;
+    }
+    return session;
   }
 
   const nextSession = normalizeSession({
@@ -131,6 +154,13 @@ export async function authFetch(path: string, init: RequestInit = {}) {
   if (!refreshed?.access_token) {
     clearSession();
     return response;
+  }
+
+  if (refreshed.access_token === session?.access_token) {
+    return new Response(JSON.stringify({ error: "Authentication service is temporarily unavailable." }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 
   headers.set("Authorization", `Bearer ${refreshed.access_token}`);

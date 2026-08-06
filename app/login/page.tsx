@@ -12,7 +12,8 @@ export default function LoginPage() {
 
   return (<AutoLocalizedContent>
     <div className="relative -m-6 min-h-[calc(100vh-5rem)] overflow-hidden rounded-[2rem] p-4 sm:p-6 lg:p-8">
-      <VillaBackdrop />
+      <VillaBackdrop src="/vorqa/assets/villa/villa-login.webp" priority blueprint={false} overlay={false} />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(3,5,8,.22),rgba(3,5,8,.08)_50%,rgba(3,5,8,.16))]" aria-hidden="true" />
       <div className="relative z-10 grid min-h-[calc(100vh-8rem)] gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div className="space-y-5">
           <VorqaLogo />

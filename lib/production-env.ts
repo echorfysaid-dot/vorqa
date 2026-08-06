@@ -19,6 +19,17 @@ function isPresent(key: string) {
   return Boolean(process.env[key]?.trim());
 }
 
+function isValidOrigin(value: string | undefined, requireSupabaseHost = false) {
+  if (!value) return false;
+  try {
+    const parsed = new URL(value.trim());
+    return parsed.protocol === "https:" && parsed.pathname === "/" && !parsed.search && !parsed.hash &&
+      (!requireSupabaseHost || parsed.hostname.endsWith(".supabase.co"));
+  } catch {
+    return false;
+  }
+}
+
 export function validateEnvironment(options: { strict?: boolean } = {}): EnvironmentValidationResult {
   const mode = (process.env.NODE_ENV || "development") as EnvironmentValidationResult["mode"];
   const appEnv = process.env.NEXT_PUBLIC_APP_ENV || mode;
@@ -28,12 +39,17 @@ export function validateEnvironment(options: { strict?: boolean } = {}): Environ
 
   if (!isPresent("NEXT_PUBLIC_SUPABASE_URL")) {
     issues.push({ key: "NEXT_PUBLIC_SUPABASE_URL", severity: "critical", message: "Supabase URL is required for production authentication and data access." });
+  } else if (!isValidOrigin(process.env.NEXT_PUBLIC_SUPABASE_URL, true)) {
+    issues.push({ key: "NEXT_PUBLIC_SUPABASE_URL", severity: "critical", message: "Supabase URL must be the HTTPS project origin without /rest/v1, /auth/v1, query parameters, or fragments." });
   }
   if (!isPresent("NEXT_PUBLIC_SUPABASE_ANON_KEY")) {
     issues.push({ key: "NEXT_PUBLIC_SUPABASE_ANON_KEY", severity: "critical", message: "Supabase anon key is required for production authentication and RLS-backed access." });
   }
   if (productionLike && dataSource !== "demo" && !isPresent("SUPABASE_SERVICE_ROLE_KEY")) {
     issues.push({ key: "SUPABASE_SERVICE_ROLE_KEY", severity: "warning", message: "Server-side Supabase admin operations may be unavailable without a service-role key." });
+  }
+  if (productionLike && !isValidOrigin(process.env.NEXT_PUBLIC_SITE_URL)) {
+    issues.push({ key: "NEXT_PUBLIC_SITE_URL", severity: "critical", message: "The production site URL must be an HTTPS origin used for authentication redirects." });
   }
   if (productionLike && !isPresent("OPENAI_API_KEY")) {
     issues.push({ key: "OPENAI_API_KEY", severity: "warning", message: "VORA will use mock fallback until an OpenAI key is configured." });

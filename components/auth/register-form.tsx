@@ -40,8 +40,8 @@ export function RegisterForm({ onRegistered }: { onRegistered?: (result: Registr
       const activeWorkspaceType = workspaceTypeForIdentity(identity);
       saveOnboardingDraft({ ...identity, status: "account_created", activeWorkspaceType });
       onRegistered?.({ email: form.email, authenticated: true, message: result.message || "Your account has been created." });
-      const query = identity.accountType === "organization" ? `accountType=organization&organizationType=${identity.organizationType}` : `accountType=individual&role=${identity.primaryRole}`;
-      router.replace(`/onboarding?${query}`);
+      router.replace("/dashboard");
+      router.refresh();
     } else if (result.success) onRegistered?.({ email: form.email, authenticated: false, message: result.message || t.pages.registerNote });
   }
 

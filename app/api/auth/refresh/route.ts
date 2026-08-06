@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureProfile, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
+import { ensureProfile, friendlyAuthError, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
 import { auditEvent, checkRateLimitAsync, parseJsonObject, rateLimitResponse, sanitizeText } from "@/lib/security";
 
 export async function POST(request: Request) {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
   if ("error" in data) {
     auditEvent("session.refresh_failed", { status: data.status });
-    return NextResponse.json({ error: data.error }, { status: data.status === 400 ? 401 : data.status });
+    return NextResponse.json({ error: friendlyAuthError(data.error, "refresh") }, { status: data.status === 400 ? 401 : data.status });
   }
 
   const session = data as {

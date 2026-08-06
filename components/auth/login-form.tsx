@@ -7,6 +7,7 @@ import { ArrowLeft, Loader2, LockKeyhole, Mail } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { useI18n } from "@/components/i18n-provider";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { safeAuthRedirect } from "@/lib/auth-client";
 
 export function LoginForm() {
   const router = useRouter();
@@ -20,7 +21,8 @@ export function LoginForm() {
     const success = await login(email, password);
     if (success) {
       const params = new URLSearchParams(window.location.search);
-      router.replace(params.get("next") || "/dashboard");
+      router.replace(safeAuthRedirect(params.get("next")));
+      router.refresh();
     }
   }
 

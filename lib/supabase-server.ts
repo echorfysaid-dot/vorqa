@@ -34,11 +34,34 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function normalizeSupabaseUrl(value?: string) {
   if (!value) return "";
-  const trimmed = value.trim().replace(/\/+$/, "");
-  return trimmed.replace(/\/(?:rest|auth)\/v1$/i, "");
+  try {
+    const parsed = new URL(value.trim());
+    if (parsed.protocol !== "https:" || parsed.pathname !== "/" || parsed.search || parsed.hash) return "";
+    return parsed.origin;
+  } catch {
+    return "";
+  }
 }
 
 const supabaseUrl = normalizeSupabaseUrl(rawSupabaseUrl);
+
+export function friendlyAuthError(error: string, operation: "login" | "register" | "refresh") {
+  const normalized = error.toLowerCase();
+  if (normalized.includes("invalid login credentials")) return "Incorrect email or password.";
+  if (normalized.includes("email not confirmed")) return "Confirm your email before signing in.";
+  if (normalized.includes("user already registered") || normalized.includes("already been registered")) {
+    return "An account already exists for this email.";
+  }
+  if (normalized.includes("password") && normalized.includes("weak")) return "Choose a stronger password and try again.";
+  if (normalized.includes("rate") || normalized.includes("too many")) return "Too many attempts. Wait a moment and try again.";
+  if (normalized.includes("network") || normalized.includes("fetch")) {
+    return "Authentication is temporarily unavailable. Try again shortly.";
+  }
+  if (operation === "refresh") return "Your session could not be renewed. Sign in again.";
+  return operation === "register"
+    ? "Unable to create the account. Check the details and try again."
+    : "Unable to sign in. Check the details and try again.";
+}
 
 export function isSupabaseServerConfigured() {
   return Boolean(supabaseUrl && supabaseAnonKey);

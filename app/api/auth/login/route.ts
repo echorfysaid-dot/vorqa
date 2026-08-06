@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureProfile, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
+import { ensureProfile, friendlyAuthError, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
 import { auditEvent, checkRateLimitAsync, parseJsonObject, rateLimitResponse, validateEmail, validatePassword } from "@/lib/security";
 
 export async function POST(request: Request) {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
   if ("error" in data) {
     auditEvent("login.failed", { email, status: data.status });
-    return NextResponse.json({ error: data.error }, { status: data.status });
+    return NextResponse.json({ error: friendlyAuthError(data.error, "login") }, { status: data.status });
   }
 
   const session = data as { access_token: string; user: { id: string; email?: string; user_metadata?: Record<string, unknown> } };

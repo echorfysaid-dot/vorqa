@@ -1,5 +1,7 @@
 ﻿import assert from "node:assert/strict";
 import { createAiApplicationContext } from "@/lib/ai-context";
+import { safeAuthRedirect } from "@/lib/auth-client";
+import { friendlyAuthError } from "@/lib/supabase-server";
 import { createAiMemory } from "@/lib/ai-memory";
 import { createAiPromptPayload, normalizeUserRequest } from "@/lib/ai-prompt-builder";
 import { executeAiOrchestrator, rankModelsForOrchestration, rankProvidersForOrchestration } from "@/lib/ai-orchestrator-engine";
@@ -2698,6 +2700,23 @@ export const tests: TestCase[] = [
       assert.equal(workflow.nextAction.label, "Complete Project Analysis");
       assert.equal(workflow.nextAction.isAvailable, false);
       assert.equal(resolveNextAction(undefined, 100).label, "Complete Project Analysis");
+    }
+  },
+  {
+    name: "Auth redirects accept protected local routes and reject auth loops or external URLs",
+    run() {
+      assert.equal(safeAuthRedirect("/projects?view=active"), "/projects?view=active");
+      assert.equal(safeAuthRedirect("/login"), "/dashboard");
+      assert.equal(safeAuthRedirect("//example.com/account"), "/dashboard");
+      assert.equal(safeAuthRedirect("https://example.com/account"), "/dashboard");
+    }
+  },
+  {
+    name: "Auth errors are normalized without leaking provider details",
+    run() {
+      assert.equal(friendlyAuthError("Invalid login credentials", "login"), "Incorrect email or password.");
+      assert.equal(friendlyAuthError("Email not confirmed", "login"), "Confirm your email before signing in.");
+      assert.equal(friendlyAuthError("internal provider exception: secret detail", "register"), "Unable to create the account. Check the details and try again.");
     }
   }
 ];
