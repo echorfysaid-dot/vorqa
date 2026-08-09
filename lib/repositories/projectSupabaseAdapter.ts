@@ -30,9 +30,18 @@ async function validateScope(input: Partial<ProjectInput>) {
 const projectSelect = "*,organizations(id,name,slug),departments(id,name,slug),project_manager:employees!projects_project_manager_id_fkey(id,first_name,last_name),project_members(id)";
 const memberSelect = "*,employees(id,first_name,last_name,job_title)";
 
+async function loadProjects(path: string) {
+  const enriched = await organizationRest<SupabaseProjectRecord[]>(`${path}&select=${encodeURIComponent(projectSelect)}`);
+  if (!enriched.error || enriched.status !== 400) return enriched;
+
+  // Relationship embeds are optional presentation data. A stale PostgREST schema cache
+  // must not make an otherwise accessible project disappear from its canonical route.
+  return organizationRest<SupabaseProjectRecord[]>(`${path}&select=*`);
+}
+
 export const projectSupabaseAdapter = {
   async getProjects() {
-    const result = await organizationRest<SupabaseProjectRecord[]>(`/projects?select=${encodeURIComponent(projectSelect)}&order=updated_at.desc`);
+    const result = await loadProjects("/projects?order=updated_at.desc");
     if (result.error) return { data: [] as Project[], source: "supabase" as const, isFallback: false, error: result.error };
     return { data: (result.data || []).map(mapSupabaseProject), source: "supabase" as const, isFallback: false };
   },
@@ -40,7 +49,7 @@ export const projectSupabaseAdapter = {
   async getProject(id: string) {
     const encoded = encodeURIComponent(id);
     const filter = isUuid(id) ? `id=eq.${encoded}` : `slug=eq.${encoded}`;
-    const result = await organizationRest<SupabaseProjectRecord[]>(`/projects?${filter}&select=${encodeURIComponent(projectSelect)}&limit=1`);
+    const result = await loadProjects(`/projects?${filter}&limit=1`);
     if (result.error) return { data: undefined as Project | undefined, source: "supabase" as const, isFallback: false, error: result.error };
     const record = result.data?.[0];
     return { data: record ? mapSupabaseProject(record) : undefined, source: "supabase" as const, isFallback: false };

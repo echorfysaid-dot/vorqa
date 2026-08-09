@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureProfile, friendlyAuthError, missingSupabaseResponse, supabaseAuth, isSupabaseServerConfigured } from "@/lib/supabase-server";
+import { ensureProfile, friendlyAuthError, isApiError, missingSupabaseResponse, supabaseAuth, isSupabaseServerConfigured } from "@/lib/supabase-server";
 import { auditEvent, checkRateLimitAsync, parseJsonObject, rateLimitResponse, sanitizeText, validateEmail, validatePassword } from "@/lib/security";
 import { normalizeAccountIdentity, workspaceTypeForIdentity } from "@/lib/onboarding";
 
@@ -55,19 +55,32 @@ export async function POST(request: Request) {
   }
 
   const session = data as { access_token?: string; user?: { id: string; email?: string } };
+  let profileReady = false;
   if (session.access_token && session.user?.id) {
-    await ensureProfile({
+    const profile = await ensureProfile({
       token: session.access_token,
       userId: session.user.id,
       email: session.user.email || email,
-      fullName
+      fullName,
+      preferredLanguage,
+      accountType: identity.accountType,
+      primaryRole: identity.primaryRole,
+      organizationType: identity.organizationType,
+      onboardingStatus: "account_created",
+      activeWorkspaceType: workspaceType
     });
+    if (isApiError(profile)) {
+      auditEvent("register.profile_failed", { userId: session.user.id, status: profile.status, code: profile.code });
+    } else {
+      profileReady = true;
+    }
   }
 
   auditEvent("register.success", { userId: session.user?.id, email, confirmationRequired: !session.access_token });
   return NextResponse.json({
     session: session.access_token ? data : null,
     user: session.user,
+    profileReady,
     confirmationRequired: !session.access_token,
     message: session.access_token ? "Registered successfully." : "Account created. Confirm your email before signing in."
   });

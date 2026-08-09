@@ -15,6 +15,7 @@ export type SupabaseSession = {
 export type ApiError = {
   error: string;
   status: number;
+  code?: string;
 };
 
 export function isApiError(value: unknown): value is ApiError {
@@ -61,6 +62,23 @@ export function friendlyAuthError(error: string, operation: "login" | "register"
   return operation === "register"
     ? "Unable to create the account. Check the details and try again."
     : "Unable to sign in. Check the details and try again.";
+}
+
+export function friendlyDataError(status: number) {
+  if (status === 401) return "Your session has expired. Sign in again.";
+  if (status === 403) return "You do not have permission to complete this action.";
+  if (status === 404) return "The requested information could not be found.";
+  if (status === 409) return "This information already exists.";
+  return "We could not load your account information. Try again shortly.";
+}
+
+function logSupabaseFailure(operation: string, status: number, detail: unknown, code?: unknown) {
+  console.error("[supabase] request failed", {
+    operation,
+    status,
+    code: typeof code === "string" ? code : undefined,
+    detail: typeof detail === "string" ? detail.slice(0, 500) : "Unknown Supabase error"
+  });
 }
 
 export function isSupabaseServerConfigured() {
@@ -183,7 +201,12 @@ export async function supabaseRest<T>(path: string, init: RequestInit & { token?
   if (response.status === 204) return null as T;
   const data = await response.json().catch(() => null);
   if (!response.ok) {
-    return { error: data?.message || "Supabase database request failed.", status: response.status } as ApiError;
+    logSupabaseFailure("database", response.status, data?.message, data?.code);
+    return {
+      error: friendlyDataError(response.status),
+      status: response.status,
+      code: typeof data?.code === "string" ? data.code : undefined
+    } as ApiError;
   }
 
   return data as T;
@@ -225,12 +248,24 @@ export async function ensureProfile({
   token,
   userId,
   email,
-  fullName
+  fullName,
+  preferredLanguage,
+  accountType,
+  primaryRole,
+  organizationType,
+  onboardingStatus,
+  activeWorkspaceType
 }: {
   token: string;
   userId: string;
   email?: string;
   fullName?: string;
+  preferredLanguage?: string;
+  accountType?: string;
+  primaryRole?: string | null;
+  organizationType?: string | null;
+  onboardingStatus?: string;
+  activeWorkspaceType?: string;
 }) {
   return supabaseRest("/profiles?on_conflict=id", {
     method: "POST",
@@ -242,7 +277,12 @@ export async function ensureProfile({
       id: userId,
       email,
       full_name: fullName || null,
-      preferred_language: "ar",
+      preferred_language: preferredLanguage || "en",
+      account_type: accountType || undefined,
+      primary_role: primaryRole ?? undefined,
+      organization_type: organizationType ?? undefined,
+      onboarding_status: onboardingStatus || undefined,
+      active_workspace_type: activeWorkspaceType || undefined,
       plan: "starter"
     })
   });

@@ -1,10 +1,12 @@
 import type { ExportReadyReport } from "@/lib/analysis-hardening";
 import { generateDocxReport, type DocxExportResult } from "@/lib/docx-export";
+import { generateHtmlReport, type HtmlExportResult } from "@/lib/html-export";
 import { generatePdfReport, type PdfExportResult } from "@/lib/pdf-export";
 import { createProfessionalReportTemplate, type ProfessionalReportMetadata } from "@/lib/report-template";
 import { vorqaReportBranding } from "@/lib/report-branding";
+import type { ReportExportContext, ReportExportFormat, ReportExportOptions } from "@/types/report-export";
 
-export type DocumentExportFormat = "pdf" | "docx";
+export type DocumentExportFormat = ReportExportFormat;
 
 export type DocumentExportStatus = Readonly<{
   ok: boolean;
@@ -17,13 +19,20 @@ export type DocumentExportStatus = Readonly<{
   error?: string;
 }>;
 
-export type DocumentExportResult = (PdfExportResult | DocxExportResult) & Readonly<{
+export type DocumentExportResult = (PdfExportResult | DocxExportResult | HtmlExportResult) & Readonly<{
   base64: string;
   status: DocumentExportStatus;
 }>;
 
-function slug(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "vorqa-report";
+export function sanitizeReportFilename(value: string) {
+  const safe = value
+    .normalize("NFKD")
+    .replace(/[\\/:*?"<>|\u0000-\u001f]/g, "-")
+    .replace(/\.\.+/g, "-")
+    .replace(/[^a-zA-Z0-9\u0600-\u06ff_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 96);
+  return safe || "vorqa-report";
 }
 
 function toBase64(bytes: Uint8Array) {
@@ -34,23 +43,27 @@ function toBase64(bytes: Uint8Array) {
 }
 
 export function createReportFilename(report: ExportReadyReport, format: DocumentExportFormat) {
-  return `${slug(report.projectId || report.projectTitle || report.title)}-${slug(report.source)}.${format}`;
+  return `${sanitizeReportFilename(report.projectId || report.projectTitle || report.title)}-${sanitizeReportFilename(report.source)}.${format}`;
 }
 
 export function exportProfessionalReport(input: {
   report: ExportReadyReport;
   format: DocumentExportFormat;
   metadata?: ProfessionalReportMetadata;
+  context?: ReportExportContext;
+  options?: Partial<ReportExportOptions>;
 }): DocumentExportResult {
   const professionalReport = createProfessionalReportTemplate({
     report: input.report,
     metadata: input.metadata,
+    context: input.context,
+    options: input.options,
     branding: vorqaReportBranding
   });
   const filename = createReportFilename(input.report, input.format);
-  const result = input.format === "pdf"
-    ? generatePdfReport(professionalReport, filename)
-    : generateDocxReport(professionalReport, filename);
+  const result = input.format === "pdf" ? generatePdfReport(professionalReport, filename)
+    : input.format === "docx" ? generateDocxReport(professionalReport, filename)
+      : generateHtmlReport(professionalReport, filename);
   return Object.freeze({
     ...result,
     base64: toBase64(result.bytes),
@@ -70,17 +83,18 @@ export function exportProfessionalReportSafe(input: {
   report: ExportReadyReport;
   format: DocumentExportFormat;
   metadata?: ProfessionalReportMetadata;
+  context?: ReportExportContext;
+  options?: Partial<ReportExportOptions>;
 }): DocumentExportResult | { status: DocumentExportStatus } {
   try {
     return exportProfessionalReport(input);
-  } catch (error) {
+  } catch {
     return {
       status: Object.freeze({
         ok: false,
         format: input.format,
-        error: error instanceof Error ? error.message : "Document export failed."
+        error: "The report could not be exported. Please try again."
       })
     };
   }
 }
-

@@ -138,8 +138,8 @@ export function createExportReadyReport(input: {
     sections: input.sections.map((section) => Object.freeze({
       id: section.id,
       title: section.title,
-      content: Array.isArray(section.content) ? section.content.filter(Boolean) : [section.content || "No content available."]
-    })),
+      content: Array.isArray(section.content) ? section.content.filter(Boolean) : section.content ? [section.content] : []
+    })).filter((section) => section.content.length > 0),
     warnings: input.warnings || []
   });
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureProfile, friendlyAuthError, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
+import { ensureProfile, friendlyAuthError, isApiError, isSupabaseServerConfigured, missingSupabaseResponse, supabaseAuth } from "@/lib/supabase-server";
 import { auditEvent, checkRateLimitAsync, parseJsonObject, rateLimitResponse, sanitizeText } from "@/lib/security";
 
 export async function POST(request: Request) {
@@ -37,13 +37,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid refreshed session." }, { status: 401 });
   }
 
-  await ensureProfile({
+  const metadata = session.user.user_metadata || {};
+  const profile = await ensureProfile({
     token: session.access_token,
     userId: session.user.id,
     email: session.user.email,
-    fullName: String(session.user.user_metadata?.full_name || "")
+    fullName: String(metadata.full_name || ""),
+    preferredLanguage: String(metadata.preferred_language || "en"),
+    accountType: typeof metadata.account_type === "string" ? metadata.account_type : undefined,
+    primaryRole: typeof metadata.primary_role === "string" ? metadata.primary_role : undefined,
+    organizationType: typeof metadata.organization_type === "string" ? metadata.organization_type : undefined,
+    onboardingStatus: typeof metadata.onboarding_status === "string" ? metadata.onboarding_status : undefined,
+    activeWorkspaceType: typeof metadata.active_workspace_type === "string" ? metadata.active_workspace_type : undefined
   });
+  if (isApiError(profile)) auditEvent("session.profile_failed", { userId: session.user.id, status: profile.status, code: profile.code });
 
   auditEvent("session.refresh_success", { userId: session.user.id, email: session.user.email });
-  return NextResponse.json({ session });
+  return NextResponse.json({ session, profileReady: !isApiError(profile) });
 }

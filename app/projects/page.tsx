@@ -194,5 +194,6 @@ function toFriendlyError(error: string) {
   if (normalized.includes("permission") || normalized.includes("policy") || normalized.includes("rls")) return "You do not have permission to perform this project action.";
   if (normalized.includes("duplicate") || normalized.includes("unique")) return "This project already exists inside the organization.";
   if (normalized.includes("auth")) return "Sign in is required for this project action.";
-  return error;
+  if (normalized.includes("organization") || normalized.includes("department") || normalized.includes("manager")) return error;
+  return "The project action could not be completed. Please try again.";
 }

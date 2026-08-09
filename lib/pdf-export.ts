@@ -1,4 +1,7 @@
-import type { ProfessionalReport } from "@/lib/report-template";
+import fs from "node:fs";
+import path from "node:path";
+import { jsPDF } from "jspdf";
+import { getReportMetadataRows, type ProfessionalReport } from "@/lib/report-template";
 
 export type PdfExportResult = Readonly<{
   format: "pdf";
@@ -8,155 +11,140 @@ export type PdfExportResult = Readonly<{
   pageCount: number;
 }>;
 
-const pageWidth = 595;
-const pageHeight = 842;
-const margin = 54;
-const lineHeight = 14;
-const maxLinesPerPage = 48;
+const gold: [number, number, number] = [214, 179, 106];
+const graphite: [number, number, number] = [17, 24, 39];
+const muted: [number, number, number] = [71, 85, 105];
+let fontBase64: string | undefined;
 
-function ascii(value: string) {
-  return value
-    .normalize("NFKD")
-    .replace(/[^\x20-\x7E\n\r\t]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+function getFont() {
+  if (fontBase64) return fontBase64;
+  const fontPath = path.join(process.cwd(), "assets", "fonts", "NotoSansArabic.ttf");
+  fontBase64 = fs.readFileSync(fontPath).toString("base64");
+  return fontBase64;
 }
 
-function escapePdf(value: string) {
-  return ascii(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-}
-
-function wrap(text: string, max = 92) {
-  const words = ascii(text).split(/\s+/).filter(Boolean);
-  const lines: string[] = [];
-  let line = "";
-  for (const word of words) {
-    if ((line + " " + word).trim().length > max) {
-      if (line) lines.push(line);
-      line = word;
-    } else {
-      line = (line + " " + word).trim();
-    }
-  }
-  if (line) lines.push(line);
-  return lines.length ? lines : [""];
-}
-
-function reportLines(report: ProfessionalReport) {
-  const lines: Array<{ text: string; size: number; heading?: boolean }> = [
-    { text: report.branding.logoText, size: 20, heading: true },
-    { text: report.title, size: 18, heading: true },
-    { text: report.branding.generatedBy, size: 10 },
-    { text: "", size: 10 },
-    { text: `Project: ${report.metadata.projectName}`, size: 10 },
-    { text: `Project ID: ${report.metadata.projectId}`, size: 10 },
-    { text: `Client: ${report.metadata.client}`, size: 10 },
-    { text: `Organization: ${report.metadata.organization}`, size: 10 },
-    { text: `Generation Date: ${report.metadata.generatedAt}`, size: 10 },
-    { text: `Analysis Type: ${report.metadata.analysisType}`, size: 10 },
-    { text: `Health Score: ${report.metadata.healthScore}`, size: 10 },
-    { text: `Confidence Score: ${report.metadata.confidenceScore}%`, size: 10 },
-    { text: "", size: 10 },
-    { text: "Summary", size: 14, heading: true },
-    ...report.summary.flatMap((item) => wrap(item).map((text) => ({ text, size: 10 }))),
-    { text: "", size: 10 },
-    { text: "Detailed Findings", size: 14, heading: true },
-    ...report.findings.flatMap((item) => wrap(`- ${item}`).map((text) => ({ text, size: 10 }))),
-    { text: "", size: 10 },
-    { text: "Recommendations", size: 14, heading: true },
-    ...report.recommendations.flatMap((item) => wrap(`- ${item}`).map((text) => ({ text, size: 10 }))),
-    { text: "", size: 10 },
-    { text: "Risk Indicators", size: 14, heading: true },
-    ...report.risks.flatMap((item) => wrap(`- ${item}`).map((text) => ({ text, size: 10 }))),
-    { text: "", size: 10 }
-  ];
-  for (const section of report.sections) {
-    lines.push({ text: section.title, size: 13, heading: true });
-    for (const content of section.content) {
-      for (const text of wrap(content)) lines.push({ text, size: 10 });
-    }
-    lines.push({ text: "", size: 10 });
-  }
-  lines.push({ text: "Warnings", size: 13, heading: true });
-  for (const warning of report.warnings) {
-    for (const text of wrap(`- ${warning}`)) lines.push({ text, size: 10 });
-  }
-  return lines;
-}
-
-function chunkPages(lines: ReturnType<typeof reportLines>) {
-  const pages: typeof lines[] = [];
-  for (let index = 0; index < lines.length; index += maxLinesPerPage) {
-    pages.push(lines.slice(index, index + maxLinesPerPage));
-  }
-  return pages.length ? pages : [[{ text: "No report content.", size: 10 }]];
-}
-
-function textObject(lines: ReturnType<typeof reportLines>, pageNumber: number, pageCount: number, footer: string) {
-  let y = pageHeight - margin;
-  const parts = [
-    "0.85 0.70 0.42 rg",
-    `36 ${pageHeight - 42} 523 2 re f`,
-    "0.07 0.09 0.15 rg",
-    "BT"
-  ];
-  for (const line of lines) {
-    const font = line.heading ? "F2" : "F1";
-    parts.push(`/${font} ${line.size} Tf`);
-    parts.push(`1 0 0 1 ${margin} ${y} Tm`);
-    parts.push(`(${escapePdf(line.text)}) Tj`);
-    y -= line.heading ? lineHeight + 4 : lineHeight;
-  }
-  parts.push("/F1 8 Tf");
-  parts.push(`1 0 0 1 ${margin} 34 Tm`);
-  parts.push(`(${escapePdf(footer)} - Page ${pageNumber} of ${pageCount}) Tj`);
-  parts.push("ET");
-  return parts.join("\n");
-}
-
-function toBytes(value: string) {
-  const bytes = new Uint8Array(value.length);
-  for (let index = 0; index < value.length; index += 1) bytes[index] = value.charCodeAt(index) & 0xff;
-  return bytes;
+function addFont(document: jsPDF) {
+  document.addFileToVFS("NotoSansArabic.ttf", getFont());
+  document.addFont("NotoSansArabic.ttf", "NotoSansArabic", "normal");
+  document.setFont("NotoSansArabic", "normal");
 }
 
 export function generatePdfReport(report: ProfessionalReport, filename = "vorqa-report.pdf"): PdfExportResult {
-  const pages = chunkPages(reportLines(report));
-  const objects: string[] = [
-    "<< /Type /Catalog /Pages 2 0 R >>",
-    `<< /Type /Pages /Kids [${pages.map((_, index) => `${3 + index * 2} 0 R`).join(" ")}] /Count ${pages.length} >>`
-  ];
+  const document = new jsPDF({ unit: "pt", format: "a4", compress: true, putOnlyUsedFonts: true });
+  addFont(document);
+  document.setR2L(report.direction === "rtl");
+  const width = document.internal.pageSize.getWidth();
+  const height = document.internal.pageSize.getHeight();
+  const margin = 54;
+  const contentWidth = width - margin * 2;
+  const x = report.direction === "rtl" ? width - margin : margin;
+  const align = report.direction === "rtl" ? "right" : "left";
+  let y = margin;
 
-  pages.forEach((page, index) => {
-    const pageObjectNumber = 3 + index * 2;
-    const contentObjectNumber = pageObjectNumber + 1;
-    objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 ${3 + pages.length * 2} 0 R /F2 ${4 + pages.length * 2} 0 R >> >> /Contents ${contentObjectNumber} 0 R >>`);
-    const stream = textObject(page, index + 1, pages.length, report.branding.footer);
-    objects.push(`<< /Length ${toBytes(stream).length} >>\nstream\n${stream}\nendstream`);
-  });
+  const ensure = (needed = 28) => {
+    if (y + needed <= height - 64) return;
+    document.addPage();
+    addFont(document);
+    document.setR2L(report.direction === "rtl");
+    y = margin;
+  };
 
-  objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
-  objects.push("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
+  const write = (value: string, size = 10, color = graphite, gap = 8) => {
+    const text = value.trim();
+    if (!text) return;
+    document.setFontSize(size);
+    document.setTextColor(...color);
+    const wrapped = document.splitTextToSize(text, contentWidth) as string[];
+    const lineHeight = size * 1.55;
+    ensure(wrapped.length * lineHeight + gap);
+    document.text(wrapped, x, y, { align, baseline: "top" });
+    y += wrapped.length * lineHeight + gap;
+  };
 
-  let pdf = "%PDF-1.4\n";
-  const offsets = [0];
-  objects.forEach((object, index) => {
-    offsets.push(toBytes(pdf).length);
-    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
-  });
-  const xrefOffset = toBytes(pdf).length;
-  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-  for (let index = 1; index < offsets.length; index += 1) {
-    pdf += `${String(offsets[index]).padStart(10, "0")} 00000 n \n`;
+  const heading = (value: string) => {
+    ensure(40);
+    y += 9;
+    document.setDrawColor(...gold);
+    document.setLineWidth(1.5);
+    document.line(report.direction === "rtl" ? x - 42 : x, y, report.direction === "rtl" ? x : x + 42, y);
+    y += 10;
+    write(value, 15, graphite, 8);
+  };
+
+  document.setFillColor(...graphite);
+  document.rect(0, 0, width, 220, "F");
+  document.setTextColor(255, 255, 255);
+  if (report.options.includeLogo) {
+    document.setFontSize(16);
+    document.text(report.branding.logoText, x, 54, { align });
   }
-  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+  document.setTextColor(...gold);
+  document.setFontSize(25);
+  const title = document.splitTextToSize(report.title, contentWidth) as string[];
+  document.text(title, x, 100, { align, baseline: "top" });
+  document.setTextColor(226, 232, 240);
+  document.setFontSize(10);
+  document.text(report.branding.generatedBy, x, 180, { align });
+  y = 250;
+
+  const metadata = getReportMetadataRows(report);
+  if (metadata.length) {
+    document.setFillColor(248, 250, 252);
+    document.roundedRect(margin, y - 12, contentWidth, metadata.length * 27 + 18, 5, 5, "F");
+    for (const [label, value] of metadata) {
+      document.setFontSize(9);
+      document.setTextColor(...muted);
+      const row = `${label}: ${value}`;
+      document.text(row, x + (report.direction === "rtl" ? -12 : 12), y, { align, baseline: "top" });
+      y += 27;
+    }
+    y += 14;
+  }
+
+  const listSection = (titleValue: string, values: readonly string[]) => {
+    if (!values.length) return;
+    heading(titleValue);
+    for (const value of values) write(`• ${value}`, 10, graphite, 5);
+  };
+
+  listSection(report.labels.summary, report.summary);
+  listSection(report.labels.findings, report.findings);
+  listSection(report.labels.risks, report.risks);
+  listSection(report.labels.recommendations, report.recommendations);
+  if (report.readiness?.available) {
+    heading(report.labels.readiness);
+    if (typeof report.readiness.overall === "number") write(`${report.labels.readiness}: ${report.readiness.overall}%`);
+    for (const metric of report.readiness.metrics) if (typeof metric.score === "number") write(`${metric.category}: ${metric.score}%`);
+  }
+  if (report.timeline.length) {
+    heading(report.labels.timeline);
+    for (const event of report.timeline) write(`${event.occurredAt} · ${event.toolType.replace(/_/g, " ")} · ${report.labels.version} ${event.version} · ${event.status}`);
+  }
+  if (report.evidenceReferences.length) {
+    heading(report.labels.evidence);
+    for (const evidence of report.evidenceReferences) write(`• ${evidence.label}${evidence.reference ? ` — ${evidence.reference}` : ""}`);
+  }
+  listSection(report.labels.missingInformation, report.missingInformation);
+  for (const section of report.sections) listSection(section.title, section.content);
+  listSection(report.labels.warnings, report.warnings);
+
+  const pageCount = document.getNumberOfPages();
+  for (let page = 1; page <= pageCount; page += 1) {
+    document.setPage(page);
+    addFont(document);
+    document.setDrawColor(226, 232, 240);
+    document.line(margin, height - 42, width - margin, height - 42);
+    document.setFontSize(8);
+    document.setTextColor(...muted);
+    document.text(report.branding.footer, margin, height - 24, { align: "left" });
+    document.text(`${report.labels.page} ${page} ${report.labels.of} ${pageCount}`, width - margin, height - 24, { align: "right" });
+  }
 
   return Object.freeze({
     format: "pdf",
     filename,
     mimeType: "application/pdf",
-    bytes: toBytes(pdf),
-    pageCount: pages.length
+    bytes: new Uint8Array(document.output("arraybuffer")),
+    pageCount
   });
 }
-

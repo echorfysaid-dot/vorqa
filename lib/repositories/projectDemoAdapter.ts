@@ -5,11 +5,36 @@ import { employeeDemoAdapter } from "./employeeDemoAdapter";
 import { organizationDemoAdapter } from "./organizationDemoAdapter";
 import { mapDemoProjectToDomain, slugifyProject } from "./projectMapper";
 
+const storageKey = "vorqa-demo-projects";
+let sessionProjects: Project[] = [];
+
+function readStoredProjects() {
+  if (typeof window === "undefined") return sessionProjects;
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    return value ? JSON.parse(value) as Project[] : [];
+  } catch {
+    return sessionProjects;
+  }
+}
+
+function writeStoredProjects(items: Project[]) {
+  sessionProjects = items;
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(items));
+  } catch {
+    // Demo persistence remains available for the current session when storage is blocked.
+  }
+}
+
 async function demoProjects(): Promise<Project[]> {
   const organizations = organizationDemoAdapter.getOrganizations().data;
   const departments = (await departmentDemoAdapter.getDepartments("atlas")).data;
   const employees = (await employeeDemoAdapter.getEmployees("atlas")).data;
-  return projects.map((project) => mapDemoProjectToDomain(project, organizations, departments, employees));
+  const seeded = projects.map((project) => mapDemoProjectToDomain(project, organizations, departments, employees));
+  const stored = readStoredProjects();
+  return [...stored, ...seeded.filter((project) => !stored.some((item) => item.id === project.id))];
 }
 
 export const projectDemoAdapter = {
@@ -55,14 +80,20 @@ export const projectDemoAdapter = {
       metadata: input.metadata || {},
       createdAt: now
     };
+    writeStoredProjects([project, ...readStoredProjects()]);
     return { data: project, source: "demo" as const, isFallback: false };
   },
 
   async updateProject(id: string, input: Partial<ProjectInput>) {
     const project = (await demoProjects()).find((item) => item.id === id || item.slug === id);
     if (!project) return { data: undefined, source: "demo" as const, isFallback: false, error: "Project not found in demo data." };
+    const updated = { ...project, ...input, updatedAt: new Date().toISOString() };
+    const stored = readStoredProjects();
+    writeStoredProjects(stored.some((item) => item.id === project.id)
+      ? stored.map((item) => item.id === project.id ? updated : item)
+      : [updated, ...stored]);
     return {
-      data: { ...project, ...input, updatedAt: new Date().toISOString() },
+      data: updated,
       source: "demo" as const,
       isFallback: false
     };
@@ -70,6 +101,13 @@ export const projectDemoAdapter = {
 
   async archiveProject(id: string) {
     const project = (await demoProjects()).find((item) => item.id === id || item.slug === id);
+    if (project) {
+      const stored = readStoredProjects();
+      const archived = { ...project, status: "Archived", updatedAt: new Date().toISOString() };
+      writeStoredProjects(stored.some((item) => item.id === project.id)
+        ? stored.map((item) => item.id === project.id ? archived : item)
+        : [archived, ...stored]);
+    }
     return {
       data: Boolean(project),
       source: "demo" as const,
@@ -108,5 +146,10 @@ export const projectDemoAdapter = {
 
   async removeProjectMember(memberId: string) {
     return { data: Boolean(memberId), source: "demo" as const, isFallback: false };
+  },
+
+  resetStoredProjects() {
+    writeStoredProjects([]);
+    if (typeof window !== "undefined") window.localStorage.removeItem(storageKey);
   }
 };

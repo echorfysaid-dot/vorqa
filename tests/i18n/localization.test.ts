@@ -23,12 +23,12 @@ function collectVisibleLiterals(file: string, includeLine: (line: number) => boo
   };
   const visit = (node: ts.Node) => {
     if (ts.isJsxText(node)) add(node, node.text);
-    if (ts.isJsxAttribute(node) && workspaceTextProps.has(node.name.text) && node.initializer && ts.isStringLiteral(node.initializer)) {
+    if (ts.isJsxAttribute(node) && ts.isIdentifier(node.name) && workspaceTextProps.has(node.name.text) && node.initializer && ts.isStringLiteral(node.initializer)) {
       add(node, node.initializer.text);
     }
     if (
       ts.isStringLiteral(node) && ts.isJsxExpression(node.parent) && node.parent.parent &&
-      ts.isJsxAttribute(node.parent.parent) && workspaceTextProps.has(node.parent.parent.name.text)
+      ts.isJsxAttribute(node.parent.parent) && ts.isIdentifier(node.parent.parent.name) && workspaceTextProps.has(node.parent.parent.name.text)
     ) {
       add(node, node.text);
     }

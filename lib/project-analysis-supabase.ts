@@ -7,7 +7,7 @@ import type {
   ProjectAnalysisToolType
 } from "@/types/project-analysis";
 
-type SupabaseRestClient = <T>(path: string, init?: RequestInit & { token?: string; serviceRole?: boolean }) => Promise<T | { error: string; status: number }>;
+type SupabaseRestClient = (path: string, init?: RequestInit & { token?: string; serviceRole?: boolean }) => Promise<unknown>;
 
 type ProjectAnalysisSessionRow = {
   id: string;
@@ -73,9 +73,9 @@ function analysisFromRow(row: ProjectAnalysisRow): ProjectAnalysisRecord {
   });
 }
 
-function assertSupabase<T>(result: T | { error: string; status: number }) {
+function assertSupabase<T>(result: unknown): T {
   if (isApiError(result)) throw new Error(result.error);
-  return result;
+  return result as T;
 }
 
 export function createProjectAnalysisSupabaseAdapter({
@@ -86,8 +86,8 @@ export function createProjectAnalysisSupabaseAdapter({
   rest?: SupabaseRestClient;
 } = {}): ProjectAnalysisAdapter {
   async function createSession(input: Parameters<ProjectAnalysisAdapter["createSession"]>[0]) {
-    const existing = assertSupabase(
-      await rest<ProjectAnalysisSessionRow[]>(
+    const existing = assertSupabase<ProjectAnalysisSessionRow[]>(
+      await rest(
         `/project_analysis_sessions?project_id=eq.${encodeFilter(input.projectId)}&owner_id=eq.${encodeFilter(input.ownerId)}&status=eq.active&limit=1`,
         { token }
       )
@@ -95,8 +95,8 @@ export function createProjectAnalysisSupabaseAdapter({
     if (existing) return sessionFromRow(existing);
 
     const now = timestamp(input.now);
-    const inserted = assertSupabase(
-      await rest<ProjectAnalysisSessionRow[]>("/project_analysis_sessions", {
+    const inserted = assertSupabase<ProjectAnalysisSessionRow[]>(
+      await rest("/project_analysis_sessions", {
         method: "POST",
         token,
         body: JSON.stringify({
@@ -115,8 +115,8 @@ export function createProjectAnalysisSupabaseAdapter({
 
   async function latestAnalysis(projectId: string, toolType: ProjectAnalysisToolType, ownerId?: string) {
     const ownerFilter = ownerId ? `&owner_id=eq.${encodeFilter(ownerId)}` : "";
-    const rows = assertSupabase(
-      await rest<ProjectAnalysisRow[]>(
+    const rows = assertSupabase<ProjectAnalysisRow[]>(
+      await rest(
         `/project_analyses?project_id=eq.${encodeFilter(projectId)}&tool_type=eq.${encodeFilter(toolType)}${ownerFilter}&order=version.desc,updated_at.desc&limit=1`,
         { token }
       )
@@ -131,8 +131,8 @@ export function createProjectAnalysisSupabaseAdapter({
     const activeSession = session || (await createSession(input));
     const latest = await latestAnalysis(input.projectId, input.toolType, input.ownerId);
     const now = timestamp(input.now);
-    const inserted = assertSupabase(
-      await rest<ProjectAnalysisRow[]>("/project_analyses", {
+    const inserted = assertSupabase<ProjectAnalysisRow[]>(
+      await rest("/project_analyses", {
         method: "POST",
         token,
         body: JSON.stringify({
@@ -156,8 +156,8 @@ export function createProjectAnalysisSupabaseAdapter({
   }
 
   async function loadSession(id: string) {
-    const rows = assertSupabase(
-      await rest<ProjectAnalysisSessionRow[]>(`/project_analysis_sessions?id=eq.${encodeFilter(id)}&limit=1`, { token })
+    const rows = assertSupabase<ProjectAnalysisSessionRow[]>(
+      await rest(`/project_analysis_sessions?id=eq.${encodeFilter(id)}&limit=1`, { token })
     );
     if (!rows[0]) throw new Error("Project analysis session not found.");
     return sessionFromRow(rows[0]);
@@ -165,8 +165,8 @@ export function createProjectAnalysisSupabaseAdapter({
 
   async function updateAnalysis(id: string, patch: Parameters<ProjectAnalysisAdapter["updateAnalysis"]>[1]) {
     const now = timestamp(patch.now);
-    const rows = assertSupabase(
-      await rest<ProjectAnalysisRow[]>(`/project_analyses?id=eq.${encodeFilter(id)}`, {
+    const rows = assertSupabase<ProjectAnalysisRow[]>(
+      await rest(`/project_analyses?id=eq.${encodeFilter(id)}`, {
         method: "PATCH",
         token,
         body: JSON.stringify({
@@ -183,14 +183,14 @@ export function createProjectAnalysisSupabaseAdapter({
   }
 
   async function loadAnalysis(id: string) {
-    const rows = assertSupabase(await rest<ProjectAnalysisRow[]>(`/project_analyses?id=eq.${encodeFilter(id)}&limit=1`, { token }));
+    const rows = assertSupabase<ProjectAnalysisRow[]>(await rest(`/project_analyses?id=eq.${encodeFilter(id)}&limit=1`, { token }));
     return rows[0] ? analysisFromRow(rows[0]) : undefined;
   }
 
   async function listProjectAnalyses(projectId: string, ownerId?: string) {
     const ownerFilter = ownerId ? `&owner_id=eq.${encodeFilter(ownerId)}` : "";
-    const rows = assertSupabase(
-      await rest<ProjectAnalysisRow[]>(
+    const rows = assertSupabase<ProjectAnalysisRow[]>(
+      await rest(
         `/project_analyses?project_id=eq.${encodeFilter(projectId)}${ownerFilter}&order=tool_type.asc,version.asc`,
         { token }
       )
@@ -207,4 +207,3 @@ export function createProjectAnalysisSupabaseAdapter({
     listProjectAnalyses
   });
 }
-
