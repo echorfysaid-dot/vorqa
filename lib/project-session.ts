@@ -76,6 +76,7 @@ export async function persistAnalysisResultDurableSafe(input: {
   projectId?: string;
   ownerId?: string;
   token?: string;
+  sessionId?: string;
   toolType: ProjectAnalysisToolType;
   result: VoraNormalizedIntelligenceResponse;
   source?: ProjectAnalysisMetadata["source"];
@@ -86,6 +87,7 @@ export async function persistAnalysisResultDurableSafe(input: {
   }
   try {
     const saved = await saveAnalysisAsync({
+      sessionId: input.sessionId,
       projectId: input.projectId,
       ownerId: input.ownerId,
       token: input.token,

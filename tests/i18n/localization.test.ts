@@ -146,6 +146,30 @@ export const tests = [
     }
   },
   {
+    name: "application JSX contains no accidental bracket-only text nodes",
+    run: () => {
+      const collectFiles = (directory: string): string[] => fs.readdirSync(path.join(process.cwd(), directory), { withFileTypes: true }).flatMap((entry) => {
+        const relative = path.join(directory, entry.name);
+        if (entry.isDirectory()) return collectFiles(relative);
+        return entry.isFile() && relative.endsWith(".tsx") ? [relative.replace(/\\/g, "/")] : [];
+      });
+      const artifacts: string[] = [];
+      for (const file of [...collectFiles("app"), ...collectFiles("components")]) {
+        const source = fs.readFileSync(path.join(process.cwd(), file), "utf8");
+        const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+        const visit = (node: ts.Node) => {
+          if (ts.isJsxText(node)) {
+            const value = node.text.replace(/\s+/g, "").trim();
+            if (value && /^[()[\]{}]+$/.test(value)) artifacts.push(`${file}:${sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1}:${value}`);
+          }
+          ts.forEachChild(node, visit);
+        };
+        visit(sourceFile);
+      }
+      assert(artifacts.length === 0, `Accidental bracket-only JSX text found: ${artifacts.join(", ")}`);
+    }
+  },
+  {
     name: "offline catalogs have identical source keys",
     run: () => {
       const arKeys = Object.keys(arCatalog).sort();

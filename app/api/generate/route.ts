@@ -50,7 +50,7 @@ function jsonError(message: string, status: number, code = "REQUEST_FAILED") {
 
 async function attachProjectPersistence<T extends VoraNormalizedIntelligenceResponse>(
   result: T,
-  input: { projectId?: string; ownerId: string; token?: string; toolType: ProjectAnalysisToolType }
+  input: { projectId?: string; ownerId: string; token?: string; sessionId?: string; toolType: ProjectAnalysisToolType }
 ) {
   return {
     ...result,
@@ -58,6 +58,7 @@ async function attachProjectPersistence<T extends VoraNormalizedIntelligenceResp
       projectId: input.projectId,
       ownerId: input.ownerId,
       token: input.token,
+      sessionId: input.sessionId,
       toolType: input.toolType,
       result,
       source: "api_generate"
@@ -250,650 +251,101 @@ function parseExportContext(value: unknown): ReportExportContext {
   const missingInformation = Array.isArray(record.missingInformation) ? record.missingInformation.filter((item): item is string => typeof item === "string").slice(0, 100).map((item) => sanitizeAiText(item, 500)) : [];
   return Object.freeze({
     ...(typeof record.analysisId === "string" ? { analysisId: sanitizeAiText(record.analysisId, 120) } : {}),
-    ...(typeof record.sessionId === "string" ? { sessionId: sanitizeAiText(record.sessionId, 120) } : {}),
-    ...(typeof record.version === "number" ? { version: Math.max(1, Math.floor(record.version)) } : {}),
-    ...(typeof record.generatedBy === "string" ? { generatedBy: sanitizeAiText(record.generatedBy, 180) } : {}),
-    ...(typeof record.workflowStage === "string" ? { workflowStage: sanitizeAiText(record.workflowStage, 180) } : {}),
-    timeline,
-    evidenceReferences,
-    missingInformation,
-    ...(record.readiness && typeof record.readiness === "object" ? { readiness: record.readiness as ReportExportContext["readiness"] } : {})
-  });
-}
-
-function parseExportReport(value: unknown): ExportReadyReport | undefined {
-  if (!value || typeof value !== "object") return undefined;
-  const record = value as Record<string, unknown>;
-  const sections = Array.isArray(record.sections) ? record.sections : [];
-  if (typeof record.title !== "string" || !Array.isArray(record.sections)) return undefined;
-  return createExportReadyReport({
-    title: sanitizeAiText(record.title, 180),
-    source: typeof record.source === "string" ? record.source as ExportReadyReport["source"] : "project_intelligence",
-    projectId: typeof record.projectId === "string" ? parseProjectId(record.projectId) : undefined,
-    projectTitle: typeof record.projectTitle === "string" ? sanitizeAiText(record.projectTitle, 180) : undefined,
-    warnings: Array.isArray(record.warnings) ? record.warnings.filter((item): item is string => typeof item === "string").map((item) => sanitizeAiText(item, 500)) : [],
-    sections: sections
-      .filter((section): section is Record<string, unknown> => Boolean(section && typeof section === "object"))
-      .slice(0, 40)
-      .map((section, index) => ({
-        id: typeof section.id === "string" ? sanitizeAiText(section.id, 80) : `section-${index + 1}`,
-        title: typeof section.title === "string" ? sanitizeAiText(section.title, 180) : `Section ${index + 1}`,
-        content: Array.isArray(section.content)
-          ? section.content.filter((item): item is string => typeof item === "string").map((item) => sanitizeAiText(item, 1200))
-          : typeof section.content === "string"
-            ? sanitizeAiText(section.content, 1200)
-            : undefined
-      }))
-  });
-}
-
-function parseTaskIntent(value: unknown): VoraIntelligenceTaskIntent | undefined {
-  if (typeof value !== "string") return undefined;
-  const allowed = new Set<VoraIntelligenceTaskIntent>([
-    "general_assistance",
-    "document_review",
-    "contract_review",
-    "risk_assessment",
-    "risk_review",
-    "planning_review",
-    "site_report_review",
-    "executive_summary",
-    "planning",
-    "cost_review",
-    "quality_review",
-    "safety_review",
-    "schedule_review",
-    "compliance_review"
-  ]);
-  return allowed.has(value as VoraIntelligenceTaskIntent) ? (value as VoraIntelligenceTaskIntent) : undefined;
-}
-
-function sanitizeContractText(value: unknown) {
-  if (typeof value !== "string") return "";
-  return sanitizeAiText(value, MAX_CONTRACT_TEXT_LENGTH);
-}
-
-function parseContractDocument(value: unknown): ContractReviewDocumentInput | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const name = sanitizeAiText(typeof record.name === "string" ? record.name : "", 180);
-  if (!name) return undefined;
-  const mimeType = sanitizeAiText(typeof record.mimeType === "string" ? record.mimeType : "", 120) || undefined;
-  const sizeBytes = typeof record.sizeBytes === "number" && Number.isFinite(record.sizeBytes) && record.sizeBytes >= 0 ? record.sizeBytes : undefined;
-  return {
-    name,
-    mimeType,
-    sizeBytes,
-    text: sanitizeContractText(record.text)
-  };
-}
-
-function sanitizeBoqText(value: unknown) {
-  if (typeof value !== "string") return "";
-  return sanitizeAiText(value, MAX_BOQ_TEXT_LENGTH);
-}
-
-function parseBoqDelimiter(value: unknown): BoqReviewDocument["delimiter"] | undefined {
-  return value === "," || value === "\t" || value === ";" || value === "|" ? value : undefined;
-}
-
-function parseBoqDocument(value: unknown): BoqReviewDocument | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const name = sanitizeAiText(typeof record.name === "string" ? record.name : "", 180);
-  if (!name) return undefined;
-  const mimeType = sanitizeAiText(typeof record.mimeType === "string" ? record.mimeType : "", 120) || undefined;
-  const sizeBytes = typeof record.sizeBytes === "number" && Number.isFinite(record.sizeBytes) && record.sizeBytes >= 0 ? record.sizeBytes : undefined;
-  return {
-    name,
-    mimeType,
-    sizeBytes,
-    text: sanitizeBoqText(record.text),
-    delimiter: parseBoqDelimiter(record.delimiter)
-  };
-}
-
-function sanitizeRiskText(value: unknown) {
-  if (typeof value !== "string") return "";
-  return sanitizeAiText(value, MAX_RISK_TEXT_LENGTH);
-}
-
-function parseRiskDocument(value: unknown): RiskAssessmentDocumentInput | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const name = sanitizeAiText(typeof record.name === "string" ? record.name : "", 180);
-  if (!name) return undefined;
-  const mimeType = sanitizeAiText(typeof record.mimeType === "string" ? record.mimeType : "", 120) || undefined;
-  const sizeBytes = typeof record.sizeBytes === "number" && Number.isFinite(record.sizeBytes) && record.sizeBytes >= 0 ? record.sizeBytes : undefined;
-  return {
-    name,
-    mimeType,
-    sizeBytes,
-    text: sanitizeRiskText(record.text)
-  };
-}
-
-function parseRiskSource(value: unknown) {
-  if (typeof value === "string") return sanitizeRiskText(value);
-  return value;
-}
-
-function sanitizePlanningText(value: unknown) {
-  if (typeof value !== "string") return "";
-  return sanitizeAiText(value, MAX_PLANNING_TEXT_LENGTH);
-}
-
-function parsePlanningDelimiter(value: unknown): PlanningReviewDocument["delimiter"] | undefined {
-  return value === "," || value === "\t" || value === ";" || value === "|" ? value : undefined;
-}
-
-function parsePlanningDocument(value: unknown): PlanningReviewDocument | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const name = sanitizeAiText(typeof record.name === "string" ? record.name : "", 180);
-  if (!name) return undefined;
-  const mimeType = sanitizeAiText(typeof record.mimeType === "string" ? record.mimeType : "", 120) || undefined;
-  const sizeBytes = typeof record.sizeBytes === "number" && Number.isFinite(record.sizeBytes) && record.sizeBytes >= 0 ? record.sizeBytes : undefined;
-  return {
-    name,
-    mimeType,
-    sizeBytes,
-    text: sanitizePlanningText(record.text),
-    delimiter: parsePlanningDelimiter(record.delimiter)
-  };
-}
-
-function sanitizeSiteReportText(value: unknown) {
-  if (typeof value !== "string") return "";
-  return sanitizeAiText(value, MAX_SITE_REPORT_TEXT_LENGTH);
-}
-
-function parseSiteReportDelimiter(value: unknown): SiteReportReviewDocument["delimiter"] | undefined {
-  return value === "," || value === "\t" || value === ";" || value === "|" ? value : undefined;
-}
-
-function parseSiteReportDocument(value: unknown): SiteReportReviewDocument | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const name = sanitizeAiText(typeof record.name === "string" ? record.name : "", 180);
-  if (!name) return undefined;
-  const mimeType = sanitizeAiText(typeof record.mimeType === "string" ? record.mimeType : "", 120) || undefined;
-  const sizeBytes = typeof record.sizeBytes === "number" && Number.isFinite(record.sizeBytes) && record.sizeBytes >= 0 ? record.sizeBytes : undefined;
-  return {
-    name,
-    mimeType,
-    sizeBytes,
-    text: sanitizeSiteReportText(record.text),
-    delimiter: parseSiteReportDelimiter(record.delimiter)
-  };
-}
-
-function parseExecutiveSummaryRequest(value: unknown): ExecutiveSummaryRequest | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
-  const record = value as Record<string, unknown>;
-  const projectId = parseProjectId(record.projectId);
-  if (!projectId) return undefined;
-  return {
-    projectId,
-    projectTitle: sanitizeAiText(typeof record.projectTitle === "string" ? record.projectTitle : "", 180) || undefined,
-    projectStatus: sanitizeAiText(typeof record.projectStatus === "string" ? record.projectStatus : "", 80) || undefined,
-    organizationName: sanitizeAiText(typeof record.organizationName === "string" ? record.organizationName : "", 180) || undefined
-  };
-}
-
-async function buildProjectContext({ token, ownerId, projectId }: { token: string; ownerId: string; projectId: string }): Promise<ProjectAiContext | { error: string; status: number; code: string }> {
-  void token;
-  void ownerId;
-
-  if (!projectId) {
-    const organization = await aiContextRepository.buildOrganizationContext("atlas");
-    return {
-      organization: organization.organization,
-      project: null,
-      members: [],
-      departments: [],
-      employees: organization.employees,
-      tasks: [],
-      timeline: null,
-      milestones: [],
-      budget: null,
-      documents: [],
-      knowledge: [],
-      memory: [],
-      references: ["organization:atlas"],
-      source: organization.source,
-      errors: organization.errors.filter((error): error is string => typeof error === "string")
-    };
-  }
-
-  const context = await aiContextRepository.buildProjectContext(projectId);
-  if (!context.project) {
-    return { error: "Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â´Ã˜Â±Ã™Ë†Ã˜Â¹ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â·Ã™â€žÃ™Ë†Ã˜Â¨ Ã˜ÂºÃ™Å Ã˜Â± Ã™â€¦Ã™Ë†Ã˜Â¬Ã™Ë†Ã˜Â¯ Ã˜Â£Ã™Ë† Ã™â€žÃ˜Â§ Ã˜ÂªÃ™â€¦Ã™â€žÃ™Æ’ Ã˜ÂµÃ™â€žÃ˜Â§Ã˜Â­Ã™Å Ã˜Â© Ã˜Â§Ã™â€žÃ™Ë†Ã˜ÂµÃ™Ë†Ã™â€ž Ã˜Â¥Ã™â€žÃ™Å Ã™â€¡.", status: 404, code: "PROJECT_NOT_FOUND" };
-  }
-  return context;
-}
-
-export async function POST(request: Request) {
-  const limit = await checkRateLimitAsync(request, "ai");
-  if (!limit.allowed) return rateLimitResponse(limit.resetAt);
-
-  const token = getBearerToken(request);
-  if (!token) {
-    return jsonError("Ã™Å Ã˜Â±Ã˜Â¬Ã™â€° Ã˜ÂªÃ˜Â³Ã˜Â¬Ã™Å Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â¯Ã˜Â®Ã™Ë†Ã™â€ž Ã™â€šÃ˜Â¨Ã™â€ž Ã˜Â§Ã˜Â³Ã˜ÂªÃ˜Â®Ã˜Â¯Ã˜Â§Ã™â€¦ VORA.", 401, "AUTH_REQUIRED");
-  }
-
-  if (!isSupabaseServerConfigured()) {
-    return jsonError("Ã˜Â¥Ã˜Â¹Ã˜Â¯Ã˜Â§Ã˜Â¯Ã˜Â§Ã˜Âª Ã˜Â§Ã™â€žÃ™â€¦Ã˜ÂµÃ˜Â§Ã˜Â¯Ã™â€šÃ˜Â© Ã˜ÂºÃ™Å Ã˜Â± Ã™â€¦Ã™Æ’Ã˜ÂªÃ™â€¦Ã™â€žÃ˜Â© Ã˜Â¹Ã™â€žÃ™â€° Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â§Ã˜Â¯Ã™â€¦.", 503, "SUPABASE_NOT_CONFIGURED");
-  }
-
-  const user = await verifySupabaseUser(token);
-  if (isApiError(user)) {
-    return jsonError("Ã˜Â§Ã™â€ Ã˜ÂªÃ™â€¡Ã˜Âª Ã˜Â§Ã™â€žÃ˜Â¬Ã™â€žÃ˜Â³Ã˜Â© Ã˜Â£Ã™Ë† Ã˜ÂªÃ˜Â¹Ã˜Â°Ã˜Â± Ã˜Â§Ã™â€žÃ˜ÂªÃ˜Â­Ã™â€šÃ™â€š Ã™â€¦Ã™â€  Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â³Ã˜ÂªÃ˜Â®Ã˜Â¯Ã™â€¦. Ã˜Â³Ã˜Â¬Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â¯Ã˜Â®Ã™Ë†Ã™â€ž Ã™â€¦Ã˜Â±Ã˜Â© Ã˜Â£Ã˜Â®Ã˜Â±Ã™â€°.", user.status === 401 ? 401 : 403, "AUTH_INVALID");
-  }
-
-  const body = await request.json().catch(() => null);
-  if (!body || typeof body !== "object") {
-    return jsonError("Ã˜ÂµÃ™Å Ã˜ÂºÃ˜Â© Ã˜Â§Ã™â€žÃ˜Â·Ã™â€žÃ˜Â¨ Ã˜ÂºÃ™Å Ã˜Â± Ã˜ÂµÃ˜Â­Ã™Å Ã˜Â­Ã˜Â©.", 400, "INVALID_JSON");
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "document_parse") {
-    const document = parseDocumentParseInput((body as { document?: unknown }).document);
-    if (!document) return jsonError("Document parsing requires a document filename.", 400, "INVALID_DOCUMENT_PARSE");
-    const parsed = await parseConstructionDocument(document);
-    auditEvent("document.parse.completed", { userId: user.id, filename: document.filename, status: parsed.status });
-    return NextResponse.json({
-      status: parsed.ok ? "success" : "failed",
-      parsingStatus: {
-        ok: parsed.ok,
-        status: parsed.status,
-        warnings: parsed.warnings,
-        errors: parsed.errors
-      },
-      document: parsed.document
-    }, { status: parsed.ok ? 200 : 400 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "knowledge_index") {
-    const projectId = parseProjectId((body as { projectId?: unknown }).projectId);
-    const documentInput = parseDocumentParseInput((body as { document?: unknown }).document);
-    if (!projectId || !documentInput) return jsonError("Knowledge indexing requires a project ID and document.", 400, "INVALID_KNOWLEDGE_INDEX");
-    const indexed = await knowledgeEngine.indexDocument({ projectId, documentInput });
-    auditEvent("knowledge.index.completed", { userId: user.id, projectId, status: indexed.status, chunkCount: indexed.chunkCount });
-    return NextResponse.json({
-      status: indexed.ok ? "success" : "failed",
-      indexingStatus: indexed
-    }, { status: indexed.ok ? 200 : 400 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "knowledge_search") {
-    const query = parseKnowledgeQuery(body);
-    if (!query) return jsonError("Knowledge search requires a project ID and query.", 400, "INVALID_KNOWLEDGE_SEARCH");
-    const searched = await knowledgeEngine.search(query);
-    auditEvent("knowledge.search.completed", { userId: user.id, projectId: query.projectId, status: searched.status, resultCount: searched.results.length });
-    return NextResponse.json({
-      status: searched.ok ? "success" : "failed",
-      searchStatus: searched
-    }, { status: searched.ok ? 200 : 400 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "copilot_chat") {
-    const copilotInput = parseCopilotChatInput(body, user.id);
-    if (!copilotInput) return jsonError("Copilot chat requires a project ID and question.", 400, "INVALID_COPILOT_CHAT");
-    const result = await executeCopilotChatSafe(copilotInput);
-    auditEvent("copilot.chat.completed", { userId: user.id, projectId: copilotInput.projectId, sessionId: result.session.id, status: result.status, retrievalStatus: result.retrievalStatus });
-    return NextResponse.json({
-      status: result.status,
-      copilot: result
-    }, { status: result.status === "success" ? 200 : 500 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "ai_orchestrator") {
-    const userRequest = sanitizeAiText(typeof (body as { userRequest?: unknown }).userRequest === "string" ? String((body as { userRequest?: unknown }).userRequest) : "", 4000);
-    if (!userRequest) return jsonError("AI orchestration requires a user request.", 400, "INVALID_AI_ORCHESTRATOR");
-    const projectId = parseProjectId((body as { projectId?: unknown }).projectId) || "PRJ-1048";
-    const now = new Date();
-    const context = createAiApplicationContext({
-      pathname: `/projects/${projectId}`,
-      searchParams: new URLSearchParams("mode=ai_orchestrator"),
-      language: typeof (body as { language?: unknown }).language === "string" ? sanitizeAiText(String((body as { language?: unknown }).language), 20) : "ar",
-      direction: (body as { direction?: unknown }).direction === "ltr" ? "ltr" : "rtl",
-      theme: "dark",
-      isAuthenticated: true,
-      now
-    });
-    const memory = createAiMemory({
-      context,
-      session: { sessionId: `ai-orchestrator:${projectId}:${now.toISOString()}`, startedAt: now.toISOString() },
-      conversation: { title: "AI Orchestration", messageCount: 1, lastInteractionAt: now.toISOString() },
-      now
-    });
-    const prompt = createAiPromptPayload({
-      context,
-      memory,
-      userRequest,
-      taskIntent: parseAiTaskIntentValue((body as { taskIntent?: unknown }).taskIntent),
-      outputPreferences: {
-        language: context.language,
-        responseFormat: "markdown",
-        includeRecommendations: true
-      },
-      now
-    });
-    const policyId = parseAiExecutionPolicyId((body as { policyId?: unknown }).policyId);
-    const result = await executeAiOrchestrator({
-      prompt,
-      policyId,
-      providerPreference: (body as { provider?: unknown }).provider === "openai" || (body as { provider?: unknown }).provider === "anthropic" || (body as { provider?: unknown }).provider === "gemini" || (body as { provider?: unknown }).provider === "openrouter" || (body as { provider?: unknown }).provider === "mock"
-        ? ((body as { provider: "openai" | "anthropic" | "gemini" | "openrouter" | "mock" }).provider)
-        : "auto",
-      availableProviders: parseProviderAvailabilityInput((body as { availableProviders?: unknown }).availableProviders),
-      options: {
-        policyId,
-        responseFormat: "markdown",
-        allowFallback: true
-      },
-      now
-    });
-    auditEvent("ai.orchestrator.completed", { userId: user.id, projectId, status: result.status, provider: result.provider || "none", model: result.model || "none" });
-    return NextResponse.json({
-      status: result.status,
-      orchestration: result
-    }, { status: result.status === "success" ? 200 : 503 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "project_comment") {
-    const parsed = parseCollaborationBase(body, user.id);
-    if (!parsed) return jsonError("Project comment requires a project ID.", 400, "INVALID_PROJECT_COMMENT");
-    const action = typeof parsed.record.action === "string" ? parsed.record.action : "add";
-    const result = action === "resolve"
-      ? collaborationEngine.comments.resolve({
-          projectId: parsed.projectId,
-          ownerId: parsed.ownerId,
-          userId: parsed.actorId,
-          commentId: typeof parsed.record.commentId === "string" ? sanitizeAiText(parsed.record.commentId, 120) : ""
-        })
-      : collaborationEngine.comments.add({
-          projectId: parsed.projectId,
-          ownerId: parsed.ownerId,
-          authorId: parsed.actorId,
-          targetType: parseAnalysisToolType(parsed.record.targetType),
-          targetId: typeof parsed.record.targetId === "string" ? sanitizeAiText(parsed.record.targetId, 120) : "analysis",
-          body: typeof parsed.record.body === "string" ? sanitizeAiText(parsed.record.body, 2000) : "",
-          threadId: typeof parsed.record.threadId === "string" ? sanitizeAiText(parsed.record.threadId, 120) : undefined
-        });
-    auditEvent("collaboration.comment.completed", { userId: user.id, projectId: parsed.projectId, status: result.status, action });
-    return NextResponse.json({ status: result.status, comment: result }, { status: result.ok ? 200 : 403 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "project_review") {
-    const parsed = parseCollaborationBase(body, user.id);
-    if (!parsed) return jsonError("Project review requires a project ID.", 400, "INVALID_PROJECT_REVIEW");
-    const action = typeof parsed.record.action === "string" ? parsed.record.action : "create";
-    const result = action === "transition"
-      ? collaborationEngine.reviews.transition({
-          projectId: parsed.projectId,
-          ownerId: parsed.ownerId,
-          actorId: parsed.actorId,
-          reviewId: typeof parsed.record.reviewId === "string" ? sanitizeAiText(parsed.record.reviewId, 120) : "",
-          status: parsed.record.status === "approved" || parsed.record.status === "rejected" || parsed.record.status === "archived" || parsed.record.status === "draft" || parsed.record.status === "in_review" ? parsed.record.status : "in_review",
-          notes: typeof parsed.record.notes === "string" ? sanitizeAiText(parsed.record.notes, 1000) : undefined
-        })
-      : collaborationEngine.reviews.create({
-          projectId: parsed.projectId,
-          ownerId: parsed.ownerId,
-          requestedBy: parsed.actorId,
-          targetType: parseAnalysisToolType(parsed.record.targetType),
-          targetId: typeof parsed.record.targetId === "string" ? sanitizeAiText(parsed.record.targetId, 120) : "analysis",
-          reviewerId: typeof parsed.record.reviewerId === "string" ? sanitizeAiText(parsed.record.reviewerId, 120) : undefined
-        });
-    auditEvent("collaboration.review.completed", { userId: user.id, projectId: parsed.projectId, status: result.status, action });
-    return NextResponse.json({ status: result.status, review: result }, { status: result.ok ? 200 : 403 });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "project_activity") {
-    const parsed = parseCollaborationBase(body, user.id);
-    if (!parsed) return jsonError("Project activity requires a project ID.", 400, "INVALID_PROJECT_ACTIVITY");
-    const activity = collaborationEngine.activity.list(parsed.projectId);
-    const audit = collaborationEngine.audit.list({ target: parsed.projectId });
-    auditEvent("collaboration.activity.listed", { userId: user.id, projectId: parsed.projectId, activityCount: activity.length });
-    return NextResponse.json({ status: "success", activity, audit });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "runtime_health") {
-    const started = Date.now();
-    const snapshot = await getRuntimeMonitorSnapshot();
-    const duration = Date.now() - started;
-    recordPerformanceMetric("runtime_health", duration);
-    logRuntimeEvent({
-      requestId: createRequestId("runtime-health"),
-      ownerId: user.id,
-      operation: "runtime_health",
-      duration,
-      status: snapshot.health.status === "unhealthy" ? "failed" : "success",
-      warnings: snapshot.health.warnings,
-      metadata: { healthStatus: snapshot.health.status }
-    });
-    return NextResponse.json({ status: "success", runtime: snapshot });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "performance_metrics") {
-    const metrics = getPerformanceMetrics();
-    logRuntimeEvent({
-      requestId: createRequestId("performance-metrics"),
-      ownerId: user.id,
-      operation: "performance_metrics",
-      duration: 0,
-      status: "success",
-      warnings: [],
-      metadata: { cacheHitRate: metrics.cache.hitRate, operationCount: metrics.operations.length }
-    });
-    return NextResponse.json({ status: "success", performance: getPerformanceMetrics() });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "report_export") {
-    const report = parseExportReport((body as { report?: unknown }).report);
-    if (!report) return jsonError("Report export requires a normalized report with title and sections.", 400, "INVALID_REPORT_EXPORT");
-    const format = parseExportFormat((body as { format?: unknown }).format);
-    const exported = exportProfessionalReportSafe({
-      report,
-      format,
-      options: parseExportOptions((body as { options?: unknown }).options),
-      context: parseExportContext((body as { context?: unknown }).context),
-      metadata: {
-        projectName: typeof (body as { projectName?: unknown }).projectName === "string" ? sanitizeAiText(String((body as { projectName?: unknown }).projectName), 180) : report.projectTitle,
-        projectId: report.projectId,
-        client: typeof (body as { client?: unknown }).client === "string" ? sanitizeAiText(String((body as { client?: unknown }).client), 180) : undefined,
-        organization: typeof (body as { organization?: unknown }).organization === "string" ? sanitizeAiText(String((body as { organization?: unknown }).organization), 180) : undefined,
-        analysisType: report.source.replace(/_/g, " "),
-        healthScore: typeof (body as { healthScore?: unknown }).healthScore === "string" ? sanitizeAiText(String((body as { healthScore?: unknown }).healthScore), 80) : undefined,
-        confidenceScore: typeof (body as { confidenceScore?: unknown }).confidenceScore === "number" ? Number((body as { confidenceScore?: unknown }).confidenceScore) : undefined,
-        analysisVersion: typeof (body as { analysisVersion?: unknown }).analysisVersion === "number" ? Number((body as { analysisVersion?: unknown }).analysisVersion) : undefined,
-        generatedBy: typeof (body as { generatedBy?: unknown }).generatedBy === "string" ? sanitizeAiText(String((body as { generatedBy?: unknown }).generatedBy), 180) : undefined,
-        workflowStage: typeof (body as { workflowStage?: unknown }).workflowStage === "string" ? sanitizeAiText(String((body as { workflowStage?: unknown }).workflowStage), 180) : undefined,
-        generatedAt: report.generatedAt
-      }
-    });
-    if (!exported.status.ok || !("base64" in exported)) {
-      return NextResponse.json({ status: "failed", exportStatus: exported.status }, { status: 500 });
-    }
-    auditEvent("report.export.completed", { userId: user.id, projectId: report.projectId, format, source: report.source });
-    return NextResponse.json({
-      status: "success",
-      exportStatus: exported.status,
-      file: {
-        filename: exported.filename,
-        mimeType: exported.mimeType,
-        base64: exported.base64
-      }
-    });
-  }
-
-  if (parseMode((body as { mode?: unknown }).mode) === "vora_intelligence") {
-    const userRequest = sanitizeText((body as { userRequest?: unknown }).userRequest);
-    if (!userRequest) {
-      return jsonError("Ã˜Â£Ã˜Â¶Ã™Â Ã˜Â·Ã™â€žÃ˜Â¨Ã˜Â§ Ã™Ë†Ã˜Â§Ã˜Â¶Ã˜Â­Ã˜Â§ Ã˜Â­Ã˜ÂªÃ™â€° Ã˜ÂªÃ˜ÂªÃ™â€¦Ã™Æ’Ã™â€  VORA Ã™â€¦Ã™â€  Ã˜ÂªÃ˜Â´Ã˜ÂºÃ™Å Ã™â€ž Ã™â€¦Ã˜Â³Ã˜Â§Ã˜Â± Ã˜Â§Ã™â€žÃ˜Â°Ã™Æ’Ã˜Â§Ã˜Â¡.", 400, "EMPTY_INPUT");
-    }
-    if (detectPromptInjection(userRequest)) {
-      return jsonError("Ã˜ÂªÃ™â€¦ Ã˜Â±Ã™ÂÃ˜Â¶ Ã˜Â§Ã™â€žÃ˜Â·Ã™â€žÃ˜Â¨ Ã™â€žÃ˜Â£Ã™â€ Ã™â€¡ Ã™Å Ã˜Â­Ã˜ÂªÃ™Ë†Ã™Å  Ã˜Â¹Ã™â€žÃ™â€° Ã˜ÂªÃ˜Â¹Ã™â€žÃ™Å Ã™â€¦Ã˜Â§Ã˜Âª Ã˜ÂºÃ™Å Ã˜Â± Ã˜Â¢Ã™â€¦Ã™â€ Ã˜Â© Ã˜Â£Ã™Ë† Ã™â€¦Ã˜Â­Ã˜Â§Ã™Ë†Ã™â€žÃ˜Â© Ã˜ÂªÃ˜Â¬Ã˜Â§Ã™Ë†Ã˜Â² Ã™â€žÃ™â€šÃ™Ë†Ã˜Â§Ã˜Â¹Ã˜Â¯ VORA.", 400, "PROMPT_INJECTION_DETECTED");
-    }
-
-    const projectId = parseProjectId((body as { projectId?: unknown }).projectId);
-    const provider = parseProvider((body as { provider?: unknown }).provider);
-    const intelligenceProvider = provider === "openai" || provider === "mock" ? provider : "auto";
-    const taskIntent = parseTaskIntent((body as { taskIntent?: unknown }).taskIntent);
-    auditEvent("ai.vora_intelligence.started", { userId: user.id, projectId, provider: intelligenceProvider, taskIntent: taskIntent || "general_assistance" });
-
-    if (taskIntent === "contract_review") {
-      const result = await executeContractReviewSafe({
-        document: parseContractDocument((body as { contractDocument?: unknown }).contractDocument),
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "contract_review" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "contract_review" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    if (taskIntent === "cost_review" && (body as { boqDocument?: unknown }).boqDocument) {
-      const result = await executeBoqReviewSafe({
-        document: parseBoqDocument((body as { boqDocument?: unknown }).boqDocument),
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "cost_review" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "boq_review" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    if (taskIntent === "risk_assessment") {
-      const result = await executeRiskAssessmentSafe({
-        contractReview: parseRiskSource((body as { contractReview?: unknown }).contractReview),
-        boqReview: parseRiskSource((body as { boqReview?: unknown }).boqReview),
-        notes: sanitizeRiskText((body as { riskNotes?: unknown }).riskNotes),
-        document: parseRiskDocument((body as { riskDocument?: unknown }).riskDocument),
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "risk_assessment" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "risk_assessment" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    if (taskIntent === "planning_review") {
-      const result = await executePlanningReviewSafe({
-        document: parsePlanningDocument((body as { planningDocument?: unknown }).planningDocument),
-        planningNotes: sanitizePlanningText((body as { planningNotes?: unknown }).planningNotes),
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "planning_review" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "planning_review" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    if (taskIntent === "site_report_review") {
-      const result = await executeSiteReportReviewSafe({
-        document: parseSiteReportDocument((body as { siteReportDocument?: unknown }).siteReportDocument),
-        siteReportNotes: sanitizeSiteReportText((body as { siteReportNotes?: unknown }).siteReportNotes),
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "site_report_review" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "site_report_review" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    if (taskIntent === "executive_summary") {
-      const result = await executeExecutiveSummarySafe({
-        executiveSummaryRequest: parseExecutiveSummaryRequest((body as { executiveSummaryRequest?: unknown }).executiveSummaryRequest) || {
-          projectId: projectId || "PRJ-1048"
-        },
-        reviewerNotes: userRequest,
-        provider: intelligenceProvider,
-        projectId,
-        organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-      });
-
-      auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status, taskIntent: "executive_summary" });
-      return NextResponse.json(await attachProjectPersistence(result, { projectId, ownerId: user.id, token, toolType: "executive_summary" }), { status: result.status === "success" ? 200 : 400 });
-    }
-
-    const result = await executeVoraIntelligenceSafe({
-      userRequest,
-      taskIntent,
-      provider: intelligenceProvider,
-      projectId,
-      organizationId: typeof (body as { organizationId?: unknown }).organizationId === "string" ? String((body as { organizationId?: unknown }).organizationId).slice(0, 80) : undefined
-    });
-
-    auditEvent("ai.vora_intelligence.completed", { userId: user.id, projectId, provider: result.provider || "unknown", status: result.status });
-    return NextResponse.json(result, { status: result.status === "success" ? 200 : 502 });
-  }
-
-  const tool = sanitizeText((body as { tool?: unknown }).tool) as ToolSlug;
-  if (!tool || !tools.some((item) => item.slug === tool)) {
-    return jsonError("Ã˜Â§Ã™â€žÃ˜Â£Ã˜Â¯Ã˜Â§Ã˜Â© Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â·Ã™â€žÃ™Ë†Ã˜Â¨Ã˜Â© Ã˜ÂºÃ™Å Ã˜Â± Ã™â€¦Ã˜Â¹Ã˜Â±Ã™Ë†Ã™ÂÃ˜Â©.", 400, "UNKNOWN_TOOL");
-  }
-
-  const sanitized = sanitizePayload((body as { payload?: unknown }).payload || {});
-  if ("error" in sanitized) {
-    return jsonError(sanitized.error, sanitized.status, sanitized.code);
-  }
-  const projectId = parseProjectId((body as { projectId?: unknown }).projectId || sanitized.payload.projectId);
-  const context = await buildProjectContext({ token, ownerId: user.id, projectId });
-  if ("error" in context) {
-    return jsonError(context.error, context.status, context.code);
-  }
-
-  try {
-    auditEvent("ai.generate.started", { userId: user.id, tool, projectId, provider: parseProvider((body as { provider?: unknown }).provider) || "auto" });
-    const result = await generateAiOutput({
-      tool,
-      payload: sanitized.payload,
-      provider: parseProvider((body as { provider?: unknown }).provider),
-      context
-    });
-
-    const saved = await saveGeneration({
-      token,
-      userId: user.id,
-      projectId,
-      tool,
-      payload: sanitized.payload,
-      output: result.output,
-      provider: result.provider,
-      model: result.model,
-      timestamp: result.timestamp,
-      usage: result.usage,
-      prompt: result.prompt,
-      exports: result.exports,
-      context
-    });
-
-    auditEvent("ai.generate.completed", { userId: user.id, tool, projectId, provider: result.provider, model: result.model });
-    return NextResponse.json({ ...result, saved });
-  } catch (error) {
-    auditEvent("ai.generate.failed", { userId: user.id, tool, projectId, error: error instanceof Error ? error.name : "UnknownError" });
-    if (error instanceof AiGenerationError) {
-      return jsonError(error.message, error.status, error.code);
-    }
-
-    return jsonError("Ã˜Â­Ã˜Â¯Ã˜Â« Ã˜Â®Ã˜Â·Ã˜Â£ Ã˜ÂºÃ™Å Ã˜Â± Ã™â€¦Ã˜ÂªÃ™Ë†Ã™â€šÃ˜Â¹ Ã˜Â£Ã˜Â«Ã™â€ Ã˜Â§Ã˜Â¡ Ã˜Â¥Ã™â€ Ã˜Â´Ã˜Â§Ã˜Â¡ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜ÂªÃ™Ë†Ã™â€°. Ã˜Â­Ã˜Â§Ã™Ë†Ã™â€ž Ã™â€¦Ã˜Â±Ã˜Â© Ã˜Â£Ã˜Â®Ã˜Â±Ã™â€°.", 500, "UNEXPECTED_GENERATION_ERROR");
-  }
-}
-
-
-
-
-
-
+    ...(typeof record.sessionId === "ë®=¶‰žËkºwµçUÉ%èÕÍ•È¹¥°ÁÉ½©•Ñ%èÁ…ÉÍ•¹ÁÉ½©•Ñ%°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°…Ñ¥½¸ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°É•Ù¥•ÜèÉ•ÍÕ±Ðô°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹½¬€ü€ÈÀÀ€è€ÐÀÌô¤ì(€ô((€¥˜€¡Á…ÉÍ•5½‘” ¡‰½‘ä…Ììµ½‘”üèÕ¹­¹½Ý¸ô¤¹µ½‘”¤€ôôô€‰ÁÉ½©•Ñ}…Ñ¥Ù¥Ñäˆ¤ì(€€€½¹ÍÐÁ…ÉÍ•€ôÁ…ÉÍ•½±±…‰½É…Ñ¥½¹	…Í”¡‰½‘ä°ÕÍ•È¹¥¤ì(€€€¥˜€ …Á…ÉÍ•¤É•ÑÕÉ¸©Í½¹ÉÉ½È ‰AÉ½©•Ð…Ñ¥Ù¥ÑäÉ•ÅÕ¥É•Ì„ÁÉ½©•Ð%¸ˆ°€ÐÀÀ°€‰%9Y1%}AI=)Q}Q%Y%Qdˆ¤ì(€€€½¹ÍÐ…Ñ¥Ù¥Ñä€ô½±±…‰½É…Ñ¥½¹¹¥¹”¹…Ñ¥Ù¥Ñä¹±¥ÍÐ¡Á…ÉÍ•¹ÁÉ½©•Ñ%¤ì(€€€½¹ÍÐ…Õ‘¥Ð€ô½±±…‰½É…Ñ¥½¹¹¥¹”¹…Õ‘¥Ð¹±¥ÍÐ¡ìÑ…É•ÐèÁ…ÉÍ•¹ÁÉ½©•Ñ%ô¤ì(€€€…Õ‘¥ÑÙ•¹Ð ‰½±±…‰½É…Ñ¥½¸¹…Ñ¥Ù¥Ñä¹±¥ÍÑ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%èÁ…ÉÍ•¹ÁÉ½©•Ñ%°…Ñ¥Ù¥Ñå½Õ¹Ðè…Ñ¥Ù¥Ñä¹±•¹Ñ ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ìÍÑ…ÑÕÌè€‰ÍÕ•ÍÌˆ°…Ñ¥Ù¥Ñä°…Õ‘¥Ðô¤ì(€ô((€¥˜€¡Á…ÉÍ•5½‘” ¡‰½‘ä…Ììµ½‘”üèÕ¹­¹½Ý¸ô¤¹µ½‘”¤€ôôô€‰ÉÕ¹Ñ¥µ•}¡•…±Ñ ˆ¤ì(€€€½¹ÍÐÍÑ…ÉÑ•€ô…Ñ”¹¹½Ü ¤ì(€€€½¹ÍÐÍ¹…ÁÍ¡½Ð€ô…Ý…¥Ð•ÑIÕ¹Ñ¥µ•5½¹¥Ñ½ÉM¹…ÁÍ¡½Ð ¤ì(€€€½¹ÍÐ‘ÕÉ…Ñ¥½¸€ô…Ñ”¹¹½Ü ¤€´ÍÑ…ÉÑ•ì(€€€É•½É‘A•É™½Éµ…¹•5•ÑÉ¥Œ ‰ÉÕ¹Ñ¥µ•}¡•…±Ñ ˆ°‘ÕÉ…Ñ¥½¸¤ì(€€€±½IÕ¹Ñ¥µ•Ù•¹Ð¡ì(€€€€€É•ÅÕ•ÍÑ%èÉ•…Ñ•I•ÅÕ•ÍÑ% ‰ÉÕ¹Ñ¥µ”µ¡•…±Ñ ˆ¤°(€€€€€½Ý¹•É%èÕÍ•È¹¥°(€€€€€½Á•É…Ñ¥½¸è€‰ÉÕ¹Ñ¥µ•}¡•…±Ñ ˆ°(€€€€€‘ÕÉ…Ñ¥½¸°(€€€€€ÍÑ…ÑÕÌèÍ¹…ÁÍ¡½Ð¹¡•…±Ñ ¹ÍÑ…ÑÕÌ€ôôô€‰Õ¹¡•…±Ñ¡äˆ€ü€‰™…¥±•ˆ€è€‰ÍÕ•ÍÌˆ°(€€€€€Ý…É¹¥¹ÌèÍ¹…ÁÍ¡½Ð¹¡•…±Ñ ¹Ý…É¹¥¹Ì°(€€€€€µ•Ñ…‘…Ñ„èì¡•…±Ñ¡MÑ…ÑÕÌèÍ¹…ÁÍ¡½Ð¹¡•…±Ñ ¹ÍÑ…ÑÕÌô(€€€ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ìÍÑ…ÑÕÌè€‰ÍÕ•ÍÌˆ°ÉÕ¹Ñ¥µ”èÍ¹…ÁÍ¡½Ðô¤ì(€ô((€¥˜€¡Á…ÉÍ•5½‘” ¡‰½‘ä…Ììµ½‘”üèÕ¹­¹½Ý¸ô¤¹µ½‘”¤€ôôô€‰Á•É™½Éµ…¹•}µ•ÑÉ¥Ìˆ¤ì(€€€½¹ÍÐµ•ÑÉ¥Ì€ô•ÑA•É™½Éµ…¹•5•ÑÉ¥Ì ¤ì(€€€±½IÕ¹Ñ¥µ•Ù•¹Ð¡ì(€€€€€É•ÅÕ•ÍÑ%èÉ•…Ñ•I•ÅÕ•ÍÑ% ‰Á•É™½Éµ…¹”µµ•ÑÉ¥Ìˆ¤°(€€€€€½Ý¹•É%èÕÍ•È¹¥°(€€€€€½Á•É…Ñ¥½¸è€‰Á•É™½Éµ…¹•}µ•ÑÉ¥Ìˆ°(€€€€€‘ÕÉ…Ñ¥½¸è€À°(€€€€€ÍÑ…ÑÕÌè€‰ÍÕ•ÍÌˆ°(€€€€€Ý…É¹¥¹Ìèmt°(€€€€€µ•Ñ…‘…Ñ„èì…¡•!¥ÑI…Ñ”èµ•ÑÉ¥Ì¹…¡”¹¡¥ÑI…Ñ”°½Á•É…Ñ¥½¹½Õ¹Ðèµ•ÑÉ¥Ì¹½Á•É…Ñ¥½¹Ì¹±•¹Ñ ô(€€€ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ìÍÑ…ÑÕÌè€‰ÍÕ•ÍÌˆ°Á•É™½Éµ…¹”è•ÑA•É™½Éµ…¹•5•ÑÉ¥Ì ¤ô¤ì(€ô((€¥˜€¡Á…ÉÍ•5½‘” ¡‰½‘ä…Ììµ½‘”üèÕ¹­¹½Ý¸ô¤¹µ½‘”¤€ôôô€‰É•Á½ÉÑ}•áÁ½ÉÐˆ¤ì(€€€½¹ÍÐÉ•Á½ÉÐ€ôÁ…ÉÍ•áÁ½ÉÑI•Á½ÉÐ ¡‰½‘ä…ÌìÉ•Á½ÉÐüèÕ¹­¹½Ý¸ô¤¹É•Á½ÉÐ¤ì(€€€¥˜€ …É•Á½ÉÐ¤É•ÑÕÉ¸©Í½¹ÉÉ½È ‰I•Á½ÉÐ•áÁ½ÉÐÉ•ÅÕ¥É•Ì„¹½Éµ…±¥é•É•Á½ÉÐÝ¥Ñ Ñ¥Ñ±”…¹Í•Ñ¥½¹Ì¸ˆ°€ÐÀÀ°€‰%9Y1%}IA=IQ}aA=IPˆ¤ì(€€€½¹ÍÐ™½Éµ…Ð€ôÁ…ÉÍ•áÁ½ÉÑ½Éµ…Ð ¡‰½‘ä…Ìì™½Éµ…ÐüèÕ¹­¹½Ý¸ô¤¹™½Éµ…Ð¤ì(€€€½¹ÍÐ•áÁ½ÉÑ•€ô•áÁ½ÉÑAÉ½™•ÍÍ¥½¹…±I•Á½ÉÑM…™”¡ì(€€€€€É•Á½ÉÐ°(€€€€€™½Éµ…Ð°(€€€€€½ÁÑ¥½¹ÌèÁ…ÉÍ•áÁ½ÉÑ=ÁÑ¥½¹Ì ¡‰½‘ä…Ìì½ÁÑ¥½¹ÌüèÕ¹­¹½Ý¸ô¤¹½ÁÑ¥½¹Ì¤°(€€€€€½¹Ñ•áÐèÁ…ÉÍ•áÁ½ÉÑ½¹Ñ•áÐ ¡‰½‘ä…Ìì½¹Ñ•áÐüèÕ¹­¹½Ý¸ô¤¹½¹Ñ•áÐ¤°(€€€€€µ•Ñ…‘…Ñ„èì(€€€€€€€ÁÉ½©•Ñ9…µ”èÑåÁ•½˜€¡‰½‘ä…ÌìÁÉ½©•Ñ9…µ”üèÕ¹­¹½Ý¸ô¤¹ÁÉ½©•Ñ9…µ”€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…ÌìÁÉ½©•Ñ9…µ”üèÕ¹­¹½Ý¸ô¤¹ÁÉ½©•Ñ9…µ”¤°€ÄàÀ¤€èÉ•Á½ÉÐ¹ÁÉ½©•ÑQ¥Ñ±”°(€€€€€€€ÁÉ½©•Ñ%èÉ•Á½ÉÐ¹ÁÉ½©•Ñ%°(€€€€€€€±¥•¹ÐèÑåÁ•½˜€¡‰½‘ä…Ìì±¥•¹ÐüèÕ¹­¹½Ý¸ô¤¹±¥•¹Ð€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…Ìì±¥•¹ÐüèÕ¹­¹½Ý¸ô¤¹±¥•¹Ð¤°€ÄàÀ¤€èÕ¹‘•™¥¹•°(€€€€€€€½É…¹¥é…Ñ¥½¸èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¸üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¸€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¸üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¸¤°€ÄàÀ¤€èÕ¹‘•™¥¹•°(€€€€€€€…¹…±åÍ¥ÍQåÁ”èÉ•Á½ÉÐ¹Í½ÕÉ”¹É•Á±…” ½|½œ°€ˆ€ˆ¤°(€€€€€€€¡•…±Ñ¡M½É”èÑåÁ•½˜€¡‰½‘ä…Ìì¡•…±Ñ¡M½É”üèÕ¹­¹½Ý¸ô¤¹¡•…±Ñ¡M½É”€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…Ìì¡•…±Ñ¡M½É”üèÕ¹­¹½Ý¸ô¤¹¡•…±Ñ¡M½É”¤°€àÀ¤€èÕ¹‘•™¥¹•°(€€€€€€€½¹™¥‘•¹•M½É”èÑåÁ•½˜€¡‰½‘ä…Ìì½¹™¥‘•¹•M½É”üèÕ¹­¹½Ý¸ô¤¹½¹™¥‘•¹•M½É”€ôôô€‰¹Õµ‰•Èˆ€ü9Õµ‰•È ¡‰½‘ä…Ìì½¹™¥‘•¹•M½É”üèÕ¹­¹½Ý¸ô¤¹½¹™¥‘•¹•M½É”¤€èÕ¹‘•™¥¹•°(€€€€€€€…¹…±åÍ¥ÍY•ÉÍ¥½¸èÑåÁ•½˜€¡‰½‘ä…Ìì…¹…±åÍ¥ÍY•ÉÍ¥½¸üèÕ¹­¹½Ý¸ô¤¹…¹…±åÍ¥ÍY•ÉÍ¥½¸€ôôô€‰¹Õµ‰•Èˆ€ü9Õµ‰•È ¡‰½‘ä…Ìì…¹…±åÍ¥ÍY•ÉÍ¥½¸üèÕ¹­¹½Ý¸ô¤¹…¹…±åÍ¥ÍY•ÉÍ¥½¸¤€èÕ¹‘•™¥¹•°(€€€€€€€•¹•É…Ñ•‘	äèÑåÁ•½˜€¡‰½‘ä…Ìì•¹•É…Ñ•‘	äüèÕ¹­¹½Ý¸ô¤¹•¹•É…Ñ•‘	ä€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…Ìì•¹•É…Ñ•‘	äüèÕ¹­¹½Ý¸ô¤¹•¹•É…Ñ•‘	ä¤°€ÄàÀ¤€èÕ¹‘•™¥¹•°(€€€€€€€Ý½É­™±½ÝMÑ…”èÑåÁ•½˜€¡‰½‘ä…ÌìÝ½É­™±½ÝMÑ…”üèÕ¹­¹½Ý¸ô¤¹Ý½É­™±½ÝMÑ…”€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ¡MÑÉ¥¹œ ¡‰½‘ä…ÌìÝ½É­™±½ÝMÑ…”üèÕ¹­¹½Ý¸ô¤¹Ý½É­™±½ÝMÑ…”¤°€ÄàÀ¤€èÕ¹‘•™¥¹•°(€€€€€€€•¹•É…Ñ•‘ÐèÉ•Á½ÉÐ¹•¹•É…Ñ•‘Ð(€€€€€ô(€€€ô¤ì(€€€¥˜€ …•áÁ½ÉÑ•¹ÍÑ…ÑÕÌ¹½¬ñð€„ ‰‰…Í”ØÐˆ¥¸•áÁ½ÉÑ•¤¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ìÍÑ…ÑÕÌè€‰™…¥±•ˆ°•áÁ½ÉÑMÑ…ÑÕÌè•áÁ½ÉÑ•¹ÍÑ…ÑÕÌô°ìÍÑ…ÑÕÌè€ÔÀÀô¤ì(€€€ô(€€€…Õ‘¥ÑÙ•¹Ð ‰É•Á½ÉÐ¹•áÁ½ÉÐ¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%èÉ•Á½ÉÐ¹ÁÉ½©•Ñ%°™½Éµ…Ð°Í½ÕÉ”èÉ•Á½ÉÐ¹Í½ÕÉ”ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ì(€€€€€ÍÑ…ÑÕÌè€‰ÍÕ•ÍÌˆ°(€€€€€•áÁ½ÉÑMÑ…ÑÕÌè•áÁ½ÉÑ•¹ÍÑ…ÑÕÌ°(€€€€€™¥±”èì(€€€€€€€™¥±•¹…µ”è•áÁ½ÉÑ•¹™¥±•¹…µ”°(€€€€€€€µ¥µ•QåÁ”è•áÁ½ÉÑ•¹µ¥µ•QåÁ”°(€€€€€€€‰…Í”ØÐè•áÁ½ÉÑ•¹‰…Í”ØÐ(€€€€€ô(€€€ô¤ì(€ô((€¥˜€¡Á…ÉÍ•5½‘” ¡‰½‘ä…Ììµ½‘”üèÕ¹­¹½Ý¸ô¤¹µ½‘”¤€ôôô€‰Ù½É…}¥¹Ñ•±±¥•¹”ˆ¤ì(€€€½¹ÍÐÕÍ•ÉI•ÅÕ•ÍÐ€ôÍ…¹¥Ñ¥é•Q•áÐ ¡‰½‘ä…ÌìÕÍ•ÉI•ÅÕ•ÍÐüèÕ¹­¹½Ý¸ô¤¹ÕÍ•ÉI•ÅÕ•ÍÐ¤ì(€€€¥˜€ …ÕÍ•ÉI•ÅÕ•ÍÐ¤ì(€€€€€É•ÑÕÉ¸©Í½¹ÉÉ½È ‹c
+c
+Ûg
+ƒc
+ßgŠ{c
+£c
+œƒg.c
+Ÿc
+Ûc
+·c
+œƒc
+·c
+«gŠÀƒc
+«c
+«gŠ›gKgŠ€Y=IƒgŠ›gŠ€ƒc
+«c
+Óc
+ëgƒgŠxƒgŠ›c
+Ïc
+Ÿc
+Äƒc
+ŸgŠ{c
+ÃgKc
+Ÿc
+„¸ˆ°€ÐÀÀ°€‰5AQe}%9AUPˆ¤ì(€€€ô(€€€¥˜€¡‘•Ñ•ÑAÉ½µÁÑ%¹©•Ñ¥½¸¡ÕÍ•ÉI•ÅÕ•ÍÐ¤¤ì(€€€€€É•ÑÕÉ¸©Í½¹ÉÉ½È ‹c
+«gŠ˜ƒc
+Çg
+c
+Øƒc
+ŸgŠ{c
+ßgŠ{c
+ ƒgŠ{c
+gŠƒgŠ„ƒgƒc
+·c
+«g.g€ƒc
+çgŠ{gŠÀƒc
+«c
+çgŠ{gƒgŠ›c
+Ÿc
+¨ƒc
+ëgƒc
+Äƒc
+‹gŠ›gŠƒc
+¤ƒc
+g.ƒgŠ›c
+·c
+Ÿg.gŠ{c
+¤ƒc
+«c
+³c
+Ÿg.c
+ÈƒgŠ{gŠkg.c
+Ÿc
+çc
+¼Y=I¸ˆ°€ÐÀÀ°€‰AI=5AQ}%9)Q%=9}QQˆ¤ì(€€€ô((€€€½¹ÍÐÁÉ½©•Ñ%€ôÁ…ÉÍ•AÉ½©•Ñ% ¡‰½‘ä…ÌìÁÉ½©•Ñ%üèÕ¹­¹½Ý¸ô¤¹ÁÉ½©•Ñ%¤ì(€€€½¹ÍÐ…¹…±åÍ¥ÍM•ÍÍ¥½¹%€ôÑåÁ•½˜€¡‰½‘ä…ÌìÍ•ÍÍ¥½¹%üèÕ¹­¹½Ý¸ô¤¹Í•ÍÍ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üÍ…¹¥Ñ¥é•¥Q•áÐ ¡‰½‘ä…ÌìÍ•ÍÍ¥½¹%èÍÑÉ¥¹œô¤¹Í•ÍÍ¥½¹%°€ÄÈÀ¤€èÕ¹‘•™¥¹•ì(€€€½¹ÍÐÁÉ½Ù¥‘•È€ôÁ…ÉÍ•AÉ½Ù¥‘•È ¡‰½‘ä…ÌìÁÉ½Ù¥‘•ÈüèÕ¹­¹½Ý¸ô¤¹ÁÉ½Ù¥‘•È¤ì(€€€½¹ÍÐ¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È€ôÁÉ½Ù¥‘•È€ôôô€‰½Á•¹…¤ˆñðÁÉ½Ù¥‘•È€ôôô€‰µ½¬ˆ€üÁÉ½Ù¥‘•È€è€‰…ÕÑ¼ˆì(€€€½¹ÍÐÑ…Í­%¹Ñ•¹Ð€ôÁ…ÉÍ•Q…Í­%¹Ñ•¹Ð ¡‰½‘ä…ÌìÑ…Í­%¹Ñ•¹ÐüèÕ¹­¹½Ý¸ô¤¹Ñ…Í­%¹Ñ•¹Ð¤ì(€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹ÍÑ…ÉÑ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°Ñ…Í­%¹Ñ•¹ÐèÑ…Í­%¹Ñ•¹Ðñð€‰•¹•É…±}…ÍÍ¥ÍÑ…¹”ˆô¤ì((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰½¹ÑÉ…Ñ}É•Ù¥•Üˆ¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•½¹ÑÉ…ÑI•Ù¥•ÝM…™”¡ì(€€€€€€€‘½Õµ•¹ÐèÁ…ÉÍ•½¹ÑÉ…Ñ½Õµ•¹Ð ¡‰½‘ä…Ìì½¹ÑÉ…Ñ½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹½¹ÑÉ…Ñ½Õµ•¹Ð¤°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰½¹ÑÉ…Ñ}É•Ù¥•Üˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰½¹ÑÉ…Ñ}É•Ù¥•Üˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰½ÍÑ}É•Ù¥•Üˆ€˜˜€¡‰½‘ä…Ìì‰½Å½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹‰½Å½Õµ•¹Ð¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•	½ÅI•Ù¥•ÝM…™”¡ì(€€€€€€€‘½Õµ•¹ÐèÁ…ÉÍ•	½Å½Õµ•¹Ð ¡‰½‘ä…Ìì‰½Å½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹‰½Å½Õµ•¹Ð¤°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰½ÍÑ}É•Ù¥•Üˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰‰½Å}É•Ù¥•Üˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰É¥Í­}…ÍÍ•ÍÍµ•¹Ðˆ¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•I¥Í­ÍÍ•ÍÍµ•¹ÑM…™”¡ì(€€€€€€€½¹ÑÉ…ÑI•Ù¥•ÜèÁ…ÉÍ•I¥Í­M½ÕÉ” ¡‰½‘ä…Ìì½¹ÑÉ…ÑI•Ù¥•ÜüèÕ¹­¹½Ý¸ô¤¹½¹ÑÉ…ÑI•Ù¥•Ü¤°(€€€€€€€‰½ÅI•Ù¥•ÜèÁ…ÉÍ•I¥Í­M½ÕÉ” ¡‰½‘ä…Ìì‰½ÅI•Ù¥•ÜüèÕ¹­¹½Ý¸ô¤¹‰½ÅI•Ù¥•Ü¤°(€€€€€€€¹½Ñ•ÌèÍ…¹¥Ñ¥é•I¥Í­Q•áÐ ¡‰½‘ä…ÌìÉ¥Í­9½Ñ•ÌüèÕ¹­¹½Ý¸ô¤¹É¥Í­9½Ñ•Ì¤°(€€€€€€€‘½Õµ•¹ÐèÁ…ÉÍ•I¥Í­½Õµ•¹Ð ¡‰½‘ä…ÌìÉ¥Í­½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹É¥Í­½Õµ•¹Ð¤°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰É¥Í­}…ÍÍ•ÍÍµ•¹Ðˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰É¥Í­}…ÍÍ•ÍÍµ•¹Ðˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰Á±…¹¹¥¹}É•Ù¥•Üˆ¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•A±…¹¹¥¹I•Ù¥•ÝM…™”¡ì(€€€€€€€‘½Õµ•¹ÐèÁ…ÉÍ•A±…¹¹¥¹½Õµ•¹Ð ¡‰½‘ä…ÌìÁ±…¹¹¥¹½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹Á±…¹¹¥¹½Õµ•¹Ð¤°(€€€€€€€Á±…¹¹¥¹9½Ñ•ÌèÍ…¹¥Ñ¥é•A±…¹¹¥¹Q•áÐ ¡‰½‘ä…ÌìÁ±…¹¹¥¹9½Ñ•ÌüèÕ¹­¹½Ý¸ô¤¹Á±…¹¹¥¹9½Ñ•Ì¤°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰Á±…¹¹¥¹}É•Ù¥•Üˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰Á±…¹¹¥¹}É•Ù¥•Üˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰Í¥Ñ•}É•Á½ÉÑ}É•Ù¥•Üˆ¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•M¥Ñ•I•Á½ÉÑI•Ù¥•ÝM…™”¡ì(€€€€€€€‘½Õµ•¹ÐèÁ…ÉÍ•M¥Ñ•I•Á½ÉÑ½Õµ•¹Ð ¡‰½‘ä…ÌìÍ¥Ñ•I•Á½ÉÑ½Õµ•¹ÐüèÕ¹­¹½Ý¸ô¤¹Í¥Ñ•I•Á½ÉÑ½Õµ•¹Ð¤°(€€€€€€€Í¥Ñ•I•Á½ÉÑ9½Ñ•ÌèÍ…¹¥Ñ¥é•M¥Ñ•I•Á½ÉÑQ•áÐ ¡‰½‘ä…ÌìÍ¥Ñ•I•Á½ÉÑ9½Ñ•ÌüèÕ¹­¹½Ý¸ô¤¹Í¥Ñ•I•Á½ÉÑ9½Ñ•Ì¤°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰Í¥Ñ•}É•Á½ÉÑ}É•Ù¥•Üˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰Í¥Ñ•}É•Á½ÉÑ}É•Ù¥•Üˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€¥˜€¡Ñ…Í­%¹Ñ•¹Ð€ôôô€‰•á•ÕÑ¥Ù•}ÍÕµµ…Éäˆ¤ì(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•á•ÕÑ¥Ù•MÕµµ…ÉåM…™”¡ì(€€€€€€€•á•ÕÑ¥Ù•MÕµµ…ÉåI•ÅÕ•ÍÐèÁ…ÉÍ•á•ÕÑ¥Ù•MÕµµ…ÉåI•ÅÕ•ÍÐ ¡‰½‘ä…Ìì•á•ÕÑ¥Ù•MÕµµ…ÉåI•ÅÕ•ÍÐüèÕ¹­¹½Ý¸ô¤¹•á•ÕÑ¥Ù•MÕµµ…ÉåI•ÅÕ•ÍÐ¤ñðì(€€€€€€€€€ÁÉ½©•Ñ%èÁÉ½©•Ñ%ñð€‰AI(´ÄÀÐàˆ(€€€€€€€ô°(€€€€€€€É•Ù¥•Ý•É9½Ñ•ÌèÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€€€ÁÉ½©•Ñ%°(€€€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€€€ô¤ì((€€€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ°Ñ…Í­%¹Ñ•¹Ðè€‰•á•ÕÑ¥Ù•}ÍÕµµ…Éäˆô¤ì(€€€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡…Ý…¥Ð…ÑÑ…¡AÉ½©•ÑA•ÉÍ¥ÍÑ•¹”¡É•ÍÕ±Ð°ìÁÉ½©•Ñ%°½Ý¹•É%èÕÍ•È¹¥°Ñ½­•¸°Í•ÍÍ¥½¹%è…¹…±åÍ¥ÍM•ÍÍ¥½¹%°Ñ½½±QåÁ”è€‰•á•ÕÑ¥Ù•}ÍÕµµ…Éäˆô¤°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÐÀÀô¤ì(€€€ô((€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•á•ÕÑ•Y½É…%¹Ñ•±±¥•¹•M…™”¡ì(€€€€€ÕÍ•ÉI•ÅÕ•ÍÐ°(€€€€€Ñ…Í­%¹Ñ•¹Ð°(€€€€€ÁÉ½Ù¥‘•Èè¥¹Ñ•±±¥•¹•AÉ½Ù¥‘•È°(€€€€€ÁÉ½©•Ñ%°(€€€€€½É…¹¥é…Ñ¥½¹%èÑåÁ•½˜€¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%€ôôô€‰ÍÑÉ¥¹œˆ€üMÑÉ¥¹œ ¡‰½‘ä…Ìì½É…¹¥é…Ñ¥½¹%üèÕ¹­¹½Ý¸ô¤¹½É…¹¥é…Ñ¥½¹%¤¹Í±¥” À°€àÀ¤€èÕ¹‘•™¥¹•(€€€ô¤ì((€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹Ù½É…}¥¹Ñ•±±¥•¹”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•Èñð€‰Õ¹­¹½Ý¸ˆ°ÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡É•ÍÕ±Ð°ìÍÑ…ÑÕÌèÉ•ÍÕ±Ð¹ÍÑ…ÑÕÌ€ôôô€‰ÍÕ•ÍÌˆ€ü€ÈÀÀ€è€ÔÀÈô¤ì(€ô((€½¹ÍÐÑ½½°€ôÍ…¹¥Ñ¥é•Q•áÐ ¡‰½‘ä…ÌìÑ½½°üèÕ¹­¹½Ý¸ô¤¹Ñ½½°¤…ÌQ½½±M±Õœì(€¥˜€ …Ñ½½°ñð€…Ñ½½±Ì¹Í½µ” ¡¥Ñ•´¤€ôø¥Ñ•´¹Í±Õœ€ôôôÑ½½°¤¤ì(€€€É•ÑÕÉ¸©Í½¹ÉÉ½È ‹c
+ŸgŠ{c
+c
+¿c
+Ÿc
+¤ƒc
+ŸgŠ{gŠ›c
+ßgŠ{g.c
+£c
+¤ƒc
+ëgƒc
+ÄƒgŠ›c
+çc
+Çg.g
+c
+¤¸ˆ°€ÐÀÀ°€‰U9-9=]9}Q==0ˆ¤ì(€ô((€½¹ÍÐÍ…¹¥Ñ¥é•€ôÍ…¹¥Ñ¥é•A…å±½… ¡‰½‘ä…ÌìÁ…å±½…üèÕ¹­¹½Ý¸ô¤¹Á…å±½…ñðíô¤ì(€¥˜€ ‰•ÉÉ½Èˆ¥¸Í…¹¥Ñ¥é•¤ì(€€€É•ÑÕÉ¸©Í½¹ÉÉ½È¡Í…¹¥Ñ¥é•¹•ÉÉ½È°Í…¹¥Ñ¥é•¹ÍÑ…ÑÕÌ°Í…¹¥Ñ¥é•¹½‘”¤ì(€ô(€½¹ÍÐÁÉ½©•Ñ%€ôÁ…ÉÍ•AÉ½©•Ñ% ¡‰½‘ä…ÌìÁÉ½©•Ñ%üèÕ¹­¹½Ý¸ô¤¹ÁÉ½©•Ñ%ñðÍ…¹¥Ñ¥é•¹Á…å±½…¹ÁÉ½©•Ñ%¤ì(€½¹ÍÐ½¹Ñ•áÐ€ô…Ý…¥Ð‰Õ¥±‘AÉ½©•Ñ½¹Ñ•áÐ¡ìÑ½­•¸°½Ý¹•É%èÕÍ•È¹¥°ÁÉ½©•Ñ%ô¤ì(€¥˜€ ‰•ÉÉ½Èˆ¥¸½¹Ñ•áÐ¤ì(€€€É•ÑÕÉ¸©Í½¹ÉÉ½È¡½¹Ñ•áÐ¹•ÉÉ½È°½¹Ñ•áÐ¹ÍÑ…ÑÕÌ°½¹Ñ•áÐ¹½‘”¤ì(€ô((€ÑÉäì(€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹•¹•É…Ñ”¹ÍÑ…ÉÑ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°Ñ½½°°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÁ…ÉÍ•AÉ½Ù¥‘•È ¡‰½‘ä…ÌìÁÉ½Ù¥‘•ÈüèÕ¹­¹½Ý¸ô¤¹ÁÉ½Ù¥‘•È¤ñð€‰…ÕÑ¼ˆô¤ì(€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥Ð•¹•É…Ñ•¥=ÕÑÁÕÐ¡ì(€€€€€Ñ½½°°(€€€€€Á…å±½…èÍ…¹¥Ñ¥é•¹Á…å±½…°(€€€€€ÁÉ½Ù¥‘•ÈèÁ…ÉÍ•AÉ½Ù¥‘•È ¡‰½‘ä…ÌìÁÉ½Ù¥‘•ÈüèÕ¹­¹½Ý¸ô¤¹ÁÉ½Ù¥‘•È¤°(€€€€€½¹Ñ•áÐ(€€€ô¤ì((€€€½¹ÍÐÍ…Ù•€ô…Ý…¥ÐÍ…Ù••¹•É…Ñ¥½¸¡ì(€€€€€Ñ½­•¸°(€€€€€ÕÍ•É%èÕÍ•È¹¥°(€€€€€ÁÉ½©•Ñ%°(€€€€€Ñ½½°°(€€€€€Á…å±½…èÍ…¹¥Ñ¥é•¹Á…å±½…°(€€€€€½ÕÑÁÕÐèÉ•ÍÕ±Ð¹½ÕÑÁÕÐ°(€€€€€ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•È°(€€€€€µ½‘•°èÉ•ÍÕ±Ð¹µ½‘•°°(€€€€€Ñ¥µ•ÍÑ…µÀèÉ•ÍÕ±Ð¹Ñ¥µ•ÍÑ…µÀ°(€€€€€ÕÍ…”èÉ•ÍÕ±Ð¹ÕÍ…”°(€€€€€ÁÉ½µÁÐèÉ•ÍÕ±Ð¹ÁÉ½µÁÐ°(€€€€€•áÁ½ÉÑÌèÉ•ÍÕ±Ð¹•áÁ½ÉÑÌ°(€€€€€½¹Ñ•áÐ(€€€ô¤ì((€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹•¹•É…Ñ”¹½µÁ±•Ñ•ˆ°ìÕÍ•É%èÕÍ•È¹¥°Ñ½½°°ÁÉ½©•Ñ%°ÁÉ½Ù¥‘•ÈèÉ•ÍÕ±Ð¹ÁÉ½Ù¥‘•È°µ½‘•°èÉ•ÍÕ±Ð¹µ½‘•°ô¤ì(€€€É•ÑÕÉ¸9•áÑI•ÍÁ½¹Í”¹©Í½¸¡ì€¸¸¹É•ÍÕ±Ð°Í…Ù•ô¤ì(€ô…Ñ €¡•ÉÉ½È¤ì(€€€…Õ‘¥ÑÙ•¹Ð ‰…¤¹•¹•É…Ñ”¹™…¥±•ˆ°ìÕÍ•É%èÕÍ•È¹¥°Ñ½½°°ÁÉ½©•Ñ%°•ÉÉ½Èè•ÉÉ½È¥¹ÍÑ…¹•½˜ÉÉ½È€ü•ÉÉ½È¹¹…µ”€è€‰U¹­¹½Ý¹ÉÉ½Èˆô¤ì(€€€¥˜€¡•ÉÉ½È¥¹ÍÑ…¹•½˜¥•¹•É…Ñ¥½¹ÉÉ½È¤ì(€€€€€É•ÑÕÉ¸©Í½¹ÉÉ½È¡•ÉÉ½È¹µ•ÍÍ…”°•ÉÉ½È¹ÍÑ…ÑÕÌ°•ÉÉ½È¹½‘”¤ì(€€€ô((€€€É•ÑÕÉ¸©Í½¹ÉÉ½È ‹c
+·c
+¿c
+¬ƒc
+»c
+ßc
+Œƒc
+ëgƒc
+ÄƒgŠ›c
+«g.gŠkc
+äƒc
+c
+¯gŠƒc
+Ÿc
+„ƒc
+—gŠƒc
+Óc
+Ÿc
+„ƒc
+ŸgŠ{gŠ›c
+·c
+«g.gŠÀ¸ƒc
+·c
+Ÿg.gŠxƒgŠ›c
+Çc
+¤ƒc
+c
+»c
+ÇgŠÀ¸ˆ°€ÔÀÀ°€‰U9aAQ}9IQ%=9}II=Hˆ¤ì(€ô)ô(4(4(4(4(4(4

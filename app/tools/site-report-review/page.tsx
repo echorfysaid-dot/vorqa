@@ -8,6 +8,7 @@ import { CheckCircle2, ClipboardList, FileSearch, Loader2, UploadCloud } from "l
 import { Alert, Badge, Button, EmptyState, GlassCard, PageHeader, ProgressBar, Textarea } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
 import { analysisPhaseLabel, getAnalysisErrorMessage, printCurrentReport, type AnalysisPhase } from "@/lib/analysis-client";
+import { useSearchParams } from "next/navigation";
 
 type SiteObservation = Readonly<{
   rowNumber: number;
@@ -89,6 +90,9 @@ function list(items: readonly string[] | undefined, fallback: string) {
 
 export default function SiteReportReviewPage() {
   const { locale } = useI18n();
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("projectId") || "PRJ-1048";
+  const sessionId = searchParams.get("sessionId") || undefined;
   const [file, setFile] = useState<File | null>(null);
   const [siteReportText, setSiteReportText] = useState("");
   const [notes, setNotes] = useState("");
@@ -139,7 +143,8 @@ export default function SiteReportReviewPage() {
           mode: "vora_intelligence",
           taskIntent: "site_report_review",
           provider: "mock",
-          projectId: "PRJ-1048",
+          projectId,
+          sessionId,
           userRequest: notes || "Review this construction site report.",
           siteReportNotes: siteReportText,
           siteReportDocument: file

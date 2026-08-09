@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, FileSearch, FileText, Loader2, Scale, UploadCloud } from "lucide-react";
 import { Alert, Badge, Button, EmptyState, GlassCard, PageHeader, ProgressBar, Textarea } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
+import { useSearchParams } from "next/navigation";
 
 type ContractReviewSection = Readonly<{
   executiveSummary?: string;
@@ -48,6 +49,9 @@ function listItems(items: readonly string[] | undefined, fallback: string) {
 
 export default function ContractReviewPage() {
   const { locale } = useI18n();
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("projectId") || "PRJ-1048";
+  const sessionId = searchParams.get("sessionId") || undefined;
   const [file, setFile] = useState<File | null>(null);
   const [fileText, setFileText] = useState("");
   const [notes, setNotes] = useState("");
@@ -100,7 +104,8 @@ export default function ContractReviewPage() {
           mode: "vora_intelligence",
           taskIntent: "contract_review",
           provider: "mock",
-          projectId: "PRJ-1048",
+          projectId,
+          sessionId,
           userRequest: notes || "Review the uploaded construction contract.",
           contractDocument: {
             name: file.name,

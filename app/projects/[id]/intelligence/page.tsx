@@ -11,11 +11,18 @@ import { useProjectRepository } from "@/lib/repositories/projectHooks";
 import { createProjectIntelligenceSession, type ProjectIntelligenceAnalysis, type ProjectIntelligenceTimelineEvent } from "@/lib/project-intelligence";
 import { createAnalysisWorkflow, type AnalysisWorkflowStage } from "@/lib/analysis-workflow";
 import { ProjectAnalysisDashboard } from "@/components/project-analysis-dashboard";
+import { useDocumentsRepository } from "@/lib/repositories/documentHooks";
+
+function withProjectContext(route: string, projectId: string) {
+  const separator = route.includes("?") ? "&" : "?";
+  return `${route}${separator}projectId=${encodeURIComponent(projectId)}`;
+}
 
 export default function ProjectIntelligencePage({ params }: { params: { id: string } }) {
   const { locale } = useI18n();
   const projectId = decodeURIComponent(params.id);
   const { data: project, loading, error, isFallback } = useProjectRepository(projectId);
+  const documents = useDocumentsRepository(projectId);
 
   if (loading) {
     return (<LocalizedContent locale={locale}>
@@ -75,7 +82,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
         <Metric label="Workflow progress" value={`${workflow.completionPercentage}%`} icon={<BarChart3 className="h-5 w-5" />} />
       </section>
 
-      <ProjectAnalysisDashboard projectId={project.id} />
+      <ProjectAnalysisDashboard project={project} documents={documents.data} />
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
@@ -98,7 +105,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
             </div>
             <div className="mt-5">
               {workflow.nextAction.route ? (
-                <Link href={workflow.nextAction.route} className="inline-flex">
+                <Link href={withProjectContext(workflow.nextAction.route, project.id)} className="inline-flex">
                   <Button icon={<Sparkles className="h-4 w-4" />}>{workflow.nextAction.label}</Button>
                 </Link>
               ) : (
@@ -113,7 +120,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
               <h2 className="mt-3 text-2xl font-black text-white">Guided analysis stages</h2>
             </div>
             <div className="grid gap-3">
-              {workflow.stages.map((stage, index) => <WorkflowStageRow key={stage.id} stage={stage} index={index} />)}
+              {workflow.stages.map((stage, index) => <WorkflowStageRow key={stage.id} stage={stage} index={index} projectId={project.id} />)}
             </div>
           </GlassCard>
 
@@ -164,13 +171,13 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
           <GlassCard className="p-5">
             <Badge tone="blue">Quick Actions</Badge>
             <div className="mt-4 grid gap-3">
-              {workflow.nextAction.route && <QuickAction href={workflow.nextAction.route} title={workflow.nextAction.label} icon={<Sparkles className="h-4 w-4" />} />}
-              <QuickAction href="/tools/contract-review" title="Run Contract Review" icon={<FileText className="h-4 w-4" />} />
-              <QuickAction href="/tools/boq-review" title="Run BOQ Review" icon={<BarChart3 className="h-4 w-4" />} />
-              <QuickAction href="/tools/risk-assessment" title="Run Risk Assessment" icon={<ShieldAlert className="h-4 w-4" />} />
-              <QuickAction href="/tools/planning-review" title="Run Planning Review" icon={<CalendarDays className="h-4 w-4" />} />
-              <QuickAction href="/tools/site-report-review" title="Run Site Report Review" icon={<ClipboardList className="h-4 w-4" />} />
-              <QuickAction href="/tools/executive-summary" title="Generate Executive Summary" icon={<FileText className="h-4 w-4" />} />
+              {workflow.nextAction.route && <QuickAction href={withProjectContext(workflow.nextAction.route, project.id)} title={workflow.nextAction.label} icon={<Sparkles className="h-4 w-4" />} />}
+              <QuickAction href={withProjectContext("/tools/contract-review", project.id)} title="Run Contract Review" icon={<FileText className="h-4 w-4" />} />
+              <QuickAction href={withProjectContext("/tools/boq-review", project.id)} title="Run BOQ Review" icon={<BarChart3 className="h-4 w-4" />} />
+              <QuickAction href={withProjectContext("/tools/risk-assessment", project.id)} title="Run Risk Assessment" icon={<ShieldAlert className="h-4 w-4" />} />
+              <QuickAction href={withProjectContext("/tools/planning-review", project.id)} title="Run Planning Review" icon={<CalendarDays className="h-4 w-4" />} />
+              <QuickAction href={withProjectContext("/tools/site-report-review", project.id)} title="Run Site Report Review" icon={<ClipboardList className="h-4 w-4" />} />
+              <QuickAction href={withProjectContext("/tools/executive-summary", project.id)} title="Generate Executive Summary" icon={<FileText className="h-4 w-4" />} />
               <QuickAction href="/history" title="Open history" icon={<Clock3 className="h-4 w-4" />} />
             </div>
           </GlassCard>
@@ -196,7 +203,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
   </LocalizedContent>);
 }
 
-function WorkflowStageRow({ stage, index }: { stage: AnalysisWorkflowStage; index: number }) {
+function WorkflowStageRow({ stage, index, projectId }: { stage: AnalysisWorkflowStage; index: number; projectId: string }) {
   const { locale } = useI18n();
   return (<LocalizedContent locale={locale}>
     <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-4 lg:grid-cols-[48px_minmax(0,1fr)_160px] lg:items-center">
@@ -213,7 +220,7 @@ function WorkflowStageRow({ stage, index }: { stage: AnalysisWorkflowStage; inde
       </div>
       <div className="flex lg:justify-end">
         {stage.route && !stage.isLocked ? (
-          <Link href={stage.route} className="inline-flex rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-2 text-sm font-black text-white transition hover:border-[#D4AF37]/28">
+          <Link href={withProjectContext(stage.route, projectId)} className="inline-flex rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-2 text-sm font-black text-white transition hover:border-[#D4AF37]/28">
             {stage.isCompleted ? "Open" : "Continue"}
           </Link>
         ) : (
@@ -250,7 +257,7 @@ function Info({ label, value }: { label: string; value: string }) {
 function AnalysisCard({ analysis, projectId }: { analysis: ProjectIntelligenceAnalysis; projectId: string }) {
   const { locale } = useI18n();
   const active = analysis.status === "completed" || analysis.status === "pending";
-  const href = analysis.href || `/projects/${encodeURIComponent(projectId)}/intelligence`;
+  const href = analysis.href ? withProjectContext(analysis.href, projectId) : `/projects/${encodeURIComponent(projectId)}/intelligence`;
   return (<LocalizedContent locale={locale}>
     <GlassCard className="p-4">
       <div className="flex items-start justify-between gap-3">

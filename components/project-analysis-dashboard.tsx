@@ -10,11 +10,13 @@ import { getProjectAnalysisState } from "@/lib/project-analysis-engine";
 import { createProjectAnalysisUiModel, filterAnalysisHistory, type AnalysisHistorySort } from "@/lib/project-analysis-view-model";
 import { getProjectAnalysisRegistryEntry } from "@/lib/project-analysis-registry";
 import { createAnalysisExportModel, createProjectIntelligenceExportModel } from "@/lib/project-report-export";
+import { createProjectIntelligenceWorkflowSnapshot } from "@/lib/project-intelligence-workflow";
 import { listProjectAnalysesAsync } from "@/lib/project-analysis-storage";
+import type { Document, Project } from "@/lib/models";
 import type { ProjectAnalysisProjectState, ProjectAnalysisRecord, ProjectAnalysisToolType } from "@/types/project-analysis";
 import { defaultReportExportOptions, type ReportExportFormat, type ReportExportOptions } from "@/types/report-export";
 
-export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
+export function ProjectAnalysisDashboard({ project, documents }: { project: Project; documents: readonly Document[] }) {
   const { locale, translate } = useI18n();
   const { session } = useAuth();
   const [query, setQuery] = useState("");
@@ -22,6 +24,7 @@ export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
   const [sort, setSort] = useState<AnalysisHistorySort>("newest");
   const [exportTarget, setExportTarget] = useState<ProjectAnalysisRecord | "project" | null>(null);
   const [revision, setRevision] = useState(0);
+  const projectId = project.id;
   const ownerId = session?.user.id;
   useEffect(() => {
     let active = true;
@@ -35,6 +38,7 @@ export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
     return getProjectAnalysisState(projectId, ownerId);
   }, [ownerId, projectId, revision]);
   const model = useMemo(() => createProjectAnalysisUiModel(state), [state]);
+  const workflowSnapshot = useMemo(() => createProjectIntelligenceWorkflowSnapshot(project, documents, state), [documents, project, state]);
   const history = useMemo(() => filterAnalysisHistory(state.history, { query, toolType, sort }), [state.history, query, toolType, sort]);
   const formatDate = (value: string) => new Intl.DateTimeFormat(locale === "ar" ? "ar-MA" : locale === "fr" ? "fr-FR" : "en-GB", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
   const nextActionHref = model.nextAction && model.unfinished
@@ -56,6 +60,44 @@ export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
         </div>
       </div>
 
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <Card className="p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div><h3 className="font-semibold text-ds-token-text">{translate("Project Context")}</h3><p className="mt-1 text-sm text-ds-token-muted">{translate("Persisted project information used by Project Intelligence.")}</p></div>
+            <Badge tone="blue">{workflowSnapshot.context.status || translate("Unavailable")}</Badge>
+          </div>
+          <dl className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <ContextItem label="Project name" value={workflowSnapshot.context.name} />
+            <ContextItem label="Project type" value={workflowSnapshot.context.type} />
+            <ContextItem label="Location" value={workflowSnapshot.context.location} />
+            <ContextItem label="Organization" value={workflowSnapshot.context.organizationName} />
+            <ContextItem label="Client / owner" value={workflowSnapshot.context.client} />
+            <ContextItem label="Contractor" value={workflowSnapshot.context.contractor} />
+            <ContextItem label="Current stage" value={workflowSnapshot.context.phase || workflowSnapshot.context.status} />
+            <ContextItem label="Start date" value={workflowSnapshot.context.startDate} />
+            <ContextItem label="End date" value={workflowSnapshot.context.endDate} />
+            <ContextItem label="Project progress" value={typeof workflowSnapshot.context.progress === "number" ? `${workflowSnapshot.context.progress}%` : undefined} />
+          </dl>
+          {workflowSnapshot.context.description ? <p className="mt-4 rounded-ds-sm border border-ds-token-border bg-black/15 p-3 text-sm leading-6 text-ds-token-muted">{workflowSnapshot.context.description}</p> : null}
+        </Card>
+
+        <Card className="p-5">
+          <Badge tone={workflowSnapshot.nextAction.type === "complete" ? "success" : "gold"}>{translate("Next Best Action")}</Badge>
+          <h3 className="mt-4 text-lg font-semibold text-ds-token-text">{translate(workflowSnapshot.nextAction.label)}</h3>
+          <p className="mt-2 text-sm leading-6 text-ds-token-muted">{translate(workflowSnapshot.nextAction.reason)}</p>
+          {workflowSnapshot.nextAction.route ? <Link href={workflowSnapshot.nextAction.route} className="mt-5 inline-flex"><Button>{translate(workflowSnapshot.nextAction.label)}</Button></Link> : null}
+        </Card>
+      </div>
+
+      <Card className="p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div><h3 className="font-semibold text-ds-token-text">{translate("Project Evidence")}</h3><p className="mt-1 text-sm text-ds-token-muted">{translate("Documents and persisted analyses currently linked to this project.")}</p></div>
+          <Badge tone={workflowSnapshot.missingEvidence.length ? "warning" : "success"}>{workflowSnapshot.evidence.length} {translate("evidence items")}</Badge>
+        </div>
+        {workflowSnapshot.evidence.length ? <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">{workflowSnapshot.evidence.map((item) => <article key={`${item.source}-${item.id}`} className="rounded-ds-md border border-ds-token-border bg-black/15 p-4"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="truncate font-medium text-ds-token-text">{item.name}</p><p className="mt-1 text-xs capitalize text-ds-token-muted">{translate(item.kind.replace(/_/g, " "))}</p></div><Badge tone={item.availability === "available" ? "success" : "warning"}>{translate(item.availability === "available" ? "Available" : "Metadata only")}</Badge></div><p className="mt-3 text-xs text-ds-token-muted">{item.version ? `${translate("Version")} ${item.version}` : translate(item.status || "Available")}</p></article>)}</div> : <EmptyState title={translate("No project evidence yet")} description={translate("Add a contract, BOQ, planning information, or site report to begin evidence-backed analysis.")} />}
+        {workflowSnapshot.missingEvidence.length ? <div className="mt-5 rounded-ds-md border border-ds-token-warning/25 bg-ds-token-warning/5 p-4"><p className="font-medium text-ds-token-text">{translate("Missing evidence")}</p><p className="mt-2 text-sm text-ds-token-muted">{workflowSnapshot.missingEvidence.map((kind) => translate(kind.replace(/_/g, " "))).join(", ")}</p><p className="mt-2 text-xs leading-5 text-ds-token-muted">{translate("Missing evidence limits readiness and the confidence of later project decisions.")}</p></div> : null}
+      </Card>
+
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         <SummaryCard label="Latest Analysis" value={model.latestAnalysis ? getProjectAnalysisRegistryEntry(model.latestAnalysis.toolType)?.title || model.latestAnalysis.toolType : translate("Unavailable")} icon={<FileClock className="h-4 w-4" />} />
         <SummaryCard label="Current Stage" value={model.currentStage?.title || translate("Complete")} icon={<Clock3 className="h-4 w-4" />} />
@@ -72,6 +114,13 @@ export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
         <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           {state.readiness.metrics.map((metric) => <div key={metric.category} className="rounded-ds-md border border-ds-token-border bg-black/15 p-4"><div className="flex items-center justify-between gap-2"><p className="text-sm font-medium capitalize text-ds-token-text">{translate(metric.category)}</p><span className="text-sm font-semibold text-ds-token-text">{typeof metric.score === "number" ? `${metric.score}%` : translate("Unavailable")}</span></div><ProgressBar value={metric.score || 0} /><p className="mt-2 text-xs text-ds-token-muted">{metric.evidence.length ? metric.evidence.map((type) => translate(getProjectAnalysisRegistryEntry(type)?.title || type)).join(", ") : translate("No evidence available")}</p></div>)}
         </div>
+      </Card>
+
+      <Card className="p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3"><div><h3 className="font-semibold text-ds-token-text">{translate("Executive Summary Readiness")}</h3><p className="mt-1 text-sm text-ds-token-muted">{translate("Summary confidence reflects only completed persisted analyses.")}</p></div><Badge tone={workflowSnapshot.executiveSummary.evidenceBacked ? "success" : "warning"}>{workflowSnapshot.executiveSummary.completeness}%</Badge></div>
+        <ProgressBar value={workflowSnapshot.executiveSummary.completeness} />
+        <p className="mt-3 text-sm text-ds-token-muted">{workflowSnapshot.executiveSummary.evidenceBacked ? translate("Ready for an evidence-backed Executive Summary.") : workflowSnapshot.executiveSummary.canGeneratePartial ? translate("A partial summary is available, but missing analyses will be reported as coverage gaps.") : translate("Complete at least one persisted analysis before generating a project summary.")}</p>
+        {workflowSnapshot.executiveSummary.missingAnalyses.length ? <p className="mt-2 text-xs text-ds-token-muted">{translate("Missing analyses")}: {workflowSnapshot.executiveSummary.missingAnalyses.map((type) => translate(getProjectAnalysisRegistryEntry(type)?.title || type)).join(", ")}</p> : null}
       </Card>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
@@ -99,6 +148,11 @@ export function ProjectAnalysisDashboard({ projectId }: { projectId: string }) {
       {exportTarget ? <ReportExportDialog target={exportTarget} state={state} token={session?.access_token} generatedBy={session?.user.email} initialLanguage={locale === "ar" || locale === "fr" ? locale : "en"} onClose={() => setExportTarget(null)} /> : null}
     </section>
   );
+}
+
+function ContextItem({ label, value }: { label: string; value?: string }) {
+  const { translate } = useI18n();
+  return <div className="rounded-ds-sm border border-ds-token-border bg-black/15 p-3"><dt className="text-xs text-ds-token-muted">{translate(label)}</dt><dd className="mt-1 truncate text-sm font-medium text-ds-token-text">{value || translate("Unavailable")}</dd></div>;
 }
 
 function SummaryCard({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {

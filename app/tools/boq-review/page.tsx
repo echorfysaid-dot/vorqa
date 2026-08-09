@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { AlertTriangle, Calculator, CheckCircle2, FileSpreadsheet, Loader2, UploadCloud } from "lucide-react";
 import { Alert, Badge, Button, EmptyState, GlassCard, PageHeader, ProgressBar, Textarea } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
+import { useSearchParams } from "next/navigation";
 
 type BoqIssue = Readonly<{
   code: string;
@@ -83,6 +84,9 @@ function list(values: readonly string[] | undefined, fallback: string) {
 
 export default function BoqReviewPage() {
   const { locale } = useI18n();
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("projectId") || "PRJ-1048";
+  const sessionId = searchParams.get("sessionId") || undefined;
   const [file, setFile] = useState<File | null>(null);
   const [boqText, setBoqText] = useState("");
   const [notes, setNotes] = useState("");
@@ -135,7 +139,8 @@ export default function BoqReviewPage() {
           mode: "vora_intelligence",
           taskIntent: "cost_review",
           provider: "mock",
-          projectId: "PRJ-1048",
+          projectId,
+          sessionId,
           userRequest: notes || "Review this BOQ structure and identify possible issues.",
           boqDocument: {
             name: fallbackName,

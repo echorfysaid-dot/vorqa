@@ -3,13 +3,15 @@
 import { useI18n } from "@/components/i18n-provider";
 import { LocalizedContent } from "@/components/localized-content";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BarChart3, CheckCircle2, FileText, Gauge, Loader2, Sparkles, TriangleAlert } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Alert, Badge, Button, EmptyState, GlassCard, PageHeader, ProgressBar, Textarea } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
 import { analysisPhaseLabel, getAnalysisErrorMessage, printCurrentReport, type AnalysisPhase } from "@/lib/analysis-client";
 import { createProjectIntelligenceSession, type ProjectHealthStatus } from "@/lib/project-intelligence";
+import { useSearchParams } from "next/navigation";
+import { useProjectRepository } from "@/lib/repositories/projectHooks";
 
 type Analysis = Readonly<{
   type: string;
@@ -77,13 +79,21 @@ function list(items: readonly string[] | undefined, fallback: string) {
 
 export default function ExecutiveSummaryPage() {
   const { locale } = useI18n();
-  const [projectId, setProjectId] = useState("PRJ-1048");
+  const searchParams = useSearchParams();
+  const requestedProjectId = searchParams.get("projectId") || "PRJ-1048";
+  const sessionId = searchParams.get("sessionId") || undefined;
+  const [projectId, setProjectId] = useState(requestedProjectId);
   const [notes, setNotes] = useState("");
   const [state, setState] = useState<AnalysisPhase>("idle");
   const [error, setError] = useState("");
   const [result, setResult] = useState<ExecutiveApiResponse | null>(null);
 
-  const selectedProject = projects.find((project) => project.id === projectId) || projects[0];
+  const persistedProject = useProjectRepository(projectId).data;
+  const selectedProject = persistedProject || projects.find((project) => project.id === projectId) || projects[0];
+
+  useEffect(() => {
+    setProjectId(requestedProjectId);
+  }, [requestedProjectId]);
   const session = useMemo(() => createProjectIntelligenceSession({
     projectId: selectedProject.id,
     projectTitle: selectedProject.title,
@@ -106,6 +116,7 @@ export default function ExecutiveSummaryPage() {
           taskIntent: "executive_summary",
           provider: "mock",
           projectId: selectedProject.id,
+          sessionId,
           userRequest: notes || "Create an executive summary from available Construction Intelligence analyses.",
           executiveSummaryRequest: {
             projectId: selectedProject.id,

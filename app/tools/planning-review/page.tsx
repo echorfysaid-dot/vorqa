@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { CalendarDays, CheckCircle2, FileClock, Loader2, UploadCloud } from "lucide-react";
 import { Alert, Badge, Button, EmptyState, GlassCard, PageHeader, ProgressBar, Textarea } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
+import { useSearchParams } from "next/navigation";
 
 type PlanningActivity = Readonly<{
   rowNumber: number;
@@ -86,6 +87,9 @@ function list(items: readonly string[] | undefined, fallback: string) {
 
 export default function PlanningReviewPage() {
   const { locale } = useI18n();
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("projectId") || "PRJ-1048";
+  const sessionId = searchParams.get("sessionId") || undefined;
   const [file, setFile] = useState<File | null>(null);
   const [planningText, setPlanningText] = useState("");
   const [notes, setNotes] = useState("");
@@ -135,7 +139,8 @@ export default function PlanningReviewPage() {
           mode: "vora_intelligence",
           taskIntent: "planning_review",
           provider: "mock",
-          projectId: "PRJ-1048",
+          projectId,
+          sessionId,
           userRequest: notes || "Review this project planning information.",
           planningNotes: planningText,
           planningDocument: file
