@@ -251,7 +251,807 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     accountType: onboarding.profile.accountType,
     primaryRole: onboarding.profile.primaryRole,
     organizationType: onboarding.profile.organizationType
-  } : null, [onboarding.profile?.accountType, onboarding.profile?.primaryRole, onboarding.prof÷z¶‰žËkºwµçeÑ”½lÀ¸ÀÍtÀ´ÌÑÉ…¹Í¥Ñ¥½¸¡½Ù•Èé‰½É‘•Èµ‘ÌµÑ½­•¸µ½±¼ÈÀ¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÔÕtˆø(€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰É¥ ´äÜ´äÁ±…”µ¥Ñ•µÌµ•¹Ñ•ÈÉ½Õ¹‘•µ‘ÌµÍ´‰œµ‘ÌµÑ½­•¸µ½±¼ÄÈÑ•áÐµ‘ÌµÑ½­•¸µ½±ˆø(€€€€€€€€€€€€€€€€ñ%½¸±…ÍÍ9…µ”ô‰ ´ÐÜ´ÐÑÉ…¹Í¥Ñ¥½¸É½ÕÀµ¡½Ù•ÈèµÉ½Ñ…Ñ”´Øˆ€¼ø(€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰™½¹Ðµ‰±…¬ˆùíÑÉ…¹Í±…Ñ”¡…Ñ¥½¸¹Ñ¥Ñ±”¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€ð½1¥¹¬ø(€€€€€€€€€€¤ì(€€€€€€€ô¥ô(€€€€€€ð½‘¥Øø(€€€€ð½±½…Ñ¥¹A…¹•°ø(€€ð½ÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø¤ì)ô()™Õ¹Ñ¥½¸½µµ…¹‘A…±•ÑÑ”¡ì½¹±½Í”°½¹=Á•¹9½Ñ¥™¥…Ñ¥½¹Ìôèì½¹±½Í”è€ ¤€ôøÙ½¥ì½¹=Á•¹9½Ñ¥™¥…Ñ¥½¹Ìè€ ¤€ôøÙ½¥ô¤ì(€½¹ÍÐÉ½ÕÑ•È€ôÕÍ•I½ÕÑ•È ¤ì(€½¹ÍÐìÑÉ…¹Í±…Ñ”ô€ôÕÍ•$Äá¸ ¤ì(€½¹ÍÐmÅÕ•Éä°Í•ÑEÕ•Éåt€ôÕÍ•MÑ…Ñ” ˆˆ¤ì(€½¹ÍÐmÍ•±•Ñ•‘%¹‘•à°Í•ÑM•±•Ñ•‘%¹‘•át€ôÕÍ•MÑ…Ñ” À¤ì(€½¹ÍÐ¹½Éµ…±¥é•‘EÕ•Éä€ôÅÕ•Éä¹Ñ½1½Ý•É…Í” ¤ì(€½¹ÍÐ™¥±Ñ•É•‘M•…É €ô±½‰…±M•…É¡%Ñ•µÌ¹™¥±Ñ•È ¡¥Ñ•´¤€ôø€‘í¥Ñ•´¹Ñ¥Ñ±•ô€‘í¥Ñ•´¹ÑåÁ•ô€‘í¥Ñ•´¹½¹Ñ•áÑô€‘í¥Ñ•´¹ÍÑ…ÑÕÍõ€¹Ñ½1½Ý•É…Í” ¤¹¥¹±Õ‘•Ì¡¹½Éµ…±¥é•‘EÕ•Éä¤¤ì(€½¹ÍÐ™¥±Ñ•É•‘½µµ…¹‘Ì€ô½µµ…¹‘%Ñ•µÌ¹™¥±Ñ•È ¡¥Ñ•´¤€ôø€‘í¥Ñ•´¹Ñ¥Ñ±•ô€‘í¥Ñ•´¹…Ñ•½Éåõ€¹Ñ½1½Ý•É…Í” ¤¹¥¹±Õ‘•Ì¡¹½Éµ…±¥é•‘EÕ•Éä¤¤ì(€½¹ÍÐÁ…±•ÑÑ•%Ñ•µÌ€ôl(€€€€¸¸¹™¥±Ñ•É•‘½µµ…¹‘Ì¹µ…À ¡¥Ñ•´¤€ôø€¡ì€¸¸¹¥Ñ•´°­¥¹è€‰½µµ…¹ˆ…Ì½¹ÍÐ°ÑåÁ”è¥Ñ•´¹…Ñ•½Éä°½¹Ñ•áÐè€‰½µµ…¹Á…±•ÑÑ”ˆ°ÍÑ…ÑÕÌè€‰I•…‘äˆô¤¤°(€€€€¸¸¹™¥±Ñ•É•‘M•…É ¹µ…À ¡¥Ñ•´¤€ôø€¡ì€¸¸¹¥Ñ•´°­¥¹è€‰Í•…É ˆ…Ì½¹ÍÐô¤¤(€tì(€½¹ÍÐÉ••¹Ñ½µµ…¹‘Ì€ô½µµ…¹‘%Ñ•µÌ¹Í±¥” À°€Ì¤ì(€½¹ÍÐÍÕ•ÍÑ•‘½µµ…¹‘Ì€ô½µµ…¹‘%Ñ•µÌ¹Í±¥” Ì°€Ü¤ì((€ÕÍ•™™•Ð  ¤€ôøì(€€€Í•ÑM•±•Ñ•‘%¹‘•à À¤ì(€ô°mÅÕ•Éåt¤ì((€™Õ¹Ñ¥½¸½Á•¹M•±•Ñ• ¤ì(€€€½¹ÍÐÍ•±•Ñ•€ôÁ…±•ÑÑ•%Ñ•µÍmÍ•±•Ñ•‘%¹‘•átì(€€€¥˜€ …Í•±•Ñ•¤É•ÑÕÉ¸ì(€€€¥˜€¡Í•±•Ñ•¹Ñ¥Ñ±”€ôôô€‰Y¥•Ü¹½Ñ¥™¥…Ñ¥½¹Ìˆ¤ì(€€€€€½¹=Á•¹9½Ñ¥™¥…Ñ¥½¹Ì ¤ì(€€€€€½¹±½Í” ¤ì(€€€€€É•ÑÕÉ¸ì(€€€ô(€€€É½ÕÑ•È¹ÁÕÍ ¡Í•±•Ñ•¹¡É•˜¤ì(€€€½¹±½Í” ¤ì(€ô((€É•ÑÕÉ¸€ ñÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø(€€€€ñµ½Ñ¥½¸¹‘¥Ø±…ÍÍ9…µ”ô‰™¥á•¥¹Í•Ð´ÀèµlÄÈÁt‰œµ‰±…¬¼ÜÈÀ´Ì‰…­‘É½Àµ‰±ÕÈµá°Í´éÀ´Øˆ¥¹¥Ñ¥…°õíì½Á…¥Ñäè€Àõô…¹¥µ…Ñ”õíì½Á…¥Ñäè€Äõô•á¥Ðõíì½Á…¥Ñäè€Àõôø(€€€€€€ñµ½Ñ¥½¸¹‘¥Ø(€€€€€€€É½±”ô‰‘¥…±½œˆ(€€€€€€€…É¥„µµ½‘…°ô‰ÑÉÕ”ˆ(€€€€€€€…É¥„µ±…‰•°õíÑÉ…¹Í±…Ñ” ‰±½‰…°Í•…É …¹½µµ…¹Á…±•ÑÑ”ˆ¥ô(€€€€€€€…É¥„µ‘•ÍÉ¥‰•‘‰äô‰½µµ…¹µÁ…±•ÑÑ”µ¡•±Àˆ(€€€€€€€¥¹¥Ñ¥…°õíì½Á…¥Ñäè€À°äè€ÈÀ°Í…±”è€À¸äàõô(€€€€€€€…¹¥µ…Ñ”õíì½Á…¥Ñäè€Ä°äè€À°Í…±”è€Äõô(€€€€€€€•á¥Ðõíì½Á…¥Ñäè€À°äè€Äà°Í…±”è€À¸äàõô(€€€€€€€±…ÍÍ9…µ”ô‰µàµ…ÕÑ¼™±•à µmµ¥¸ ÜØÁÁà±…±Œ ÄÀÁÙ ´Ä¸ÕÉ•´¤¥tµ…àµÜ´Ñá°™±•àµ½°½Ù•É™±½Üµ¡¥‘‘•¸É½Õ¹‘•µ‘Ì´Éá°‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµ‘ÌµÑ½­•¸µÍ•½¹‘…Éä¼äàÍ¡…‘½Üµ‘Ìµ±œÉ¥¹œ´ÄÉ¥¹œµÝ¡¥Ñ”½lÀ¸ÀÈÕt‰…­‘É½Àµ‰±ÕÈµá°Í´é µmµ¥¸ ÜØÁÁà±…±Œ ÄÀÁÙ ´ÍÉ•´¤¥tˆ(€€€€€€€½¹-•å½Ý¸õì¡•Ù•¹Ð¤€ôøì(€€€€€€€€€¥˜€¡•Ù•¹Ð¹­•ä€ôôô€‰Í…Á”ˆ¤½¹±½Í” ¤ì(€€€€€€€€€¥˜€¡•Ù•¹Ð¹­•ä€ôôô€‰ÉÉ½Ý½Ý¸ˆ¤ì(€€€€€€€€€€€•Ù•¹Ð¹ÁÉ•Ù•¹Ñ•™…Õ±Ð ¤ì(€€€€€€€€€€€Í•ÑM•±•Ñ•‘%¹‘•à ¡Ù…±Õ”¤€ôø5…Ñ ¹µ¥¸¡Ù…±Õ”€¬€Ä°5…Ñ ¹µ…à À°Á…±•ÑÑ•%Ñ•µÌ¹±•¹Ñ €´€Ä¤¤¤ì(€€€€€€€€€ô(€€€€€€€€€¥˜€¡•Ù•¹Ð¹­•ä€ôôô€‰ÉÉ½ÝUÀˆ¤ì(€€€€€€€€€€€•Ù•¹Ð¹ÁÉ•Ù•¹Ñ•™…Õ±Ð ¤ì(€€€€€€€€€€€Í•ÑM•±•Ñ•‘%¹‘•à ¡Ù…±Õ”¤€ôø5…Ñ ¹µ…à¡Ù…±Õ”€´€Ä°€À¤¤ì(€€€€€€€€€ô(€€€€€€€€€¥˜€¡•Ù•¹Ð¹­•ä€ôôô€‰¹Ñ•Èˆ¤ì(€€€€€€€€€€€•Ù•¹Ð¹ÁÉ•Ù•¹Ñ•™…Õ±Ð ¤ì(€€€€€€€€€€€½Á•¹M•±•Ñ• ¤ì(€€€€€€€€€ô(€€€€€€€õô(€€€€€€ø(€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰‰½É‘•Èµˆ‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀÀ´Ðˆø(€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´Ìˆø(€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰™±•àµ¥¸µÜ´À™±•à´Ä¥Ñ•µÌµ•¹Ñ•È…À´ÌÉ½Õ¹‘•µ‘Ìµµ‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ½±¼ÈÈ‰œµ‰±…¬¼ÈàÁà´ÐÁä´ÌÍ¡…‘½Üµ¥¹¹•ÈÍ¡…‘½Üµ‰±…¬¼ÈÀˆø(€€€€€€€€€€€€€€ñM•…É ±…ÍÍ9…µ”ô‰ ´ÔÜ´ÔÍ¡É¥¹¬´ÀÑ•áÐµ½±ˆ€¼ø(€€€€€€€€€€€€€€ñ¥¹ÁÕÐ(€€€€€€€€€€€€€€€…ÕÑ½½ÕÌ(€€€€€€€€€€€€€€€Ù…±Õ”õíÅÕ•Éåô(€€€€€€€€€€€€€€€½¹¡…¹”õì¡•Ù•¹Ð¤€ôøÍ•ÑEÕ•Éä¡•Ù•¹Ð¹Ñ…É•Ð¹Ù…±Õ”¥ô(€€€€€€€€€€€€€€€±…ÍÍ9…µ”ô‰Üµ™Õ±°‰œµÑÉ…¹ÍÁ…É•¹ÐÑ•áÐµ‰…Í”™½¹Ðµ‰½±Ñ•áÐµ‘ÌµÑ•áÐ½ÕÑ±¥¹”µ¹½¹”Á±…•¡½±‘•ÈéÑ•áÐµ‘ÌµÑ•áÐ¼ÌØˆ(€€€€€€€€€€€€€€€Á±…•¡½±‘•ÈõíÑÉ…¹Í±…Ñ” ‰M•…É ÁÉ½©•ÑÌ°½É…¹¥é…Ñ¥½¹Ì°Á•½Á±”°É•Á½ÉÑÌ°Ñ½½±Ì¸¸¸ˆ¥ô(€€€€€€€€€€€€€€€…É¥„µ±…‰•°õíÑÉ…¹Í±…Ñ” ‰M•…É Y½ÉÅ„Ý½É­ÍÁ…”ˆ¥ô(€€€€€€€€€€€€€€€…É¥„µ½¹ÑÉ½±Ìô‰½µµ…¹µÁ…±•ÑÑ”µÉ•ÍÕ±ÑÌˆ(€€€€€€€€€€€€€€€…É¥„µ…Ñ¥Ù•‘•Í•¹‘…¹ÐõíÁ…±•ÑÑ•%Ñ•µÍmÍ•±•Ñ•‘%¹‘•át€ü½µµ…¹µÁ…±•ÑÑ”µÉ•ÍÕ±Ð´‘íÍ•±•Ñ•‘%¹‘•áõ€€èÕ¹‘•™¥¹•‘ô(€€€€€€€€€€€€€€¼ø(€€€€€€€€€€€€€€ñ-•å‰½…É‘!¥¹Ð­•åÌõíl‰ÍŒ‰uô±…ÍÍ9…µ”ô‰¡¥‘‘•¸‰œµÝ¡¥Ñ”½lÀ¸ÀÐÕtÍ´é¥¹±¥¹”µ™±•àˆ€¼ø(€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€ñ‰ÕÑÑ½¸ÑåÁ”ô‰‰ÕÑÑ½¸ˆ½¹±¥¬õí½¹±½Í•ô±…ÍÍ9…µ”ô‰‘Ìµ™½ÕÍ…‰±”É¥ ´ÄÈÜ´ÄÈÍ¡É¥¹¬´ÀÁ±…”µ¥Ñ•µÌµ•¹Ñ•ÈÉ½Õ¹‘•´Éá°‰½É‘•È‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÔÕtÑ•áÐµ‘ÌµÑ•áÐ¼ÔàÑÉ…¹Í¥Ñ¥½¸¡½Ù•ÈèµÑÉ…¹Í±…Ñ”µä´À¸Ô¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀàÕt¡½Ù•ÈéÑ•áÐµ‘ÌµÑ•áÐˆ…É¥„µ±…‰•°õíÑÉ…¹Í±…Ñ” ‰±½Í”½µµ…¹Á…±•ÑÑ”ˆ¥ôø(€€€€€€€€€€€€€€ñ¡•ÙÉ½¹½Ý¸±…ÍÍ9…µ”ô‰ ´ÔÜ´ÔÉ½Ñ…Ñ”´ÄàÀˆ€¼ø(€€€€€€€€€€€€ð½‰ÕÑÑ½¸ø(€€€€€€€€€€ð½‘¥Øø(€€€€€€€€ð½‘¥Øø((€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰É¥µ¥¸µ ´À™±•à´Ä…À´À±œéÉ¥µ½±ÌµlÈØÁÁá}µ¥¹µ…à À°Å™È¥tˆø(€€€€€€€€€€ñ…Í¥‘”±…ÍÍ9…µ”ô‰¡¥‘‘•¸‰½É‘•Èµ”‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÄátÀ´Ð±œé‰±½¬ˆø(€€€€€€€€€€€€ñA…±•ÑÑ•M•Ñ¥½¸Ñ¥Ñ±”õíÑÉ…¹Í±…Ñ” ‰I••¹Ð½µµ…¹‘Ìˆ¥ô½µµ…¹‘ÌõíÉ••¹Ñ½µµ…¹‘Íô€¼ø(€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰µÐ´Ôˆø(€€€€€€€€€€€€€€ñA…±•ÑÑ•M•Ñ¥½¸Ñ¥Ñ±”õíÑÉ…¹Í±…Ñ” ‰MÕ•ÍÑ•½µµ…¹‘Ìˆ¥ô½µµ…¹‘ÌõíÍÕ•ÍÑ•‘½µµ…¹‘Íô€¼ø(€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€ð½…Í¥‘”ø((€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰µ¥¸µ ´À½Ù•É™±½Üµäµ…ÕÑ¼À´Ðˆø(€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰µˆ´Ì™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ‰•ÑÝ••¸…À´Ìˆø(€€€€€€€€€€€€€€ñ‘¥Ø¥ô‰½µµ…¹µÁ…±•ÑÑ”µ¡•±Àˆø(€€€€€€€€€€€€€€€€ñ	…‘”Ñ½¹”ô‰½±ˆùíÑÉ…¹Í±…Ñ” ‰±½‰…°‘¥Í½Ù•Éäˆ¥ôð½	…‘”ø(€€€€€€€€€€€€€€€€ñÀ±…ÍÍ9…µ”ô‰µÐ´ÈÑ•áÐµÍ´Ñ•áÐµ‘ÌµÑ•áÐ¼ÔÐˆùíÁ…±•ÑÑ•%Ñ•µÌ¹±•¹Ñ¡ôíÑÉ…¹Í±…Ñ” ‰É•ÍÕ±ÑÌ…É½ÍÌY½ÉÅ„ˆ¥ôð½Àø(€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰¡¥‘‘•¸…À´ÈÑ•áÐµlÄÁÁát™½¹Ðµ‰±…¬Ñ•áÐµ‘ÌµÑ•áÐ¼ÌàÍ´é™±•àˆø(€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰¥¹±¥¹”µ™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÄÉ½Õ¹‘•µ±œ‰½É‘•È‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀÁà´ÈÁä´Äˆøñ-•å‰½…É‘!¥¹Ð­•åÌõíl‹ŠDˆ°€‹ŠL‰uô±…ÍÍ9…µ”ô‰‰½É‘•È´ÀÀ´Àˆ€¼øíÑÉ…¹Í±…Ñ” ‰9…Ù¥…Ñ”ˆ¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰¥¹±¥¹”µ™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÄÉ½Õ¹‘•µ±œ‰½É‘•È‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀÁà´ÈÁä´Äˆøñ-•å‰½…É‘!¥¹Ð­•åÌõíl‰¹Ñ•È‰uô±…ÍÍ9…µ”ô‰‰½É‘•È´ÀÀ´Àˆ€¼øíÑÉ…¹Í±…Ñ” ‰=Á•¸ˆ¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€ð½‘¥Øø((€€€€€€€€€€€íÁ…±•ÑÑ•%Ñ•µÌ¹±•¹Ñ €ü€ (€€€€€€€€€€€€€€ñ‘¥Ø¥ô‰½µµ…¹µÁ…±•ÑÑ”µÉ•ÍÕ±ÑÌˆÉ½±”ô‰±¥ÍÑ‰½àˆ…É¥„µ±…‰•°õíÑÉ…¹Í±…Ñ” ‰½µµ…¹Á…±•ÑÑ”É•ÍÕ±ÑÌˆ¥ô±…ÍÍ9…µ”ô‰É¥…À´Èˆø(€€€€€€€€€€€€€€€íÁ…±•ÑÑ•%Ñ•µÌ¹µ…À ¡¥Ñ•´°¥¹‘•à¤€ôøì(€€€€€€€€€€€€€€€€€½¹ÍÐ%½¸€ô¥Ñ•´¹¥½¸ì(€€€€€€€€€€€€€€€€€½¹ÍÐ…Ñ¥Ù”€ô¥¹‘•à€ôôôÍ•±•Ñ•‘%¹‘•àì(€€€€€€€€€€€€€€€€€É•ÑÕÉ¸€ (€€€€€€€€€€€€€€€€€€€€ñ1¥¹¬(€€€€€€€€€€€€€€€€€€€€€­•äõí€‘í¥Ñ•´¹­¥¹‘ô´‘í¥Ñ•´¹Ñ¥Ñ±•õô(€€€€€€€€€€€€€€€€€€€€€¥õí½µµ…¹µÁ…±•ÑÑ”µÉ•ÍÕ±Ð´‘í¥¹‘•áõô(€€€€€€€€€€€€€€€€€€€€€É½±”ô‰½ÁÑ¥½¸ˆ(€€€€€€€€€€€€€€€€€€€€€…É¥„µÍ•±•Ñ•õí…Ñ¥Ù•ô(€€€€€€€€€€€€€€€€€€€€€¡É•˜õí¥Ñ•´¹¡É•™ô(€€€€€€€€€€€€€€€€€€€€€½¹±¥¬õì¡•Ù•¹Ð¤€ôøì(€€€€€€€€€€€€€€€€€€€€€€€¥˜€¡¥Ñ•´¹Ñ¥Ñ±”€ôôô€‰Y¥•Ü¹½Ñ¥™¥…Ñ¥½¹Ìˆ¤ì(€€€€€€€€€€€€€€€€€€€€€€€€€•Ù•¹Ð¹ÁÉ•Ù•¹Ñ•™…Õ±Ð ¤ì(€€€€€€€€€€€€€€€€€€€€€€€€€½¹=Á•¹9½Ñ¥™¥…Ñ¥½¹Ì ¤ì(€€€€€€€€€€€€€€€€€€€€€€€ô(€€€€€€€€€€€€€€€€€€€€€€€½¹±½Í” ¤ì(€€€€€€€€€€€€€€€€€€€€€õô(€€€€€€€€€€€€€€€€€€€€€½¹5½ÕÍ•¹Ñ•Èõì ¤€ôøÍ•ÑM•±•Ñ•‘%¹‘•à¡¥¹‘•à¥ô(€€€€€€€€€€€€€€€€€€€€€±…ÍÍ9…µ”õíÉ½ÕÀ™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÉ½Õ¹‘•µ‘Ìµµ‰½É‘•ÈÀ´ÌÑ•áÐµÍÑ…ÉÐÍ¡…‘½ÜµÍ´ÑÉ…¹Í¥Ñ¥½¸€‘ì(€€€€€€€€€€€€€€€€€€€€€€€…Ñ¥Ù”€ü€‰‰½É‘•Èµ‘ÌµÑ½­•¸µ½±¼Ìà‰œµ‘ÌµÑ½­•¸µ½±¼ÄÈˆ€è€‰‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµÝ¡¥Ñ”½lÀ¸ÀÍt¡½Ù•Èé‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•ÈµÍÑÉ½¹œ¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÔÕtˆ(€€€€€€€€€€€€€€€€€€€€€õô(€€€€€€€€€€€€€€€€€€€€ø(€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”õíÉ¥ ´ÄÄÜ´ÄÄÍ¡É¥¹¬´ÀÁ±…”µ¥Ñ•µÌµ•¹Ñ•ÈÉ½Õ¹‘•´Éá°‰½É‘•ÈÑÉ…¹Í¥Ñ¥½¸€‘í…Ñ¥Ù”€ü€‰‰½É‘•Èµ½±¼Èà‰œµ½±¼ÄØÑ•áÐµ½±ˆ€è€‰‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÑtÑ•áÐµ½±‰õôø(€€€€€€€€€€€€€€€€€€€€€€€€ñ%½¸±…ÍÍ9…µ”ô‰ ´ÔÜ´ÔÑÉ…¹Í¥Ñ¥½¸É½ÕÀµ¡½Ù•ÈèµÉ½Ñ…Ñ”´Øˆ€¼ø(€€€€€€€€€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰µ¥¸µÜ´À™±•à´Äˆø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰‰±½¬ÑÉÕ¹…Ñ”™½¹Ðµ‰±…¬Ñ•áÐµÝ¡¥Ñ”ˆùíÑÉ…¹Í±…Ñ”¡¥Ñ•´¹Ñ¥Ñ±”¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰µÐ´Ä‰±½¬ÑÉÕ¹…Ñ”Ñ•áÐµáÌÑ•áÐµ‘ÌµÑ•áÐ¼ÐØˆùíÑÉ…¹Í±…Ñ”¡¥Ñ•´¹ÑåÁ”¥ôƒ
-ÜíÑÉ…¹Í±…Ñ”¡¥Ñ•´¹½¹Ñ•áÐ¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ñ	…‘”Ñ½¹”õí¥Ñ•´¹­¥¹€ôôô€‰½µµ…¹ˆ€ü€‰‰±Õ”ˆ€è€‰¹•ÕÑÉ…°‰ôùíÑÉ…¹Í±…Ñ”¡¥Ñ•´¹ÍÑ…ÑÕÌ¥ôð½	…‘”ø(€€€€€€€€€€€€€€€€€€€€ð½1¥¹¬ø(€€€€€€€€€€€€€€€€€€¤ì(€€€€€€€€€€€€€€€ô¥ô(€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€¤€è€ (€€€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰É¥µ¥¸µ ´àÀÁ±…”µ¥Ñ•µÌµ•¹Ñ•ÈÉ½Õ¹‘•µ‘Ìµá°‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµÝ¡¥Ñ”½lÀ¸ÀÍtÀ´àÑ•áÐµ•¹Ñ•Èˆø(€€€€€€€€€€€€€€€€ñ‘¥Øø(€€€€€€€€€€€€€€€€€€ñM•…É ±…ÍÍ9…µ”ô‰µàµ…ÕÑ¼ ´ÄÀÜ´ÄÀÑ•áÐµ½±ˆ€¼ø(€€€€€€€€€€€€€€€€€€ñ Ì±…ÍÍ9…µ”ô‰µÐ´ÐÑ•áÐµá°™½¹Ðµ‰±…¬Ñ•áÐµÝ¡¥Ñ”ˆùíÑÉ…¹Í±…Ñ” ‰9¼É•ÍÕ±ÑÌ™½Õ¹ˆ¥ôð½ Ìø(€€€€€€€€€€€€€€€€€€ñÀ±…ÍÍ9…µ”ô‰µÐ´ÈÑ•áÐµÍ´±•…‘¥¹œ´ØÑ•áÐµ‘ÌµÑ•áÐ¼ÔÐˆùíÑÉ…¹Í±…Ñ” ‰QÉäÍ•…É¡¥¹œ™½È„ÁÉ½©•Ð°•µÁ±½å•”°É•Á½ÉÐ°½É…¹¥é…Ñ¥½¸°½ÈY=IÑ½½°¸ˆ¥ôð½Àø(€€€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€¥ô(€€€€€€€€€€ð½‘¥Øø(€€€€€€€€ð½‘¥Øø(€€€€€€ð½µ½Ñ¥½¸¹‘¥Øø(€€€€ð½µ½Ñ¥½¸¹‘¥Øø(€€ð½ÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø¤ì)ô()™Õ¹Ñ¥½¸A…±•ÑÑ•M•Ñ¥½¸¡ìÑ¥Ñ±”°½µµ…¹‘ÌôèìÑ¥Ñ±”èÍÑÉ¥¹œì½µµ…¹‘ÌèÑåÁ•½˜½µµ…¹‘%Ñ•µÌô¤ì(€½¹ÍÐìÑÉ…¹Í±…Ñ”ô€ôÕÍ•$Äá¸ ¤ì(€É•ÑÕÉ¸€ ñÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø(€€€€ñ‘¥Øø(€€€€€€ñÀ±…ÍÍ9…µ”ô‰µˆ´ÈÑ•áÐµáÌ™½¹Ðµ‰±…¬ÕÁÁ•É…Í”ÑÉ…­¥¹œµlÀ¸ÄÑ•µtÑ•áÐµ‘ÌµÑ•áÐ¼ÐÈˆùíÑ¥Ñ±•ôð½Àø(€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰É¥…À´Èˆø(€€€€€€€í½µµ…¹‘Ì¹µ…À ¡½µµ…¹¤€ôøì(€€€€€€€€€½¹ÍÐ%½¸€ô½µµ…¹¹¥½¸ì(€€€€€€€€€É•ÑÕÉ¸€ (€€€€€€€€€€€€ñ1¥¹¬­•äõí½µµ…¹¹Ñ¥Ñ±•ô¡É•˜õí½µµ…¹¹¡É•™ô±…ÍÍ9…µ”ô‰É½ÕÀ™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÈÉ½Õ¹‘•µ‘Ìµµ‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµÝ¡¥Ñ”½lÀ¸ÀÍtÁà´ÌÁä´ÈÑ•áÐµÍ´™½¹Ðµ‰½±ÑÉ…¹Í¥Ñ¥½¸¡½Ù•Èé‰½É‘•Èµ‘ÌµÑ½­•¸µ½±¼ÈÀ¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÔÕtˆø(€€€€€€€€€€€€€€ñ%½¸±…ÍÍ9…µ”ô‰ ´ÐÜ´ÐÍ¡É¥¹¬´ÀÑ•áÐµ½±ÑÉ…¹Í¥Ñ¥½¸É½ÕÀµ¡½Ù•ÈèµÉ½Ñ…Ñ”´Øˆ€¼ø(€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰ÑÉÕ¹…Ñ”ˆùíÑÉ…¹Í±…Ñ”¡½µµ…¹¹Ñ¥Ñ±”¥ôð½ÍÁ…¸ø(€€€€€€€€€€€€ð½1¥¹¬ø(€€€€€€€€€€¤ì(€€€€€€€ô¥ô(€€€€€€ð½‘¥Øø(€€€€ð½‘¥Øø(€€ð½ÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø¤ì)ô()™Õ¹Ñ¥½¸9½Ñ¥™¥…Ñ¥½¹ÍA…¹•°¡ì(€É•…‘%‘Ì°(€½¹5…É­±±I•…°(€½¹Q½±•I•…)ôèì(€É•…‘%‘Ìè¹Õµ‰•Émtì(€½¹5…É­±±I•…è€ ¤€ôøÙ½¥ì(€½¹Q½±•I•…è€¡¥è¹Õµ‰•È¤€ôøÙ½¥ì)ô¤ì(€½¹ÍÐì‘¥Ñ¥½¹…ÉäèÐ°‘¥Èô€ôÕÍ•$Äá¸ ¤ì(€½¹ÍÐm™¥±Ñ•È°Í•Ñ¥±Ñ•Ét€ôÕÍ•MÑ…Ñ” ‰±°ˆ¤ì(€½¹ÍÐ¹½Ñ¥™¥…Ñ¥½¹Ì€ô‘•µ½9½Ñ¥™¥…Ñ¥½¹%Ñ•µÌ¹™¥±Ñ•È ¡¥Ñ•´¤€ôøì(€€€½¹ÍÐÕ¹É•…€ô¥Ñ•´¹Õ¹É•…€˜˜€…É•…‘%‘Ì¹¥¹±Õ‘•Ì¡¥Ñ•´¹¥¤ì(€€€¥˜€¡™¥±Ñ•È€ôôô€‰U¹É•…ˆ¤É•ÑÕÉ¸Õ¹É•…ì(€€€¥˜€¡™¥±Ñ•È€ôôô€‰!¥ ÁÉ¥½É¥Ñäˆ¤É•ÑÕÉ¸¥Ñ•´¹ÁÉ¥½É¥Ñä€ôôô€‰!¥ ˆì(€€€É•ÑÕÉ¸ÑÉÕ”ì(€ô¤ì(€½¹ÍÐÕ¹É•…‘½Õ¹Ð€ô‘•µ½9½Ñ¥™¥…Ñ¥½¹%Ñ•µÌ¹™¥±Ñ•È ¡¥Ñ•´¤€ôø¥Ñ•´¹Õ¹É•…€˜˜€…É•…‘%‘Ì¹¥¹±Õ‘•Ì¡¥Ñ•´¹¥¤¤¹±•¹Ñ ì((€É•ÑÕÉ¸€ ñÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø(€€€€ñµ½Ñ¥½¸¹‘¥Ø(€€€€€¥¹¥Ñ¥…°õíì½Á…¥Ñäè€À°äè€ÄÀ°Í…±”è€À¸äàõô(€€€€€…¹¥µ…Ñ”õíì½Á…¥Ñäè€Ä°äè€À°Í…±”è€Äõô(€€€€€•á¥Ðõíì½Á…¥Ñäè€À°äè€ÄÀ°Í…±”è€À¸äàõô(€€€€€±…ÍÍ9…µ”õí…‰Í½±ÕÑ”Ñ½À´ÄÈè´ÔÀÜµmµ¥¸ ÐÈÁÁà±…±Œ ÄÀÁÙÜ´Ä¸ÕÉ•´¤¥t½Ù•É™±½Üµ¡¥‘‘•¸É½Õ¹‘•µ‘Ìµá°‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµ‘ÌµÑ½­•¸µÍ•½¹‘…Éä¼äàÑ•áÐµ‘ÌµÑ½­•¸µÑ•áÐÍ¡…‘½Üµ‘Ìµ±œ‰…­‘É½Àµ‰±ÕÈµá°€‘í‘¥È€ôôô€‰ÉÑ°ˆ€ü€‰±•™Ð´Àˆ€è€‰É¥¡Ð´À‰õô(€€€€ø(€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰‰½É‘•Èµˆ‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀÀ´Ðˆø(€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ‰•ÑÝ••¸…À´Ìˆø(€€€€€€€€€€ñ‘¥Øø(€€€€€€€€€€€€ñ È±…ÍÍ9…µ”ô‰™½¹Ðµ‰±…¬ˆùíÐ¹½µµ½¸¹¹½Ñ¥™¥…Ñ¥½¹Íôð½ Èø(€€€€€€€€€€€€ñÀ±…ÍÍ9…µ”ô‰µÐ´ÄÑ•áÐµáÌÑ•áÐµ‘ÌµÑ•áÐ¼ÐàˆùíÕ¹É•…‘½Õ¹ÑôÕ¹É•……É½ÍÌÁÉ½©•ÑÌ…¹½É…¹¥é…Ñ¥½¹Ìð½Àø(€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€ñ	…‘”Ñ½¹”ô‰½±ˆùíÕ¹É•…‘½Õ¹Ñôð½	…‘”ø(€€€€€€€€ð½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰µÐ´Ð™±•à™±•àµÝÉ…À…À´Èˆø(€€€€€€€€€íl‰±°ˆ°€‰U¹É•…ˆ°€‰!¥ ÁÉ¥½É¥Ñä‰t¹µ…À ¡¥Ñ•´¤€ôø€ (€€€€€€€€€€€€ñ‰ÕÑÑ½¸­•äõí¥Ñ•µôÑåÁ”ô‰‰ÕÑÑ½¸ˆ½¹±¥¬õì ¤€ôøÍ•Ñ¥±Ñ•È¡¥Ñ•´¥ô±…ÍÍ9…µ”õíÉ½Õ¹‘•µ™Õ±°‰½É‘•ÈÁà´ÌÁä´ÄÑ•áÐµáÌ™½¹Ðµ‰±…¬ÑÉ…¹Í¥Ñ¥½¸€‘í™¥±Ñ•È€ôôô¥Ñ•´€ü€‰‰½É‘•Èµ½±¼ÐÀ‰œµ½±¼ÄÐÑ•áÐµ½±ˆ€è€‰‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÑtÑ•áÐµ‘ÌµÑ•áÐ¼ÔÐ¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÝt‰õôø(€€€€€€€€€€€€€í¥Ñ•µô(€€€€€€€€€€€€ð½‰ÕÑÑ½¸ø(€€€€€€€€€€¤¥ô(€€€€€€€€€€ñ‰ÕÑÑ½¸ÑåÁ”ô‰‰ÕÑÑ½¸ˆ½¹±¥¬õí½¹5…É­±±I•…‘ô±…ÍÍ9…µ”ô‰µÌµ…ÕÑ¼É½Õ¹‘•µ™Õ±°‰½É‘•È‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÑtÁà´ÌÁä´ÄÑ•áÐµáÌ™½¹Ðµ‰±…¬Ñ•áÐµ‘ÌµÑ•áÐ¼ÔÐÑÉ…¹Í¥Ñ¥½¸¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÝtˆø(€€€€€€€€€€€5…É¬…±°É•…(€€€€€€€€€€ð½‰ÕÑÑ½¸ø(€€€€€€€€ð½‘¥Øø(€€€€€€ð½‘¥Øø(€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰µ…àµ µlÜÁÙ¡t½Ù•É™±½Üµäµ…ÕÑ¼À´Ðˆø(€€€€€€€í¹½Ñ¥™¥…Ñ¥½¹Ì¹±•¹Ñ €ü€ (€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰É¥…À´Èˆø(€€€€€€€€€€€í¹½Ñ¥™¥…Ñ¥½¹Ì¹µ…À ¡¥Ñ•´¤€ôøì(€€€€€€€€€€€€€½¹ÍÐÕ¹É•…€ô¥Ñ•´¹Õ¹É•…€˜˜€…É•…‘%‘Ì¹¥¹±Õ‘•Ì¡¥Ñ•´¹¥¤ì(€€€€€€€€€€€€€½¹ÍÐÑ½¹”€ô¥Ñ•´¹ÁÉ¥½É¥Ñä€ôôô€‰!¥ ˆ€ü€‰‘…¹•Èˆ€è¥Ñ•´¹ÁÉ¥½É¥Ñä€ôôô€‰5•‘¥Õ´ˆ€ü€‰Ý…É¹¥¹œˆ€è€‰¹•ÕÑÉ…°ˆì(€€€€€€€€€€€€€É•ÑÕÉ¸€ (€€€€€€€€€€€€€€€€ñ‰ÕÑÑ½¸­•äõí¥Ñ•´¹¥‘ôÑåÁ”ô‰‰ÕÑÑ½¸ˆ½¹±¥¬õì ¤€ôø½¹Q½±•I•…¡¥Ñ•´¹¥¥ô±…ÍÍ9…µ”õíÉ½Õ¹‘•µ‘Ìµµ‰½É‘•ÈÀ´ÌÑ•áÐµÍÑ…ÉÐÑÉ…¹Í¥Ñ¥½¸¡½Ù•Èé‰œµÝ¡¥Ñ”½lÀ¸ÀÔÕt€‘íÕ¹É•…€ü€‰‰½É‘•Èµ‘ÌµÑ½­•¸µ½±¼ÈÐ‰œµ‘ÌµÑ½­•¸µ½±¼ÄÀˆ€è€‰‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµÝ¡¥Ñ”½lÀ¸ÀÍt‰õôø(€€€€€€€€€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰™±•à¥Ñ•µÌµÍÑ…ÉÐ…À´Ìˆø(€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”õíµÐ´Ä ´È¸ÔÜ´È¸ÔÍ¡É¥¹¬´ÀÉ½Õ¹‘•µ™Õ±°€‘íÕ¹É•…€ü€‰…¹¥µ…Ñ”µÁÕ±Í”‰œµ½±ˆ€è€‰‰œµÝ¡¥Ñ”¼Äà‰õô€¼ø(€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰µ¥¸µÜ´À™±•à´Äˆø(€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰™±•à™±•àµÝÉ…À¥Ñ•µÌµ•¹Ñ•È…À´Èˆø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰™½¹Ðµ‰±…¬Ñ•áÐµÝ¡¥Ñ”ˆùí¥Ñ•´¹Ñ¥Ñ±•ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñ	…‘”Ñ½¹”õíÑ½¹•ôùí¥Ñ•´¹ÁÉ¥½É¥Ñåôð½	…‘”ø(€€€€€€€€€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰µÐ´Ä‰±½¬Ñ•áÐµáÌ±•…‘¥¹œ´ÔÑ•áÐµ‘ÌµÑ•áÐ¼Ôàˆùí¥Ñ•´¹µ•ÍÍ…•ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰µÐ´È™±•à™±•àµÝÉ…À¥Ñ•µÌµ•¹Ñ•È…À´ÈÑ•áÐµlÄÅÁát™½¹Ðµ‰½±Ñ•áÐµ‘ÌµÑ•áÐ¼ÐÈˆø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸ùí¥Ñ•´¹…Ñ•½Éåôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸û
-Üð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸ùí¥Ñ•´¹½¹Ñ•áÑôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸û
-Üð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸ùí¥Ñ•´¹Ñ¥µ•ÍÑ…µÁôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€ð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€€€ñÍÁ…¸±…ÍÍ9…µ”ô‰Ñ•áÐµáÌ™½¹Ðµ‰±…¬Ñ•áÐµ½±ˆùí¥Ñ•´¹…Ñ¥½¹ôð½ÍÁ…¸ø(€€€€€€€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€€€€€€€ð½‰ÕÑÑ½¸ø(€€€€€€€€€€€€€€¤ì(€€€€€€€€€€€ô¥ô(€€€€€€€€€€ð½‘¥Øø(€€€€€€€€¤€è€ (€€€€€€€€€€ñ‘¥Ø±…ÍÍ9…µ”ô‰É¥µ¥¸µ ´ÔØÁ±…”µ¥Ñ•µÌµ•¹Ñ•ÈÉ½Õ¹‘•´Éá°‰½É‘•È‰½É‘•ÈµÝ¡¥Ñ”¼ÄÀ‰œµÝ¡¥Ñ”½lÀ¸ÀÑtÀ´ØÑ•áÐµ•¹Ñ•Èˆø(€€€€€€€€€€€€ñ‘¥Øø(€€€€€€€€€€€€€€ñ	•±°±…ÍÍ9…µ”ô‰µàµ…ÕÑ¼ ´äÜ´äÑ•áÐµ½±ˆ€¼ø(€€€€€€€€€€€€€€ñ Ì±…ÍÍ9…µ”ô‰µÐ´Ð™½¹Ðµ‰±…¬Ñ•áÐµÝ¡¥Ñ”ˆù9¼¹½Ñ¥™¥…Ñ¥½¹Ìð½ Ìø(€€€€€€€€€€€€€€ñÀ±…ÍÍ9…µ”ô‰µÐ´ÈÑ•áÐµÍ´±•…‘¥¹œ´ØÑ•áÐµ‘ÌµÑ•áÐ¼ÔÐˆùQ¡¥Ì™¥±Ñ•È¥Ì±•…È™½È¹½Ü¸ð½Àø(€€€€€€€€€€€€ð½‘¥Øø(€€€€€€€€€€ð½‘¥Øø(€€€€€€€€¥ô(€€€€€€ð½‘¥Øø(€€€€ð½µ½Ñ¥½¸¹‘¥Øø(€€ð½ÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø¤ì)ô()™Õ¹Ñ¥½¸±½…Ñ¥¹A…¹•°¡ì¡¥±‘É•¸°±…ÍÍ9…µ”€ô€ˆˆôèì¡¥±‘É•¸èI•…Ð¹I•…Ñ9½‘”ì±…ÍÍ9…µ”üèÍÑÉ¥¹œô¤ì(€É•ÑÕÉ¸€ ñÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø(€€€€ñµ½Ñ¥½¸¹‘¥Ø¥¹¥Ñ¥…°õíì½Á…¥Ñäè€À°äè€ÄÀ°Í…±”è€À¸äàõô…¹¥µ…Ñ”õíì½Á…¥Ñäè€Ä°äè€À°Í…±”è€Äõô•á¥Ðõíì½Á…¥Ñäè€À°äè€ÄÀ°Í…±”è€À¸äàõô±…ÍÍ9…µ”õí…‰Í½±ÕÑ”Ñ½À´ÄÈè´ÔÀÜ´àÀÉ½Õ¹‘•µ‘Ìµá°‰½É‘•È‰½É‘•Èµ‘ÌµÑ½­•¸µ‰½É‘•È‰œµ‘ÌµÑ½­•¸µÍ•½¹‘…Éä¼äàÀ´ÐÑ•áÐµ‘ÌµÑ½­•¸µÑ•áÐÍ¡…‘½Üµ‘Ìµ±œ‰…­‘É½Àµ‰±ÕÈµá°€‘í±…ÍÍ9…µ•õôø(€€€€€í¡¥±‘É•¹ô(€€€€ð½µ½Ñ¥½¸¹‘¥Øø(€€ð½ÕÑ½1½…±¥é•‘½¹Ñ•¹Ðø¤ì)ô(4(4
+  } : null, [onboarding.profile?.accountType, onboarding.profile?.primaryRole, onboarding.profile?.organizationType]);
+  const workspaceLabel = identity?.accountType === "organization" && identity.organizationType
+    ? organizationTypeDisplayNames[identity.organizationType]
+    : identity?.primaryRole ? roleDisplayNames[identity.primaryRole] : undefined;
+  const roleNavigation = useMemo(() => identity ? navigationForIdentity(identity).map((item) => ({ ...item, icon: iconForRoleNavigation(item.label) })) : [], [identity]);
+
+  const isPublicAuthExperience = pathname === "/login" || pathname === "/register" || pathname === "/pricing" || (pathname === "/onboarding" && !session);
+
+  if (pathname === "/" || isPublicAuthExperience) {
+    return (<AutoLocalizedContent>
+      <ToastContext.Provider value={toastValue}>
+        <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] text-[#f8efd7] transition dark:bg-[#0A0A0A] dark:text-[#f8efd7]">
+          {pathname !== "/" && <div className="fixed end-4 top-4 z-[120] sm:end-6 sm:top-6"><LanguageSelector compact /></div>}
+          {children}
+        </div>
+      </ToastContext.Provider>
+    </AutoLocalizedContent>);
+  }
+
+  return (<AutoLocalizedContent>
+    <ToastContext.Provider value={toastValue}>
+      <div className="min-h-screen overflow-x-hidden bg-ds-token-bg text-ds-token-text">
+        <div className="pointer-events-none fixed inset-0 bg-ds-token-bg" />
+
+        <a href="#vorqa-workspace-content" className="ds-focusable fixed start-4 top-4 z-[130] -translate-y-24 rounded-ds-md border border-ds-token-gold/30 bg-ds-token-secondary/96 px-4 py-2 text-sm font-bold text-ds-token-gold shadow-ds-lg backdrop-blur-xl transition focus:translate-y-0">
+          {translate("Skip to workspace")}
+        </a>
+
+        <aside aria-label={translate("Primary workspace navigation")} className={`fixed inset-y-0 ${shellSide} z-50 hidden overflow-visible border-ds-token-border bg-ds-token-secondary p-4 transition-[width] duration-ds-slow lg:block ${sidebarCollapsed ? "w-20" : "w-[17.5rem]"}`}>
+          <SidebarContent pathname={pathname} collapsed={sidebarCollapsed} activeOrganization={activeOrganization} onOrganizationChange={setActiveOrganization} onToggle={() => setSidebarCollapsed((value) => !value)} roleNavigation={identity ? roleNavigation : undefined} workspaceLabel={workspaceLabel ? translate(workspaceLabel) : undefined} />
+        </aside>
+
+        <AnimatePresence>
+          {sidebarOpen && (
+            <>
+              <motion.button className="fixed inset-0 z-50 bg-black/78 backdrop-blur-sm lg:hidden" aria-label={translate("Close menu")} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSidebarOpen(false)} />
+              <motion.aside
+                role="dialog"
+                aria-modal="true"
+                aria-label={translate("Primary workspace navigation")}
+                className={`fixed inset-y-0 ${mobileSide} z-50 w-[min(300px,calc(100vw-1rem))] border-ds-token-border bg-ds-token-overlay p-4 shadow-ds-lg lg:hidden`}
+                initial={{ x: drawerOffset }}
+                animate={{ x: 0 }}
+                exit={{ x: drawerOffset }}
+                transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              >
+                <SidebarContent pathname={pathname} activeOrganization={activeOrganization} onOrganizationChange={setActiveOrganization} onNavigate={() => setSidebarOpen(false)} roleNavigation={identity ? roleNavigation : undefined} workspaceLabel={workspaceLabel ? translate(workspaceLabel) : undefined} />
+              </motion.aside>
+            </>
+          )}
+        </AnimatePresence>
+
+        <div className={`relative transition-all duration-ds-slow ${contentMargin}`}>
+          <header className="sticky top-0 z-40 border-b border-ds-token-border bg-ds-token-bg/90 backdrop-blur-xl">
+            <div className="mx-auto flex min-h-16 max-w-ds-content items-center gap-2 px-4 sm:gap-2.5 sm:px-6 lg:px-8">
+              <IconButton className="lg:hidden" onClick={() => setSidebarOpen(true)} ariaLabel={translate("Open menu")}>
+                <Menu className="h-5 w-5" />
+              </IconButton>
+
+              <div className="hidden">
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ds-token-gold">{translate("VORA Project Workspace")}</p>
+                  <Badge tone="blue" className="hidden 2xl:inline-flex">{t.shell.workspaceBadge}</Badge>
+                  <Badge tone={dataSourceMode === "supabase" ? "success" : dataSourceMode === "auto" ? "blue" : "warning"} className="hidden 2xl:inline-flex">{dataSourceLabel}</Badge>
+                  <Badge tone={activeOrganization.status === "Active" ? "success" : activeOrganization.status === "Pending invitation" ? "warning" : "danger"} className="hidden 2xl:inline-flex">{translate(activeOrganization.status)}</Badge>
+                </div>
+                <h1 className="mt-1 truncate text-lg font-black sm:text-xl">{currentPage}</h1>
+                <p className="mt-1 hidden truncate text-xs font-bold text-ds-text/46 sm:block">{activeOrganization.name} Â· {activeOrganization.workspace}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setCommandOpen(true)}
+                className="group ds-focusable ms-auto hidden h-11 w-[min(34vw,460px)] min-w-[260px] items-center gap-3 rounded-ds-sm border border-ds-token-border bg-black/20 px-3.5 text-start transition-colors duration-ds-base hover:border-ds-token-border-strong hover:bg-white/[0.035] 2xl:flex"
+                aria-label={translate("Open global search and command palette")}
+              >
+                <Search className="h-5 w-5 text-gold transition-transform duration-ds-base group-focus-within:scale-110" />
+                <span className="min-w-0 flex-1 text-sm text-ds-text/44">{t.common.searchWorkspace}</span>
+                <KeyboardHint keys={["Ctrl", "K"]} />
+              </button>
+
+              <IconButton className="ms-auto 2xl:ms-0 2xl:hidden" onClick={() => setCommandOpen(true)} ariaLabel={translate("Open global search")}>
+                <Search className="h-5 w-5" />
+              </IconButton>
+
+              <div className="shrink-0">
+                <LanguageSelector compact />
+              </div>
+
+              <div className="relative hidden md:block">
+                <IconButton onClick={() => setQuickActionsOpen((value) => !value)} ariaLabel={translate("Open quick actions")}>
+                  <Rocket className="h-5 w-5" />
+                </IconButton>
+                <AnimatePresence>{quickActionsOpen && <QuickActionsMenu />}</AnimatePresence>
+              </div>
+
+              <div className="hidden md:block">
+                <IconButton onClick={() => setTheme(theme === "dark" ? "light" : "dark")} ariaLabel={translate("Toggle theme")}>
+                  {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </IconButton>
+              </div>
+
+              <div className="relative hidden md:block">
+                <IconButton onClick={() => setNotificationsOpen((value) => !value)} ariaLabel={t.common.notifications}>
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && <span className="absolute -left-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1 text-[10px] font-black text-black ring-2 ring-[#0B1120]">{unreadCount}</span>}
+                </IconButton>
+                <AnimatePresence>
+                  {notificationsOpen && (
+                    <NotificationsPanel
+                      readIds={notificationReadIds}
+                      onMarkAllRead={() => setNotificationReadIds(demoNotificationItems.map((item) => item.id))}
+                      onToggleRead={(id) => setNotificationReadIds((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id])}
+                    />
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="relative">
+                <motion.button whileTap={{ scale: 0.985 }} className="ds-focusable flex items-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.035] p-1.5 transition hover:border-ds-token-gold/24 hover:bg-white/[0.065] sm:gap-3" onClick={() => setProfileOpen((value) => !value)} aria-label={translate("Open user profile menu")} aria-expanded={profileOpen}>
+                  <Avatar name={userLabel} size="sm" />
+                  <span className="hidden max-w-44 text-start leading-tight 2xl:block">
+                    <span className="block truncate text-sm font-black">{userLabel}</span>
+                    <span className="text-xs text-ds-text/50">{session ? t.common.activeSession : t.common.guestMode}</span>
+                  </span>
+                  <ChevronDown className="hidden h-4 w-4 text-ds-text/58 2xl:block" />
+                </motion.button>
+                <AnimatePresence>
+                  {profileOpen && (
+                    <FloatingPanel className={profilePanelSide}>
+                      <div className="mb-4 flex items-center gap-3">
+                        <Avatar name={userLabel} />
+                        <div className="min-w-0">
+                          <p className="truncate font-black">{t.common.workspace}</p>
+                          <p className="truncate text-xs text-ds-text/50">{session?.user?.email || "guest@vorqa.ai"}</p>
+                        </div>
+                      </div>
+                      {workspaceLabel && <div className="mb-3 rounded-ds-sm border border-ds-token-border bg-white/[0.035] px-3 py-2"><p className="text-xs text-ds-token-muted">Active workspace</p><p className="mt-1 text-sm font-semibold text-ds-token-text">{translate(workspaceLabel)}</p></div>}
+                      <Link href="/settings" className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-bold hover:bg-white/10">
+                        <UserRound className="h-4 w-4" />
+                        {t.common.profileSettings}
+                      </Link>
+                      <button type="button" onClick={logout} className="mt-1 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-bold text-gold hover:bg-gold/10">
+                        <LogOut className="h-4 w-4" />
+                        {t.common.logout}
+                      </button>
+                    </FloatingPanel>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </header>
+
+          <motion.main
+            id="vorqa-workspace-content"
+            key={pathname}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto w-full max-w-ds-content px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8"
+          >
+            {children}
+          </motion.main>
+        </div>
+
+        <AnimatePresence>
+          {commandOpen && <CommandPalette onClose={() => setCommandOpen(false)} onOpenNotifications={() => setNotificationsOpen(true)} />}
+        </AnimatePresence>
+
+        <div className="fixed bottom-5 left-5 z-[70] grid w-[min(360px,calc(100vw-40px))] gap-3">
+          <AnimatePresence>
+            {toasts.map((toast) => (
+              <motion.div key={toast.id} initial={{ opacity: 0, y: 20, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, scale: 0.98 }} className="rounded-ds-lg border border-ds-token-gold/20 bg-ds-token-secondary/95 p-4 shadow-ds-lg backdrop-blur-xl">
+                <p className="font-black text-ds-text">{toast.title}</p>
+                <p className="mt-1 text-sm text-ds-text/58">{toast.text}</p>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+    </ToastContext.Provider>
+  </AutoLocalizedContent>);
+}
+
+function IconButton({ children, onClick, ariaLabel, className = "" }: { children: React.ReactNode; onClick: () => void; ariaLabel: string; className?: string }) {
+  return (<AutoLocalizedContent>
+    <motion.button whileTap={{ scale: 0.96 }} className={`group ds-focusable relative grid h-10 w-10 shrink-0 place-items-center rounded-ds-md border border-ds-token-border bg-white/[0.035] text-ds-token-gold shadow-sm transition hover:border-ds-token-gold/26 hover:bg-white/[0.065] ${className}`} onClick={onClick} aria-label={ariaLabel}>
+      <span className="absolute inset-x-1 top-0 h-px bg-white/20" />
+      <span className="transition-transform duration-ds-base group-hover:scale-105">{children}</span>
+    </motion.button>
+  </AutoLocalizedContent>);
+}
+
+function KeyboardHint({ keys, className = "" }: { keys: string[]; className?: string }) {
+  return (
+    <span aria-hidden="true" className={`rounded-lg border border-white/10 px-2 py-1 text-[10px] font-black text-ds-text/42 ${className}`}>
+      {keys.join(" ")}
+    </span>
+  );
+}
+
+function SidebarContent({
+  pathname,
+  collapsed = false,
+  activeOrganization,
+  onOrganizationChange,
+  onNavigate,
+  onToggle,
+  roleNavigation,
+  workspaceLabel
+}: {
+  pathname: string;
+  collapsed?: boolean;
+  activeOrganization: DemoOrganization;
+  onOrganizationChange: (organization: DemoOrganization) => void;
+  onNavigate?: () => void;
+  onToggle?: () => void;
+  roleNavigation?: Array<{ label: string; href: string; available: boolean; icon: typeof LayoutDashboard }>;
+  workspaceLabel?: string;
+}) {
+  const { dictionary: t, dir, translate } = useI18n();
+  return (<AutoLocalizedContent>
+    <div className="flex h-full flex-col">
+      <div className={`mb-4 flex min-h-11 items-center ${collapsed ? "justify-center" : "justify-between gap-3"}`}>
+        <div onClick={onNavigate} className={collapsed ? "scale-90" : ""}>
+          <VorqaLogo compact={collapsed} />
+        </div>
+        {onToggle && (
+          <IconButton onClick={onToggle} ariaLabel={translate("Toggle sidebar")}>
+            {collapsed ? <PanelRightOpen className="h-5 w-5" /> : <PanelRightClose className="h-5 w-5" />}
+          </IconButton>
+        )}
+      </div>
+
+      <nav aria-label={translate("Main workspace sections")} className="grid min-h-0 flex-1 content-start gap-1 overflow-y-auto pe-1">
+        {workspaceLabel && !collapsed && <div className="mb-2 rounded-ds-sm border border-ds-token-border bg-white/[0.025] px-3 py-2"><p className="text-[10px] uppercase tracking-[0.12em] text-ds-token-muted">Active workspace</p><p className="mt-1 truncate text-sm font-semibold capitalize text-ds-token-text">{workspaceLabel}</p></div>}
+        {(roleNavigation || primaryNavItems).map((item) => {
+          const Icon = item.icon;
+          const hrefPath = item.href.split("#")[0];
+          const active = hrefPath === pathname || (hrefPath !== "/" && pathname.startsWith(hrefPath) && !item.href.includes("#"));
+          const label = "label" in item && item.label ? translate(item.label) : ("key" in item ? t.nav[item.key as keyof typeof t.nav] : "");
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onNavigate}
+              title={collapsed ? label : undefined}
+              aria-current={active ? "page" : undefined}
+              className={`group ds-focusable relative flex min-h-11 items-center gap-3 rounded-ds-sm px-3 py-2.5 text-sm font-semibold transition-colors duration-ds-base ${
+                active ? "bg-ds-token-gold/10 text-ds-token-gold-bright" : `text-ds-token-muted hover:bg-white/[0.04] hover:text-ds-token-text`
+              } ${collapsed ? "justify-center" : ""}`}
+            >
+              {active && !collapsed && <motion.span layoutId="shell-active-indicator" className="absolute inset-y-2 start-0 w-0.5 rounded-full bg-ds-token-gold" />}
+              <Icon className="h-[1.125rem] w-[1.125rem] shrink-0" />
+              {!collapsed && label}
+            </Link>
+          );
+        })}
+        {!roleNavigation && (collapsed ? (
+          <Link
+            href="/settings"
+            onClick={onNavigate}
+            title={translate("More")}
+            className="group ds-focusable relative flex min-h-10 items-center justify-center gap-3 rounded-ds-md px-3 py-2.5 text-sm font-bold text-ds-token-muted transition-all duration-ds-base hover:bg-white/[0.05] hover:text-ds-token-text"
+          >
+            <MoreHorizontal className="h-5 w-5 shrink-0 transition-transform duration-ds-base group-hover:-rotate-6" />
+          </Link>
+        ) : (
+          <div className="mt-3 border-t border-ds-token-border pt-3">
+            <div className="mb-1.5 flex items-center gap-2 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-ds-token-muted-soft">
+              <MoreHorizontal className="h-4 w-4" />
+              {translate("More")}
+            </div>
+            <div className="grid gap-1" role="list" aria-label={translate("Secondary workspace sections")}>
+              {secondaryNavItems.map((item) => {
+                const Icon = item.icon;
+                const hrefPath = item.href.split("#")[0];
+                const active = hrefPath === pathname || (hrefPath !== "/" && pathname.startsWith(hrefPath) && !item.href.includes("#"));
+                const label = "label" in item && item.label ? translate(item.label) : t.nav[item.key as keyof typeof t.nav];
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onNavigate}
+                    aria-current={active ? "page" : undefined}
+                    className={`group ds-focusable relative flex min-h-10 items-center gap-3 rounded-ds-sm px-3 py-2 text-[13px] font-medium transition-colors duration-ds-base ${
+                      active ? "bg-white/[0.07] text-ds-token-gold" : "text-ds-token-muted-soft hover:bg-white/[0.045] hover:text-ds-token-text"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    {label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      {!collapsed && (
+        <div className="mt-3 rounded-ds-xl border border-ds-token-border bg-white/[0.025] p-3.5 shadow-inner shadow-black/20">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-sm font-black text-gold">{t.shell.productivity}</p>
+            <CalendarDays className="h-4 w-4 text-blue" />
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-white/10">
+            <motion.div className="h-full rounded-full bg-gradient-to-l from-gold to-blue shadow-[0_0_22px_rgba(212,175,55,0.35)]" initial={{ width: 0 }} animate={{ width: "72%" }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />
+          </div>
+          <p className="mt-3 text-xs leading-6 text-ds-text/52">{t.shell.productivityText}</p>
+        </div>
+      )}
+
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function OrganizationSwitcher({
+  activeOrganization,
+  onOrganizationChange,
+  collapsed
+}: {
+  activeOrganization: DemoOrganization;
+  onOrganizationChange: (organization: DemoOrganization) => void;
+  collapsed?: boolean;
+}) {
+  const { translate } = useI18n();
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const filteredOrganizations = demoOrganizations.filter((organization) => `${organization.name} ${organization.industry} ${organization.location}`.toLowerCase().includes(query.toLowerCase()));
+  const recentOrganizations = demoOrganizations.slice(0, 2);
+  const panelSide = "right-0";
+
+  if (collapsed) {
+    return (<AutoLocalizedContent>
+      <div className="relative mb-5 grid place-items-center">
+        <button
+          type="button"
+          aria-label={translate("Switch organization")}
+          onClick={() => setOpen((value) => !value)}
+          className="grid h-11 w-11 place-items-center rounded-ds-md border border-ds-token-gold/24 bg-ds-token-gold/12 text-sm font-black text-ds-token-gold shadow-gold-glow transition hover:border-ds-token-gold/40"
+        >
+          {activeOrganization.logo.slice(0, 2)}
+        </button>
+        <AnimatePresence>
+          {open && (
+            <OrganizationSwitcherPanel
+              className="right-0 top-14"
+              query={query}
+              setQuery={setQuery}
+              activeOrganization={activeOrganization}
+              recentOrganizations={recentOrganizations}
+              organizations={filteredOrganizations}
+              onSelect={(organization) => {
+                onOrganizationChange(organization);
+                setOpen(false);
+              }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+    </AutoLocalizedContent>);
+  }
+
+  return (<AutoLocalizedContent>
+    <div className="relative mb-5">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-label={translate("Switch organization")}
+        onClick={() => setOpen((value) => !value)}
+        className="group flex w-full items-center gap-3 rounded-ds-xl border border-ds-token-border bg-white/[0.03] p-2.5 text-start shadow-inner shadow-black/20 transition hover:border-ds-token-gold/26 hover:bg-white/[0.055]"
+      >
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-ds-md border border-ds-token-gold/24 bg-ds-token-gold/12 text-sm font-black text-ds-token-gold shadow-gold-glow">
+          {activeOrganization.logo}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-black text-ds-text">{activeOrganization.name}</span>
+          <span className="mt-1 block truncate text-xs font-bold text-ds-text/46">{activeOrganization.workspace}</span>
+          <span className="mt-2 inline-flex">
+            <Badge tone={activeOrganization.role === "Owner" ? "gold" : activeOrganization.role === "Admin" ? "blue" : activeOrganization.role === "Member" ? "success" : "neutral"}>{translate(activeOrganization.role)}</Badge>
+          </span>
+        </span>
+        <ChevronDown className="h-4 w-4 shrink-0 text-gold transition group-hover:rotate-180" />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <OrganizationSwitcherPanel
+            className={`${panelSide} top-[5.25rem]`}
+            query={query}
+            setQuery={setQuery}
+            activeOrganization={activeOrganization}
+            recentOrganizations={recentOrganizations}
+            organizations={filteredOrganizations}
+            onSelect={(organization) => {
+              onOrganizationChange(organization);
+              setOpen(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function OrganizationSwitcherPanel({
+  className,
+  query,
+  setQuery,
+  activeOrganization,
+  recentOrganizations,
+  organizations,
+  onSelect
+}: {
+  className: string;
+  query: string;
+  setQuery: (value: string) => void;
+  activeOrganization: DemoOrganization;
+  recentOrganizations: DemoOrganization[];
+  organizations: DemoOrganization[];
+  onSelect: (organization: DemoOrganization) => void;
+}) {
+  const { translate } = useI18n();
+  return (<AutoLocalizedContent>
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+      className={`absolute z-[90] w-[min(360px,calc(100vw-2rem))] rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 p-4 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${className}`}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-gold">{translate("Organizations")}</p>
+          <h3 className="mt-1 font-black">{translate("Switch workspace")}</h3>
+        </div>
+        <Badge tone="blue">{translate("UI state")}</Badge>
+      </div>
+
+      <label className="mt-4 flex h-10 items-center gap-3 rounded-ds-md border border-ds-token-border bg-black/24 px-3 shadow-inner shadow-black/20 transition focus-within:border-ds-token-gold/40">
+        <Search className="h-4 w-4 text-gold" />
+        <input value={query} onChange={(event) => setQuery(event.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-ds-text/36" placeholder={translate("Search organizations")} />
+      </label>
+
+      <div className="mt-4 grid gap-4">
+        <OrganizationGroup title={translate("Recent organizations")} organizations={recentOrganizations} activeOrganization={activeOrganization} onSelect={onSelect} />
+        <OrganizationGroup title={translate("All organizations")} organizations={organizations} activeOrganization={activeOrganization} onSelect={onSelect} />
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
+        <button type="button" className="flex items-center justify-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.035] px-3 py-2 text-xs font-bold text-ds-token-muted transition hover:bg-white/[0.06]">
+          <Plus className="h-4 w-4 text-gold" />
+          {translate("Create organization")}
+        </button>
+        <button type="button" className="flex items-center justify-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.035] px-3 py-2 text-xs font-bold text-ds-token-muted transition hover:bg-white/[0.06]">
+          <UserPlus className="h-4 w-4 text-gold" />
+          {translate("Join organization")}
+        </button>
+      </div>
+    </motion.div>
+  </AutoLocalizedContent>);
+}
+
+function OrganizationGroup({
+  title,
+  organizations,
+  activeOrganization,
+  onSelect
+}: {
+  title: string;
+  organizations: DemoOrganization[];
+  activeOrganization: DemoOrganization;
+  onSelect: (organization: DemoOrganization) => void;
+}) {
+  const { translate } = useI18n();
+  return (<AutoLocalizedContent>
+    <div>
+      <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-ds-text/42">{title}</p>
+      <div className="grid gap-2">
+        {organizations.length ? (
+          organizations.map((organization) => {
+            const active = organization.id === activeOrganization.id;
+            return (
+              <button
+                type="button"
+                key={`${title}-${organization.id}`}
+                onClick={() => onSelect(organization)}
+                className={`flex items-center gap-3 rounded-ds-md border p-3 text-start transition ${
+                  active ? "border-ds-token-gold/36 bg-ds-token-gold/12" : "border-ds-token-border bg-white/[0.03] hover:bg-white/[0.055]"
+                }`}
+              >
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold/12 text-xs font-black text-gold">{organization.logo}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-black">{organization.name}</span>
+                  <span className="mt-1 block truncate text-xs text-ds-text/46">{translate(organization.role)} Â· {translate(organization.status)}</span>
+                </span>
+                {active && <span className="h-2.5 w-2.5 rounded-full bg-gold shadow-gold-glow" />}
+              </button>
+            );
+          })
+        ) : (
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-sm text-ds-text/50">{translate("No organizations found.")}</div>
+        )}
+      </div>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function QuickActionsMenu() {
+  const { dir, translate } = useI18n();
+  return (<AutoLocalizedContent>
+    <FloatingPanel className={dir === "rtl" ? "left-0" : "right-0"}>
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">{translate("Quick actions")}</p>
+          <h2 className="mt-1 font-black">{translate("Move faster")}</h2>
+        </div>
+        <Rocket className="h-5 w-5 text-gold" />
+      </div>
+      <div className="grid gap-2">
+        {quickActions.map((action) => {
+          const Icon = action.icon;
+          return (
+            <Link key={action.title} href={action.href} className="group flex items-center gap-3 rounded-ds-md border border-ds-token-border bg-white/[0.03] p-3 transition hover:border-ds-token-gold/20 hover:bg-white/[0.055]">
+              <span className="grid h-9 w-9 place-items-center rounded-ds-sm bg-ds-token-gold/12 text-ds-token-gold">
+                <Icon className="h-4 w-4 transition group-hover:-rotate-6" />
+              </span>
+              <span className="font-black">{translate(action.title)}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </FloatingPanel>
+  </AutoLocalizedContent>);
+}
+
+function CommandPalette({ onClose, onOpenNotifications }: { onClose: () => void; onOpenNotifications: () => void }) {
+  const router = useRouter();
+  const { translate } = useI18n();
+  const [query, setQuery] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const normalizedQuery = query.toLowerCase();
+  const filteredSearch = globalSearchItems.filter((item) => `${item.title} ${item.type} ${item.context} ${item.status}`.toLowerCase().includes(normalizedQuery));
+  const filteredCommands = commandItems.filter((item) => `${item.title} ${item.category}`.toLowerCase().includes(normalizedQuery));
+  const paletteItems = [
+    ...filteredCommands.map((item) => ({ ...item, kind: "command" as const, type: item.category, context: "Command palette", status: "Ready" })),
+    ...filteredSearch.map((item) => ({ ...item, kind: "search" as const }))
+  ];
+  const recentCommands = commandItems.slice(0, 3);
+  const suggestedCommands = commandItems.slice(3, 7);
+
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
+  function openSelected() {
+    const selected = paletteItems[selectedIndex];
+    if (!selected) return;
+    if (selected.title === "View notifications") {
+      onOpenNotifications();
+      onClose();
+      return;
+    }
+    router.push(selected.href);
+    onClose();
+  }
+
+  return (<AutoLocalizedContent>
+    <motion.div className="fixed inset-0 z-[120] bg-black/72 p-3 backdrop-blur-xl sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label={translate("Global search and command palette")}
+        aria-describedby="command-palette-help"
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 18, scale: 0.98 }}
+        className="mx-auto flex h-[min(760px,calc(100vh-1.5rem))] max-w-4xl flex-col overflow-hidden rounded-ds-2xl border border-ds-token-border bg-ds-token-secondary/98 shadow-ds-lg ring-1 ring-white/[0.025] backdrop-blur-xl sm:h-[min(760px,calc(100vh-3rem))]"
+        onKeyDown={(event) => {
+          if (event.key === "Escape") onClose();
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setSelectedIndex((value) => Math.min(value + 1, Math.max(0, paletteItems.length - 1)));
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            setSelectedIndex((value) => Math.max(value - 1, 0));
+          }
+          if (event.key === "Enter") {
+            event.preventDefault();
+            openSelected();
+          }
+        }}
+      >
+        <div className="border-b border-white/10 p-4">
+          <div className="flex items-center gap-3">
+            <div className="flex min-w-0 flex-1 items-center gap-3 rounded-ds-md border border-ds-token-gold/22 bg-black/28 px-4 py-3 shadow-inner shadow-black/20">
+              <Search className="h-5 w-5 shrink-0 text-gold" />
+              <input
+                autoFocus
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                className="w-full bg-transparent text-base font-bold text-ds-text outline-none placeholder:text-ds-text/36"
+                placeholder={translate("Search projects, organizations, people, reports, tools...")}
+                aria-label={translate("Search Vorqa workspace")}
+                aria-controls="command-palette-results"
+                aria-activedescendant={paletteItems[selectedIndex] ? `command-palette-result-${selectedIndex}` : undefined}
+              />
+              <KeyboardHint keys={["Esc"]} className="hidden bg-white/[0.045] sm:inline-flex" />
+            </div>
+            <button type="button" onClick={onClose} className="ds-focusable grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/[0.055] text-ds-text/58 transition hover:-translate-y-0.5 hover:bg-white/[0.085] hover:text-ds-text" aria-label={translate("Close command palette")}>
+              <ChevronDown className="h-5 w-5 rotate-180" />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[260px_minmax(0,1fr)]">
+          <aside className="hidden border-e border-white/10 bg-white/[0.018] p-4 lg:block">
+            <PaletteSection title={translate("Recent commands")} commands={recentCommands} />
+            <div className="mt-5">
+              <PaletteSection title={translate("Suggested commands")} commands={suggestedCommands} />
+            </div>
+          </aside>
+
+          <div className="min-h-0 overflow-y-auto p-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div id="command-palette-help">
+                <Badge tone="gold">{translate("Global discovery")}</Badge>
+                <p className="mt-2 text-sm text-ds-text/54">{paletteItems.length} {translate("results across Vorqa")}</p>
+              </div>
+              <div className="hidden gap-2 text-[10px] font-black text-ds-text/38 sm:flex">
+                <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-2 py-1"><KeyboardHint keys={["â†‘", "â†“"]} className="border-0 p-0" /> {translate("Navigate")}</span>
+                <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-2 py-1"><KeyboardHint keys={["Enter"]} className="border-0 p-0" /> {translate("Open")}</span>
+              </div>
+            </div>
+
+            {paletteItems.length ? (
+              <div id="command-palette-results" role="listbox" aria-label={translate("Command palette results")} className="grid gap-2">
+                {paletteItems.map((item, index) => {
+                  const Icon = item.icon;
+                  const active = index === selectedIndex;
+                  return (
+                    <Link
+                      key={`${item.kind}-${item.title}`}
+                      id={`command-palette-result-${index}`}
+                      role="option"
+                      aria-selected={active}
+                      href={item.href}
+                      onClick={(event) => {
+                        if (item.title === "View notifications") {
+                          event.preventDefault();
+                          onOpenNotifications();
+                        }
+                        onClose();
+                      }}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                      className={`group flex items-center gap-3 rounded-ds-md border p-3 text-start shadow-sm transition ${
+                        active ? "border-ds-token-gold/38 bg-ds-token-gold/12" : "border-ds-token-border bg-white/[0.03] hover:border-ds-token-border-strong hover:bg-white/[0.055]"
+                      }`}
+                    >
+                      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl border transition ${active ? "border-gold/28 bg-gold/16 text-gold" : "border-white/10 bg-white/[0.04] text-gold"}`}>
+                        <Icon className="h-5 w-5 transition group-hover:-rotate-6" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate font-black text-white">{translate(item.title)}</span>
+                        <span className="mt-1 block truncate text-xs text-ds-text/46">{translate(item.type)} Â· {translate(item.context)}</span>
+                      </span>
+                      <Badge tone={item.kind === "command" ? "blue" : "neutral"}>{translate(item.status)}</Badge>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="grid min-h-80 place-items-center rounded-ds-xl border border-ds-token-border bg-white/[0.03] p-8 text-center">
+                <div>
+                  <Search className="mx-auto h-10 w-10 text-gold" />
+                  <h3 className="mt-4 text-xl font-black text-white">{translate("No results found")}</h3>
+                  <p className="mt-2 text-sm leading-6 text-ds-text/54">{translate("Try searching for a project, employee, report, organization, or VORA tool.")}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  </AutoLocalizedContent>);
+}
+
+function PaletteSection({ title, commands }: { title: string; commands: typeof commandItems }) {
+  const { translate } = useI18n();
+  return (<AutoLocalizedContent>
+    <div>
+      <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-ds-text/42">{title}</p>
+      <div className="grid gap-2">
+        {commands.map((command) => {
+          const Icon = command.icon;
+          return (
+            <Link key={command.title} href={command.href} className="group flex items-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.03] px-3 py-2 text-sm font-bold transition hover:border-ds-token-gold/20 hover:bg-white/[0.055]">
+              <Icon className="h-4 w-4 shrink-0 text-gold transition group-hover:-rotate-6" />
+              <span className="truncate">{translate(command.title)}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function NotificationsPanel({
+  readIds,
+  onMarkAllRead,
+  onToggleRead
+}: {
+  readIds: number[];
+  onMarkAllRead: () => void;
+  onToggleRead: (id: number) => void;
+}) {
+  const { dictionary: t, dir } = useI18n();
+  const [filter, setFilter] = useState("All");
+  const notifications = demoNotificationItems.filter((item) => {
+    const unread = item.unread && !readIds.includes(item.id);
+    if (filter === "Unread") return unread;
+    if (filter === "High priority") return item.priority === "High";
+    return true;
+  });
+  const unreadCount = demoNotificationItems.filter((item) => item.unread && !readIds.includes(item.id)).length;
+
+  return (<AutoLocalizedContent>
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+      className={`absolute top-12 z-50 w-[min(420px,calc(100vw-1.5rem))] overflow-hidden rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${dir === "rtl" ? "left-0" : "right-0"}`}
+    >
+      <div className="border-b border-white/10 p-4">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="font-black">{t.common.notifications}</h2>
+            <p className="mt-1 text-xs text-ds-text/48">{unreadCount} unread across projects and organizations</p>
+          </div>
+          <Badge tone="gold">{unreadCount}</Badge>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {["All", "Unread", "High priority"].map((item) => (
+            <button key={item} type="button" onClick={() => setFilter(item)} className={`rounded-full border px-3 py-1 text-xs font-black transition ${filter === item ? "border-gold/40 bg-gold/14 text-gold" : "border-white/10 bg-white/[0.04] text-ds-text/54 hover:bg-white/[0.07]"}`}>
+              {item}
+            </button>
+          ))}
+          <button type="button" onClick={onMarkAllRead} className="ms-auto rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black text-ds-text/54 transition hover:bg-white/[0.07]">
+            Mark all read
+          </button>
+        </div>
+      </div>
+      <div className="max-h-[70vh] overflow-y-auto p-4">
+        {notifications.length ? (
+          <div className="grid gap-2">
+            {notifications.map((item) => {
+              const unread = item.unread && !readIds.includes(item.id);
+              const tone = item.priority === "High" ? "danger" : item.priority === "Medium" ? "warning" : "neutral";
+              return (
+                <button key={item.id} type="button" onClick={() => onToggleRead(item.id)} className={`rounded-ds-md border p-3 text-start transition hover:bg-white/[0.055] ${unread ? "border-ds-token-gold/24 bg-ds-token-gold/10" : "border-ds-token-border bg-white/[0.03]"}`}>
+                  <div className="flex items-start gap-3">
+                    <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${unread ? "animate-pulse bg-gold" : "bg-white/18"}`} />
+                    <span className="min-w-0 flex-1">
+                      <span className="flex flex-wrap items-center gap-2">
+                        <span className="font-black text-white">{item.title}</span>
+                        <Badge tone={tone}>{item.priority}</Badge>
+                      </span>
+                      <span className="mt-1 block text-xs leading-5 text-ds-text/58">{item.message}</span>
+                      <span className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-bold text-ds-text/42">
+                        <span>{item.category}</span>
+                        <span>Â·</span>
+                        <span>{item.context}</span>
+                        <span>Â·</span>
+                        <span>{item.timestamp}</span>
+                      </span>
+                    </span>
+                    <span className="text-xs font-black text-gold">{item.action}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid min-h-56 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center">
+            <div>
+              <Bell className="mx-auto h-9 w-9 text-gold" />
+              <h3 className="mt-4 font-black text-white">No notifications</h3>
+              <p className="mt-2 text-sm leading-6 text-ds-text/54">This filter is clear for now.</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  </AutoLocalizedContent>);
+}
+
+function FloatingPanel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (<AutoLocalizedContent>
+    <motion.div initial={{ opacity: 0, y: 10, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.98 }} className={`absolute top-12 z-50 w-80 rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 p-4 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${className}`}>
+      {children}
+    </motion.div>
+  </AutoLocalizedContent>);
+}
+
+

@@ -281,4 +281,3100 @@ function OverviewTab({ project, activity }: { project: ProjectWorkspaceProject; 
           <div className="divide-y divide-ds-token-border">
             {(detail?.tasks.slice(0, 4) || []).map((task, index) => (
               <div key={task} className="flex items-center gap-3 py-3">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ds-token-border text-xçôÖÚ$z{-®éÜj×w&–BÖ–â×rÕ³##…ÒvÓ2#à¢ÄÖ–æ”ÖWG&–2Æ&VÃÒ%&ö¦V7B6öFR"fÇVS×·&ö¦V7Bæ–GÒ–6öã×³ÄföÆFW$¶æ&â6Æ74æÖSÒ&‚ÓRrÓR"óçÒóà¢ÄÖ–æ”ÖWG&–2Æ&VÃÒ%7FGW2"fÇVS×·&ö¦V7Bç7FGW7Ò–6öã×³ÄvVvR6Æ74æÖSÒ&‚ÓRrÓR"óçÒóà¢ÂöF—cà¢ÂöF—cà¢ÂôvÆ746&Cà ¢ÆF—b6Æ74æÖSÒ&w&–BvÓR†Ã¦w&–BÖ6öÇ2Õ¶Ö–æÖ‚ƒÃg"•ó3c…Ò#à¢ÆF—b6Æ74æÖSÒ'76R×’ÓR#à¢Å6WGF–æw56V7F–öâF—FÆSÒ$vVæW&Â6WGF–æw2"&FvSÒ-‹Š}˜R"–6öã×³Å6WGF–æw26Æ74æÖSÒ&‚ÓRrÓR"óçÓà¢ÆF—b6Æ74æÖSÒ&w&–BvÓBÖC¦w&–BÖ6öÇ2Ó"#à¢Å6WGF–æw4–çWBÆ&VÃÒ%&ö¦V7BæÖR"fÇVS×·&ö¦V7BçF—FÆWÒóà¢Å6WGF–æw4–çWBÆ&VÃÒ%&ö¦V7B6öFR"fÇVS×·&ö¦V7Bæ–GÒóà¢Å6WGF–æw4–çWBÆ&VÃÒ%&ö¦V7BG—R"fÇVS×·&ö¦V7BçG—WÒóà¢Å6WGF–æw4–çWBÆ&VÃÒ$Æö6F–öâ"fÇVSÒ-Š}˜M˜]‹­‹ŠˆÂŠ=˜=Š}Šı˜­‹"óà¢Å6WGF–æw56VÆV7BÆ&VÃÒ%7FGW2"fÇVS×·&ö¦V7Bç7FGW7Ò÷F–öç3×µ²%Æææ–ær"Â$7F—fR"Â$öâ†öÆB"Â$6ö×ÆWFVB%×Òóà¢Å6WGF–æw4–çWBÆ&VÃÒ%7F'BFFR"fÇVSÒ###bÓrÓ"óà¢Å6WGF–æw4–çWBÆ&VÃÒ$W‡V7FVB6ö×ÆWF–öâFFR"fÇVSÒ###bÓ"Ó#"óà¢ÆF—b6Æ74æÖSÒ&ÖC¦6öÂ×7âÓ"#à¢Å6WGF–æw5FW‡F&VÆ&VÃÒ$FW67&—F–öâ"fÇVSÒ-˜]‹=Š}ŠİŠ’˜]‹M‹˜‹’˜]‹˜]Š}‹˜­Š’˜MŠ]ŠıŠ}‹Š’Š}˜MŠ­Ší‹}˜­‹}ˆÂŠ}˜M˜Š½Š}Šm˜-ˆÂŠ}˜M˜‹˜­˜-ˆÂŠ}˜MŠ­˜m˜˜­‹ˆÂ˜Š}˜MŠ­˜-Š}‹˜­‹Š˜]‹=Š}‹ŠıŠ’dõ$â"óà¢ÂöF—cà¢ÂöF—cà¢Âõ6WGF–æw56V7F–öãà ¢Å6WGF–æw56V7F–öâF—FÆSÒ%v÷&·76R&VfW&Væ6W2"&FvSÒ-Š}˜MŠ­˜‹m˜­˜MŠ}Š¢"–6öã×³ÄvVvR6Æ74æÖSÒ&‚ÓRrÓR"óçÓà¢ÆF—b6Æ74æÖSÒ&w&–BvÓBÖC¦w&–BÖ6öÇ2Ó"†Ã¦w&–BÖ6öÇ2Ó2#à¢Å6WGF–æw56VÆV7BÆ&VÃÒ$FVfVÇBÆæF–ær6V7F–öâ"fÇVSÒ$÷fW'f–Wr"÷F–öç3×µ²$÷fW'f–Wr"Â%dõ$’"Â$Fö7VÖVçG2"Â%F–ÖVÆ–æR"Â%&W÷'G2%×Òóà¢Å6WGF–æw56VÆV7BÆ&VÃÒ$ÆæwVvR"fÇVSÒ-Š}˜M‹‹Š˜­Š’"÷F–öç3×µ²-Š}˜M‹‹Š˜­Š’"Â$g&ì:v—2"Â$VævÆ—6‚%×Òóà¢Å6WGF–æw56VÆV7BÆ&VÃÒ$FFRf÷&ÖB"fÇVSÒ%•••’ÔÔÒÔDB"÷F–öç3×µ²%•••’ÔÔÒÔDB"Â$DBôÔÒõ•••’"Â$ÔÔÒDBÂ•••’%×Òóà¢Å6WGF–æw56VÆV7BÆ&VÃÒ$7W'&Væ7’"fÇVSÒ$ÔB"÷F–öç3×µ²$ÔB"Â%U4B"Â$UU"%×Òóà¢Å6WGF–æw56VÆV7BÆ&VÃÒ%F–ÖR¦öæR"fÇVSÒ$g&–6ô66&Ææ6"÷F–öç3×µ²$g&–6ô66&Ææ6"Â%UD2"Â$WW&÷Rõ&—2%×Òóà¢Å6WGF–æw56VÆV7BÆ&VÃÒ$F—7Æ’FVç6—G’"fÇVSÒ$6öÖf÷'F&ÆR"÷F–öç3×µ²$6öÖf÷'F&ÆR"Â$6ö×7B"Â%76–÷W2%×Òóà¢ÂöF—cà¢Âõ6WGF–æw56V7F–öãà ¢Å6WGF–æw56V7F–öâF—FÆSÒ$æ÷F–f–6F–öç2"&FvSÒ-Š}˜MŠ­˜mŠ˜­˜}Š}Š¢"–6öã×³Ä6Æö6³26Æ74æÖSÒ&‚ÓRrÓR"óçÓà¢ÆF—b6Æ74æÖSÒ&w&–BvÓ2ÖC¦w&–BÖ6öÇ2Ó"#à¢¶æ÷F–f–6F–öä—FV×2æÖ‚†—FVÒÂ–æFW‚’Óâ€¢Å6WGF–æw5FövvÆR¶W“×¶—FV×ÒÆ&VÃ×¶—FV×ÒVæ&ÆVC×¶–æFW‚ÓÒ'Òóà¢’—Ğ¢ÂöF—cà¢Âõ6WGF–æw56V7F–öãà ¢Å6WGF–æw56V7F–öâF—FÆSÒ$’&VfW&Væ6W2"&FvSÒ%dõ$"–6öã×³Ä&÷B6Æ74æÖSÒ&‚ÓRrÓR"óçÓà¢ÆF—b6Æ74æÖSÒ&w&–BvÓBÖC¦w&–BÖ6öÇ2Ó"#à¢¶•&VfW&Væ6W2æÖ‚†—FVÒ’Óâ€¢Å6WGF–æw56VÆV7B¶W“×¶—FVÒæÆ&VÇÒÆ&VÃ×¶—FVÒæÆ&VÇÒfÇVS×¶—FVÒçfÇVWÒ÷F–öç3×µ¶—FVÒçfÇVRÂ$F—6&ÆVB"Â$ÖçVÂ"Â$&Ææ6VB%×Òóà¢’—Ğ¢ÂöF—cà¢Âõ6WGF–æw56V7F–öãà ¢Å6WGF–æw56V7F–öâF—FÆSÒ$FFæBf–ÆW2"&FvSÒ-Š}˜MŠ˜­Š}˜mŠ}Š¢"–6öã×³Äf–ÆT&6†—fR6Æ74æÖSÒ&‚ÓRrÓR"óçÓà¢ÆF—b6Æ74æÖSÒ&w&–BvÓBÖC¦w&–BÖ6öÇ2Ó2#à¢Å&öw&W75æVÂÆ&VÃÒ%7F÷&vRW6vR"fÇVS×³CgÒFöæSÒ&&ÇVR"óà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÓ7†Â&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓB#à¢Ä&FvRFöæSÒ&vöÆB#äW‡÷'CÂô&FvSà¢Ç6Æ74æÖSÒ&×BÓ2FW‡B×6ÒÆVF–ærÓbFW‡BÖG2×FW‡BóSb#íŠ­‹]Šı˜­‹Š˜­Š}˜mŠ}Š¢Š}˜M˜]‹M‹˜‹’˜=˜Š}ŠÍ˜}Š’˜˜-‹rãÂ÷à¢Ä'WGFöâ6Æ74æÖSÒ&×BÓBrÖgVÆÂ"f&–çCÒ'6V6öæF'’"–6öã×³ÄF÷væÆöB6Æ74æÖSÒ&‚ÓBrÓB"óçÓäW‡÷'B&ö¦V7BFFÂô'WGFöãà¢ÂöF—cà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÓ7†Â&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓB#à¢Ä&FvRFöæSÒ&&ÇVR#ä&6†—fSÂô&FvSà¢Ç6Æ74æÖSÒ&×BÓ2FW‡B×6ÒÆVF–ærÓbFW‡BÖG2×FW‡BóSb#íŠ­Šİ‹m˜­‹Š=‹‹M˜­˜˜=Š}˜]˜BŠı˜˜bŠ­˜m˜˜­‹Š}˜MŠ­˜m‹-˜­˜BãÂ÷à¢Ä'WGFöâ6Æ74æÖSÒ&×BÓBrÖgVÆÂ"f&–çCÒ'6V6öæF'’"–6öã×³Äf–ÆT&6†—fR6Æ74æÖSÒ&‚ÓBrÓB"óçÓäF÷væÆöB&6†—fSÂô'WGFöãà¢ÂöF—cà¢ÂöF—cà¢Âõ6WGF–æw56V7F–öãà ¢ÄvÆ746&B6Æ74æÖSÒ&&÷&FW"Õ²4TcCCCEÒó#BÓR#à¢ÆF—b6Æ74æÖSÒ&Ö"ÓRfÆW‚—FV×2×7F'B§W7F–g’Ö&WGvVVâvÓ2#à¢ÆF—cà¢Ä&FvRFöæSÒ&FævW"#äFævW"¦öæSÂô&FvSà¢Æƒ26Æ74æÖSÒ&×BÓ"FW‡BÓ'†ÂföçBÖ&Æ6²FW‡B×v†—FR#íŠ]ŠÍ‹Š}ŠŠ}Š¢Šİ‹=Š}‹=Š“Âöƒ3à¢Ç6Æ74æÖSÒ&×BÓ"FW‡B×6ÒÆVF–ærÓrFW‡BÖG2×FW‡BóSB#í˜=˜BŠ}˜MŠ=‹-‹Š}‹˜}˜mŠrT’˜˜-‹râ˜MŠr˜­˜ŠÍŠòŠ=‹‹M˜Š’Š=˜‚˜m˜-˜B˜]˜M˜=˜­Š’Š=˜‚Šİ‹˜˜‹˜M˜¢ãÂ÷à¢ÂöF—cà¢ÄÆö6´¶W–†öÆR6Æ74æÖSÒ&‚ÓbrÓbFW‡BÕ²4TcCCCEÒ"óà¢ÂöF—cà¢ÆF—b6Æ74æÖSÒ&w&–BvÓ2ÖC¦w&–BÖ6öÇ2Ó2#à¢ÄFævW$7F–öâF—FÆSÒ$&6†—fR&ö¦V7B"FW67&—F–öãÒ-Š]Ší˜Š}ŠŠ}˜M˜]‹M‹˜‹’˜]˜bŠ}˜M‹˜]˜BŠ}˜M˜­˜˜]˜¢â"óà¢ÄFævW$7F–öâF—FÆSÒ%G&ç6fW"÷væW'6†—"FW67&—F–öãÒ-Š­Šİ‹m˜­‹˜m˜-˜B˜]˜M˜=˜­Š’Š}˜M˜]‹M‹˜‹’â"óà¢ÄFævW$7F–öâF—FÆSÒ$FVÆWFR&ö¦V7B"FW67&—F–öãÒ-Š]ŠÍ‹Š}ŠŠí‹}˜­‹‹­˜­‹˜]˜‹˜Bâ"óà¢ÂöF—cà¢ÂôvÆ746&Cà¢ÂöF—cà ¢Æ6–FR6Æ74æÖSÒ'76R×’ÓR#à¢ÄvÆ746&B6Æ74æÖSÒ'ÓR#à¢Ä&FvRFöæSÒ&vöÆB#åW&Ö—76–öç27VÖÖ'“Âô&FvSà¢Æƒ26Æ74æÖSÒ&×BÓ2FW‡B×†ÂföçBÖ&Æ6²FW‡B×v†—FR#í˜]˜MŠí‹RŠ}˜M‹]˜MŠ}Šİ˜­Š}Š£Âöƒ3à¢ÆF—b6Æ74æÖSÒ&×BÓRw&–BvÓ2#à¢Ä6öçFW‡E&÷rÆ&VÃÒ$÷væW""fÇVSÒ-‹=‹˜­ŠòŠ}˜M‹M‹˜˜¢"óà¢Ä6öçFW‡E&÷rÆ&VÃÒ$FÖ–ç2"fÇVSÒ#""óà¢Ä6öçFW‡E&÷rÆ&VÃÒ$VF—F÷'2"fÇVSÒ#B"óà¢Ä6öçFW‡E&÷rÆ&VÃÒ%f–WvW'2"fÇVSÒ#‚"óà¢Ä6öçFW‡E&÷rÆ&VÃÒ$66W72÷fW'f–Wr"fÇVSÒ%&—fFRv÷&·76R"óà¢ÂöF—cà¢ÂôvÆ746&Cà ¢ÄvÆ746&B6Æ74æÖSÒ'ÓR#à¢ÆF—b6Æ74æÖSÒ&fÆW‚—FV×2×7F'BvÓB#à¢Åf÷&f—7VÂf&–çCÒ&fF""6Æ74æÖSÒ&‚ÓbrÓb&÷VæFVBÓ'†Â"6—¦W3Ò#cG‚"óà¢ÆF—cà¢Ä&FvRFöæSÒ&&ÇVR#ådõ$6WGF–æw3Âô&FvSà¢Æƒ26Æ74æÖSÒ&×BÓ2FW‡B×†ÂföçBÖ&Æ6²FW‡B×v†—FR#íŠ­˜‹]˜­Š’Š}˜MŠ]‹ŠıŠ}ŠıŠ}Š£Âöƒ3à¢ÂöF—cà¢ÂöF—cà¢Ç6Æ74æÖSÒ&×BÓRFW‡B×6ÒÆVF–ærÓrFW‡BÖG2×FW‡Bóc#à¢Š=˜m‹]ŠÒŠŠ­˜‹˜­˜BŠ­˜mŠ˜­˜}Š}Š¢Š}˜MŠ­Š=Ší˜­‹˜Š}˜M˜]ŠíŠ}‹}‹Š}˜MŠ=‹=Š˜‹˜­Š’Ší˜MŠ}˜B˜]‹Šİ˜MŠ’Š}˜MŠ­˜m˜˜­‹ˆÂ˜]‹’Š]Š˜-Š}Š˜]˜MŠí‹Rdõ$Š­˜M˜-Š}Šm˜­Š}˜²˜M˜M˜‹˜­˜"Š}˜MŠ]ŠıŠ}‹˜¢à¢Â÷à¢ÂôvÆ746&Cà ¢ÄvÆ746&B6Æ74æÖSÒ'ÓR#à¢Ä&FvRFöæSÒ&æWWG&Â#ä66W72÷fW'f–WsÂô&FvSà¢ÆF—b6Æ74æÖSÒ&×BÓR76R×’ÓB#à¢Å&öw&W74&"fÇVS×³ÒÆ&VÃÒ$÷væW"66W72"FöæSÒ&vöÆB"óà¢Å&öw&W74&"fÇVS×³s'ÒÆ&VÃÒ$VF—F÷"66W72"FöæSÒ&&ÇVR"óà¢Å&öw&W74&"fÇVS×³3‡ÒÆ&VÃÒ%f–WvW"66W72"FöæSÒ'7V66W72"óà¢ÂöF—cà¢ÂôvÆ746&Cà¢Âö6–FSà¢ÂöF—cà¢ÂöF—cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ6WGF–æw56V7F–öâ‡²F—FÆRÂ&FvRÂ–6öâÂ6†–ÆG&VâÓ¢²F—FÆS¢7G&–æs²&FvS¢7G&–æs²–6öã¢&V7Bå&V7DæöFS²6†–ÆG&Vã¢&V7Bå&V7DæöFRÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÄvÆ746&B6Æ74æÖSÒ'ÓR#à¢ÆF—b6Æ74æÖSÒ&Ö"ÓRfÆW‚—FV×2Ö6VçFW"vÓ2#à¢Ç7â6Æ74æÖSÒ&w&–B‚ÓrÓÆ6RÖ—FV×2Ö6VçFW"&÷VæFVBÓ'†Â&rÕ²4CDc3uÒóFW‡BÖvöÆB6†F÷rÖvöÆBÖvÆ÷r#ç¶–6öçÓÂ÷7ãà¢ÆF—cà¢Ä&FvRFöæSÒ&vöÆB#ç¶&FvWÓÂô&FvSà¢Æƒ26Æ74æÖSÒ&×BÓ"FW‡BÓ'†ÂföçBÖ&Æ6²FW‡B×v†—FR#ç·F—FÆWÓÂöƒ3à¢ÂöF—cà¢ÂöF—cà¢¶6†–ÆG&VçĞ¢ÂôvÆ746&Cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ6WGF–æw4–çWB‡²Æ&VÂÂfÇVRÓ¢²Æ&VÃ¢7G&–æs²fÇVS¢7G&–ærÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²#à¢Ç7â6Æ74æÖSÒ&Ö"Ó"&Æö6²FW‡B×‡2föçBÖ&Æ6²WW&66RFW‡BÖG2×FW‡BóC"#ç¶Æ&VÇÓÂ÷7ãà¢Æ–çWBFVfVÇEfÇVS×·fÇVWÒ6Æ74æÖSÒ&‚Ó"rÖgVÆÂ&÷VæFVBÓ'†Â&÷&FW"&÷&FW"×v†—FRó&rÖ&Æ6²ó#B‚ÓBFW‡B×6ÒföçBÖ&öÆBFW‡BÖG2×FW‡B÷WFÆ–æRÖæöæRG&ç6—F–öâfö7W3¦&÷&FW"Õ²4CDc3uÒóCB"óà¢ÂöÆ&VÃà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ6WGF–æw5FW‡F&V‡²Æ&VÂÂfÇVRÓ¢²Æ&VÃ¢7G&–æs²fÇVS¢7G&–ærÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²#à¢Ç7â6Æ74æÖSÒ&Ö"Ó"&Æö6²FW‡B×‡2föçBÖ&Æ6²WW&66RFW‡BÖG2×FW‡BóC"#ç¶Æ&VÇÓÂ÷7ãà¢ÇFW‡F&VFVfVÇEfÇVS×·fÇVWÒ&÷w3×³GÒ6Æ74æÖSÒ'rÖgVÆÂ&W6—¦RÖæöæR&÷VæFVBÓ'†Â&÷&FW"&÷&FW"×v†—FRó&rÖ&Æ6²ó#B‚ÓB’Ó2FW‡B×6ÒföçBÖ&öÆBÆVF–ærÓrFW‡BÖG2×FW‡B÷WFÆ–æRÖæöæRG&ç6—F–öâfö7W3¦&÷&FW"Õ²4CDc3uÒóCB"óà¢ÂöÆ&VÃà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ6WGF–æw56VÆV7B‡²Æ&VÂÂfÇVRÂ÷F–öç2Ó¢²Æ&VÃ¢7G&–æs²fÇVS¢7G&–æs²÷F–öç3¢7G&–æuµÒÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²#à¢Ç7â6Æ74æÖSÒ&Ö"Ó"&Æö6²FW‡B×‡2föçBÖ&Æ6²WW&66RFW‡BÖG2×FW‡BóC"#ç¶Æ&VÇÓÂ÷7ãà¢Ç6VÆV7BFVfVÇEfÇVS×·fÇVWÒ6Æ74æÖSÒ&‚Ó"rÖgVÆÂ&÷VæFVBÓ'†Â&÷&FW"&÷&FW"×v†—FRó&rÖ&Æ6²ó#B‚ÓBFW‡B×6ÒföçBÖ&öÆBFW‡BÖG2×FW‡B÷WFÆ–æRÖæöæRG&ç6—F–öâfö7W3¦&÷&FW"Õ²4CDc3uÒóCB#à¢´'&’æg&öÒ†æWr6WB†÷F–öç2’’æÖ‚†÷F–öâ’Óâ€¢Æ÷F–öâ¶W“×¶÷F–öçÒfÇVS×¶÷F–öçÓç¶÷F–öçÓÂö÷F–öãà¢’—Ğ¢Â÷6VÆV7Cà¢ÂöÆ&VÃà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ6WGF–æw5FövvÆR‡²Æ&VÂÂVæ&ÆVBÓ¢²Æ&VÃ¢7G&–æs²Væ&ÆVC¢&ööÆVâÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢Æ'WGFöâG—SÒ&'WGFöâ"6Æ74æÖSÒ&fÆW‚—FV×2Ö6VçFW"§W7F–g’Ö&WGvVVâvÓB&÷VæFVBÓ'†Â&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓBFW‡B×&–v‡BG&ç6—F–öâ†÷fW#¢×G&ç6ÆFR×’Ó†÷fW#¦&÷&FW"Õ²4CDc3uÒó#‚†÷fW#¦&r×v†—FRõ³ãcUÒ#à¢Ç7ãà¢Ç7â6Æ74æÖSÒ&&Æö6²föçBÖ&Æ6²FW‡B×v†—FR#ç¶Æ&VÇÓÂ÷7ãà¢Ç7â6Æ74æÖSÒ&×BÓ&Æö6²FW‡B×‡2föçBÖ&öÆBFW‡BÖG2×FW‡BóC"#ç¶Væ&ÆVBò$Væ&ÆVBf÷"F†—2v÷&·76R"¢$F—6&ÆVB'’FVfVÇB'ÓÂ÷7ãà¢Â÷7ãà¢Ç7â6Æ74æÖS×¶&VÆF—fR‚ÓrrÓ"&÷VæFVBÖgVÆÂ&÷&FW"G&ç6—F–öâG¶Væ&ÆVBò&&÷&FW"Õ²3d3sƒEÒó3R&rÕ²3d3sƒEÒó#"¢&&÷&FW"×v†—FRó&rÖ&Æ6²ó3'ÖÓà¢Ç7â6Æ74æÖS×¶'6öÇWFRF÷Ó‚ÓRrÓR&÷VæFVBÖgVÆÂG&ç6—F–öâG¶Væ&ÆVBò'&–v‡BÓb&rÕ²3d3sƒEÒ6†F÷rÕ³óó‡…÷&v&ƒ#"Ã“’Ã3"ÂãSR•Ò"¢'&–v‡BÓ&rÖG2×FW‡BóCR'ÖÒóà¢Â÷7ãà¢Âö'WGFöãà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâFævW$7F–öâ‡²F—FÆRÂFW67&—F–öâÓ¢²F—FÆS¢7G&–æs²FW67&—F–öã¢7G&–ærÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÓ7†Â&÷&FW"&÷&FW"Õ²4TcCCCEÒó‚&rÕ²4TcCCCEÒó‚ÓB#à¢Ä&FvRFöæSÒ&FævW"#ç·F—FÆWÓÂô&FvSà¢Ç6Æ74æÖSÒ&×BÓ2Ö–âÖ‚Ó"FW‡B×6ÒÆVF–ærÓbFW‡BÖG2×FW‡BóSB#ç¶FW67&—F–öçÓÂ÷à¢Ä'WGFöâ6Æ74æÖSÒ&×BÓBrÖgVÆÂ"f&–çCÒ&FævW""–6öã×³ÄÆö6´¶W–†öÆR6Æ74æÖSÒ&‚ÓBrÓB"óçÓåT’öæÇ“Âô'WGFöãà¢ÂöF—cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâv÷&·76UF%66fföÆB‡²F"Â&ö¦V7BÓ¢²F#¢7G&–æs²&ö¦V7C¢&ö¦V7Ev÷&·76U&ö¦V7BÒ’°¢6öç7B7W'&VçBÒv÷&·76UF'2æf–æB‚†—FVÒ’Óâ—FVÒçfÇVRÓÓÒF"“°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÄvÆ746&B6Æ74æÖSÒ'Ób#à¢ÄV×G•7FFP¢F—FÆS×¶G¶7W'&VçCòæÆ&VÂÇÂ%v÷&·76R'Ò+rG·&ö¦V7BçF—FÆWÖĞ¢FW67&—F–öãÒ-Š­˜RŠ­ŠÍ˜}˜­‹"˜]‹=Š}ŠİŠ’˜}‹ŠrŠ}˜M˜-‹=˜RŠ‹]‹˜­Š}˜²˜˜-‹r˜˜¢7&–çBrãâ‹=˜­Š­˜R‹Š‹rŠ}˜M˜]ŠİŠ­˜˜’Š}˜M˜]Š­Ší‹]‹R˜]˜bŠ}˜M˜‹Š}Šm˜Š}˜MŠİŠ}˜M˜­Š’ŠŠı˜˜bŠ]‹mŠ}˜Š’˜]˜m‹}˜"Ší˜M˜˜¢ŠÍŠı˜­Šòâ ¢7F–öã×°¢ÄÆ–æ²‡&Vc×·F"ÓÓÒ&’"ò"÷FööÇ2öFö7VÖVçB"¢F"ÓÓÒ&¶æ÷vÆVFvR"ò"÷&ö¦V7G26¶æ÷vÆVFvR"¢"÷&ö¦V7G2'Óà¢Ä'WGFöâf&–çCÒ'6V6öæF'’"–6öã×³ÅÇW26Æ74æÖSÒ&‚ÓBrÓB"óçÓí˜Š­ŠÒŠ}˜M˜]‹=Š}‹Š}˜MŠİŠ}˜M˜£Âô'WGFöãà¢ÂôÆ–æ³à¢Ğ¢óà¢ÂôvÆ746&Cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâÖ–æ”ÖWG&–2‡²Æ&VÂÂfÇVRÂ–6öâÓ¢²Æ&VÃ¢7G&–æs²fÇVS¢7G&–æs²–6öã¢&V7Bå&V7DæöFRÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÓ'†Â&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓ2#à¢ÆF—b6Æ74æÖSÒ&fÆW‚—FV×2Ö6VçFW"vÓ"FW‡BÖvöÆB#ç¶–6öçÓÇ7â6Æ74æÖSÒ'FW‡B×‡2föçBÖ&Æ6²FW‡BÖG2×FW‡BóS"#ç¶Æ&VÇÓÂ÷7ããÂöF—cà¢Ç6Æ74æÖSÒ&×BÓ"FW‡BÓ'†ÂföçBÖ&Æ6²FW‡B×v†—FR#ç·fÇVWÓÂ÷à¢ÂöF—cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ'VFvWDÖWG&–46&B‡²F—FÆRÂfÇVRÂFWF–ÂÂ–6öâÂFöæRÓ¢²F—FÆS¢7G&–æs²fÇVS¢7G&–æs²FWF–Ã¢7G&–æs²–6öã¢&V7Bå&V7DæöFS²FöæS¢&vöÆB"Â&&ÇVR"Â'7V66W72"Ò’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÕ³ãW&VÕÒ&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓB6†F÷rÖG2×6ÒG&ç6—F–öâ†÷fW#¢×G&ç6ÆFR×’Ó†÷fW#¦&÷&FW"Õ²4CDc3uÒó#‚†÷fW#¦&r×v†—FRõ³ãcUÒ#à¢ÆF—b6Æ74æÖSÒ&fÆW‚—FV×2×7F'B§W7F–g’Ö&WGvVVâvÓ2#à¢ÆF—cà¢Ä&FvRFöæS×·FöæWÓç·F—FÆWÓÂô&FvSà¢Ç6Æ74æÖSÒ&×BÓBFW‡BÓ'†ÂföçBÖ&Æ6²FW‡B×v†—FR#ç·fÇVWÓÂ÷à¢Ç6Æ74æÖSÒ&×BÓ"FW‡B×‡2föçBÖ&öÆBÆVF–ærÓRFW‡BÖG2×FW‡BóC‚#ç¶FWF–ÇÓÂ÷à¢ÂöF—cà¢Ç7â6Æ74æÖSÒ&w&–B‚Ó"rÓ"6‡&–æ²ÓÆ6RÖ—FV×2Ö6VçFW"&÷VæFVBÓ'†Â&rÕ²4CDc3uÒóFW‡BÖvöÆB6†F÷rÖvöÆBÖvÆ÷r#ç¶–6öçÓÂ÷7ãà¢ÂöF—cà¢ÂöF—cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ'VFvWD7F–öä6öçFVçB‡²7F–öâÓ¢²7F–öã¢²F—FÆS¢7G&–æs²FW67&—F–öã¢7G&–æs²–6öã¢&V7Bå&V7DæöFS²FöæS¢&vöÆB"Â&&ÇVR"Â'7V66W72"Â&æWWG&Â"ÒÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢Ç7â6Æ74æÖSÒ&fÆW‚—FV×2×7F'BvÓ2#à¢Ç7â6Æ74æÖSÒ&w&–B‚ÓrÓ6‡&–æ²ÓÆ6RÖ—FV×2Ö6VçFW"&÷VæFVBÓ'†Â&rÕ²4CDc3uÒó"FW‡BÖvöÆBG&ç6—F–öâw&÷WÖ†÷fW#¢×&÷FFRÓb#ç¶7F–öâæ–6öçÓÂ÷7ãà¢Ç7ãà¢Ä&FvRFöæS×¶7F–öâçFöæWÓç¶7F–öâçF—FÆWÓÂô&FvSà¢Ç7â6Æ74æÖSÒ&×BÓ"&Æö6²FW‡B×6ÒÆVF–ærÓbFW‡BÖG2×FW‡BóSb#ç¶7F–öâæFW67&—F–öçÓÂ÷7ãà¢Â÷7ãà¢Â÷7ãà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ&öw&W75æVÂ‡²Æ&VÂÂfÇVRÂFöæRÓ¢²Æ&VÃ¢7G&–æs²fÇVS¢çVÖ&W#²FöæS¢&vöÆB"Â&&ÇVR"Â'7V66W72"Ò’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÆF—b6Æ74æÖSÒ'&÷VæFVBÓ7†Â&÷&FW"&÷&FW"×v†—FRó&rÖ&Æ6²ó#ÓB#à¢Ç6Æ74æÖSÒ&Ö"ÓBFW‡B×6ÒföçBÖ&Æ6²FW‡BÖG2×FW‡Bós#ç¶Æ&VÇÓÂ÷à¢Å&öw&W74&"fÇVS×·fÇVWÒFöæS×·FöæWÒóà¢ÂöF—cà¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ ¦gVæ7F–öâ7F–öäÆ–æ²‡²‡&VbÂ–6öâÂF—FÆRÓ¢²‡&Vc¢7G&–æs²–6öã¢&V7Bå&V7DæöFS²F—FÆS¢7G&–ærÒ’°¢&WGW&âƒÄWFôÆö6Æ—¦VD6öçFVçCà¢ÄÆ–æ²‡&Vc×¶‡&VgÒ6Æ74æÖSÒ&w&÷W&÷VæFVBÓ7†Â&÷&FW"&÷&FW"×v†—FRó&r×v†—FRõ³ãCUÒÓBG&ç6—F–öâ†÷fW#¢×G&ç6ÆFR×’Ó†÷fW#¦&÷&FW"Õ²4CDc3uÒó3"†÷fW#¦&r×v†—FRõ³ãuÒ#à¢Ç7â6Æ74æÖSÒ&w&–B‚ÓrÓÆ6RÖ—FV×2Ö6VçFW"&÷VæFVBÓ'†Â&rÕ²4CDc3uÒó"FW‡BÖvöÆBG&ç6—F–öâw&÷WÖ†÷fW#¢×&÷FFRÓb#ç¶–6öçÓÂ÷7ãà¢Ç7â6Æ74æÖSÒ&×BÓB&Æö6²föçBÖ&Æ6²FW‡B×v†—FR#ç·F—FÆWÓÂ÷7ãà¢Ç7â6Æ74æÖSÒ&×BÓ"&Æö6²FW‡B×‡2ÆVF–ærÓRFW‡BÖG2×FW‡BóCb#í˜]Š­Š}ŠÒ‹Š‹Š}˜M˜‹Š}Šm˜Š}˜MŠİŠ}˜M˜­Š“Â÷7ãà¢ÂôÆ–æ³à¢ÂôWFôÆö6Æ—¦VD6öçFVçCâ“°§Ğ Ğ
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ds-token-border text-xs text-ds-token-muted">{index + 1}</span>
+                <span className="min-w-0 flex-1 truncate text-sm font-medium text-ds-token-text">{task}</span>
+                <Badge tone={index === 0 ? "warning" : "neutral"}>{index === 0 ? "Next" : "Open"}</Badge>
+              </div>
+            ))}
+            {!detail?.tasks.length && <p className="py-5 text-sm text-ds-token-muted">No pending tasks</p>}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="hidden p-5">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <Badge tone="gold">Overview</Badge>
+              <h2 className="mt-2 text-2xl font-black text-white">Ù…Ù„Ø®Øµ Ø§Ù„ØªÙ†ÙÙŠØ°</h2>
+            </div>
+            <IconButton label="ØªÙ†Ø²ÙŠÙ„ Ø§Ù„Ù…Ù„Ø®Øµ" tone="gold">
+              <Download className="h-5 w-5" />
+            </IconButton>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <ProgressPanel label="Ø§Ù„ØªÙ‚Ø¯Ù… Ø§Ù„Ø¹Ø§Ù…" value={project.score} tone="gold" />
+            <ProgressPanel label="Ø¬Ø§Ù‡Ø²ÙŠØ© Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚" value={72} tone="blue" />
+            <ProgressPanel label="ØªÙ†Ø³ÙŠÙ‚ Ø§Ù„ÙØ±ÙŠÙ‚" value={64} tone="success" />
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <Badge tone="blue">Quick Actions</Badge>
+              <h2 className="mt-2 text-2xl font-black text-white">Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø³Ø±ÙŠØ¹Ø©</h2>
+            </div>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <ActionLink href="/tools/document" icon={<FileText className="h-5 w-5" />} title="Ø¥Ù†Ø´Ø§Ø¡ ÙˆØ«ÙŠÙ‚Ø©" />
+            <ActionLink href="/tools" icon={<Bot className="h-5 w-5" />} title="Ø§Ø³Ø£Ù„ VORA" />
+            <ActionLink href="/projects#knowledge" icon={<UploadCloud className="h-5 w-5" />} title="Ø¥Ø¶Ø§ÙØ© Ù…Ù„Ù Ù…Ø¹Ø±ÙØ©" />
+            <ActionLink href="/history" icon={<Clock3 className="h-5 w-5" />} title="Ø¹Ø±Ø¶ Ø§Ù„Ù†Ø´Ø§Ø·" />
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <h2 className="text-2xl font-black text-white">Ø§Ù„Ù†Ø´Ø§Ø· Ø§Ù„Ø£Ø®ÙŠØ±</h2>
+            <Badge tone="neutral">{activity.length} Ø¹Ù†Ø§ØµØ±</Badge>
+          </div>
+          <div className="grid gap-4">
+            {activity.map((item, index) => (
+              <TimelineCard key={item.title} index={index + 1} title={item.title} text={item.text} icon={item.icon} />
+            ))}
+          </div>
+        </GlassCard>
+      </div>
+
+      <aside className="space-y-5">
+        <GlassCard className="p-5">
+          <h3 className="text-base font-semibold text-ds-token-text">Overview</h3>
+          <div className="mt-4 divide-y divide-ds-token-border">
+            <div className="flex items-center justify-between gap-3 py-3">
+              <span className="text-sm text-ds-token-muted">Documents</span><Badge tone="warning">{Math.min(detail?.documents.length || 0, 3)}</Badge>
+            </div>
+            <div className="flex items-center justify-between gap-3 py-3"><span className="text-sm text-ds-token-muted">Budget Health</span><Badge tone="neutral">0</Badge></div>
+            <div className="flex items-center justify-between gap-3 py-3"><span className="text-sm text-ds-token-muted">Top Risks</span><Badge tone={(detail?.reports.length || 0) > 2 ? "warning" : "neutral"}>{Math.min(detail?.reports.length || 0, 2)}</Badge></div>
+          </div>
+        </GlassCard>
+        <GlassCard className="p-5">
+          <Badge tone="gold">AI Insight</Badge>
+          <div className="mt-4 flex items-start gap-4">
+            <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+            <div>
+              <h3 className="font-black text-white">ØªÙˆØµÙŠØ© VORA</h3>
+              <p className="mt-2 text-sm leading-7 text-ds-text/60">Ø§Ø¨Ø¯Ø£ Ø¨ØªÙˆÙ„ÙŠØ¯ ØªÙ‚Ø±ÙŠØ± ØªÙ†ÙÙŠØ°ÙŠ Ù…Ø®ØªØµØ± Ø¨Ø¹Ø¯ Ø±ÙØ¹ Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ© Ù„Ù„Ù…Ø´Ø±ÙˆØ¹.</p>
+            </div>
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <h3 className="text-xl font-black text-white">Ø£Ø­Ø¯Ø« Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚</h3>
+          <div className="mt-4 grid gap-3">
+            {["Ù…Ù„Ø®Øµ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹", "Ø®Ø·Ø© Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ø£ÙˆÙ„ÙŠØ©", "Ù‚Ø§Ø¦Ù…Ø© Ù…ØªØ·Ù„Ø¨Ø§Øª Ø§Ù„ØªÙ†ÙÙŠØ°"].map((title) => (
+              <div key={title} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+                <FileText className="h-5 w-5 text-gold" />
+                <span className="min-w-0 flex-1 truncate text-sm font-black text-ds-text">{title}</span>
+                <Badge tone="neutral">Draft</Badge>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <h3 className="text-xl font-black text-white">Ø§Ù„ÙØ±ÙŠÙ‚</h3>
+          <div className="mt-4 grid gap-3">
+            {["Ù…Ø§Ù„Ùƒ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹", "VORA", "Ù…Ø±Ø§Ø¬Ø¹ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚"].map((member) => (
+              <div key={member} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+                <span className="font-bold text-ds-text/76">{member}</span>
+                <span className="h-2.5 w-2.5 rounded-full bg-[#16C784] shadow-[0_0_18px_rgba(22,199,132,.72)]" />
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      </aside>
+    </div></LocalizedContent>
+  );
+}
+
+function AiWorkspaceTab({ project }: { project: ProjectWorkspaceProject }) {
+  const { locale } = useI18n();
+  const organizationId = project.organizationId || "atlas";
+  const tasksState = useTasksRepository(project.id);
+  const timelineState = useTimelineRepository(project.id);
+  const budgetState = useBudgetRepository(project.id);
+  const documentsState = useDocumentsRepository(project.id);
+  const knowledgeState = useKnowledgeRepository({ organizationId, projectId: project.id });
+  const [selectedPrompt, setSelectedPrompt] = useState(voraSkills[0]?.prompt || "");
+  const [conversationSearch, setConversationSearch] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const moduleReferences = [
+    { label: "Tasks", value: tasksState.loading ? "..." : tasksState.data.length },
+    { label: "Milestones", value: timelineState.loading ? "..." : timelineState.data.milestones.length },
+    { label: "Budget", value: budgetState.loading ? "..." : `${budgetRepository.getBudgetStats(budgetState.data).progress}%` },
+    { label: "Documents", value: documentsState.loading ? "..." : documentsState.data.length },
+    { label: "Knowledge", value: knowledgeState.loading ? "..." : knowledgeState.data.length }
+  ];
+
+  const recentConversations = projectRepository.listSavedGenerations().filter((item) => {
+    const normalized = conversationSearch.trim().toLowerCase();
+    if (!normalized) return true;
+    return [item.title, item.tool, item.date].join(" ").toLowerCase().includes(normalized);
+  });
+
+  const demoResponse = [
+    "## ØªØ­Ù„ÙŠÙ„ VORA Ø§Ù„Ø³Ø±ÙŠØ¹",
+    "",
+    `Ø§Ù„Ù…Ø´Ø±ÙˆØ¹: **${project.title}**`,
+    "",
+    "| Ø§Ù„Ù…Ø­ÙˆØ± | Ø§Ù„Ù‚Ø±Ø§Ø¡Ø© | Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù…Ù‚ØªØ±Ø­ |",
+    "|---|---|---|",
+    `| Ø§Ù„Ù…Ù‡Ø§Ù… | ${tasksState.data.length} Ø¹Ù†ØµØ± ÙÙŠ Ø§Ù„Ø³ÙŠØ§Ù‚ | Ø±Ø§Ø¬Ø¹ Ø§Ù„Ù…Ù‡Ø§Ù… Ø§Ù„Ø­Ø±Ø¬Ø© ÙˆØ§Ù„Ù…Ø­Ø¬ÙˆØ¨Ø© Ø£ÙˆÙ„Ø§Ù‹ |`,
+    `| Ø§Ù„Ø¬Ø¯ÙˆÙ„ | ${timelineState.data.milestones.length} Ù…Ø¹Ù„Ù… | Ø«Ø¨Ù‘Øª Ø§Ù„Ù…Ø¹Ù„Ù… Ø§Ù„Ù‚Ø§Ø¯Ù… ÙˆØ­Ø¯Ø¯ Ø§Ù„Ù…Ø§Ù„Ùƒ |`,
+    `| Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ | ${documentsState.data.length} Ù…Ù„Ù | Ø¬Ù‡Ù‘Ø² Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ Ø§Ù„Ù†Ø§Ù‚ØµØ© |`,
+    `| Ø§Ù„Ù…Ø¹Ø±ÙØ© | ${knowledgeState.data.length} Ù…Ù‚Ø§Ù„Ø© | Ø§Ø±Ø¨Ø· Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø§Ù„Ø³Ù„Ø§Ù…Ø© ÙˆØ§Ù„Ø¬ÙˆØ¯Ø© Ø¨Ø§Ù„Ù…Ø±Ø­Ù„Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ© |`,
+    "",
+    "### Ø§Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©",
+    selectedPrompt || "Ø§Ø®ØªØ± Ù…Ø·Ø§Ù„Ø¨Ø© Ø³Ø±ÙŠØ¹Ø© Ù„ÙŠØªÙ… ØªÙ…Ø±ÙŠØ±Ù‡Ø§ Ø¥Ù„Ù‰ Ù…ÙˆÙ„Ø¯ VORA Ø§Ù„Ø­Ø§Ù„ÙŠ."
+  ].join("\n");
+
+  const copyResponse = async () => {
+    await navigator.clipboard?.writeText(demoResponse).catch(() => undefined);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  };
+
+  return (
+    <LocalizedContent locale={locale}><div className="grid gap-5 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,.65fr)]">
+      <div className="space-y-5">
+        <GlassCard className="relative overflow-hidden p-5">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ds-token-gold/42 to-transparent" />
+          <div className="relative z-10">
+            <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <Badge tone="blue">Conversation</Badge>
+                <h2 className="mt-2 text-2xl font-black text-white">VORA Intelligence Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+                <p className="mt-2 text-sm leading-7 text-ds-text/58">VORA ÙŠÙ‚Ø±Ø£ Ø³ÙŠØ§Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ù…Ù† Ø§Ù„Ù…Ø³ØªÙˆØ¯Ø¹Ø§Øª Ø§Ù„Ø­Ø§Ù„ÙŠØ©: Ø§Ù„ÙØ±ÙŠÙ‚ØŒ Ø§Ù„Ù…Ù‡Ø§Ù…ØŒ Ø§Ù„Ø¬Ø¯ÙˆÙ„ØŒ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©ØŒ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ØŒ ÙˆØ§Ù„Ù…Ø¹Ø±ÙØ©.</p>
+              </div>
+              <VoraVisual variant="thinking" className="h-20 w-20 rounded-ds-xl" sizes="80px" />
+            </div>
+            <div className="mb-5 grid gap-3 sm:grid-cols-5">
+              {moduleReferences.map((module) => (
+                <div key={module.label} className="rounded-ds-md border border-ds-token-border bg-white/[0.03] p-3">
+                  <p className="text-xs text-ds-text/45">{module.label}</p>
+                  <p className="mt-1 text-xl font-black text-white">{module.value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="grid gap-3 rounded-ds-xl border border-ds-token-border bg-black/22 p-4 sm:p-5">
+              <ChatBubble role="assistant">Ù…Ø±Ø­Ø¨Ø§Ù‹ØŒ Ø£Ù†Ø§ VORA. Ø¬Ù‡Ø²Øª Ø³ÙŠØ§Ù‚ {project.title} Ù…Ù† Ø§Ù„Ù…Ù‡Ø§Ù… ÙˆØ§Ù„Ø¬Ø¯ÙˆÙ„ ÙˆØ§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© ÙˆØ§Ù„ÙˆØ«Ø§Ø¦Ù‚ ÙˆØ§Ù„Ù…Ø¹Ø±ÙØ©.</ChatBubble>
+              <ChatBubble role="user">{selectedPrompt || "Ø£Ø±ÙŠØ¯ ØªØ­Ù„ÙŠÙ„Ø§Ù‹ Ø³Ø±ÙŠØ¹Ø§Ù‹ Ù„Ù„Ù…Ø®Ø§Ø·Ø± ÙˆØ®Ø·Ø© ØªÙ†ÙÙŠØ° Ù…Ø®ØªØµØ±Ø©."}</ChatBubble>
+              <ChatBubble role="assistant">{demoResponse}</ChatBubble>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link href="/tools/document">
+                <Button icon={<Sparkles className="h-4 w-4" />}>ÙØªØ­ Ù…ÙˆÙ„Ø¯ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚</Button>
+              </Link>
+              <Button variant="secondary" onClick={copyResponse} icon={<FileText className="h-4 w-4" />}>{copied ? "ØªÙ… Ø§Ù„Ù†Ø³Ø®" : "Ù†Ø³Ø® Ø§Ù„Ø±Ø¯"}</Button>
+              <Link href="/tools">
+                <Button variant="secondary" icon={<Bot className="h-4 w-4" />}>ÙƒÙ„ Ø£Ø¯ÙˆØ§Øª VORA</Button>
+              </Link>
+            </div>
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <Badge tone="gold">Suggested Actions</Badge>
+              <h2 className="mt-2 text-2xl font-black text-white">Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ù…Ù‚ØªØ±Ø­Ø©</h2>
+            </div>
+            <Badge tone="blue">VORA Ready</Badge>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {voraSkills.slice(0, 6).map((skill) => (
+              <button key={skill.id} type="button" onClick={() => setSelectedPrompt(skill.prompt)} className="group rounded-ds-lg border border-ds-token-border bg-white/[0.03] p-4 text-start transition hover:border-ds-token-gold/32 hover:bg-white/[0.055]">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-ds-md bg-ds-token-gold/12 text-ds-token-gold transition group-hover:scale-105"><Sparkles className="h-5 w-5" /></span>
+                  <div>
+                    <Badge tone="gold">{skill.title}</Badge>
+                    <p className="mt-3 text-sm leading-6 text-ds-text/56">{skill.prompt}</p>
+                    <p className="mt-2 text-xs text-ds-text/40">{skill.modules.join(" Â· ")}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="mb-5">
+            <Badge tone="blue">Quick Prompts</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">Ù…Ø·Ø§Ù„Ø¨Ø§Øª Ø³Ø±ÙŠØ¹Ø©</h2>
+          </div>
+          <div className="grid gap-3">
+            {voraSkills.slice(6).map((skill) => (
+              <button key={skill.id} type="button" onClick={() => setSelectedPrompt(skill.prompt)} className="group flex items-start gap-3 rounded-ds-md border border-ds-token-border bg-black/20 p-4 text-start transition hover:border-ds-token-gold/24 hover:bg-white/[0.045]">
+                <Lightbulb className="mt-1 h-5 w-5 shrink-0 text-gold transition group-hover:-rotate-6" />
+                <span className="text-sm font-bold leading-7 text-ds-text/72">{skill.prompt}</span>
+              </button>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-2xl font-black text-white">Ø°Ø§ÙƒØ±Ø© VORA</h2>
+              <p className="mt-1 text-sm text-ds-text/50">Ù…Ø­Ø§Ø¯Ø«Ø§Øª ÙˆÙ…Ø®Ø±Ø¬Ø§Øª Ù…Ø­ÙÙˆØ¸Ø© Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ø³ÙŠØ§Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.</p>
+            </div>
+            <Link href="/history" className="text-sm font-black text-gold">Ø¹Ø±Ø¶ Ø§Ù„Ø³Ø¬Ù„</Link>
+          </div>
+          <Input value={conversationSearch} onChange={(event) => setConversationSearch(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ø­Ø§Ø¯Ø«Ø§Øª Ø§Ù„Ø³Ø§Ø¨Ù‚Ø©" className="mb-4" />
+          <div className="grid gap-3">
+            {recentConversations.slice(0, 4).map((output) => (
+              <div key={output.title} className="flex items-center gap-3 rounded-ds-md border border-ds-token-border bg-white/[0.03] p-4">
+                <Sparkles className="h-5 w-5 text-[#51D8FF]" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-black text-white">{output.title}</p>
+                  <p className="mt-1 text-xs text-ds-text/46">{output.tool} Â· {output.date}</p>
+                </div>
+                <Badge tone="neutral">VORA</Badge>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      </div>
+
+      <aside className="space-y-5">
+        <GlassCard className="p-5">
+          <Badge tone="gold">Project Context</Badge>
+          <h3 className="mt-3 text-xl font-black text-white">Ø³ÙŠØ§Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h3>
+          <div className="mt-4 grid gap-3">
+            <ContextRow label="Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={project.title} />
+            <ContextRow label="Ø§Ù„Ù†ÙˆØ¹" value={project.type} />
+            <ContextRow label="Ø§Ù„Ø­Ø§Ù„Ø©" value={project.status} />
+            <ContextRow label="Ø§Ù„ØªÙ‚Ø¯Ù…" value={`${project.score}%`} />
+            <ContextRow label="Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«" value={project.updatedAt} />
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <Badge tone="blue">Attached Documents</Badge>
+          <h3 className="mt-3 text-xl font-black text-white">ÙˆØ«Ø§Ø¦Ù‚ Ù…Ø±ØªØ¨Ø·Ø©</h3>
+          <div className="mt-4 grid gap-3">
+            {["Ù…Ù„Ø®Øµ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹", "Ù…ØªØ·Ù„Ø¨Ø§Øª Ø§Ù„ØªÙ†ÙÙŠØ°", "Ù…Ø­Ø¶Ø± Ø§Ø¬ØªÙ…Ø§Ø¹"].map((doc) => (
+              <div key={doc} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+                <FileText className="h-5 w-5 text-gold" />
+                <span className="min-w-0 flex-1 truncate text-sm font-bold text-ds-text/76">{doc}</span>
+                <LockKeyhole className="h-4 w-4 text-ds-text/34" />
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <Badge tone="success">Knowledge Summary</Badge>
+          <h3 className="mt-3 text-xl font-black text-white">Ù…Ù„Ø®Øµ Ø§Ù„Ù…Ø¹Ø±ÙØ©</h3>
+          <p className="mt-3 text-sm leading-7 text-ds-text/60">Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© ØªØ¨Ù‚Ù‰ Ù…Ø¯Ø§Ø±Ø© Ø¹Ø¨Ø± Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø§Ù„Ø­Ø§Ù„ÙŠØ©. Ù‡Ø°Ø§ Ø§Ù„Ù‚Ø³Ù… ÙŠØ¹Ø±Ø¶ Ø·Ø¨Ù‚Ø© ØªÙ†Ø¸ÙŠÙ…ÙŠØ© ÙÙ‚Ø· Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.</p>
+          <div className="mt-4 grid gap-3">
+            <MiniMetric label="Ù…Ù„ÙØ§Øª Ù…Ø¹Ø±ÙØ©" value="0" icon={<UploadCloud className="h-5 w-5" />} />
+            <MiniMetric label="Ø¬Ø§Ù‡Ø²ÙŠØ© Ø§Ù„Ø³ÙŠØ§Ù‚" value="Ù‚ÙŠØ¯ Ø§Ù„ØªØ¬Ù‡ÙŠØ²" icon={<Bot className="h-5 w-5" />} />
+          </div>
+          <Link href="/projects#knowledge" className="mt-4 inline-flex w-full items-center justify-center rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-3 text-sm font-black text-ds-text transition hover:border-[#D4AF37]/30 hover:bg-white/[0.08]">
+            ÙØªØ­ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø¹Ø±ÙØ©
+          </Link>
+        </GlassCard>
+      </aside>
+    </div></LocalizedContent>
+  );
+}
+
+function DocumentsTab({ project }: { project: ProjectWorkspaceProject }) {
+  const { locale } = useI18n();
+  const organizationId = project.organizationId || "atlas";
+  const documentState = useDocumentsRepository(project.id);
+  const departmentState = useDepartmentsRepository(organizationId);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [query, setQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [uploaderFilter, setUploaderFilter] = useState("All");
+  const [tagFilter, setTagFilter] = useState("All");
+  const [sort, setSort] = useState("updated");
+  const [view, setView] = useState<"grid" | "table">("grid");
+  const [uploading, setUploading] = useState<Array<{ id: string; name: string; progress: number; error?: string; file?: File }>>([]);
+  const [uploadMeta, setUploadMeta] = useState<Omit<DocumentUploadInput, "projectId" | "file">>({
+    organizationId,
+    category: "Architectural Drawings",
+    version: "v1",
+    tags: []
+  });
+  const [preview, setPreview] = useState<{ document: Document; url?: string; text?: string } | null>(null);
+  const [message, setMessage] = useState<string | undefined>();
+
+  useEffect(() => {
+    setDocuments(documentState.data);
+  }, [documentState.data]);
+
+  useEffect(() => {
+    setUploadMeta((current) => ({ ...current, organizationId }));
+  }, [organizationId]);
+
+  useEffect(() => {
+    return () => {
+      if (preview?.url) URL.revokeObjectURL(preview.url);
+    };
+  }, [preview]);
+
+  const filteredDocuments = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    return documents
+      .filter((document) => {
+        const matchesSearch = normalized ? [document.title, document.filename, document.category, document.departmentName, document.uploaderName, ...(document.tags || [])].filter(Boolean).join(" ").toLowerCase().includes(normalized) : true;
+        const matchesCategory = categoryFilter === "All" || document.category === categoryFilter;
+        const matchesUploader = uploaderFilter === "All" || document.uploaderName === uploaderFilter;
+        const matchesTag = tagFilter === "All" || (document.tags || []).includes(tagFilter);
+        return matchesSearch && matchesCategory && matchesUploader && matchesTag;
+      })
+      .sort((a, b) => {
+        if (sort === "largest") return (b.fileSize || 0) - (a.fileSize || 0);
+        if (sort === "name") return a.title.localeCompare(b.title);
+        return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
+      });
+  }, [categoryFilter, documents, query, sort, tagFilter, uploaderFilter]);
+
+  const stats = useMemo(() => documentRepository.getDocumentStats(documents), [documents]);
+  const uploaders = useMemo(() => Array.from(new Set(documents.map((document) => document.uploaderName).filter(Boolean))) as string[], [documents]);
+  const tags = useMemo(() => Array.from(new Set(documents.flatMap((document) => document.tags || []))), [documents]);
+
+  async function uploadFiles(files: FileList | File[]) {
+    const list = Array.from(files);
+    for (const file of list) {
+      const id = `${file.name}-${Date.now()}-${Math.random()}`;
+      setUploading((current) => [...current, { id, name: file.name, progress: 18, file }]);
+      const result = await documentRepository.uploadDocument({
+        projectId: project.id,
+        organizationId,
+        departmentId: uploadMeta.departmentId,
+        category: uploadMeta.category,
+        version: uploadMeta.version,
+        tags: uploadMeta.tags,
+        file
+      });
+      if (!result.data) {
+        setUploading((current) => current.map((item) => item.id === id ? { ...item, progress: 100, error: result.error || "Upload failed." } : item));
+        continue;
+      }
+      const department = departmentState.data.find((item) => item.id === result.data?.departmentId);
+      setDocuments((current) => [{ ...result.data!, departmentName: result.data!.departmentName || department?.name }, ...current]);
+      setUploading((current) => current.map((item) => item.id === id ? { ...item, progress: 100 } : item));
+    }
+  }
+
+  async function downloadProjectDocument(document: Document) {
+    const result = await documentRepository.downloadDocument(document);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+      return;
+    }
+    const blob = result.data;
+    const url = URL.createObjectURL(blob);
+    const link = window.document.createElement("a");
+    link.href = url;
+    link.download = document.filename || `${document.title}.${document.mimeType?.includes("pdf") ? "pdf" : "txt"}`;
+    window.document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function previewDocument(document: Document) {
+    const result = await documentRepository.downloadDocument(document);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ù…Ø¹Ø§ÙŠÙ†Ø© Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+      return;
+    }
+    const blob = result.data;
+    if (document.mimeType?.startsWith("text/") || document.mimeType?.includes("markdown")) {
+      setPreview({ document, text: await blob.text() });
+      return;
+    }
+    if (document.mimeType?.startsWith("image/") || document.mimeType === "application/pdf") {
+      setPreview({ document, url: URL.createObjectURL(blob) });
+      return;
+    }
+    setPreview({ document, text: "Ù„Ø§ ØªØªÙˆÙØ± Ù…Ø¹Ø§ÙŠÙ†Ø© Ù…Ø¨Ø§Ø´Ø±Ø© Ù„Ù‡Ø°Ø§ Ø§Ù„Ù†ÙˆØ¹. ÙŠÙ…ÙƒÙ† ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ù„Ù Ù„ÙØªØ­Ù‡ ÙÙŠ Ø§Ù„ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨." });
+  }
+
+  async function updateProjectDocument(documentId: string, input: Partial<ProjectDocumentInput>) {
+    const result = await documentRepository.updateDocument(documentId, input);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ø¯ÙŠØ« Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+      return;
+    }
+    setDocuments((current) => current.map((document) => document.id === documentId ? { ...document, ...result.data } : document));
+    setMessage("ØªÙ… ØªØ­Ø¯ÙŠØ« Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+  }
+
+  async function archiveProjectDocument(documentId: string) {
+    const result = await documentRepository.archiveDocument(documentId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+      return;
+    }
+    setDocuments((current) => current.filter((document) => document.id !== documentId));
+    setMessage("ØªÙ…Øª Ø£Ø±Ø´ÙØ© Ø§Ù„ÙˆØ«ÙŠÙ‚Ø©.");
+  }
+
+  async function deleteProjectDocument(documentId: string) {
+    const result = await documentRepository.deleteDocument(documentId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø­Ø°Ù Ø§Ù„ÙˆØ«ÙŠÙ‚Ø© Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹.");
+      return;
+    }
+    setDocuments((current) => current.filter((document) => document.id !== documentId));
+    setMessage("ØªÙ… Ø­Ø°Ù Ø§Ù„ÙˆØ«ÙŠÙ‚Ø© Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹ Ø¹Ø¨Ø± Ø§Ù„Ù…Ø³ØªÙˆØ¯Ø¹.");
+  }
+
+  return (
+    <LocalizedContent locale={locale}><div className="space-y-5">
+      <GlassCard className="p-5">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <Badge tone="gold">Documents</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">ÙˆØ«Ø§Ø¦Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">Ø¥Ø¯Ø§Ø±Ø© ÙˆØ«Ø§Ø¦Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ ÙˆÙ…Ù„ÙØ§Øª Ø§Ù„ØªØ®Ø²ÙŠÙ† Ø¹Ø¨Ø± Ù…Ø³ØªÙˆØ¯Ø¹ Ù…ÙˆØ­Ø¯ ÙŠØ¯Ø¹Ù… Supabase Storage Ùˆ Demo / Supabase / Auto modes.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <label className="inline-flex cursor-pointer">
+              <input type="file" multiple className="hidden" onChange={(event) => event.target.files && void uploadFiles(event.target.files)} />
+              <span className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.065] px-5 text-sm font-black text-[#f8efd7] shadow-ds-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#D4AF37]/30 hover:bg-white/[0.095]">
+                <UploadCloud className="h-4 w-4" /> Ø±ÙØ¹ Ù…Ù„ÙØ§Øª
+              </span>
+            </label>
+            <Link href="/tools/document">
+              <Button icon={<Sparkles className="h-4 w-4" />}>ØªÙˆÙ„ÙŠØ¯ ÙˆØ«ÙŠÙ‚Ø©</Button>
+            </Link>
+          </div>
+        </div>
+      </GlassCard>
+
+      <GlassCard className="p-4">
+        <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_180px_180px_160px_160px_auto] xl:items-center">
+          <Input label="Search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ØŒ Ø§Ù„ÙØ¦Ø§ØªØŒ Ø§Ù„ÙˆØ³ÙˆÙ…..." icon={<Search className="h-4 w-4" />} />
+          <NativeSelect label="Category" value={categoryFilter} onChange={setCategoryFilter} options={[{ value: "All", label: "ÙƒÙ„ Ø§Ù„ÙØ¦Ø§Øª" }, ...documentCategories.map((category) => ({ value: category, label: category }))]} />
+          <NativeSelect label="Uploader" value={uploaderFilter} onChange={setUploaderFilter} options={[{ value: "All", label: "ÙƒÙ„ Ø§Ù„Ø±Ø§ÙØ¹ÙŠÙ†" }, ...uploaders.map((uploader) => ({ value: uploader, label: uploader }))]} />
+          <NativeSelect label="Tag" value={tagFilter} onChange={setTagFilter} options={[{ value: "All", label: "ÙƒÙ„ Ø§Ù„ÙˆØ³ÙˆÙ…" }, ...tags.map((tag) => ({ value: tag, label: tag }))]} />
+          <Dropdown label="Sort" value={sort} options={["updated", "largest", "name"]} onChange={setSort} />
+          <div className="flex gap-2">
+            <IconButton label="Grid view" tone={view === "grid" ? "gold" : "neutral"} onClick={() => setView("grid")}>
+              <Grid2X2 className="h-5 w-5" />
+            </IconButton>
+            <IconButton label="Table view" tone={view === "table" ? "gold" : "neutral"} onClick={() => setView("table")}>
+              <List className="h-5 w-5" />
+            </IconButton>
+          </div>
+        </div>
+      </GlassCard>
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <MiniMetric label="Document count" value={String(stats.count)} icon={<FileText className="h-5 w-5" />} />
+        <MiniMetric label="Storage usage" value={formatBytes(stats.storageUsage)} icon={<FileArchive className="h-5 w-5" />} />
+        <MiniMetric label="Categories" value={String(Object.keys(stats.categories).length)} icon={<FolderKanban className="h-5 w-5" />} />
+        <MiniMetric label="Largest file" value={stats.largestFiles[0] ? formatBytes(stats.largestFiles[0].fileSize || 0) : "0 B"} icon={<Download className="h-5 w-5" />} />
+      </section>
+
+      <section
+        className="ds-surface ds-lift rounded-[1.85rem] border-dashed p-5"
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={(event) => {
+          event.preventDefault();
+          void uploadFiles(event.dataTransfer.files);
+        }}
+      >
+        <div className="grid gap-4 lg:grid-cols-[1fr_180px_180px_180px] lg:items-end">
+          <div>
+            <Badge tone="blue">Upload Area</Badge>
+            <h3 className="mt-2 text-xl font-black text-white">Ø§Ø³Ø­Ø¨ Ø§Ù„Ù…Ù„ÙØ§Øª Ù‡Ù†Ø§ Ø£Ùˆ Ø§Ø®ØªØ± Ù…Ù„ÙØ§Øª Ù…ØªØ¹Ø¯Ø¯Ø©</h3>
+            <p className="mt-2 text-sm leading-7 text-ds-text/56">Bucket expected: vorqa-project-documents. Ù„Ù† ÙŠØªÙ… Ø¥Ù†Ø´Ø§Ø¡ bucket ØªÙ„Ù‚Ø§Ø¦ÙŠØ§Ù‹.</p>
+          </div>
+          <NativeSelect label="Category" value={String(uploadMeta.category || "Other")} onChange={(value) => setUploadMeta((current) => ({ ...current, category: value as ProjectDocumentCategory }))} options={documentCategories.map((category) => ({ value: category, label: category }))} />
+          <NativeSelect label="Department" value={uploadMeta.departmentId || ""} onChange={(value) => setUploadMeta((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departmentState.data.map((department) => ({ value: department.id, label: department.name }))]} />
+          <Input label="Tags" value={(uploadMeta.tags || []).join(", ")} onChange={(event) => setUploadMeta((current) => ({ ...current, tags: event.target.value.split(",").map((tag) => tag.trim()).filter(Boolean) }))} placeholder="permit, approved" />
+        </div>
+        {uploading.length > 0 && (
+          <div className="mt-5 grid gap-3">
+            {uploading.map((item) => (
+              <div key={item.id} className="rounded-2xl border border-white/10 bg-black/20 p-3">
+                <div className="mb-2 flex items-center justify-between gap-3 text-sm font-black text-ds-text">
+                  <span className="truncate">{item.name}</span>
+                  <div className="flex gap-2">
+                    {item.error && item.file && <Button type="button" size="sm" variant="secondary" onClick={() => void uploadFiles([item.file!])}>Retry</Button>}
+                    <Button type="button" size="sm" variant="ghost" onClick={() => setUploading((current) => current.filter((upload) => upload.id !== item.id))}>Cancel</Button>
+                  </div>
+                </div>
+                <ProgressBar value={item.progress} tone={item.error ? "danger" : "gold"} />
+                {item.error && <p className="mt-2 text-xs font-bold text-[#FFB4B4]">{item.error}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {message && <p className="rounded-2xl border border-[#D4AF37]/18 bg-[#D4AF37]/10 p-3 text-sm font-bold leading-6 text-[#F5D878]">{message}</p>}
+
+      {documentState.loading ? (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{[0, 1, 2].map((item) => <div key={item} className="ds-skeleton h-44 rounded-[1.75rem]" />)}</div>
+      ) : documentState.error && !documentState.isFallback ? (
+        <GlassCard className="p-5">
+          <p className="rounded-2xl border border-[#EF4444]/24 bg-[#EF4444]/10 p-4 text-sm font-bold text-[#FFB4B4]">{documentState.error}</p>
+        </GlassCard>
+      ) : filteredDocuments.length === 0 ? (
+        <EmptyState
+          title="Ù„Ø§ ØªÙˆØ¬Ø¯ ÙˆØ«Ø§Ø¦Ù‚ Ù„Ù‡Ø°Ø§ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ø¨Ø¹Ø¯"
+          description="ÙˆÙ„Ù‘Ø¯ ÙˆØ«ÙŠÙ‚Ø© Ø¹Ø¨Ø± VORA Ø£Ùˆ Ø§Ø±ÙØ¹ Ù…Ù„ÙØ§Ù‹ Ø¬Ø¯ÙŠØ¯Ø§Ù‹ Ø¥Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© ÙˆØ«Ø§Ø¦Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹."
+          action={
+            <div className="flex flex-wrap justify-center gap-2">
+              <Link href="/tools/document"><Button>ØªÙˆÙ„ÙŠØ¯ ÙˆØ«ÙŠÙ‚Ø©</Button></Link>
+            </div>
+          }
+        />
+      ) : (
+        view === "grid" ? (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {filteredDocuments.map((document) => (
+              <ProjectDocumentCard key={document.id} document={document} onPreview={() => void previewDocument(document)} onDownload={() => void downloadProjectDocument(document)} onArchive={() => void archiveProjectDocument(document.id)} onDelete={() => void deleteProjectDocument(document.id)} onUpdate={(input) => void updateProjectDocument(document.id, input)} departments={departmentState.data} />
+            ))}
+          </div>
+        ) : (
+          <GlassCard className="overflow-hidden p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[940px] border-collapse text-sm">
+                <thead className="border-b border-white/10 bg-white/[0.055] text-gold">
+                  <tr>{["Document", "Category", "Uploader", "Size", "Tags", "Updated", "Actions"].map((column) => <th key={column} className="px-4 py-3 text-right font-black">{column}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {filteredDocuments.map((document) => (
+                    <tr key={document.id} className="border-b border-white/10 text-ds-text/70 transition hover:bg-white/[0.045]">
+                      <td className="px-4 py-3 font-black text-white">{document.title}</td>
+                      <td className="px-4 py-3">{document.category || "Other"}</td>
+                      <td className="px-4 py-3">{document.uploaderName || "VORA"}</td>
+                      <td className="px-4 py-3">{formatBytes(document.fileSize || 0)}</td>
+                      <td className="px-4 py-3">{(document.tags || []).join(", ") || "-"}</td>
+                      <td className="px-4 py-3">{document.updatedAt?.slice(0, 10) || "-"}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex gap-2">
+                          <Button type="button" size="sm" variant="secondary" onClick={() => void previewDocument(document)}>Preview</Button>
+                          <Button type="button" size="sm" variant="secondary" onClick={() => void downloadProjectDocument(document)}>Download</Button>
+                          <Button type="button" size="sm" variant="danger" onClick={() => void archiveProjectDocument(document.id)}>Archive</Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GlassCard>
+        )
+      )}
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        {preview && (
+          <GlassCard className="p-5">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="gold">Preview</Badge>
+                <h3 className="mt-2 text-xl font-black text-white">{preview.document.title}</h3>
+              </div>
+              <Button type="button" variant="secondary" size="sm" onClick={() => setPreview(null)}>Ø¥ØºÙ„Ø§Ù‚</Button>
+            </div>
+            {preview.url && preview.document.mimeType?.startsWith("image/") && <Image src={preview.url} alt={preview.document.title} width={1600} height={900} unoptimized className="max-h-[520px] w-full rounded-3xl object-contain" />}
+            {preview.url && preview.document.mimeType === "application/pdf" && <iframe src={preview.url} title={preview.document.title} className="h-[520px] w-full rounded-3xl border border-white/10" />}
+            {preview.text && <pre className="max-h-[520px] overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-black/24 p-4 text-sm leading-7 text-ds-text/70">{preview.text}</pre>}
+          </GlassCard>
+        )}
+        <GlassCard className="p-5">
+          <div className="flex items-start gap-4">
+            <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+            <div>
+              <Badge tone="blue">VORA Document Insights</Badge>
+              <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚</h3>
+            </div>
+          </div>
+          <div className="mt-5 grid gap-3">
+            <ContextRow label="Missing documents" value={stats.categories.Permits ? "Low" : "Permits"} />
+            <ContextRow label="Recent uploads" value={String(stats.recentUploads.length)} />
+            <ContextRow label="Large files" value={stats.largestFiles[0]?.filename || "None"} />
+            <ContextRow label="Expiring permits" value={documents.some((document) => document.category === "Permits") ? "Review required" : "Not uploaded"} />
+          </div>
+        </GlassCard>
+      </div>
+    </div></LocalizedContent>
+  );
+}
+
+function KnowledgeTab({ project }: { project: ProjectWorkspaceProject }) {
+  const { locale } = useI18n();
+  const organizationId = project.organizationId || "atlas";
+  const knowledgeState = useKnowledgeRepository({ organizationId, projectId: project.id });
+  const documentsState = useDocumentsRepository(project.id);
+  const [articles, setArticles] = useState<KnowledgeArticle[]>([]);
+  const [query, setQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [tagFilter, setTagFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [sort, setSort] = useState("updated");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | undefined>();
+  const [form, setForm] = useState<KnowledgeArticleInput>({
+    organizationId,
+    projectId: project.id,
+    title: "",
+    summary: "",
+    content: "",
+    category: "Building Standards",
+    tags: [],
+    status: "Published"
+  });
+
+  useEffect(() => {
+    setArticles(knowledgeState.data);
+  }, [knowledgeState.data]);
+
+  useEffect(() => {
+    setForm((current) => ({ ...current, organizationId, projectId: project.id }));
+  }, [organizationId, project.id]);
+
+  const allTags = useMemo(() => Array.from(new Set(articles.flatMap((article) => article.tags || []))).sort(), [articles]);
+  const stats = useMemo(() => knowledgeRepository.getKnowledgeStats(articles), [articles]);
+  const filteredArticles = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    return articles
+      .filter((article) => {
+        const searchBody = [article.title, article.summary, article.content, article.category, ...(article.tags || [])].filter(Boolean).join(" ").toLowerCase();
+        const matchesSearch = normalized ? searchBody.includes(normalized) : true;
+        const matchesCategory = categoryFilter === "All" || article.category === categoryFilter;
+        const matchesTag = tagFilter === "All" || (article.tags || []).includes(tagFilter);
+        const matchesStatus = statusFilter === "All" || article.status === statusFilter;
+        return matchesSearch && matchesCategory && matchesTag && matchesStatus;
+      })
+      .sort((a, b) => {
+        if (sort === "title") return a.title.localeCompare(b.title);
+        if (sort === "category") return String(a.category || "").localeCompare(String(b.category || ""));
+        return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
+      });
+  }, [articles, categoryFilter, query, sort, statusFilter, tagFilter]);
+
+  const resetForm = () => {
+    setEditingId(null);
+    setForm({
+      organizationId,
+      projectId: project.id,
+      title: "",
+      summary: "",
+      content: "",
+      category: "Building Standards",
+      tags: [],
+      status: "Published"
+    });
+  };
+
+  const saveArticle = async () => {
+    if (!form.title.trim()) {
+      setMessage("Ø£Ø¯Ø®Ù„ Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ù…Ù‚Ø§Ù„Ø© Ù‚Ø¨Ù„ Ø§Ù„Ø­ÙØ¸.");
+      return;
+    }
+    const input = { ...form, title: form.title.trim(), tags: form.tags || [] };
+    const result = editingId
+      ? await knowledgeRepository.updateKnowledge(editingId, input)
+      : await knowledgeRepository.createKnowledge(input);
+    if (result.data) {
+      setArticles((current) => editingId ? current.map((article) => article.id === editingId ? result.data! : article) : [result.data!, ...current]);
+      setMessage(editingId ? "ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ù‚Ø§Ù„Ø© Ø§Ù„Ù…Ø¹Ø±ÙÙŠØ©." : "ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ù…Ù‚Ø§Ù„Ø© Ù…Ø¹Ø±ÙÙŠØ© Ø¬Ø¯ÙŠØ¯Ø©.");
+      resetForm();
+    } else {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø­ÙØ¸ Ø§Ù„Ù…Ù‚Ø§Ù„Ø© Ø§Ù„Ù…Ø¹Ø±ÙÙŠØ©.");
+    }
+  };
+
+  const archiveArticle = async (articleId: string) => {
+    const result = await knowledgeRepository.archiveKnowledge(articleId);
+    if (result.data) {
+      setArticles((current) => current.map((article) => article.id === articleId ? { ...article, status: "Archived", updatedAt: new Date().toISOString() } : article));
+      setMessage("ØªÙ… Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ù‚Ø§Ù„Ø© Ø¯ÙˆÙ† Ø­Ø°ÙÙ‡Ø§ Ù†Ù‡Ø§Ø¦ÙŠØ§Ù‹.");
+    } else {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ù‚Ø§Ù„Ø©.");
+    }
+  };
+
+  return (
+    <LocalizedContent locale={locale}><div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="space-y-5">
+        <div className="grid gap-4 md:grid-cols-4">
+          <MetricPanel label="Ø§Ù„Ù…Ù‚Ø§Ù„Ø§Øª" value={stats.count} hint="Ù‚Ø§Ø¹Ø¯Ø© Ù…Ø¹Ø±ÙØ© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" icon={<BookOpen className="h-5 w-5" />} />
+          <MetricPanel label="Ø§Ù„ÙØ¦Ø§Øª" value={Object.keys(stats.categories).length} hint="ØªØµÙ†ÙŠÙ ØªØ´ØºÙŠÙ„ÙŠ" icon={<Hash className="h-5 w-5" />} />
+          <MetricPanel label="Ø§Ù„Ù…Ø³ÙˆØ¯Ø§Øª" value={stats.draftCount} hint="ØªØ­ØªØ§Ø¬ Ø§Ø¹ØªÙ…Ø§Ø¯Ø§Ù‹" icon={<FileText className="h-5 w-5" />} />
+          <MetricPanel label="Ø§Ù„Ù…Ù„ÙØ§Øª" value={documentsState.data.length} hint="Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" icon={<FileArchive className="h-5 w-5" />} />
+        </div>
+
+        <GlassCard className="p-5">
+          <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <Badge tone="gold">Knowledge Base</Badge>
+              <h2 className="mt-2 text-2xl font-black text-white">Ù‚Ø§Ø¹Ø¯Ø© Ù…Ø¹Ø±ÙØ© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+              <p className="mt-2 text-sm leading-7 text-ds-text/60">Ù…Ù‚Ø§Ù„Ø§Øª ØªØ´ØºÙŠÙ„ÙŠØ© Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ ÙˆØ§Ù„ÙˆØ«Ø§Ø¦Ù‚ ÙˆØ§Ù„Ù‚Ø±Ø§Ø±Ø§Øª Ø§Ù„ÙŠÙˆÙ…ÙŠØ©ØŒ Ù…Ø¹ Ø¨Ù‚Ø§Ø¡ Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø§Ù„Ø­Ø§Ù„ÙŠØ© Ø¶Ù…Ù† Supabase Storage.</p>
+            </div>
+            <Badge tone={knowledgeState.isFallback ? "warning" : "success"}>{knowledgeState.source}</Badge>
+          </div>
+
+          <div className="grid gap-3 lg:grid-cols-[1fr_180px_160px_150px]">
+            <div className="relative">
+              <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ds-text/45" />
+              <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ø¹Ø±ÙØ©ØŒ Ø§Ù„ÙˆØ³ÙˆÙ…ØŒ Ø£Ùˆ Ø§Ù„Ù…Ø­ØªÙˆÙ‰" className="pr-11" />
+            </div>
+            <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              <option>All</option>
+              {knowledgeCategories.map((category) => <option key={category}>{category}</option>)}
+            </select>
+            <select value={tagFilter} onChange={(event) => setTagFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              <option>All</option>
+              {allTags.map((tag) => <option key={tag}>{tag}</option>)}
+            </select>
+            <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              <option>All</option>
+              {knowledgeStatuses.map((status) => <option key={status}>{status}</option>)}
+            </select>
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+            <select value={sort} onChange={(event) => setSort(event.target.value)} className="h-10 rounded-xl border border-white/10 bg-white/[0.055] px-3 text-xs text-white outline-none">
+              <option value="updated">Ø§Ù„Ø£Ø­Ø¯Ø« ØªØ­Ø¯ÙŠØ«Ø§Ù‹</option>
+              <option value="title">Ø­Ø³Ø¨ Ø§Ù„Ø¹Ù†ÙˆØ§Ù†</option>
+              <option value="category">Ø­Ø³Ø¨ Ø§Ù„ÙØ¦Ø©</option>
+            </select>
+            <span className="text-xs text-ds-text/55">{filteredArticles.length} Ù†ØªÙŠØ¬Ø©</span>
+          </div>
+        </GlassCard>
+
+        {knowledgeState.loading ? (
+          <GlassCard className="p-6 text-sm text-ds-text/60">Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ù‚Ø§Ø¹Ø¯Ø© Ø§Ù„Ù…Ø¹Ø±ÙØ©...</GlassCard>
+        ) : knowledgeState.error && knowledgeState.source !== "demo-fallback" ? (
+          <GlassCard className="p-6">
+            <EmptyState title="ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ø¹Ø±ÙØ©" description={knowledgeState.error} />
+          </GlassCard>
+        ) : filteredArticles.length === 0 ? (
+          <GlassCard className="p-6">
+            <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù‚Ø§Ù„Ø§Øª Ù…Ø·Ø§Ø¨Ù‚Ø©" description="Ø§Ø¨Ø¯Ø£ Ø¨Ø¥Ø¶Ø§ÙØ© Ø¥Ø¬Ø±Ø§Ø¡ØŒ Ù…Ø¹ÙŠØ§Ø±ØŒ Ø£Ùˆ Ù‚Ø§Ø¦Ù…Ø© ØªØ­Ù‚Ù‚ Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ù‡Ø°Ø§ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹." />
+          </GlassCard>
+        ) : (
+          <div className="grid gap-4 lg:grid-cols-2">
+            {filteredArticles.map((article) => (
+              <GlassCard key={article.id} className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <Badge tone={article.status === "Archived" ? "neutral" : article.status === "Draft" ? "warning" : "success"}>{article.status}</Badge>
+                    <h3 className="mt-3 text-lg font-black text-white">{article.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-7 text-ds-text/60">{article.summary}</p>
+                  </div>
+                  <IconButton label="Ø£Ø±Ø´ÙØ©" tone="warning" onClick={() => archiveArticle(article.id)}>
+                    <FileArchive className="h-4 w-4" />
+                  </IconButton>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {article.category && <Badge tone="blue">{article.category}</Badge>}
+                  {(article.tags || []).map((tag) => <Badge key={tag} tone="neutral">#{tag}</Badge>)}
+                </div>
+                <div className="mt-4 grid gap-2 text-xs text-ds-text/55">
+                  <span>ÙˆØ«ÙŠÙ‚Ø© Ù…Ø±ØªØ¨Ø·Ø©: {article.documentTitle || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯Ø©"}</span>
+                  <span>Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«: {article.updatedAt ? new Date(article.updatedAt).toLocaleDateString("ar-MA") : "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"}</span>
+                </div>
+                <div className="mt-4 flex gap-2">
+                  <Button size="sm" variant="secondary" onClick={() => {
+                    setEditingId(article.id);
+                    setForm({
+                      organizationId,
+                      projectId: project.id,
+                      documentId: article.documentId,
+                      title: article.title,
+                      summary: article.summary,
+                      content: article.content,
+                      category: article.category,
+                      tags: article.tags || [],
+                      status: article.status
+                    });
+                  }}>ØªØ¹Ø¯ÙŠÙ„</Button>
+                  <Button size="sm" variant="ghost">ÙØªØ­</Button>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        )}
+
+        <GlassCard className="p-5">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <Badge tone="blue">{editingId ? "Edit" : "Create"}</Badge>
+              <h3 className="mt-2 text-xl font-black text-white">{editingId ? "ØªØ¹Ø¯ÙŠÙ„ Ù…Ù‚Ø§Ù„Ø© Ù…Ø¹Ø±ÙÙŠØ©" : "Ø¥Ø¶Ø§ÙØ© Ù…Ù‚Ø§Ù„Ø© Ù…Ø¹Ø±ÙÙŠØ©"}</h3>
+            </div>
+            {editingId && <Button size="sm" variant="ghost" onClick={resetForm}>Ø¥Ù„ØºØ§Ø¡</Button>}
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} placeholder="Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ù…Ù‚Ø§Ù„Ø©" />
+            <select value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              {knowledgeCategories.map((category) => <option key={category}>{category}</option>)}
+            </select>
+            <select value={form.documentId || ""} onChange={(event) => setForm({ ...form, documentId: event.target.value || undefined })} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              <option value="">Ø¨Ø¯ÙˆÙ† ÙˆØ«ÙŠÙ‚Ø© Ù…Ø±ØªØ¨Ø·Ø©</option>
+              {documentsState.data.map((document) => <option key={document.id} value={document.id}>{document.title}</option>)}
+            </select>
+            <select value={form.status} onChange={(event) => setForm({ ...form, status: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/[0.055] px-4 text-sm text-white outline-none">
+              {knowledgeStatuses.map((status) => <option key={status}>{status}</option>)}
+            </select>
+          </div>
+          <Textarea value={form.summary || ""} onChange={(event) => setForm({ ...form, summary: event.target.value })} placeholder="Ù…Ù„Ø®Øµ Ù‚ØµÙŠØ±" className="mt-3 min-h-[92px]" />
+          <Textarea value={form.content || ""} onChange={(event) => setForm({ ...form, content: event.target.value })} placeholder="Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØªÙØµÙŠÙ„ÙŠ Ø¨ØµÙŠØºØ© Markdown" className="mt-3 min-h-[160px]" />
+          <Input value={(form.tags || []).join(", ")} onChange={(event) => setForm({ ...form, tags: event.target.value.split(",").map((tag) => tag.trim()).filter(Boolean) })} placeholder="ÙˆØ³ÙˆÙ… Ù…ÙØµÙˆÙ„Ø© Ø¨ÙÙˆØ§ØµÙ„" className="mt-3" />
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Button onClick={saveArticle} icon={<Plus className="h-4 w-4" />}>{editingId ? "Ø­ÙØ¸ Ø§Ù„ØªØ¹Ø¯ÙŠÙ„" : "Ø¥Ù†Ø´Ø§Ø¡ Ù…Ù‚Ø§Ù„Ø©"}</Button>
+            {message && <span className="text-sm text-ds-text/60">{message}</span>}
+          </div>
+        </GlassCard>
+
+        <KnowledgeWorkspace projectId={project.id} projectTitle={project.title} />
+      </div>
+      <aside className="space-y-5">
+        <GlassCard className="p-5">
+          <div className="flex items-start gap-4">
+            <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+            <div>
+              <Badge tone="success">VORA Knowledge</Badge>
+              <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤Ù‰ Ø§Ù„Ù…Ø¹Ø±ÙØ©</h3>
+            </div>
+          </div>
+          <p className="mt-4 text-sm leading-7 text-ds-text/60">Ù‡Ø°Ù‡ Ø§Ù„Ø±Ø¤Ù‰ ØªØ¬Ø±ÙŠØ¨ÙŠØ© ÙÙ‚Ø· ÙˆÙ„Ø§ ØªØ³ØªØ¯Ø¹ÙŠ OpenAI. Ø§Ù„Ù‡Ø¯Ù Ù‡Ùˆ Ø¥Ø¸Ù‡Ø§Ø± ÙØ¬ÙˆØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© ÙˆØ§Ù„Ù‚Ø±Ø§Ø¡Ø© Ø§Ù„Ù…Ù‚ØªØ±Ø­Ø© Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.</p>
+          <div className="mt-5 space-y-3">
+            <InsightRow title="ØªÙˆØ«ÙŠÙ‚ Ù†Ø§Ù‚Øµ" text="Ø£Ø¶Ù Ø¥Ø¬Ø±Ø§Ø¡ Ø§Ø¹ØªÙ…Ø§Ø¯ Ø§Ù„Ù…ÙˆØ±Ø¯ÙŠÙ† Ù‚Ø¨Ù„ Ù…Ø±Ø­Ù„Ø© Ø§Ù„Ù…Ø´ØªØ±ÙŠØ§Øª." />
+            <InsightRow title="Ù‚Ø±Ø§Ø¡Ø© Ù…Ù‚ØªØ±Ø­Ø©" text="Ø±Ø§Ø¬Ø¹ Ù…ÙˆØ§ØµÙØ§Øª Ø§Ù„Ø®Ø±Ø³Ø§Ù†Ø© ÙˆÙ‚Ø§Ø¦Ù…Ø© ÙØ­Øµ Ø§Ù„Ø£Ø³Ø§Ø³Ø§Øª." />
+            <InsightRow title="Ø¥Ø¬Ø±Ø§Ø¡ Ù…Ø­Ø¯Ø«" text="ØªÙ… ØªØ­Ø¯ÙŠØ« Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø§Ù„Ø³Ù„Ø§Ù…Ø© Ù…Ø¤Ø®Ø±Ø§Ù‹ ÙˆØªØ­ØªØ§Ø¬ Ù…Ø´Ø§Ø±ÙƒØ© Ù…Ø¹ Ø§Ù„ÙØ±ÙŠÙ‚." />
+            <InsightRow title="Ù…ÙˆØ¶ÙˆØ¹ Ù…ÙƒØ±Ø±" text="ÙŠÙˆØ¬Ø¯ ØªØ´Ø§Ø¨Ù‡ Ø¨ÙŠÙ† Ø¶Ø¨Ø· Ø§Ù„Ø¬ÙˆØ¯Ø© ÙˆÙ‚Ø§Ø¦Ù…Ø© Ø§Ù„ÙØ­ØµØŒ ÙŠÙ…ÙƒÙ† Ø¯Ù…Ø¬Ù‡Ù…Ø§ Ù„Ø§Ø­Ù‚Ø§Ù‹." />
+          </div>
+          <div className="mt-5 grid gap-3">
+            <MiniMetric label="Ù†Ø·Ø§Ù‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={project.id} icon={<FolderKanban className="h-5 w-5" />} />
+            <MiniMetric label="Ø§Ù„Ø£ÙƒØ«Ø± Ù‚Ø±Ø§Ø¡Ø©" value={stats.mostViewed[0]?.title || "ØºÙŠØ± Ù…ØªØ§Ø­"} icon={<BookOpen className="h-5 w-5" />} />
+            <MiniMetric label="RAG / OCR" value="ØºÙŠØ± Ù…ÙØ¹Ù„" icon={<Bot className="h-5 w-5" />} />
+          </div>
+        </GlassCard>
+      </aside>
+    </div></LocalizedContent>
+  );
+}
+
+function InsightRow({ title, text }: { title: string; text: string }) {
+  return (<AutoLocalizedContent>
+    <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+      <p className="text-sm font-black text-white">{title}</p>
+      <p className="mt-1 text-xs leading-6 text-ds-text/55">{text}</p>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function MetricPanel({ label, value, hint, icon }: { label: string; value: React.ReactNode; hint: string; icon: React.ReactNode }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-xs text-ds-text/55">{label}</p>
+          <p className="mt-2 text-2xl font-black text-white">{value}</p>
+          <p className="mt-1 text-xs text-ds-text/45">{hint}</p>
+        </div>
+        <span className="rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/10 p-3 text-[#F2D487]">{icon}</span>
+      </div>
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: ProjectDetail }) {
+  const organizationId = project.organizationId || "atlas";
+  const budgetState = useBudgetRepository(project.id);
+  const departmentState = useDepartmentsRepository(organizationId);
+  const [budget, setBudget] = useState(budgetState.data);
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [message, setMessage] = useState<string | undefined>();
+  const [categoryForm, setCategoryForm] = useState<BudgetCategoryInput>({
+    organizationId,
+    name: "",
+    description: "",
+    color: "#D4AF37"
+  });
+  const [itemForm, setItemForm] = useState<ProjectBudgetItemInput>({
+    projectId: project.id,
+    organizationId,
+    title: "",
+    description: "",
+    plannedCost: 0,
+    actualCost: 0,
+    committedCost: 0,
+    status: "Planned",
+    priority: "Medium"
+  });
+
+  useEffect(() => {
+    setBudget(budgetState.data);
+  }, [budgetState.data]);
+
+  useEffect(() => {
+    setCategoryForm((current) => ({ ...current, organizationId }));
+    setItemForm((current) => ({ ...current, projectId: project.id, organizationId }));
+  }, [organizationId, project.id]);
+
+  const stats = useMemo(() => budgetRepository.getBudgetStats(budget), [budget]);
+  const filteredItems = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return budget.items.filter((item) => {
+      const queryMatch = !query || [item.title, item.description, item.categoryName, item.departmentName].filter(Boolean).some((value) => String(value).toLowerCase().includes(query));
+      const categoryMatch = categoryFilter === "All" || item.categoryId === categoryFilter;
+      const statusMatch = statusFilter === "All" || item.status === statusFilter;
+      return queryMatch && categoryMatch && statusMatch;
+    });
+  }, [budget.items, categoryFilter, search, statusFilter]);
+
+  const quickActions = [
+    { title: "Ø¥Ø¶Ø§ÙØ© Ù…ØµØ±ÙˆÙ", description: "Ø£Ù†Ø´Ø¦ Ø¨Ù†Ø¯ ØªÙƒÙ„ÙØ© Ø¬Ø¯ÙŠØ¯ Ù„Ù„Ù…Ø´Ø±ÙˆØ¹", icon: <Plus className="h-5 w-5" />, tone: "gold" as const },
+    { title: "Ø±ÙØ¹ ÙØ§ØªÙˆØ±Ø©", description: "Ø³ÙŠØ³ØªØ®Ø¯Ù… Ù…Ø³Ø§Ø± Ø§Ù„Ù…Ù„ÙØ§Øª Ø¹Ù†Ø¯ Ø§Ù„Ø±Ø¨Ø·", icon: <UploadCloud className="h-5 w-5" />, tone: "blue" as const },
+    { title: "ØªÙˆÙ„ÙŠØ¯ ØªÙ‚Ø±ÙŠØ± Ù…ÙŠØ²Ø§Ù†ÙŠØ©", description: "Ø§ÙØªØ­ VORA Ù„Ø¥Ø¹Ø¯Ø§Ø¯ ØªÙ‚Ø±ÙŠØ±", icon: <BarChart3 className="h-5 w-5" />, tone: "success" as const, href: "/tools/document" },
+    { title: "ØªØµØ¯ÙŠØ± Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©", description: "ÙˆØ§Ø¬Ù‡Ø© ØªØµØ¯ÙŠØ± ÙÙ‚Ø· Ø­Ø§Ù„ÙŠØ§Ù‹", icon: <Download className="h-5 w-5" />, tone: "neutral" as const }
+  ];
+
+  async function createCategory(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!categoryForm.name.trim()) {
+      setMessage("Ø§Ø³Ù… ÙØ¦Ø© Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ù…Ø·Ù„ÙˆØ¨.");
+      return;
+    }
+    const result = await budgetRepository.createCategory({ ...categoryForm, name: categoryForm.name.trim(), description: categoryForm.description?.trim() });
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„ÙØ¦Ø©.");
+      return;
+    }
+    setBudget((current) => ({ ...current, categories: [result.data!, ...current.categories] }));
+    setCategoryForm({ organizationId, name: "", description: "", color: "#D4AF37" });
+    setMessage("ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ ÙØ¦Ø© Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+  }
+
+  async function updateCategory(categoryId: string, input: Partial<BudgetCategoryInput>) {
+    const result = await budgetRepository.updateCategory(categoryId, input);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ø¯ÙŠØ« Ø§Ù„ÙØ¦Ø©.");
+      return;
+    }
+    setBudget((current) => ({ ...current, categories: current.categories.map((category) => (category.id === categoryId ? { ...category, ...result.data } : category)) }));
+    setMessage("ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„ÙØ¦Ø©.");
+  }
+
+  async function archiveCategory(categoryId: string) {
+    const result = await budgetRepository.archiveCategory(categoryId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø§Ù„ÙØ¦Ø©.");
+      return;
+    }
+    setBudget((current) => ({ ...current, categories: current.categories.filter((category) => category.id !== categoryId), items: current.items.map((item) => item.categoryId === categoryId ? { ...item, categoryId: undefined, categoryName: undefined } : item) }));
+    setMessage("ØªÙ…Øª Ø£Ø±Ø´ÙØ© Ø§Ù„ÙØ¦Ø©.");
+  }
+
+  async function createBudgetItem(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!itemForm.title.trim()) {
+      setMessage("Ø¹Ù†ÙˆØ§Ù† Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ù…Ø·Ù„ÙˆØ¨.");
+      return;
+    }
+    if (itemForm.categoryId && !budget.categories.some((category) => category.id === itemForm.categoryId)) {
+      setMessage("ÙØ¦Ø© Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ù„Ø§ ØªÙ†ØªÙ…ÙŠ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ù†Ø¸Ù…Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©.");
+      return;
+    }
+    if (itemForm.departmentId && !departmentState.data.some((department) => department.id === itemForm.departmentId)) {
+      setMessage("Ø§Ù„Ù‚Ø³Ù… Ø§Ù„Ù…Ø®ØªØ§Ø± Ù„Ø§ ÙŠÙ†ØªÙ…ÙŠ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ù†Ø¸Ù…Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©.");
+      return;
+    }
+    const result = await budgetRepository.createBudgetItem({
+      ...itemForm,
+      title: itemForm.title.trim(),
+      description: itemForm.description?.trim(),
+      plannedCost: Number(itemForm.plannedCost || 0),
+      actualCost: Number(itemForm.actualCost || 0),
+      committedCost: Number(itemForm.committedCost || 0)
+    });
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø¥Ù†Ø´Ø§Ø¡ Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+      return;
+    }
+    const category = budget.categories.find((entry) => entry.id === result.data?.categoryId);
+    const department = departmentState.data.find((entry) => entry.id === result.data?.departmentId);
+    setBudget((current) => ({ ...current, items: [{ ...result.data!, categoryName: result.data!.categoryName || category?.name, categoryColor: result.data!.categoryColor || category?.color, departmentName: result.data!.departmentName || department?.name }, ...current.items] }));
+    setItemForm({ projectId: project.id, organizationId, title: "", description: "", plannedCost: 0, actualCost: 0, committedCost: 0, status: "Planned", priority: "Medium" });
+    setMessage("ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+  }
+
+  async function updateBudgetItem(itemId: string, input: Partial<ProjectBudgetItemInput>) {
+    const result = await budgetRepository.updateBudgetItem(itemId, input);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ø¯ÙŠØ« Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+      return;
+    }
+    const category = budget.categories.find((entry) => entry.id === result.data?.categoryId);
+    const department = departmentState.data.find((entry) => entry.id === result.data?.departmentId);
+    setBudget((current) => ({
+      ...current,
+      items: current.items.map((item) => item.id === itemId ? { ...item, ...result.data, categoryName: result.data?.categoryName || category?.name || item.categoryName, categoryColor: result.data?.categoryColor || category?.color || item.categoryColor, departmentName: result.data?.departmentName || department?.name || item.departmentName } : item)
+    }));
+    setMessage("ØªÙ… ØªØ­Ø¯ÙŠØ« Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+  }
+
+  async function archiveBudgetItem(itemId: string) {
+    const result = await budgetRepository.archiveBudgetItem(itemId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+      return;
+    }
+    setBudget((current) => ({ ...current, items: current.items.filter((item) => item.id !== itemId) }));
+    setMessage("ØªÙ…Øª Ø£Ø±Ø´ÙØ© Ø¨Ù†Ø¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©.");
+  }
+
+  return (<AutoLocalizedContent>
+    <div className="space-y-5">
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <GlassCard className="relative overflow-hidden p-5">
+          <BlueprintOverlay className="opacity-20" />
+          <div className="relative z-10">
+            <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <Badge tone="gold">Budget Overview</Badge>
+                <h2 className="mt-2 text-2xl font-black text-white">Ù…Ø³Ø§Ø­Ø© Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">Ù†Ø¸Ø§Ù… Ù…ÙŠØ²Ø§Ù†ÙŠØ© ÙˆØªÙƒÙ„ÙØ© Ù…Ø±ØªØ¨Ø· Ø¨Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ ÙˆØ§Ù„ÙØ¦Ø§Øª ÙˆØ§Ù„Ø£Ù‚Ø³Ø§Ù… Ø¹Ø¨Ø± Ø·Ø¨Ù‚Ø© Ø§Ù„Ù…Ø³ØªÙˆØ¯Ø¹Ø§Øª Ù…Ø¹ Ø§Ù„Ø­ÙØ§Ø¸ Ø¹Ù„Ù‰ Demo / Supabase / Auto modes.</p>
+              </div>
+              <Badge tone="blue">{budgetState.source}</Badge>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <BudgetMetricCard title="Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…Ø®Ø·Ø·Ø©" value={formatMoney(stats.planned)} detail="Total planned budget" icon={<Coins className="h-6 w-6" />} tone="gold" />
+              <BudgetMetricCard title="Ø§Ù„ØªÙƒÙ„ÙØ© Ø§Ù„ÙØ¹Ù„ÙŠØ©" value={formatMoney(stats.actual)} detail="Actual paid/captured cost" icon={<Gauge className="h-6 w-6" />} tone="blue" />
+              <BudgetMetricCard title="Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…ØªØ¨Ù‚ÙŠØ©" value={formatMoney(stats.remaining)} detail="Remaining after actual and committed" icon={<CheckCircle2 className="h-6 w-6" />} tone="success" />
+            </div>
+
+            <div className="mt-5 rounded-[1.75rem] border border-white/10 bg-black/24 p-5">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-xl font-black text-white">ØªÙ‚Ø¯Ù… Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©</h3>
+                  <p className="mt-1 text-sm text-ds-text/50">Actual + committed versus planned.</p>
+                </div>
+                <Badge tone={stats.overBudget ? "warning" : "neutral"}>{stats.progress}% Ù…Ø³ØªØ®Ø¯Ù…</Badge>
+              </div>
+              <ProgressBar value={stats.progress} tone={stats.overBudget ? "warning" : "gold"} label="Ù†Ø³Ø¨Ø© Ø§Ù„ØµØ±Ù ÙˆØ§Ù„Ø§Ù„ØªØ²Ø§Ù…" />
+            </div>
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="flex items-start gap-4">
+            <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+            <div>
+              <Badge tone="blue">AI Budget Insights</Badge>
+              <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© VORA Ø§Ù„Ù…Ø§Ù„ÙŠØ©</h3>
+            </div>
+          </div>
+          <p className="mt-4 text-sm leading-7 text-ds-text/60">Ø±ØµØ¯Øª VORA {stats.overBudget ? `${stats.overBudget} Ø¨Ù†Ø¯Ø§Ù‹ ÙÙˆÙ‚ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©` : "Ø§Ø³ØªÙ‚Ø±Ø§Ø±Ø§Ù‹ ÙÙŠ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ø­Ø§Ù„ÙŠØ©"}ØŒ ÙˆØ§Ù„ØªÙˆÙ‚Ø¹ Ø§Ù„Ø­Ø§Ù„ÙŠ Ù‡Ùˆ {formatMoney(stats.forecast)}.</p>
+          <div className="mt-4 grid gap-3">
+            <ContextRow label="Cost overrun" value={stats.overBudget ? `${stats.overBudget} items` : "None"} />
+            <ContextRow label="Unused budget" value={formatMoney(stats.remaining)} />
+            <ContextRow label="Forecast" value={formatMoney(stats.forecast)} />
+            <ContextRow label="Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={project.id} />
+          </div>
+        </GlassCard>
+      </section>
+
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-5">
+          <GlassCard className="p-4">
+            <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_180px_180px]">
+              <Input label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø¨Ù†ÙˆØ¯ ÙˆØ§Ù„ÙØ¦Ø§Øª ÙˆØ§Ù„Ø£Ù‚Ø³Ø§Ù…" icon={<Search className="h-4 w-4" />} />
+              <NativeSelect label="Category" value={categoryFilter} onChange={setCategoryFilter} options={[{ value: "All", label: "ÙƒÙ„ Ø§Ù„ÙØ¦Ø§Øª" }, ...budget.categories.map((category) => ({ value: category.id, label: category.name }))]} />
+              <Dropdown label="Status" value={statusFilter} options={["All", ...budgetItemStatuses]} onChange={setStatusFilter} />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="gold">Cost Categories</Badge>
+                <h2 className="mt-2 text-2xl font-black text-white">ÙØ¦Ø§Øª Ø§Ù„ØªÙƒÙ„ÙØ©</h2>
+              </div>
+              <Badge tone="neutral">{budget.categories.length} ÙØ¦Ø§Øª</Badge>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {budget.categories.map((category) => <BudgetCategoryCard key={category.id} category={category} total={stats.topCategories.find((entry) => entry.category.id === category.id)?.total || 0} planned={stats.planned} onUpdate={(input) => void updateCategory(category.id, input)} onArchive={() => void archiveCategory(category.id)} />)}
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="blue">Budget Table</Badge>
+                <h2 className="mt-2 text-2xl font-black text-white">Ø¨Ù†ÙˆØ¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©</h2>
+              </div>
+              <Button type="button" variant="secondary" icon={<Plus className="h-4 w-4" />} onClick={() => document.getElementById("budget-item-title")?.focus()}>Ø¥Ø¶Ø§ÙØ© Ø¨Ù†Ø¯</Button>
+            </div>
+            {budgetState.loading ? (
+              <div className="grid gap-3">
+                {[0, 1, 2].map((item) => <div key={item} className="ds-skeleton h-20 rounded-3xl" />)}
+              </div>
+            ) : budgetState.error && !budgetState.isFallback ? (
+              <EmptyState title="ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©" description={budgetState.error} />
+            ) : filteredItems.length === 0 ? (
+              <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨Ù†ÙˆØ¯ Ù…Ø·Ø§Ø¨Ù‚Ø©" description="Ø¹Ø¯Ù‘Ù„ Ø§Ù„Ø¨Ø­Ø« Ø£Ùˆ Ø£Ø¶Ù Ø¨Ù†Ø¯ Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø¬Ø¯ÙŠØ¯." />
+            ) : (
+              <div className="grid gap-3">
+                {filteredItems.map((item) => <BudgetItemRow key={item.id} item={item} categories={budget.categories} departments={departmentState.data} onUpdate={(input) => void updateBudgetItem(item.id, input)} onArchive={() => void archiveBudgetItem(item.id)} />)}
+              </div>
+            )}
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="mb-5">
+              <Badge tone="gold">Budget CRUD</Badge>
+              <h2 className="mt-2 text-2xl font-black text-white">Ø¥Ø¶Ø§ÙØ© Ø¨Ù†Ø¯ ØªÙƒÙ„ÙØ©</h2>
+            </div>
+            <form className="grid gap-4" onSubmit={createBudgetItem}>
+              <Input id="budget-item-title" label="Title" value={itemForm.title} onChange={(event) => setItemForm((current) => ({ ...current, title: event.target.value }))} placeholder="Ù…Ø«Ù„Ø§Ù‹: Concrete supply" />
+              <Textarea label="Description" value={itemForm.description} onChange={(event) => setItemForm((current) => ({ ...current, description: event.target.value }))} placeholder="ÙˆØµÙ Ù…Ø®ØªØµØ± Ù„Ù„Ø¨Ù†Ø¯" />
+              <div className="grid gap-3 md:grid-cols-4">
+                <NativeSelect label="Category" value={itemForm.categoryId || ""} onChange={(value) => setItemForm((current) => ({ ...current, categoryId: value || undefined }))} options={[{ value: "", label: "Ø¨Ø¯ÙˆÙ† ÙØ¦Ø©" }, ...budget.categories.map((category) => ({ value: category.id, label: category.name }))]} />
+                <NativeSelect label="Department" value={itemForm.departmentId || ""} onChange={(value) => setItemForm((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departmentState.data.map((department) => ({ value: department.id, label: department.name }))]} />
+                <Dropdown label="Status" value={itemForm.status} options={budgetItemStatuses} onChange={(value) => setItemForm((current) => ({ ...current, status: value as BudgetItemStatus }))} />
+                <Dropdown label="Priority" value={itemForm.priority} options={budgetPriorities} onChange={(value) => setItemForm((current) => ({ ...current, priority: value as BudgetPriority }))} />
+              </div>
+              <div className="grid gap-3 md:grid-cols-3">
+                <Input label="Planned" type="number" min={0} value={String(itemForm.plannedCost || 0)} onChange={(event) => setItemForm((current) => ({ ...current, plannedCost: Number(event.target.value || 0) }))} />
+                <Input label="Actual" type="number" min={0} value={String(itemForm.actualCost || 0)} onChange={(event) => setItemForm((current) => ({ ...current, actualCost: Number(event.target.value || 0) }))} />
+                <Input label="Committed" type="number" min={0} value={String(itemForm.committedCost || 0)} onChange={(event) => setItemForm((current) => ({ ...current, committedCost: Number(event.target.value || 0) }))} />
+              </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                <Input label="Start date" type="date" value={itemForm.startDate || ""} onChange={(event) => setItemForm((current) => ({ ...current, startDate: event.target.value || undefined }))} />
+                <Input label="End date" type="date" value={itemForm.endDate || ""} onChange={(event) => setItemForm((current) => ({ ...current, endDate: event.target.value || undefined }))} />
+              </div>
+              <Button type="submit" icon={<Plus className="h-4 w-4" />}>Ø¥Ù†Ø´Ø§Ø¡ Ø¨Ù†Ø¯ ØªÙƒÙ„ÙØ©</Button>
+            </form>
+          </GlassCard>
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <Badge tone="gold">Quick Actions</Badge>
+            <h3 className="mt-3 text-xl font-black text-white">Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©</h3>
+            <div className="mt-4 grid gap-3">
+              {quickActions.map((action) =>
+                action.href ? (
+                  <Link key={action.title} href={action.href} className="group rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-0.5 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+                    <BudgetActionContent action={action} />
+                  </Link>
+                ) : (
+                  <button key={action.title} type="button" className="group rounded-2xl border border-white/10 bg-white/[0.045] p-4 text-start transition hover:-translate-y-0.5 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+                    <BudgetActionContent action={action} />
+                  </button>
+                )
+              )}
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="blue">Create Category</Badge>
+            <h3 className="mt-3 text-xl font-black text-white">ÙØ¦Ø© Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø¬Ø¯ÙŠØ¯Ø©</h3>
+            <form className="mt-4 grid gap-3" onSubmit={createCategory}>
+              <Input label="Name" value={categoryForm.name} onChange={(event) => setCategoryForm((current) => ({ ...current, name: event.target.value }))} placeholder="Ù…Ø«Ù„Ø§Ù‹: Materials" />
+              <Textarea label="Description" value={categoryForm.description} onChange={(event) => setCategoryForm((current) => ({ ...current, description: event.target.value }))} placeholder="ÙˆØµÙ Ø§Ù„ÙØ¦Ø©" />
+              <Input label="Color" type="color" value={categoryForm.color || "#D4AF37"} onChange={(event) => setCategoryForm((current) => ({ ...current, color: event.target.value }))} />
+              <Button type="submit" size="sm">Ø¥Ø¶Ø§ÙØ© ÙØ¦Ø©</Button>
+              {message && <p className="rounded-2xl border border-[#D4AF37]/18 bg-[#D4AF37]/10 p-3 text-sm font-bold leading-6 text-[#F5D878]">{message}</p>}
+            </form>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="blue">Budget Timeline</Badge>
+            <h3 className="mt-3 text-xl font-black text-white">Ø®Ø· Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©</h3>
+            <div className="mt-5 grid gap-4">
+              <TimelineCard index={1} title="ØªØ­Ø¯ÙŠØ¯ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…Ø®Ø·Ø·Ø©" text="Ø§Ù„Ø®Ø·ÙˆØ© Ø§Ù„Ø£ÙˆÙ„Ù‰ Ù‚Ø¨Ù„ Ø§Ø­ØªØ³Ø§Ø¨ Ø§Ù„Ù…ØªØ¨Ù‚ÙŠ ÙˆØ§Ù„Ø§Ù†Ø­Ø±Ø§ÙØ§Øª." icon={<Coins className="h-4 w-4" />} />
+              <TimelineCard index={2} title="Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ù…ØµØ§Ø±ÙŠÙ ÙˆØ§Ù„ÙÙˆØ§ØªÙŠØ±" text="Ø³ÙŠØªÙ… Ø±Ø¨Ø·Ù‡Ø§ Ù„Ø§Ø­Ù‚Ø§Ù‹ Ø¯ÙˆÙ† ØªØºÙŠÙŠØ± Ø§Ù„Ø¹Ù‚ÙˆØ¯ Ø§Ù„Ø­Ø§Ù„ÙŠØ©." icon={<UploadCloud className="h-4 w-4" />} />
+              <TimelineCard index={3} title="ØªÙ‚Ø±ÙŠØ± VORA Ø§Ù„Ù…Ø§Ù„ÙŠ" text="Ø¬Ø§Ù‡Ø² ÙƒÙ…Ø³Ø§Ø± ÙˆØ§Ø¬Ù‡Ø© Ø¹Ø¨Ø± Ù…ÙˆÙ„Ø¯ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ Ø§Ù„Ø­Ø§Ù„ÙŠ." icon={<Bot className="h-4 w-4" />} />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="neutral">Repository Mode</Badge>
+            <div className="mt-4 grid gap-3">
+              <ContextRow label="Ø§Ù„Ù…ØµØ¯Ø±" value={budgetState.source} />
+              <ContextRow label="Fallback" value={budgetState.isFallback ? "Ù…ÙØ¹Ù„" : "ØºÙŠØ± Ù…ÙØ¹Ù„"} />
+              <ContextRow label="Committed" value={formatMoney(stats.committed)} />
+            </div>
+          </GlassCard>
+        </aside>
+      </section>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: { category: BudgetCategory; total: number; planned: number; onUpdate: (input: Partial<BudgetCategoryInput>) => void; onArchive: () => void }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Partial<BudgetCategoryInput>>({ name: category.name, description: category.description, color: category.color });
+  const percent = planned ? Math.round((total / planned) * 100) : 0;
+  return (<AutoLocalizedContent>
+    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone="gold">{category.name}</Badge>
+          <p className="mt-4 text-2xl font-black text-white">{formatMoney(total)}</p>
+          <p className="mt-2 text-xs leading-5 text-ds-text/48">{category.description || "Budget category"}</p>
+        </div>
+        <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: category.color || "#D4AF37" }} />
+      </div>
+      <div className="mt-5"><ProgressBar value={percent} tone="gold" label="Ù†Ø³Ø¨Ø© Ù…Ù† Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©" /></div>
+      <div className="mt-4 flex gap-2">
+        <Button type="button" size="sm" variant="secondary" onClick={() => setEditing((current) => !current)}>ØªØ¹Ø¯ÙŠÙ„</Button>
+        <Button type="button" size="sm" variant="danger" onClick={onArchive}>Ø£Ø±Ø´ÙØ©</Button>
+      </div>
+      {editing && (
+        <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-black/22 p-3">
+          <Input label="Name" value={draft.name || ""} onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))} />
+          <Input label="Color" type="color" value={draft.color || "#D4AF37"} onChange={(event) => setDraft((current) => ({ ...current, color: event.target.value }))} />
+          <Button type="button" size="sm" onClick={() => onUpdate(draft)}>Ø­ÙØ¸</Button>
+        </div>
+      )}
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: { item: ProjectBudgetItem; categories: BudgetCategory[]; departments: Array<{ id: string; name: string }>; onUpdate: (input: Partial<ProjectBudgetItemInput>) => void; onArchive: () => void }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Partial<ProjectBudgetItemInput>>({
+    categoryId: item.categoryId,
+    departmentId: item.departmentId,
+    status: item.status,
+    priority: item.priority,
+    plannedCost: item.plannedCost,
+    actualCost: item.actualCost,
+    committedCost: item.committedCost,
+    endDate: item.endDate
+  });
+  const used = item.actualCost + item.committedCost;
+  const percent = item.plannedCost ? Math.round((used / item.plannedCost) * 100) : 0;
+
+  return (<AutoLocalizedContent>
+    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_180px_180px_auto] xl:items-center">
+        <div className="min-w-0">
+          <div className="flex flex-wrap gap-2">
+            <Badge tone={budgetStatusTone(item.status)}>{item.status}</Badge>
+            <Badge tone={budgetPriorityTone(item.priority)}>{item.priority}</Badge>
+          </div>
+          <h3 className="mt-3 text-lg font-black text-white">{item.title}</h3>
+          <p className="mt-2 text-xs leading-5 text-ds-text/50">{item.categoryName || "Ø¨Ø¯ÙˆÙ† ÙØ¦Ø©"} Â· {item.departmentName || "Ø¹Ø§Ù…"} Â· {item.endDate || "Ø¨Ø¯ÙˆÙ† ØªØ§Ø±ÙŠØ®"}</p>
+        </div>
+        <ContextRow label="Planned" value={formatMoney(item.plannedCost)} />
+        <ContextRow label="Used" value={formatMoney(used)} />
+        <div className="flex gap-2">
+          <Button type="button" size="sm" variant="secondary" onClick={() => setEditing((current) => !current)}>ØªØ¹Ø¯ÙŠÙ„</Button>
+          <Button type="button" size="sm" variant="danger" onClick={onArchive}>Ø£Ø±Ø´ÙØ©</Button>
+        </div>
+      </div>
+      <div className="mt-4"><ProgressBar value={percent} tone={percent > 100 ? "danger" : "gold"} label="Actual + committed" /></div>
+      {editing && (
+        <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-black/22 p-3 lg:grid-cols-4">
+          <NativeSelect label="Category" value={draft.categoryId || ""} onChange={(value) => setDraft((current) => ({ ...current, categoryId: value || undefined }))} options={[{ value: "", label: "Ø¨Ø¯ÙˆÙ† ÙØ¦Ø©" }, ...categories.map((category) => ({ value: category.id, label: category.name }))]} />
+          <NativeSelect label="Department" value={draft.departmentId || ""} onChange={(value) => setDraft((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departments.map((department) => ({ value: department.id, label: department.name }))]} />
+          <Dropdown label="Status" value={draft.status} options={budgetItemStatuses} onChange={(value) => setDraft((current) => ({ ...current, status: value as BudgetItemStatus }))} />
+          <Dropdown label="Priority" value={draft.priority} options={budgetPriorities} onChange={(value) => setDraft((current) => ({ ...current, priority: value as BudgetPriority }))} />
+          <Input label="Planned" type="number" min={0} value={String(draft.plannedCost || 0)} onChange={(event) => setDraft((current) => ({ ...current, plannedCost: Number(event.target.value || 0) }))} />
+          <Input label="Actual" type="number" min={0} value={String(draft.actualCost || 0)} onChange={(event) => setDraft((current) => ({ ...current, actualCost: Number(event.target.value || 0) }))} />
+          <Input label="Committed" type="number" min={0} value={String(draft.committedCost || 0)} onChange={(event) => setDraft((current) => ({ ...current, committedCost: Number(event.target.value || 0) }))} />
+          <Input label="End date" type="date" value={draft.endDate || ""} onChange={(event) => setDraft((current) => ({ ...current, endDate: event.target.value || undefined }))} />
+          <div className="lg:col-span-4 flex gap-2">
+            <Button type="button" size="sm" onClick={() => onUpdate(draft)}>Ø­ÙØ¸</Button>
+            <Button type="button" size="sm" variant="secondary" onClick={() => setEditing(false)}>Ø¥ØºÙ„Ø§Ù‚</Button>
+          </div>
+        </div>
+      )}
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function formatMoney(value: number) {
+  return `${Math.round(value).toLocaleString("en-US")} MAD`;
+}
+
+function budgetStatusTone(status: BudgetItemStatus): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {
+  if (status === "Paid") return "success";
+  if (status === "Committed") return "blue";
+  if (status === "Approved") return "gold";
+  if (status === "Over Budget") return "danger";
+  return "neutral";
+}
+
+function budgetPriorityTone(priority: BudgetPriority): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {
+  if (priority === "Critical") return "danger";
+  if (priority === "High") return "warning";
+  if (priority === "Low") return "blue";
+  return "neutral";
+}
+
+function ProjectDocumentCard({
+  document,
+  departments,
+  onPreview,
+  onDownload,
+  onArchive,
+  onDelete,
+  onUpdate
+}: {
+  document: Document;
+  departments: Array<{ id: string; name: string }>;
+  onPreview: () => void;
+  onDownload: () => void;
+  onArchive: () => void;
+  onDelete: () => void;
+  onUpdate: (input: Partial<ProjectDocumentInput>) => void;
+}) {
+  const { locale } = useI18n();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Partial<ProjectDocumentInput>>({
+    title: document.title,
+    category: document.category,
+    version: document.version,
+    departmentId: document.departmentId,
+    tags: document.tags
+  });
+
+  return (
+    <LocalizedContent locale={locale}><div className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div>
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">
+          <FileText className="h-6 w-6" />
+        </span>
+        <div className="mt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge tone="blue">{document.category || "Other"}</Badge>
+            <Badge tone="neutral">{document.version || "v1"}</Badge>
+          </div>
+          <h3 className="mt-3 truncate text-lg font-black text-white">{document.title}</h3>
+          <p className="mt-2 line-clamp-3 text-sm leading-7 text-ds-text/58">
+            {document.filename || "Generated document"} Â· {formatBytes(document.fileSize || 0)} Â· {document.departmentName || "Ø¹Ø§Ù…"}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(document.tags || []).slice(0, 4).map((tag) => <Badge key={tag} tone="neutral">{tag}</Badge>)}
+          </div>
+        </div>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        <Button type="button" variant="secondary" size="sm" onClick={onPreview}>Preview</Button>
+        <Button type="button" variant="secondary" size="sm" onClick={onDownload} icon={<Download className="h-4 w-4" />}>ØªØ­Ù…ÙŠÙ„</Button>
+        <Button type="button" variant="secondary" size="sm" onClick={() => setEditing((current) => !current)}>Edit</Button>
+        <Button type="button" variant="danger" size="sm" onClick={onArchive}>Archive</Button>
+        <Button type="button" variant="danger" size="sm" onClick={onDelete}>Delete</Button>
+      </div>
+      {editing && (
+        <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-black/22 p-3">
+          <Input label="Title" value={draft.title || ""} onChange={(event) => setDraft((current) => ({ ...current, title: event.target.value }))} />
+          <NativeSelect label="Category" value={String(draft.category || "Other")} onChange={(value) => setDraft((current) => ({ ...current, category: value }))} options={documentCategories.map((category) => ({ value: category, label: category }))} />
+          <NativeSelect label="Department" value={draft.departmentId || ""} onChange={(value) => setDraft((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departments.map((department) => ({ value: department.id, label: department.name }))]} />
+          <Input label="Version" value={draft.version || ""} onChange={(event) => setDraft((current) => ({ ...current, version: event.target.value }))} />
+          <Input label="Tags" value={(draft.tags || []).join(", ")} onChange={(event) => setDraft((current) => ({ ...current, tags: event.target.value.split(",").map((tag) => tag.trim()).filter(Boolean) }))} />
+          <Button type="button" size="sm" onClick={() => onUpdate(draft)}>Save metadata</Button>
+        </div>
+      )}
+    </div></LocalizedContent>
+  );
+}
+
+function formatBytes(value: number) {
+  if (!value) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1);
+  return `${(value / Math.pow(1024, index)).toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function ContextRow({ label, value }: { label: string; value: string }) {
+  return (<AutoLocalizedContent>
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+      <span className="text-sm font-bold text-ds-text/46">{label}</span>
+      <span className="truncate text-sm font-black text-ds-text">{value}</span>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function TasksTab({ project }: { project: ProjectWorkspaceProject }) {
+  const { locale } = useI18n();
+  const organizationId = project.organizationId || "atlas";
+  const taskState = useTasksRepository(project.id);
+  const departmentState = useDepartmentsRepository(organizationId);
+  const employeeState = useEmployeesRepository(organizationId);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [view, setView] = useState<"kanban" | "list">("kanban");
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [priorityFilter, setPriorityFilter] = useState("All");
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | undefined>();
+  const [form, setForm] = useState<TaskInput>({
+    projectId: project.id,
+    organizationId,
+    title: "",
+    description: "",
+    status: "Todo",
+    priority: "Medium",
+    estimatedHours: 8,
+    progress: 0
+  });
+
+  useEffect(() => {
+    setTasks(taskState.data);
+  }, [taskState.data]);
+
+  useEffect(() => {
+    setForm((current) => ({ ...current, projectId: project.id, organizationId }));
+  }, [project.id, organizationId]);
+
+  const stats = useMemo(() => taskRepository.getProjectTaskStats(tasks), [tasks]);
+  const filteredTasks = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return tasks.filter((task) => {
+      const queryMatch = !query || [task.title, task.description, task.assigneeName, task.departmentName].filter(Boolean).some((value) => String(value).toLowerCase().includes(query));
+      const statusMatch = statusFilter === "All" || task.status === statusFilter;
+      const priorityMatch = priorityFilter === "All" || task.priority === priorityFilter;
+      return queryMatch && statusMatch && priorityMatch;
+    });
+  }, [priorityFilter, search, statusFilter, tasks]);
+
+  const validateForm = () => {
+    if (!form.title.trim()) return "Ø§Ø³Ù… Ø§Ù„Ù…Ù‡Ù…Ø© Ù…Ø·Ù„ÙˆØ¨.";
+    if (form.departmentId && !departmentState.data.some((department) => department.id === form.departmentId)) return "Ø§Ù„Ù‚Ø³Ù… Ø§Ù„Ù…Ø®ØªØ§Ø± Ù„Ø§ ÙŠÙ†ØªÙ…ÙŠ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ù†Ø¸Ù…Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©.";
+    if (form.assigneeEmployeeId && !employeeState.data.some((employee) => employee.id === form.assigneeEmployeeId)) return "Ø§Ù„Ù…ÙˆØ¸Ù Ø§Ù„Ù…Ø®ØªØ§Ø± Ù„Ø§ ÙŠÙ†ØªÙ…ÙŠ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ù†Ø¸Ù…Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©.";
+    return undefined;
+  };
+
+  async function createTask(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const error = validateForm();
+    if (error) {
+      setMessage(error);
+      return;
+    }
+    const result = await taskRepository.createTask({
+      ...form,
+      title: form.title.trim(),
+      description: form.description?.trim(),
+      estimatedHours: form.estimatedHours ? Number(form.estimatedHours) : undefined,
+      progress: Number(form.progress || 0)
+    });
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ù…Ù‡Ù…Ø©.");
+      return;
+    }
+    const department = departmentState.data.find((item) => item.id === result.data?.departmentId);
+    const assignee = employeeState.data.find((item) => item.id === result.data?.assigneeEmployeeId);
+    setTasks((current) => [
+      {
+        ...result.data!,
+        departmentName: result.data!.departmentName || department?.name,
+        assigneeName: result.data!.assigneeName || assignee?.fullName || assignee?.name
+      },
+      ...current
+    ]);
+    setForm({
+      projectId: project.id,
+      organizationId,
+      title: "",
+      description: "",
+      status: "Todo",
+      priority: "Medium",
+      estimatedHours: 8,
+      progress: 0
+    });
+    setMessage("ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ù…Ù‡Ù…Ø© Ø¯Ø§Ø®Ù„ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.");
+  }
+
+  async function updateLocalTask(taskId: string, input: Partial<TaskInput>) {
+    const result = await taskRepository.updateTask(taskId, input);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ù‡Ù…Ø©.");
+      return;
+    }
+    const department = departmentState.data.find((item) => item.id === result.data?.departmentId);
+    const assignee = employeeState.data.find((item) => item.id === result.data?.assigneeEmployeeId);
+    setTasks((current) =>
+      current.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              ...result.data,
+              departmentName: result.data?.departmentName || department?.name || task.departmentName,
+              assigneeName: result.data?.assigneeName || assignee?.fullName || assignee?.name || task.assigneeName
+            }
+          : task
+      )
+    );
+    setMessage("ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ù‡Ù…Ø©.");
+  }
+
+  async function moveTask(taskId: string, status: TaskStatus) {
+    const result = await taskRepository.moveTask(taskId, status);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ù†Ù‚Ù„ Ø§Ù„Ù…Ù‡Ù…Ø©.");
+      return;
+    }
+    setTasks((current) => current.map((task) => (task.id === taskId ? { ...task, status, progress: status === "Done" ? 100 : task.progress } : task)));
+  }
+
+  async function archiveTask(taskId: string) {
+    const result = await taskRepository.archiveTask(taskId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ù‡Ù…Ø©.");
+      return;
+    }
+    setTasks((current) => current.filter((task) => task.id !== taskId));
+    setMessage("ØªÙ…Øª Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ù‡Ù…Ø© Ø¨Ø¯ÙˆÙ† Ø­Ø°Ù Ø¯Ø§Ø¦Ù….");
+  }
+
+  const taskColumns = taskStatuses.map((status) => ({
+    status,
+    tasks: filteredTasks.filter((task) => task.status === status)
+  }));
+
+  return (
+    <LocalizedContent locale={locale}><div className="space-y-5">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+        <TaskMetric title="Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ù…Ù‡Ø§Ù…" value={String(stats.total)} tone="gold" icon={<CheckCircle2 className="h-5 w-5" />} />
+        <TaskMetric title="Ø§Ù„Ù…ÙƒØªÙ…Ù„Ø©" value={String(stats.completed)} tone="success" icon={<CheckCircle2 className="h-5 w-5" />} />
+        <TaskMetric title="Ù‚ÙŠØ¯ Ø§Ù„ØªÙ†ÙÙŠØ°" value={String(stats.inProgress)} tone="blue" icon={<Clock3 className="h-5 w-5" />} />
+        <TaskMetric title="Ù…Ø­Ø¬ÙˆØ¨Ø©" value={String(stats.blocked)} tone="danger" icon={<ShieldAlert className="h-5 w-5" />} />
+        <TaskMetric title="Ù…ØªØ£Ø®Ø±Ø©" value={String(stats.overdue)} tone="warning" icon={<CalendarDays className="h-5 w-5" />} />
+        <TaskMetric title="Ù†Ø³Ø¨Ø© Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²" value={`${stats.completionRate}%`} tone="gold" icon={<Gauge className="h-5 w-5" />} />
+      </section>
+
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-5">
+          <GlassCard className="relative overflow-hidden p-5">
+            <BlueprintOverlay className="opacity-20" />
+            <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <Badge tone="gold">Tasks Workspace</Badge>
+                <h2 className="mt-2 text-2xl font-black text-white">Ù„ÙˆØ­Ø© Ù…Ù‡Ø§Ù… Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+                <p className="mt-2 text-sm leading-7 text-ds-text/58">Kanban ÙˆÙ‚Ø§Ø¦Ù…Ø© Ø¹Ù…Ù„ Ù…Ø±ØªØ¨Ø·Ø© Ø¨Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ø§Ù„Ø­Ø§Ù„ÙŠ Ø¹Ø¨Ø± Ø·Ø¨Ù‚Ø© Ø§Ù„Ù…Ø³ØªÙˆØ¯Ø¹Ø§ØªØŒ Ù…Ø¹ Ø¨Ù‚Ø§Ø¡ Ù…Ù†Ø·Ù‚ Ø§Ù„Ø®Ù„ÙÙŠØ© ÙƒÙ…Ø§ Ù‡Ùˆ.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button type="button" variant={view === "kanban" ? "primary" : "secondary"} size="sm" onClick={() => setView("kanban")} icon={<Grid2X2 className="h-4 w-4" />}>Kanban</Button>
+                <Button type="button" variant={view === "list" ? "primary" : "secondary"} size="sm" onClick={() => setView("list")} icon={<List className="h-4 w-4" />}>List</Button>
+              </div>
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-4">
+            <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_180px_180px]">
+              <Input label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ù‡Ø§Ù… Ø£Ùˆ Ø§Ù„Ø£Ù‚Ø³Ø§Ù… Ø£Ùˆ Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠÙ†" icon={<Search className="h-4 w-4" />} />
+              <Dropdown label="Status" value={statusFilter} options={["All", ...taskStatuses]} onChange={setStatusFilter} />
+              <Dropdown label="Priority" value={priorityFilter} options={["All", ...taskPriorities]} onChange={setPriorityFilter} />
+            </div>
+          </GlassCard>
+
+          {taskState.loading ? (
+            <GlassCard className="p-6">
+              <div className="grid gap-4 md:grid-cols-3">
+                {[0, 1, 2].map((item) => <div key={item} className="ds-skeleton h-40 rounded-3xl" />)}
+              </div>
+            </GlassCard>
+          ) : taskState.error && !taskState.isFallback ? (
+            <EmptyState title="ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ù‡Ø§Ù…" description={taskState.error} />
+          ) : filteredTasks.length === 0 ? (
+            <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù‡Ø§Ù… Ù…Ø·Ø§Ø¨Ù‚Ø©" description="Ø¹Ø¯Ù‘Ù„ Ø§Ù„Ø¨Ø­Ø« Ø£Ùˆ Ø£Ù†Ø´Ø¦ Ù…Ù‡Ù…Ø© Ø¬Ø¯ÙŠØ¯Ø© Ù„Ù‡Ø°Ø§ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹." />
+          ) : view === "kanban" ? (
+            <div className="grid gap-4 xl:grid-cols-5">
+              {taskColumns.map((column) => (
+                <div
+                  key={column.status}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    const taskId = event.dataTransfer.getData("text/plain") || draggingTaskId;
+                    if (taskId) void moveTask(taskId, column.status);
+                    setDraggingTaskId(null);
+                  }}
+                  className="min-h-[420px] rounded-[1.75rem] border border-white/10 bg-black/18 p-3"
+                >
+                  <div className="mb-3 flex items-center justify-between gap-3 px-1">
+                    <Badge tone={taskStatusTone(column.status)}>{taskStatusLabel(column.status)}</Badge>
+                    <span className="text-xs font-black text-ds-text/42">{column.tasks.length}</span>
+                  </div>
+                  <div className="grid gap-3">
+                    {column.tasks.map((task) => (
+                      <TaskCard
+                        key={task.id}
+                        task={task}
+                        editing={editingTaskId === task.id}
+                        departments={departmentState.data}
+                        employees={employeeState.data}
+                        onEdit={() => setEditingTaskId((current) => (current === task.id ? null : task.id))}
+                        onArchive={() => void archiveTask(task.id)}
+                        onUpdate={(input) => void updateLocalTask(task.id, input)}
+                        onDragStart={() => setDraggingTaskId(task.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <GlassCard className="overflow-hidden p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[860px] border-collapse text-sm">
+                  <thead className="border-b border-white/10 bg-white/[0.055] text-gold">
+                    <tr>
+                      {["Ø§Ù„Ù…Ù‡Ù…Ø©", "Ø§Ù„Ø­Ø§Ù„Ø©", "Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©", "Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„", "Ø§Ù„Ù‚Ø³Ù…", "Ø§Ù„Ø§Ø³ØªØ­Ù‚Ø§Ù‚", "Ø§Ù„ØªÙ‚Ø¯Ù…", "Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª"].map((column) => (
+                        <th key={column} className="px-4 py-3 text-right font-black">{column}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredTasks.map((task) => (
+                      <tr key={task.id} className="border-b border-white/10 text-ds-text/70 transition hover:bg-white/[0.045]">
+                        <td className="px-4 py-3 font-black text-white">{task.title}</td>
+                        <td className="px-4 py-3"><Badge tone={taskStatusTone(task.status)}>{taskStatusLabel(task.status)}</Badge></td>
+                        <td className="px-4 py-3"><Badge tone={taskPriorityTone(task.priority)}>{task.priority}</Badge></td>
+                        <td className="px-4 py-3">{task.assigneeName || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"}</td>
+                        <td className="px-4 py-3">{task.departmentName || "Ø¹Ø§Ù…"}</td>
+                        <td className="px-4 py-3">{task.dueDate || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"}</td>
+                        <td className="px-4 py-3"><ProgressBar value={task.progress || 0} /></td>
+                        <td className="px-4 py-3">
+                          <div className="flex gap-2">
+                            <Button type="button" size="sm" variant="secondary" onClick={() => setEditingTaskId(task.id)}>ØªØ¹Ø¯ÙŠÙ„</Button>
+                            <Button type="button" size="sm" variant="danger" onClick={() => void archiveTask(task.id)}>Ø£Ø±Ø´ÙØ©</Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </GlassCard>
+          )}
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <Badge tone="gold">Quick Actions</Badge>
+            <h3 className="mt-3 text-xl font-black text-white">Ø¥Ù†Ø´Ø§Ø¡ Ù…Ù‡Ù…Ø©</h3>
+            <form className="mt-5 grid gap-4" onSubmit={createTask}>
+              <Input label="Task title" value={form.title} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder="Ù…Ø«Ù„Ø§Ù‹: Foundations inspection" />
+              <Textarea label="Description" value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} placeholder="ÙˆØµÙ Ù…Ø®ØªØµØ± Ù„Ù„Ù…Ù‡Ù…Ø©" />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Dropdown label="Status" value={form.status} options={taskStatuses} onChange={(value) => setForm((current) => ({ ...current, status: value as TaskStatus }))} />
+                <Dropdown label="Priority" value={form.priority} options={taskPriorities} onChange={(value) => setForm((current) => ({ ...current, priority: value as TaskPriority }))} />
+              </div>
+              <NativeSelect label="Department" value={form.departmentId || ""} onChange={(value) => setForm((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departmentState.data.map((department) => ({ value: department.id, label: department.name }))]} />
+              <NativeSelect label="Assignee" value={form.assigneeEmployeeId || ""} onChange={(value) => setForm((current) => ({ ...current, assigneeEmployeeId: value || undefined }))} options={[{ value: "", label: "ØºÙŠØ± Ù…Ø­Ø¯Ø¯" }, ...employeeState.data.map((employee) => ({ value: employee.id, label: employee.fullName || employee.name }))]} />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Input label="Due date" type="date" value={form.dueDate || ""} onChange={(event) => setForm((current) => ({ ...current, dueDate: event.target.value || undefined }))} />
+                <Input label="Hours" type="number" min={0} value={String(form.estimatedHours || "")} onChange={(event) => setForm((current) => ({ ...current, estimatedHours: Number(event.target.value || 0) }))} />
+              </div>
+              <Button type="submit" icon={<Plus className="h-4 w-4" />}>Ø¥Ø¶Ø§ÙØ© Ù…Ù‡Ù…Ø©</Button>
+              {message && <p className="rounded-2xl border border-[#D4AF37]/18 bg-[#D4AF37]/10 p-3 text-sm font-bold leading-6 text-[#F5D878]">{message}</p>}
+            </form>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="flex items-start gap-4">
+              <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+              <div>
+                <Badge tone="blue">VORA Task Insights</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© Ø§Ù„Ù…Ù‡Ø§Ù…</h3>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-3">
+              <ContextRow label="Ø®Ø·Ø± Ø§Ù„ØªØ£Ø®ÙŠØ±" value={stats.overdue > 0 ? `${stats.overdue} Ù…Ù‡Ø§Ù…` : "Ù…Ù†Ø®ÙØ¶"} />
+              <ContextRow label="Ø§Ù„Ù…Ù‡Ù…Ø© Ø§Ù„ØªØ§Ù„ÙŠØ©" value={tasks.find((task) => task.status === "In Progress")?.title || "ØªØ­Ø¯ÙŠØ¯ Ø£ÙˆÙ„ÙˆÙŠØ© Ø¬Ø¯ÙŠØ¯Ø©"} />
+              <ContextRow label="Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡ Ø§Ù„Ù…Ù‚ØªØ±Ø­" value={stats.blocked ? "Ø±Ø§Ø¬Ø¹ Ø§Ù„Ù…Ù‡Ø§Ù… Ø§Ù„Ù…Ø­Ø¬ÙˆØ¨Ø©" : "Ø§Ù†Ù‚Ù„ Ø§Ù„Ù…Ù‡Ø§Ù… Ø§Ù„Ø¬Ø§Ù‡Ø²Ø© Ù„Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©"} />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="neutral">Repository Mode</Badge>
+            <div className="mt-4 grid gap-3">
+              <ContextRow label="Ø§Ù„Ù…ØµØ¯Ø±" value={taskState.source} />
+              <ContextRow label="Fallback" value={taskState.isFallback ? "Ù…ÙØ¹Ù„" : "ØºÙŠØ± Ù…ÙØ¹Ù„"} />
+              <ContextRow label="Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={project.id} />
+            </div>
+          </GlassCard>
+        </aside>
+      </section>
+    </div></LocalizedContent>
+  );
+}
+
+function TaskCard({
+  task,
+  editing,
+  departments,
+  employees,
+  onEdit,
+  onArchive,
+  onUpdate,
+  onDragStart
+}: {
+  task: Task;
+  editing: boolean;
+  departments: Array<{ id: string; name: string }>;
+  employees: Array<{ id: string; fullName?: string; name: string }>;
+  onEdit: () => void;
+  onArchive: () => void;
+  onUpdate: (input: Partial<TaskInput>) => void;
+  onDragStart: () => void;
+}) {
+  const { locale } = useI18n();
+  const [draft, setDraft] = useState<Partial<TaskInput>>({
+    status: task.status,
+    priority: task.priority,
+    departmentId: task.departmentId,
+    assigneeEmployeeId: task.assigneeEmployeeId,
+    dueDate: task.dueDate,
+    estimatedHours: task.estimatedHours,
+    progress: task.progress
+  });
+
+  useEffect(() => {
+    setDraft({
+      status: task.status,
+      priority: task.priority,
+      departmentId: task.departmentId,
+      assigneeEmployeeId: task.assigneeEmployeeId,
+      dueDate: task.dueDate,
+      estimatedHours: task.estimatedHours,
+      progress: task.progress
+    });
+  }, [task]);
+
+  return (
+    <LocalizedContent locale={locale}><div
+      draggable
+      onDragStart={(event) => {
+        event.dataTransfer.setData("text/plain", task.id);
+        onDragStart();
+      }}
+      className="group rounded-[1.5rem] border border-white/10 bg-white/[0.055] p-4 shadow-ds-sm transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.075]"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex flex-wrap gap-2">
+            <Badge tone={taskPriorityTone(task.priority)}>{task.priority}</Badge>
+            <Badge tone={taskStatusTone(task.status)}>{taskStatusLabel(task.status)}</Badge>
+          </div>
+          <h3 className="mt-3 line-clamp-2 font-black leading-6 text-white">{task.title}</h3>
+          {task.description && <p className="mt-2 line-clamp-2 text-xs leading-5 text-ds-text/50">{task.description}</p>}
+        </div>
+        <Avatar name={task.assigneeName || "VORA"} size="sm" />
+      </div>
+
+      <div className="mt-4 grid gap-2">
+        <ProgressBar value={task.progress || 0} label="Progress" tone={task.status === "Blocked" ? "danger" : task.status === "Done" ? "success" : "gold"} />
+        <div className="grid gap-2 text-xs font-bold text-ds-text/52">
+          <span>Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„: {task.assigneeName || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"}</span>
+          <span>Ø§Ù„Ù‚Ø³Ù…: {task.departmentName || "Ø¹Ø§Ù…"}</span>
+          <span>Ø§Ù„Ø§Ø³ØªØ­Ù‚Ø§Ù‚: {task.dueDate || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"} Â· {task.estimatedHours || 0}h</span>
+        </div>
+      </div>
+
+      {editing && (
+        <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-black/22 p-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <Dropdown label="Status" value={draft.status} options={taskStatuses} onChange={(value) => setDraft((current) => ({ ...current, status: value as TaskStatus }))} />
+            <Dropdown label="Priority" value={draft.priority} options={taskPriorities} onChange={(value) => setDraft((current) => ({ ...current, priority: value as TaskPriority }))} />
+          </div>
+          <NativeSelect label="Department" value={draft.departmentId || ""} onChange={(value) => setDraft((current) => ({ ...current, departmentId: value || undefined }))} options={[{ value: "", label: "Ø¹Ø§Ù…" }, ...departments.map((department) => ({ value: department.id, label: department.name }))]} />
+          <NativeSelect label="Assignee" value={draft.assigneeEmployeeId || ""} onChange={(value) => setDraft((current) => ({ ...current, assigneeEmployeeId: value || undefined }))} options={[{ value: "", label: "ØºÙŠØ± Ù…Ø­Ø¯Ø¯" }, ...employees.map((employee) => ({ value: employee.id, label: employee.fullName || employee.name }))]} />
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            <Input label="Due date" type="date" value={draft.dueDate || ""} onChange={(event) => setDraft((current) => ({ ...current, dueDate: event.target.value || undefined }))} />
+            <Input label="Progress" type="number" min={0} max={100} value={String(draft.progress || 0)} onChange={(event) => setDraft((current) => ({ ...current, progress: Number(event.target.value || 0) }))} />
+          </div>
+          <div className="flex gap-2">
+            <Button type="button" size="sm" onClick={() => onUpdate(draft)}>Ø­ÙØ¸</Button>
+            <Button type="button" size="sm" variant="secondary" onClick={onEdit}>Ø¥ØºÙ„Ø§Ù‚</Button>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-4 flex gap-2">
+        <Button type="button" size="sm" variant="secondary" onClick={onEdit}>ØªØ¹Ø¯ÙŠÙ„</Button>
+        <Button type="button" size="sm" variant="danger" onClick={onArchive}>Ø£Ø±Ø´ÙØ©</Button>
+      </div>
+    </div></LocalizedContent>
+  );
+}
+
+function NativeSelect({
+  label,
+  value,
+  options,
+  onChange
+}: {
+  label: string;
+  value: string;
+  options: Array<{ value: string; label: string }>;
+  onChange: (value: string) => void;
+}) {
+  return (<AutoLocalizedContent>
+    <label className="grid gap-2 text-sm font-black text-[#f8efd7]/82">
+      <span className="text-xs uppercase tracking-[0.12em] text-[#f8efd7]/58">{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="h-12 w-full rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-[#f8efd7] outline-none transition focus:border-[#D4AF37]/44">
+        {options.map((option) => (
+          <option key={option.value || "empty"} value={option.value} className="bg-[#111827] text-[#f8efd7]">{option.label}</option>
+        ))}
+      </select>
+    </label>
+  </AutoLocalizedContent>);
+}
+
+function TaskMetric({ title, value, tone, icon }: { title: string; value: string; tone: "gold" | "blue" | "success" | "warning" | "danger"; icon: React.ReactNode }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone={tone}>{title}</Badge>
+          <p className="mt-4 text-3xl font-black text-white">{value}</p>
+        </div>
+        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+      </div>
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function taskStatusLabel(status: TaskStatus) {
+  return {
+    Todo: "To do",
+    "In Progress": "In progress",
+    Review: "Review",
+    Blocked: "Blocked",
+    Done: "Done"
+  }[status];
+}
+
+function taskStatusTone(status: TaskStatus): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {
+  if (status === "Done") return "success";
+  if (status === "In Progress") return "blue";
+  if (status === "Review") return "gold";
+  if (status === "Blocked") return "danger";
+  return "neutral";
+}
+
+function taskPriorityTone(priority: TaskPriority): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {
+  if (priority === "Critical") return "danger";
+  if (priority === "High") return "warning";
+  if (priority === "Low") return "blue";
+  return "neutral";
+}
+
+function TimelineTab({ project }: { project: ProjectWorkspaceProject }) {
+  const { locale } = useI18n();
+  const organizationId = project.organizationId || "atlas";
+  const timelineState = useTimelineRepository(project.id);
+  const taskState = useTasksRepository(project.id);
+  const [timeline, setTimeline] = useState(timelineState.data);
+  const [view, setView] = useState<"timeline" | "calendar">("timeline");
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [message, setMessage] = useState<string | undefined>();
+  const [milestoneForm, setMilestoneForm] = useState<TimelineMilestoneInput>({
+    projectId: project.id,
+    organizationId,
+    title: "",
+    description: "",
+    status: "Planned",
+    progress: 0
+  });
+  const [dependencyForm, setDependencyForm] = useState<TaskDependencyInput>({
+    predecessorTaskId: "",
+    successorTaskId: "",
+    dependencyType: "Finish-to-Start"
+  });
+
+  useEffect(() => {
+    setTimeline(timelineState.data);
+  }, [timelineState.data]);
+
+  useEffect(() => {
+    setMilestoneForm((current) => ({ ...current, projectId: project.id, organizationId }));
+  }, [organizationId, project.id]);
+
+  const stats = useMemo(() => timelineRepository.getTimelineStats(timeline), [timeline]);
+  const filteredMilestones = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return timeline.milestones.filter((milestone) => {
+      const queryMatch = !query || [milestone.title, milestone.description].filter(Boolean).some((value) => String(value).toLowerCase().includes(query));
+      const statusMatch = statusFilter === "All" || milestone.status === statusFilter;
+      return queryMatch && statusMatch;
+    });
+  }, [search, statusFilter, timeline.milestones]);
+
+  const nextMilestone = timeline.milestones
+    .filter((milestone) => milestone.status !== "Completed" && milestone.status !== "Archived")
+    .sort((a, b) => String(a.dueDate || "").localeCompare(String(b.dueDate || "")))[0];
+  const delayedMilestone = timeline.milestones.find((milestone) => milestone.status === "Delayed");
+
+  function dependencyCreatesCycle(input: TaskDependencyInput, dependencies = timeline.dependencies) {
+    if (!input.predecessorTaskId || !input.successorTaskId) return false;
+    if (input.predecessorTaskId === input.successorTaskId) return true;
+    const edges = [...dependencies, { id: "draft", predecessorTaskId: input.predecessorTaskId, successorTaskId: input.successorTaskId, dependencyType: input.dependencyType }];
+    const visit = (taskId: string, seen = new Set<string>()): boolean => {
+      if (taskId === input.predecessorTaskId) return true;
+      if (seen.has(taskId)) return false;
+      seen.add(taskId);
+      return edges.filter((edge) => edge.predecessorTaskId === taskId).some((edge) => visit(edge.successorTaskId, seen));
+    };
+    return visit(input.successorTaskId);
+  }
+
+  async function createMilestone(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!milestoneForm.title.trim()) {
+      setMessage("Ø¹Ù†ÙˆØ§Ù† Ø§Ù„Ù…Ø¹Ù„Ù… Ù…Ø·Ù„ÙˆØ¨.");
+      return;
+    }
+    const result = await timelineRepository.createMilestone({
+      ...milestoneForm,
+      title: milestoneForm.title.trim(),
+      description: milestoneForm.description?.trim(),
+      progress: Number(milestoneForm.progress || 0)
+    });
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ù…Ø¹Ù„Ù….");
+      return;
+    }
+    setTimeline((current) => ({ ...current, milestones: [result.data!, ...current.milestones] }));
+    setMilestoneForm({ projectId: project.id, organizationId, title: "", description: "", status: "Planned", progress: 0 });
+    setMessage("ØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ù…Ø¹Ù„Ù… Ø§Ù„Ø²Ù…Ù†ÙŠ.");
+  }
+
+  async function updateMilestone(milestoneId: string, input: Partial<TimelineMilestoneInput>) {
+    const result = await timelineRepository.updateMilestone(milestoneId, input);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ø¹Ù„Ù….");
+      return;
+    }
+    setTimeline((current) => ({ ...current, milestones: current.milestones.map((milestone) => (milestone.id === milestoneId ? { ...milestone, ...result.data } : milestone)) }));
+    setMessage("ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ù…Ø¹Ù„Ù….");
+  }
+
+  async function archiveMilestone(milestoneId: string) {
+    const result = await timelineRepository.archiveMilestone(milestoneId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ø¹Ù„Ù….");
+      return;
+    }
+    setTimeline((current) => ({ ...current, milestones: current.milestones.filter((milestone) => milestone.id !== milestoneId) }));
+    setMessage("ØªÙ…Øª Ø£Ø±Ø´ÙØ© Ø§Ù„Ù…Ø¹Ù„Ù… Ø¨Ø¯ÙˆÙ† Ø­Ø°Ù Ø¯Ø§Ø¦Ù….");
+  }
+
+  async function createDependency(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!dependencyForm.predecessorTaskId || !dependencyForm.successorTaskId) {
+      setMessage("Ø§Ø®ØªØ± Ù…Ù‡Ù…Ø© Ø³Ø§Ø¨Ù‚Ø© ÙˆÙ…Ù‡Ù…Ø© Ù„Ø§Ø­Ù‚Ø©.");
+      return;
+    }
+    if (dependencyCreatesCycle(dependencyForm)) {
+      setMessage("Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø¥Ø¶Ø§ÙØ© Ø§Ø¹ØªÙ…Ø§Ø¯ Ø¯Ø§Ø¦Ø±ÙŠ Ø¨ÙŠÙ† Ø§Ù„Ù…Ù‡Ø§Ù….");
+      return;
+    }
+    const existing = timeline.dependencies.some((dependency) =>
+      dependency.predecessorTaskId === dependencyForm.predecessorTaskId &&
+      dependency.successorTaskId === dependencyForm.successorTaskId &&
+      dependency.dependencyType === dependencyForm.dependencyType
+    );
+    if (existing) {
+      setMessage("Ù‡Ø°Ø§ Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ù…ÙˆØ¬ÙˆØ¯ Ù…Ø³Ø¨Ù‚Ø§Ù‹.");
+      return;
+    }
+    const result = await timelineRepository.createDependency(dependencyForm);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯.");
+      return;
+    }
+    const predecessor = taskState.data.find((task) => task.id === result.data?.predecessorTaskId);
+    const successor = taskState.data.find((task) => task.id === result.data?.successorTaskId);
+    setTimeline((current) => ({
+      ...current,
+      dependencies: [{ ...result.data!, predecessorTitle: result.data!.predecessorTitle || predecessor?.title, successorTitle: result.data!.successorTitle || successor?.title }, ...current.dependencies]
+    }));
+    setDependencyForm({ predecessorTaskId: "", successorTaskId: "", dependencyType: "Finish-to-Start" });
+    setMessage("ØªÙ…Øª Ø¥Ø¶Ø§ÙØ© Ø§Ø¹ØªÙ…Ø§Ø¯ Ø§Ù„Ù…Ù‡Ù…Ø©.");
+  }
+
+  async function removeDependency(dependencyId: string) {
+    const result = await timelineRepository.removeDependency(dependencyId);
+    if (!result.data) {
+      setMessage(result.error || "ØªØ¹Ø°Ø± Ø­Ø°Ù Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯.");
+      return;
+    }
+    setTimeline((current) => ({ ...current, dependencies: current.dependencies.filter((dependency) => dependency.id !== dependencyId) }));
+    setMessage("ØªÙ… Ø­Ø°Ù Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯.");
+  }
+
+  return (
+    <LocalizedContent locale={locale}><div className="space-y-5">
+      <GlassCard className="relative overflow-hidden p-5">
+        <BlueprintOverlay className="opacity-20" />
+        <div className="relative z-10 flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+          <div>
+            <Badge tone="gold">Timeline Workspace</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ Ù„Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">
+              Ù†Ø¸Ø§Ù… Ù…Ø¹Ø§Ù„Ù… ÙˆØ§Ø¹ØªÙ…Ø§Ø¯ÙŠØ§Øª Ù…Ø±ØªØ¨Ø· Ø¨Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ ÙˆØ§Ù„Ù…Ù‡Ø§Ù… Ø¹Ø¨Ø± Ø·Ø¨Ù‚Ø© Ø§Ù„Ù…Ø³ØªÙˆØ¯Ø¹Ø§Øª Ù…Ø¹ Ø§Ù„Ø­ÙØ§Ø¸ Ø¹Ù„Ù‰ Demo / Supabase / Auto modes.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" icon={<Plus className="h-4 w-4" />} onClick={() => document.getElementById("milestone-title")?.focus()}>Ø¥Ø¶Ø§ÙØ© Ù…Ø¹Ù„Ù…</Button>
+            <Button type="button" variant="secondary" icon={<CalendarDays className="h-4 w-4" />} onClick={() => setView("calendar")}>Ø¹Ø±Ø¶ Ø§Ù„ØªÙ‚ÙˆÙŠÙ…</Button>
+            <Button variant="secondary" icon={<Sparkles className="h-4 w-4" />}>ØªÙˆÙ„ÙŠØ¯ Ø¬Ø¯ÙˆÙ„ Ø¹Ø¨Ø± VORA</Button>
+            <Button variant="secondary" icon={<Download className="h-4 w-4" />}>ØªØµØ¯ÙŠØ±</Button>
+          </div>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <TimelineMetric title="Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ù…Ø¹Ø§Ù„Ù…" value={String(stats.total)} tone="gold" icon={<CalendarDays className="h-5 w-5" />} />
+        <TimelineMetric title="Ù…ÙƒØªÙ…Ù„Ø©" value={String(stats.completed)} tone="success" icon={<CheckCircle2 className="h-5 w-5" />} />
+        <TimelineMetric title="Ù‚Ø§Ø¯Ù…Ø©" value={String(stats.upcoming)} tone="blue" icon={<Gauge className="h-5 w-5" />} />
+        <TimelineMetric title="Ù…ØªØ£Ø®Ø±Ø©" value={String(stats.overdue)} tone="warning" icon={<ShieldAlert className="h-5 w-5" />} />
+        <TimelineMetric title="Ø¥Ù†Ø¬Ø§Ø² Ø§Ù„Ø¬Ø¯ÙˆÙ„" value={`${stats.completionRate}%`} tone="neutral" icon={<Clock3 className="h-5 w-5" />} />
+      </div>
+
+      <GlassCard className="p-4">
+        <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_180px_auto] xl:items-center">
+          <Input label="Search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ø¹Ø§Ù„Ù… ÙˆØ§Ù„ÙˆØµÙ" icon={<Search className="h-4 w-4" />} />
+          <Dropdown label="Status" value={statusFilter} options={["All", ...milestoneStatuses]} onChange={setStatusFilter} />
+          <div className="flex gap-2">
+            <IconButton label="Timeline view" tone={view === "timeline" ? "gold" : "neutral"} onClick={() => setView("timeline")}><BarChart3 className="h-5 w-5" /></IconButton>
+            <IconButton label="Calendar view" tone={view === "calendar" ? "gold" : "neutral"} onClick={() => setView("calendar")}><CalendarDays className="h-5 w-5" /></IconButton>
+          </div>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="space-y-5">
+          {timelineState.loading ? (
+            <GlassCard className="p-6">
+              <div className="grid gap-4 md:grid-cols-3">
+                {[0, 1, 2].map((item) => <div key={item} className="ds-skeleton h-40 rounded-3xl" />)}
+              </div>
+            </GlassCard>
+          ) : timelineState.error && !timelineState.isFallback ? (
+            <EmptyState title="ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ" description={timelineState.error} />
+          ) : filteredMilestones.length === 0 ? (
+            <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ø¹Ø§Ù„Ù… Ù…Ø·Ø§Ø¨Ù‚Ø©" description="Ø¹Ø¯Ù‘Ù„ Ø§Ù„Ø¨Ø­Ø« Ø£Ùˆ Ø£Ù†Ø´Ø¦ Ù…Ø¹Ù„Ù…Ø§Ù‹ Ø²Ù…Ù†ÙŠØ§Ù‹ Ø¬Ø¯ÙŠØ¯Ø§Ù‹." />
+          ) : view === "timeline" ? (
+            <GlassCard className="overflow-hidden p-5">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <Badge tone="blue">Milestone Timeline</Badge>
+                  <h3 className="mt-2 text-2xl font-black text-white">Ø§Ù„Ù…Ø¹Ø§Ù„Ù… ÙˆØ§Ù„ØªÙ‚Ø¯Ù…</h3>
+                </div>
+                <Badge tone="neutral">{filteredMilestones.length} visible</Badge>
+              </div>
+              <div className="grid gap-4">
+                {filteredMilestones.map((milestone, index) => (
+                  <MilestoneRow key={milestone.id} milestone={milestone} index={index} onUpdate={(input) => void updateMilestone(milestone.id, input)} onArchive={() => void archiveMilestone(milestone.id)} />
+                ))}
+              </div>
+            </GlassCard>
+          ) : (
+            <GlassCard className="p-5">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div>
+                  <Badge tone="gold">Calendar View</Badge>
+                  <h3 className="mt-2 text-2xl font-black text-white">Ø¹Ø±Ø¶ Ø§Ù„ØªÙ‚ÙˆÙŠÙ…</h3>
+                </div>
+                <Badge tone="blue">UI only</Badge>
+              </div>
+              <div className="grid gap-3 md:grid-cols-3">
+                {filteredMilestones.map((milestone) => (
+                  <div key={milestone.id} className="rounded-3xl border border-white/10 bg-white/[0.045] p-4">
+                    <Badge tone={milestoneTone(milestone.status)}>{milestone.title}</Badge>
+                    <p className="mt-4 text-lg font-black text-white">{milestone.startDate || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"} - {milestone.dueDate || "ØºÙŠØ± Ù…Ø­Ø¯Ø¯"}</p>
+                    <p className="mt-2 text-sm font-bold text-ds-text/48">{milestone.description || "Project milestone"}</p>
+                    <div className="mt-4"><ProgressBar value={milestone.progress} tone={milestoneTone(milestone.status) === "neutral" ? "gold" : milestoneTone(milestone.status)} /></div>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          )}
+
+          <GlassCard className="p-5">
+            <div className="mb-5">
+              <Badge tone="gold">Milestone CRUD</Badge>
+              <h3 className="mt-2 text-2xl font-black text-white">Ø¥Ø¶Ø§ÙØ© Ù…Ø¹Ù„Ù… Ø²Ù…Ù†ÙŠ</h3>
+            </div>
+            <form className="grid gap-4" onSubmit={createMilestone}>
+              <Input id="milestone-title" label="Title" value={milestoneForm.title} onChange={(event) => setMilestoneForm((current) => ({ ...current, title: event.target.value }))} placeholder="Ù…Ø«Ù„Ø§Ù‹: Foundation complete" />
+              <Textarea label="Description" value={milestoneForm.description} onChange={(event) => setMilestoneForm((current) => ({ ...current, description: event.target.value }))} placeholder="ÙˆØµÙ Ù…Ø®ØªØµØ± Ù„Ù„Ù…Ø¹Ù„Ù…" />
+              <div className="grid gap-3 md:grid-cols-4">
+                <Dropdown label="Status" value={milestoneForm.status} options={milestoneStatuses} onChange={(value) => setMilestoneForm((current) => ({ ...current, status: value as MilestoneStatus }))} />
+                <Input label="Start date" type="date" value={milestoneForm.startDate || ""} onChange={(event) => setMilestoneForm((current) => ({ ...current, startDate: event.target.value || undefined }))} />
+                <Input label="Due date" type="date" value={milestoneForm.dueDate || ""} onChange={(event) => setMilestoneForm((current) => ({ ...current, dueDate: event.target.value || undefined }))} />
+                <Input label="Progress" type="number" min={0} max={100} value={String(milestoneForm.progress || 0)} onChange={(event) => setMilestoneForm((current) => ({ ...current, progress: Number(event.target.value || 0) }))} />
+              </div>
+              <Button type="submit" icon={<Plus className="h-4 w-4" />}>Ø¥Ù†Ø´Ø§Ø¡ Ù…Ø¹Ù„Ù…</Button>
+              {message && <p className="rounded-2xl border border-[#D4AF37]/18 bg-[#D4AF37]/10 p-3 text-sm font-bold leading-6 text-[#F5D878]">{message}</p>}
+            </form>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="blue">Task Dependencies</Badge>
+                <h3 className="mt-2 text-2xl font-black text-white">Ø§Ø¹ØªÙ…Ø§Ø¯ÙŠØ§Øª Ø§Ù„Ù…Ù‡Ø§Ù…</h3>
+              </div>
+              <Badge tone="neutral">{timeline.dependencies.length} dependencies</Badge>
+            </div>
+            <form className="mb-5 grid gap-3 xl:grid-cols-[1fr_1fr_180px_auto]" onSubmit={createDependency}>
+              <NativeSelect label="Predecessor" value={dependencyForm.predecessorTaskId} onChange={(value) => setDependencyForm((current) => ({ ...current, predecessorTaskId: value }))} options={[{ value: "", label: "Ø§Ø®ØªØ± Ø§Ù„Ù…Ù‡Ù…Ø© Ø§Ù„Ø³Ø§Ø¨Ù‚Ø©" }, ...taskState.data.map((task) => ({ value: task.id, label: task.title }))]} />
+              <NativeSelect label="Successor" value={dependencyForm.successorTaskId} onChange={(value) => setDependencyForm((current) => ({ ...current, successorTaskId: value }))} options={[{ value: "", label: "Ø§Ø®ØªØ± Ø§Ù„Ù…Ù‡Ù…Ø© Ø§Ù„Ù„Ø§Ø­Ù‚Ø©" }, ...taskState.data.map((task) => ({ value: task.id, label: task.title }))]} />
+              <Dropdown label="Type" value={dependencyForm.dependencyType} options={dependencyTypes} onChange={(value) => setDependencyForm((current) => ({ ...current, dependencyType: value as DependencyType }))} />
+              <div className="flex items-end"><Button type="submit" className="w-full" size="sm">Ø¥Ø¶Ø§ÙØ©</Button></div>
+            </form>
+            <div className="grid gap-3">
+              {timeline.dependencies.length === 0 ? (
+                <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ø§Ø¹ØªÙ…Ø§Ø¯ÙŠØ§Øª Ø¨Ø¹Ø¯" description="Ø£Ø¶Ù Ø§Ø¹ØªÙ…Ø§Ø¯Ø§Ù‹ Ø¨ÙŠÙ† Ù…Ù‡Ù…ØªÙŠÙ† Ù„ØªÙˆØ¶ÙŠØ­ ØªØ³Ù„Ø³Ù„ Ø§Ù„ØªÙ†ÙÙŠØ°." />
+              ) : (
+                timeline.dependencies.map((dependency) => <DependencyRow key={dependency.id} dependency={dependency} onRemove={() => void removeDependency(dependency.id)} />)
+              )}
+            </div>
+          </GlassCard>
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <div className="flex items-start gap-4">
+              <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+              <div>
+                <Badge tone="blue">VORA Insights</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ</h3>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-3">
+              <ContextRow label="Ø®Ø·Ø± Ø§Ù„ØªØ£Ø®ÙŠØ±" value={delayedMilestone?.title || "Ù…Ù†Ø®ÙØ¶"} />
+              <ContextRow label="Ø§Ù„Ù…Ø¹Ù„Ù… Ø§Ù„Ù‚Ø§Ø¯Ù…" value={nextMilestone?.title || "Ù„Ø§ ÙŠÙˆØ¬Ø¯"} />
+              <ContextRow label="Ø§Ø¹ØªÙ…Ø§Ø¯ Ù…Ø­Ø¬ÙˆØ¨" value={timeline.dependencies.length ? `${timeline.dependencies.length} Ø§Ø¹ØªÙ…Ø§Ø¯` : "Ù„Ø§ ÙŠÙˆØ¬Ø¯"} />
+              <ContextRow label="ØªÙˆÙ‚Ø¹ Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²" value={`${stats.completionRate}%`} />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="gold">Milestones</Badge>
+            <div className="mt-5 grid gap-4">
+              {timeline.milestones.slice(0, 3).map((milestone, index) => (
+                <TimelineCard key={milestone.id} index={index + 1} title={milestone.title} text={milestone.description || milestone.status} icon={milestone.status === "Completed" ? <CheckCircle2 className="h-4 w-4" /> : milestone.status === "Delayed" ? <ShieldAlert className="h-4 w-4" /> : <Clock3 className="h-4 w-4" />} />
+              ))}
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="gold">Quick Actions</Badge>
+            <div className="mt-4 grid gap-3">
+              <ActionLink href="/tools/document" icon={<Sparkles className="h-5 w-5" />} title="ØªÙˆÙ„ÙŠØ¯ Ø¬Ø¯ÙˆÙ„ Ø²Ù…Ù†ÙŠ" />
+              <ActionLink href="/tools/document" icon={<FileText className="h-5 w-5" />} title="ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ø¬Ø¯ÙˆÙ„" />
+              <ActionLink href="/history" icon={<Download className="h-5 w-5" />} title="ØªØµØ¯ÙŠØ± Ù„Ø§Ø­Ù‚Ø§Ù‹" />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="neutral">Repository Mode</Badge>
+            <div className="mt-4 grid gap-3">
+              <ContextRow label="Ø§Ù„Ù…ØµØ¯Ø±" value={timelineState.source} />
+              <ContextRow label="Fallback" value={timelineState.isFallback ? "Ù…ÙØ¹Ù„" : "ØºÙŠØ± Ù…ÙØ¹Ù„"} />
+              <ContextRow label="Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={project.id} />
+            </div>
+          </GlassCard>
+        </aside>
+      </div>
+    </div></LocalizedContent>
+  );
+}
+
+function MilestoneRow({ milestone, index, onUpdate, onArchive }: { milestone: TimelineMilestone; index: number; onUpdate: (input: Partial<TimelineMilestoneInput>) => void; onArchive: () => void }) {
+  const { locale } = useI18n();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Partial<TimelineMilestoneInput>>({
+    status: milestone.status,
+    progress: milestone.progress,
+    startDate: milestone.startDate,
+    dueDate: milestone.dueDate
+  });
+
+  useEffect(() => {
+    setDraft({
+      status: milestone.status,
+      progress: milestone.progress,
+      startDate: milestone.startDate,
+      dueDate: milestone.dueDate
+    });
+  }, [milestone]);
+
+  return (
+    <LocalizedContent locale={locale}><div className="relative rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="grid h-9 w-9 place-items-center rounded-2xl bg-[#D4AF37] text-sm font-black text-black shadow-gold-glow">{index + 1}</span>
+            <Badge tone={milestoneTone(milestone.status)}>{milestone.status}</Badge>
+            {milestone.status === "Delayed" && <ShieldAlert className="h-4 w-4 text-[#FFB020]" />}
+          </div>
+          <h3 className="mt-3 text-xl font-black text-white">{milestone.title}</h3>
+          <p className="mt-2 text-sm leading-6 text-ds-text/54">{milestone.description || "Project timeline milestone"}</p>
+        </div>
+        <div className="min-w-[220px]">
+          <ProgressBar value={milestone.progress} label={`${milestone.startDate || "TBD"} - ${milestone.dueDate || "TBD"}`} tone={milestoneTone(milestone.status) === "neutral" ? "gold" : milestoneTone(milestone.status)} />
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button type="button" size="sm" variant="secondary" onClick={() => setEditing((current) => !current)}>ØªØ¹Ø¯ÙŠÙ„</Button>
+        <Button type="button" size="sm" variant="danger" onClick={onArchive}>Ø£Ø±Ø´ÙØ©</Button>
+      </div>
+      {editing && (
+        <div className="mt-4 grid gap-3 rounded-2xl border border-white/10 bg-black/22 p-3 lg:grid-cols-4">
+          <Dropdown label="Status" value={draft.status} options={milestoneStatuses} onChange={(value) => setDraft((current) => ({ ...current, status: value as MilestoneStatus }))} />
+          <Input label="Start date" type="date" value={draft.startDate || ""} onChange={(event) => setDraft((current) => ({ ...current, startDate: event.target.value || undefined }))} />
+          <Input label="Due date" type="date" value={draft.dueDate || ""} onChange={(event) => setDraft((current) => ({ ...current, dueDate: event.target.value || undefined }))} />
+          <Input label="Progress" type="number" min={0} max={100} value={String(draft.progress || 0)} onChange={(event) => setDraft((current) => ({ ...current, progress: Number(event.target.value || 0) }))} />
+          <div className="lg:col-span-4 flex gap-2">
+            <Button type="button" size="sm" onClick={() => onUpdate(draft)}>Ø­ÙØ¸</Button>
+            <Button type="button" size="sm" variant="secondary" onClick={() => setEditing(false)}>Ø¥ØºÙ„Ø§Ù‚</Button>
+          </div>
+        </div>
+      )}
+    </div></LocalizedContent>
+  );
+}
+
+function DependencyRow({ dependency, onRemove }: { dependency: TaskDependency; onRemove: () => void }) {
+  const { locale } = useI18n();
+  return (
+    <LocalizedContent locale={locale}><div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <Badge tone="blue">{dependency.dependencyType}</Badge>
+        <p className="mt-3 text-sm font-black text-white">{dependency.predecessorTitle || dependency.predecessorTaskId}</p>
+        <p className="mt-1 text-xs font-bold text-ds-text/46">Ø«Ù… {dependency.successorTitle || dependency.successorTaskId}</p>
+      </div>
+      <Button type="button" size="sm" variant="danger" onClick={onRemove}>Ø­Ø°Ù</Button>
+    </div></LocalizedContent>
+  );
+}
+
+function TimelineMetric({ title, value, icon, tone }: { title: string; value: string; icon: React.ReactNode; tone: "gold" | "blue" | "warning" | "success" | "neutral" | "danger" }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone={tone}>{title}</Badge>
+          <p className="mt-4 text-2xl font-black text-white">{value}</p>
+        </div>
+        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+      </div>
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function milestoneTone(status: MilestoneStatus): "gold" | "blue" | "warning" | "success" | "neutral" {
+  if (status === "Completed") return "success";
+  if (status === "In Progress") return "blue";
+  if (status === "Delayed") return "warning";
+  return "neutral";
+}
+
+function TeamTab({ project, detail }: { project: ProjectWorkspaceProject; detail: ProjectDetail }) {
+  const { locale } = useI18n();
+  const [query, setQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [availabilityFilter, setAvailabilityFilter] = useState("all");
+
+  const members = detail.team.map((member) => ({
+    name: member.name,
+    role: member.role,
+    status: member.status,
+    availability: member.workload > 80 ? "Busy" : "Available",
+    tasks: member.tasks,
+    workload: member.workload
+  }));
+
+  const roles = ["Project Owner", "Architect", "Engineer", "Contractor", "Site Manager", "Supervisor", "Client"];
+  const visibleMembers = members.filter((member) => {
+    const matchesQuery = query.trim() ? `${member.name} ${member.role}`.toLowerCase().includes(query.trim().toLowerCase()) : true;
+    const matchesRole = roleFilter === "all" || member.role === roleFilter;
+    const matchesStatus = statusFilter === "all" || member.status === statusFilter;
+    const matchesAvailability = availabilityFilter === "all" || member.availability === availabilityFilter;
+    return matchesQuery && matchesRole && matchesStatus && matchesAvailability;
+  });
+
+  return (
+    <LocalizedContent locale={locale}><div className="space-y-5">
+      <GlassCard className="relative overflow-hidden p-5">
+        <BlueprintOverlay className="opacity-20" />
+        <div className="relative z-10 flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+          <div>
+            <Badge tone="gold">Team Workspace</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">ÙØ±ÙŠÙ‚ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">
+              ÙˆØ§Ø¬Ù‡Ø© ØªÙ†Ø¸ÙŠÙ… Ø§Ù„ÙØ±ÙŠÙ‚ Ø¯Ø§Ø®Ù„ {project.title}: Ø§Ù„Ø£Ø¯ÙˆØ§Ø±ØŒ Ø§Ù„ØªÙˆÙØ±ØŒ Ø¹Ø¨Ø¡ Ø§Ù„Ø¹Ù…Ù„ØŒ ÙˆØ§Ù„Ù†Ø´Ø§Ø·. Ù‡Ø°Ø§ Ø§Ù„Ù‚Ø³Ù… UI ÙÙ‚Ø· Ø¯ÙˆÙ† Ø£ÙŠ Ø¯Ø¹ÙˆØ§Øª Ø£Ùˆ ØµÙ„Ø§Ø­ÙŠØ§Øª ÙØ¹Ù„ÙŠØ©.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button icon={<Plus className="h-4 w-4" />}>Ø¯Ø¹ÙˆØ© Ø¹Ø¶Ùˆ</Button>
+            <Button variant="secondary" icon={<UsersRound className="h-4 w-4" />}>Ø¥Ø³Ù†Ø§Ø¯ Ø¯ÙˆØ±</Button>
+            <Button variant="secondary" icon={<Sparkles className="h-4 w-4" />}>Ø¥Ù†Ø´Ø§Ø¡ ÙØ±ÙŠÙ‚</Button>
+            <Button variant="secondary" icon={<Download className="h-4 w-4" />}>ØªØµØ¯ÙŠØ± Ø§Ù„ÙØ±ÙŠÙ‚</Button>
+          </div>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <TeamMetric title="Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø£Ø¹Ø¶Ø§Ø¡" value={String(members.length)} tone="gold" icon={<UsersRound className="h-5 w-5" />} />
+        <TeamMetric title="Ù†Ø´Ø·ÙˆÙ† Ø§Ù„ÙŠÙˆÙ…" value={String(members.filter((member) => member.status === "Active").length)} tone="success" icon={<CheckCircle2 className="h-5 w-5" />} />
+        <TeamMetric title="Ø¯Ø¹ÙˆØ§Øª Ù…Ø¹Ù„Ù‚Ø©" value={String(members.filter((member) => member.status === "Invited" || member.status === "Pending").length)} tone="warning" icon={<Clock3 className="h-5 w-5" />} />
+        <TeamMetric title="Ø§Ù„Ø£Ø¯ÙˆØ§Ø± Ø§Ù„Ù…ØºØ·Ø§Ø©" value={`${new Set(members.map((member) => member.role)).size}/${roles.length}`} tone="blue" icon={<Gauge className="h-5 w-5" />} />
+      </div>
+
+      <GlassCard className="p-4">
+        <div className="grid gap-3 xl:grid-cols-[1fr_repeat(3,180px)] xl:items-center">
+          <div className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-black/24 px-4 py-3 shadow-inner shadow-black/20 transition focus-within:border-[#D4AF37]/40">
+            <Search className="h-5 w-5 text-gold" />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„ÙØ±ÙŠÙ‚..." className="w-full bg-transparent text-sm text-ds-text outline-none placeholder:text-ds-text/38" />
+          </div>
+          <select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø§Ù„Ø£Ø¯ÙˆØ§Ø±</option>
+            {roles.map((role) => <option key={role} value={role}>{role}</option>)}
+          </select>
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø§Ù„Ø­Ø§Ù„Ø§Øª</option>
+            <option value="Active">Active</option>
+            <option value="Pending">Pending</option>
+            <option value="Invited">Invited</option>
+          </select>
+          <select value={availabilityFilter} onChange={(event) => setAvailabilityFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø§Ù„ØªÙˆÙØ±</option>
+            <option value="Available">Available</option>
+            <option value="Busy">Busy</option>
+            <option value="Limited">Limited</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="space-y-5">
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="blue">Team Directory</Badge>
+                <h3 className="mt-2 text-2xl font-black text-white">Ø¯Ù„ÙŠÙ„ Ø§Ù„ÙØ±ÙŠÙ‚</h3>
+              </div>
+              <Badge tone="neutral">{visibleMembers.length} members</Badge>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {visibleMembers.map((member) => <TeamMemberCard key={member.name} member={member} />)}
+            </div>
+            {visibleMembers.length === 0 && <div className="mt-4"><EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬" description="Ø¬Ø±Ù‘Ø¨ ØªØºÙŠÙŠØ± Ø§Ù„Ø¨Ø­Ø« Ø£Ùˆ Ø§Ù„ÙÙ„Ø§ØªØ± Ø§Ù„Ø­Ø§Ù„ÙŠØ©." /></div>}
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="gold">Team Roles</Badge>
+                <h3 className="mt-2 text-2xl font-black text-white">Ø§Ù„Ø£Ø¯ÙˆØ§Ø± Ø§Ù„Ù…Ø·Ù„ÙˆØ¨Ø©</h3>
+              </div>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {roles.map((role) => {
+                const covered = members.some((member) => member.role === role);
+                return (
+                  <div key={role} className="rounded-2xl border border-white/10 bg-white/[0.045] p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-black text-white">{role}</span>
+                      <Badge tone={covered ? "success" : "warning"}>{covered ? "Covered" : "Missing"}</Badge>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </GlassCard>
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <div className="flex items-start gap-4">
+              <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+              <div>
+                <Badge tone="blue">VORA Insights</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© Ø§Ù„ÙØ±ÙŠÙ‚</h3>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-3">
+              <ContextRow label="ØªÙˆØ§Ø²Ù† Ø§Ù„Ø¹Ù…Ù„" value="Architect Ù…Ø±ØªÙØ¹" />
+              <ContextRow label="Ø£Ø¯ÙˆØ§Ø± Ù†Ø§Ù‚ØµØ©" value="Site Manager" />
+              <ContextRow label="Ø§Ù‚ØªØ±Ø§Ø­ ØªØ¹Ø§ÙˆÙ†" value="Ù…Ø±Ø§Ø¬Ø¹Ø© Ø£Ø³Ø¨ÙˆØ¹ÙŠØ©" />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="gold">Activity Feed</Badge>
+            <div className="mt-5 grid gap-4">
+              <TimelineCard index={1} title="VORA Ø±Ø§Ø¬Ø¹Øª ØªÙˆØ²ÙŠØ¹ Ø§Ù„Ø¹Ù…Ù„" text="ÙŠÙˆØ¬Ø¯ Ø¶ØºØ· Ø£Ø¹Ù„Ù‰ Ø¹Ù„Ù‰ Ø¯ÙˆØ± Ø§Ù„Ù…Ø¹Ù…Ø§Ø±ÙŠ." icon={<Bot className="h-4 w-4" />} />
+              <TimelineCard index={2} title="Ø¯Ø¹ÙˆØ© Ù‚ÙŠØ¯ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø±" text="Ù…Ù‚Ø§ÙˆÙ„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ù„Ù… ÙŠØ¤ÙƒØ¯ Ø§Ù„Ø¯Ø¹ÙˆØ© Ø¨Ø¹Ø¯." icon={<Clock3 className="h-4 w-4" />} />
+              <TimelineCard index={3} title="Ø¯ÙˆØ± Ù†Ø§Ù‚Øµ" text="ÙŠÙÙ†ØµØ­ Ø¨Ø¥Ø¶Ø§ÙØ© Site Manager Ù‚Ø¨Ù„ Ø§Ù„ØªÙ†ÙÙŠØ°." icon={<ShieldAlert className="h-4 w-4" />} />
+            </div>
+          </GlassCard>
+        </aside>
+      </div>
+    </div></LocalizedContent>
+  );
+}
+
+function TeamMetric({ title, value, icon, tone }: { title: string; value: string; icon: React.ReactNode; tone: "gold" | "blue" | "warning" | "success" }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone={tone}>{title}</Badge>
+          <p className="mt-4 text-3xl font-black text-white">{value}</p>
+        </div>
+        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+      </div>
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function TeamMemberCard({ member }: { member: { name: string; role: string; status: string; availability: string; tasks: number; workload: number } }) {
+  const { locale } = useI18n();
+  return (
+    <LocalizedContent locale={locale}><div className="rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div className="flex items-start gap-4">
+        <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/10 text-lg font-black text-gold shadow-gold-glow">
+          {member.name.slice(0, 1)}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge tone={member.status === "Active" ? "success" : member.status === "Pending" ? "warning" : "blue"}>{member.status}</Badge>
+            <Badge tone="neutral">{member.availability}</Badge>
+          </div>
+          <h4 className="mt-3 truncate text-lg font-black text-white">{member.name}</h4>
+          <p className="mt-1 text-sm font-bold text-ds-text/50">{member.role}</p>
+        </div>
+      </div>
+      <div className="mt-5 grid gap-3">
+        <div className="flex items-center justify-between text-xs font-black text-ds-text/52">
+          <span>Assigned tasks</span>
+          <span>{member.tasks}</span>
+        </div>
+        <ProgressBar value={member.workload} label="Workload" tone={member.workload > 80 ? "warning" : member.workload > 60 ? "blue" : "success"} />
+      </div>
+    </div></LocalizedContent>
+  );
+}
+
+function ReportsTab({ project, detail }: { project: ProjectWorkspaceProject; detail: ProjectDetail }) {
+  const analyticsState = useAnalyticsSummary(project.organizationId || "atlas", project.id);
+  const analytics = analyticsState.data;
+  const [query, setQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedReportId, setSelectedReportId] = useState("RPT-001");
+
+  const reportTypes = [
+    { title: "Executive", label: "ØªÙ‚Ø§Ø±ÙŠØ± ØªÙ†ÙÙŠØ°ÙŠØ©", count: analytics?.reports.filter((report) => report.type === "Executive").length || 1, tone: "gold" as const, icon: <BarChart3 className="h-5 w-5" /> },
+    { title: "Weekly", label: "ØªÙ‚Ø§Ø±ÙŠØ± Ø£Ø³Ø¨ÙˆØ¹ÙŠØ©", count: analytics?.reports.filter((report) => report.type === "Weekly").length || 1, tone: "blue" as const, icon: <CalendarDays className="h-5 w-5" /> },
+    { title: "Budget", label: "ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©", count: analytics?.reports.filter((report) => report.type === "Budget").length || 1, tone: "success" as const, icon: <Coins className="h-5 w-5" /> },
+    { title: "Timeline", label: "ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ", count: analytics?.reports.filter((report) => report.type === "Timeline").length || 1, tone: "warning" as const, icon: <Clock3 className="h-5 w-5" /> },
+    { title: "Progress", label: "ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ù„ØªÙ‚Ø¯Ù…", count: analytics?.reports.filter((report) => report.type === "Progress").length || 1, tone: "neutral" as const, icon: <UsersRound className="h-5 w-5" /> },
+    { title: "Risk", label: "ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ù„Ù…Ø®Ø§Ø·Ø±", count: analytics?.reports.filter((report) => report.type === "Risk").length || 1, tone: "warning" as const, icon: <ShieldAlert className="h-5 w-5" /> }
+  ];
+
+  const reports = analytics?.reports.map((report, index) => ({
+    id: report.id,
+    title: report.title,
+    category: report.type,
+    status: report.status,
+    date: report.date,
+    author: report.author,
+    preview: report.summary,
+    tone: (index === 0 ? "gold" : report.type === "Budget" ? "success" : report.type === "Risk" ? "warning" : "blue") as "gold" | "success" | "warning" | "blue"
+  })) || detail.reports.map((title, index) => ({
+    id: `RPT-${String(index + 1).padStart(3, "0")}`,
+    title,
+    category: index === 0 ? "Executive" : index === 1 ? "Budget" : "Risk",
+    status: index === 2 ? "Needs review" : "Ready",
+    date: `2026-07-${16 - index * 2}`,
+    author: index === 1 ? "Finance Department" : "VORA",
+    preview: `${title} for ${project.title}: includes project status, management actions, risks, budget signals, and next decisions.`,
+    tone: (index === 0 ? "gold" : index === 1 ? "success" : "warning") as "gold" | "success" | "warning"
+  }));
+
+  const visibleReports = reports.filter((report) => {
+    const searchTarget = `${report.title} ${report.category} ${report.status} ${report.author}`.toLowerCase();
+    const matchesQuery = query.trim() ? searchTarget.includes(query.trim().toLowerCase()) : true;
+    const matchesType = typeFilter === "all" || report.category === typeFilter;
+    const matchesStatus = statusFilter === "all" || report.status === statusFilter;
+    const matchesDate = dateFilter === "all" || (dateFilter === "recent" ? report.date >= "2026-07-10" : report.date < "2026-07-10");
+    return matchesQuery && matchesType && matchesStatus && matchesDate;
+  });
+
+  const selectedReport = visibleReports.find((report) => report.id === selectedReportId) || visibleReports[0] || reports[0];
+
+  return (<AutoLocalizedContent>
+    <div className="space-y-5">
+      <GlassCard className="relative overflow-hidden p-5">
+        <BlueprintOverlay className="opacity-20" />
+        <div className="relative z-10 flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+          <div>
+            <Badge tone="gold">Reports Workspace</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">
+              ÙˆØ§Ø¬Ù‡Ø© Ù„Ø¥Ø¯Ø§Ø±Ø© ØªÙ‚Ø§Ø±ÙŠØ± {project.title}: Ø§Ù„ØªÙ†ÙÙŠØ°ÙŠØŒ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹ÙŠØŒ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©ØŒ Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠØŒ Ø§Ù„ÙØ±ÙŠÙ‚ØŒ ÙˆØ§Ù„Ù…Ø®Ø§Ø·Ø±. Ù‡Ø°Ø§ Ø§Ù„Ù‚Ø³Ù… UI ÙÙ‚Ø· Ø¯ÙˆÙ† Ø¥Ù†Ø´Ø§Ø¡ Ù…Ù„ÙØ§Øª Ø£Ùˆ APIs Ø¬Ø¯ÙŠØ¯Ø©.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button icon={<Sparkles className="h-4 w-4" />}>ØªÙˆÙ„ÙŠØ¯ ØªÙ‚Ø±ÙŠØ±</Button>
+            <Button variant="secondary" icon={<Download className="h-4 w-4" />}>Export PDF</Button>
+            <Button variant="secondary" icon={<FileArchive className="h-4 w-4" />}>Export Excel</Button>
+            <Button variant="secondary" icon={<CalendarDays className="h-4 w-4" />}>Ø¬Ø¯ÙˆÙ„Ø© ØªÙ‚Ø±ÙŠØ±</Button>
+          </div>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {reportTypes.map((type) => (
+          <ReportsOverviewCard key={type.title} title={type.label} value={String(type.count)} tone={type.tone} icon={type.icon} />
+        ))}
+      </div>
+
+      {analyticsState.loading || !analytics ? (
+        <GlassCard className="p-5">
+          <p className="text-sm text-ds-text/60">Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ù…Ø¤Ø´Ø±Ø§Øª Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ± ÙˆØ§Ù„ØªØ­Ù„ÙŠÙ„Ø§Øª...</p>
+        </GlassCard>
+      ) : (
+        <>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[analytics.projectHealth, analytics.budgetHealth, analytics.timelineHealth, analytics.taskCompletion].map((kpi) => (
+              <GlassCard key={kpi.id} className="p-4">
+                <Badge tone={kpi.tone}>{kpi.label}</Badge>
+                <p className="mt-4 text-3xl font-black text-white">{kpi.displayValue}</p>
+                <p className="mt-2 text-xs leading-6 text-ds-text/50">{kpi.description}</p>
+                <div className="mt-4"><ProgressBar value={kpi.value} tone={kpi.tone} /></div>
+              </GlassCard>
+            ))}
+          </div>
+
+          <div className="grid gap-5 xl:grid-cols-3">
+            <ChartContainer title="Task Distribution">
+              <MiniBarChart points={analytics.taskDistribution} />
+            </ChartContainer>
+            <ChartContainer title="Department Performance">
+              <MiniBarChart points={analytics.departmentPerformance} />
+            </ChartContainer>
+            <ChartContainer title="Knowledge Activity">
+              {analytics.knowledgeActivity.length ? <MiniBarChart points={analytics.knowledgeActivity} /> : <EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ù…Ø¹Ø±ÙØ©" description="Ø³ØªØ¸Ù‡Ø± ÙØ¦Ø§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø¨Ø¹Ø¯ Ø¥Ø¶Ø§ÙØ© Ù…Ù‚Ø§Ù„Ø§Øª Ù„Ù„Ù…Ø´Ø±ÙˆØ¹." />}
+            </ChartContainer>
+          </div>
+
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="blue">Analytics Matrix</Badge>
+                <h3 className="mt-2 text-xl font-black text-white">Ù…Ø¤Ø´Ø±Ø§Øª Ù‚Ø§Ø¨Ù„Ø© Ù„Ù„ØªÙ†ÙÙŠØ°</h3>
+              </div>
+              <Badge tone={analytics.riskScore > 55 ? "warning" : "success"}>Risk {analytics.riskScore}%</Badge>
+            </div>
+            <Table
+              columns={["Ø§Ù„Ù…Ø¤Ø´Ø±", "Ø§Ù„Ù‚ÙŠÙ…Ø©", "Ø§Ù„Ø§ØªØ¬Ø§Ù‡", "Ø§Ù„ÙˆØµÙ"]}
+              rows={[analytics.projectHealth, analytics.budgetHealth, analytics.timelineHealth, analytics.taskCompletion, analytics.knowledgeCoverage, analytics.documentCoverage].map((kpi) => [
+                kpi.label,
+                kpi.displayValue,
+                kpi.trend || "flat",
+                kpi.description || ""
+              ])}
+            />
+          </GlassCard>
+        </>
+      )}
+
+      <GlassCard className="p-4">
+        <div className="grid gap-3 xl:grid-cols-[1fr_repeat(3,180px)] xl:items-center">
+          <div className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-black/24 px-4 py-3 shadow-inner shadow-black/20 transition focus-within:border-[#D4AF37]/40">
+            <Search className="h-5 w-5 text-gold" />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±..." className="w-full bg-transparent text-sm text-ds-text outline-none placeholder:text-ds-text/38" />
+          </div>
+          <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</option>
+            {reportTypes.map((type) => <option key={type.title} value={type.title}>{type.label}</option>)}
+          </select>
+          <select value={dateFilter} onChange={(event) => setDateFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø§Ù„ØªÙˆØ§Ø±ÙŠØ®</option>
+            <option value="recent">Ø§Ù„Ø£Ø­Ø¯Ø«</option>
+            <option value="older">Ø§Ù„Ø£Ù‚Ø¯Ù…</option>
+          </select>
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none focus:border-[#D4AF37]/44">
+            <option value="all">ÙƒÙ„ Ø§Ù„Ø­Ø§Ù„Ø§Øª</option>
+            <option value="Ready">Ready</option>
+            <option value="Draft">Draft</option>
+            <option value="Needs review">Needs review</option>
+          </select>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-5">
+          <GlassCard className="p-5">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <Badge tone="blue">Reports Library</Badge>
+                <h3 className="mt-2 text-2xl font-black text-white">Ù…ÙƒØªØ¨Ø© Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</h3>
+              </div>
+              <Badge tone="neutral">{visibleReports.length} reports</Badge>
+            </div>
+            <div className="grid gap-4">
+              {visibleReports.map((report) => (
+                <button
+                  key={report.id}
+                  type="button"
+                  onClick={() => setSelectedReportId(report.id)}
+                  className={`w-full rounded-[1.75rem] border p-4 text-right transition hover:-translate-y-1 hover:border-[#D4AF37]/32 hover:bg-white/[0.065] ${selectedReport.id === report.id ? "border-[#D4AF37]/34 bg-[#D4AF37]/8 shadow-gold-glow" : "border-white/10 bg-white/[0.045]"}`}
+                >
+                  <span className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <span className="min-w-0">
+                      <span className="flex flex-wrap items-center gap-2">
+                        <Badge tone={report.tone}>{report.category}</Badge>
+                        <Badge tone={report.status === "Ready" ? "success" : report.status === "Draft" ? "blue" : "warning"}>{report.status}</Badge>
+                      </span>
+                      <span className="mt-3 block text-xl font-black text-white">{report.title}</span>
+                      <span className="mt-2 block text-sm leading-7 text-ds-text/56">{report.preview}</span>
+                      <span className="mt-4 flex flex-wrap gap-3 text-xs font-bold text-ds-text/42">
+                        <span>{report.date}</span>
+                        <span>Â·</span>
+                        <span>{report.author}</span>
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 gap-2">
+                      <IconButton label="Ù…Ø¹Ø§ÙŠÙ†Ø© Ø§Ù„ØªÙ‚Ø±ÙŠØ±" tone="blue">
+                        <FileText className="h-5 w-5" />
+                      </IconButton>
+                      <IconButton label="ØªÙ†Ø²ÙŠÙ„ Ø§Ù„ØªÙ‚Ø±ÙŠØ±" tone="gold">
+                        <Download className="h-5 w-5" />
+                      </IconButton>
+                      <IconButton label="Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„ØªÙ‚Ø±ÙŠØ±" tone="neutral">
+                        <UsersRound className="h-5 w-5" />
+                      </IconButton>
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+            {visibleReports.length === 0 && <div className="mt-4"><EmptyState title="Ù„Ø§ ØªÙˆØ¬Ø¯ ØªÙ‚Ø§Ø±ÙŠØ±" description="Ø¬Ø±Ù‘Ø¨ ØªØºÙŠÙŠØ± Ø§Ù„Ø¨Ø­Ø« Ø£Ùˆ Ø§Ù„ÙÙ„Ø§ØªØ± Ø§Ù„Ø­Ø§Ù„ÙŠØ©." /></div>}
+          </GlassCard>
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <Badge tone={selectedReport.tone}>Report Preview</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">{selectedReport.title}</h3>
+              </div>
+              <FileText className="h-6 w-6 text-gold" />
+            </div>
+            <div className="mt-5 rounded-3xl border border-white/10 bg-black/24 p-4">
+              <p className="text-sm leading-7 text-ds-text/62">{selectedReport.preview}</p>
+              <div className="mt-5 grid gap-3">
+                <ContextRow label="Ø§Ù„ØªØµÙ†ÙŠÙ" value={selectedReport.category} />
+                <ContextRow label="Ø§Ù„Ø­Ø§Ù„Ø©" value={selectedReport.status} />
+                <ContextRow label="Ø§Ù„ØªØ§Ø±ÙŠØ®" value={selectedReport.date} />
+                <ContextRow label="Ø§Ù„ÙƒØ§ØªØ¨" value={selectedReport.author} />
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <Button variant="secondary" icon={<Download className="h-4 w-4" />}>Download</Button>
+              <Button variant="secondary" icon={<UsersRound className="h-4 w-4" />}>Share</Button>
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="flex items-start gap-4">
+              <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+              <div>
+                <Badge tone="blue">VORA Insights</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">Ø±Ø¤ÙŠØ© Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</h3>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-3">
+              <ContextRow label="Ø§Ù„ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ù…Ù‚ØªØ±Ø­" value="Executive Brief" />
+              <ContextRow label="ØªÙ‚Ø±ÙŠØ± Ù†Ø§Ù‚Øµ" value="Risk Update" />
+              <ContextRow label="Ù…Ù„Ø®Øµ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹" value={`${project.score}% ØªÙ‚Ø¯Ù…`} />
+              <ContextRow label="Ø¥Ø¬Ø±Ø§Ø¡ Ø¥Ø¯Ø§Ø±ÙŠ" value="Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„ØªØ£Ø®ÙŠØ±" />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="gold">Quick Actions</Badge>
+            <div className="mt-4 grid gap-3">
+              <ActionLink href="/tools/document" icon={<Sparkles className="h-5 w-5" />} title="ØªÙˆÙ„ÙŠØ¯ ØªÙ‚Ø±ÙŠØ±" />
+              <ActionLink href="/history" icon={<FileArchive className="h-5 w-5" />} title="Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ù…Ø®Ø±Ø¬Ø§Øª" />
+              <ActionLink href="/tools/document" icon={<CalendarDays className="h-5 w-5" />} title="Ø¬Ø¯ÙˆÙ„Ø© ØªÙ‚Ø±ÙŠØ±" />
+            </div>
+          </GlassCard>
+        </aside>
+      </div>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function ReportsOverviewCard({ title, value, icon, tone }: { title: string; value: string; icon: React.ReactNode; tone: "gold" | "blue" | "warning" | "success" | "neutral" }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone={tone}>{title}</Badge>
+          <p className="mt-4 text-3xl font-black text-white">{value}</p>
+          <p className="mt-2 text-xs font-bold text-ds-text/46">Ø¬Ø§Ù‡Ø² Ù„Ù„Ø¹Ø±Ø¶ ÙˆØ§Ù„Ø¥Ø¯Ø§Ø±Ø©</p>
+        </div>
+        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+      </div>
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function MiniBarChart({ points }: { points: AnalyticsChartPoint[] }) {
+  const max = Math.max(1, ...points.map((point) => point.value));
+  return (<AutoLocalizedContent>
+    <div className="space-y-3">
+      {points.slice(0, 7).map((point) => (
+        <div key={point.label} className="grid gap-2">
+          <div className="flex items-center justify-between gap-3 text-xs font-bold text-ds-text/58">
+            <span className="truncate">{point.label}</span>
+            <span>{point.value}</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-white/10">
+            <div
+              className={
+                "h-full rounded-full shadow-[0_0_18px_currentColor] " +
+                (point.tone === "success" ? "bg-[#16C784] text-[#16C784]" : point.tone === "warning" ? "bg-[#FFB020] text-[#FFB020]" : point.tone === "danger" ? "bg-[#EF4444] text-[#EF4444]" : point.tone === "blue" ? "bg-[#4F8CFF] text-[#4F8CFF]" : "bg-[#D4AF37] text-[#D4AF37]")
+              }
+              style={{ width: `${Math.max(4, Math.round((point.value / max) * 100))}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function SettingsTab({ project }: { project: ProjectWorkspaceProject }) {
+  const notificationItems = [
+    "Task updates",
+    "Timeline delays",
+    "Budget alerts",
+    "Document uploads",
+    "Team activity",
+    "VORA recommendations"
+  ];
+
+  const aiPreferences = [
+    { label: "Default VORA tone", value: "Professional" },
+    { label: "Default output language", value: "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©" },
+    { label: "Automatic project summaries", value: "Enabled" },
+    { label: "Risk alerts", value: "High priority" },
+    { label: "Weekly AI briefing", value: "Sunday morning" }
+  ];
+
+  return (<AutoLocalizedContent>
+    <div className="space-y-5">
+      <GlassCard className="sticky top-4 z-20 border-[#D4AF37]/18 p-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge tone="warning">Unsaved changes</Badge>
+            <p className="text-sm font-bold text-ds-text/60">ÙƒÙ„ Ø§Ù„ØªØºÙŠÙŠØ±Ø§Øª ÙÙŠ Ù‡Ø°Ø§ Ø§Ù„Ù‚Ø³Ù… ÙˆØ§Ø¬Ù‡Ø© ÙÙ‚Ø· ÙˆÙ„Ù† ÙŠØªÙ… Ø­ÙØ¸Ù‡Ø§ ÙÙŠ Ù‚Ø§Ø¹Ø¯Ø© Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª.</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary">Reset changes</Button>
+            <Button icon={<CheckCircle2 className="h-4 w-4" />}>Save changes</Button>
+          </div>
+        </div>
+      </GlassCard>
+
+      <GlassCard className="relative overflow-hidden p-5">
+        <BlueprintOverlay className="opacity-20" />
+        <div className="relative z-10 flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+          <div>
+            <Badge tone="gold">Project Settings</Badge>
+            <h2 className="mt-2 text-2xl font-black text-white">Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">
+              ÙˆØ§Ø¬Ù‡Ø© Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ù…ØªÙ‚Ø¯Ù…Ø© Ù„Ù€ {project.title}: Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¹Ø§Ù…Ø©ØŒ Ø§Ù„ØªÙØ¶ÙŠÙ„Ø§ØªØŒ Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§ØªØŒ Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ§ØªØŒ VORAØŒ ÙˆØ§Ù„Ù…Ù„ÙØ§Øª. Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ù…Ø¯Ù…Ø±Ø© Ø£Ùˆ Ø­ÙØ¸ ÙØ¹Ù„ÙŠ ÙÙŠ Ù‡Ø°Ø§ Ø§Ù„Ø³Ø¨Ø±Ù†Øª.
+            </p>
+          </div>
+          <div className="grid min-w-[220px] gap-3">
+            <MiniMetric label="Project Code" value={project.id} icon={<FolderKanban className="h-5 w-5" />} />
+            <MiniMetric label="Status" value={project.status} icon={<Gauge className="h-5 w-5" />} />
+          </div>
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="space-y-5">
+          <SettingsSection title="General Settings" badge="Ø¹Ø§Ù…" icon={<Settings className="h-5 w-5" />}>
+            <div className="grid gap-4 md:grid-cols-2">
+              <SettingsInput label="Project name" value={project.title} />
+              <SettingsInput label="Project code" value={project.id} />
+              <SettingsInput label="Project type" value={project.type} />
+              <SettingsInput label="Location" value="Ø§Ù„Ù…ØºØ±Ø¨ØŒ Ø£ÙƒØ§Ø¯ÙŠØ±" />
+              <SettingsSelect label="Status" value={project.status} options={["Planning", "Active", "On hold", "Completed"]} />
+              <SettingsInput label="Start date" value="2026-07-01" />
+              <SettingsInput label="Expected completion date" value="2026-12-20" />
+              <div className="md:col-span-2">
+                <SettingsTextarea label="Description" value="Ù…Ø³Ø§Ø­Ø© Ù…Ø´Ø±ÙˆØ¹ Ù…Ø¹Ù…Ø§Ø±ÙŠØ© Ù„Ø¥Ø¯Ø§Ø±Ø© Ø§Ù„ØªØ®Ø·ÙŠØ·ØŒ Ø§Ù„ÙˆØ«Ø§Ø¦Ù‚ØŒ Ø§Ù„ÙØ±ÙŠÙ‚ØŒ Ø§Ù„ØªÙ†ÙÙŠØ°ØŒ ÙˆØ§Ù„ØªÙ‚Ø§Ø±ÙŠØ± Ø¨Ù…Ø³Ø§Ø¹Ø¯Ø© VORA." />
+              </div>
+            </div>
+          </SettingsSection>
+
+          <SettingsSection title="Workspace Preferences" badge="Ø§Ù„ØªÙØ¶ÙŠÙ„Ø§Øª" icon={<Gauge className="h-5 w-5" />}>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <SettingsSelect label="Default landing section" value="Overview" options={["Overview", "VORA AI", "Documents", "Timeline", "Reports"]} />
+              <SettingsSelect label="Language" value="Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©" options={["Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©", "FranÃ§ais", "English"]} />
+              <SettingsSelect label="Date format" value="YYYY-MM-DD" options={["YYYY-MM-DD", "DD/MM/YYYY", "MMM DD, YYYY"]} />
+              <SettingsSelect label="Currency" value="MAD" options={["MAD", "USD", "EUR"]} />
+              <SettingsSelect label="Time zone" value="Africa/Casablanca" options={["Africa/Casablanca", "UTC", "Europe/Paris"]} />
+              <SettingsSelect label="Display density" value="Comfortable" options={["Comfortable", "Compact", "Spacious"]} />
+            </div>
+          </SettingsSection>
+
+          <SettingsSection title="Notifications" badge="Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§Øª" icon={<Clock3 className="h-5 w-5" />}>
+            <div className="grid gap-3 md:grid-cols-2">
+              {notificationItems.map((item, index) => (
+                <SettingsToggle key={item} label={item} enabled={index !== 2} />
+              ))}
+            </div>
+          </SettingsSection>
+
+          <SettingsSection title="AI Preferences" badge="VORA" icon={<Bot className="h-5 w-5" />}>
+            <div className="grid gap-4 md:grid-cols-2">
+              {aiPreferences.map((item) => (
+                <SettingsSelect key={item.label} label={item.label} value={item.value} options={[item.value, "Disabled", "Manual", "Balanced"]} />
+              ))}
+            </div>
+          </SettingsSection>
+
+          <SettingsSection title="Data and Files" badge="Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª" icon={<FileArchive className="h-5 w-5" />}>
+            <div className="grid gap-4 md:grid-cols-3">
+              <ProgressPanel label="Storage usage" value={46} tone="blue" />
+              <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-4">
+                <Badge tone="gold">Export</Badge>
+                <p className="mt-3 text-sm leading-6 text-ds-text/56">ØªØµØ¯ÙŠØ± Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ ÙƒÙˆØ§Ø¬Ù‡Ø© ÙÙ‚Ø·.</p>
+                <Button className="mt-4 w-full" variant="secondary" icon={<Download className="h-4 w-4" />}>Export project data</Button>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-white/[0.045] p-4">
+                <Badge tone="blue">Archive</Badge>
+                <p className="mt-3 text-sm leading-6 text-ds-text/56">ØªØ­Ø¶ÙŠØ± Ø£Ø±Ø´ÙŠÙ ÙƒØ§Ù…Ù„ Ø¯ÙˆÙ† ØªÙ†ÙÙŠØ° Ø§Ù„ØªÙ†Ø²ÙŠÙ„.</p>
+                <Button className="mt-4 w-full" variant="secondary" icon={<FileArchive className="h-4 w-4" />}>Download archive</Button>
+              </div>
+            </div>
+          </SettingsSection>
+
+          <GlassCard className="border-[#EF4444]/24 p-5">
+            <div className="mb-5 flex items-start justify-between gap-3">
+              <div>
+                <Badge tone="danger">Danger Zone</Badge>
+                <h3 className="mt-2 text-2xl font-black text-white">Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø­Ø³Ø§Ø³Ø©</h3>
+                <p className="mt-2 text-sm leading-7 text-ds-text/54">ÙƒÙ„ Ø§Ù„Ø£Ø²Ø±Ø§Ø± Ù‡Ù†Ø§ UI ÙÙ‚Ø·. Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ø£Ø±Ø´ÙØ© Ø£Ùˆ Ù†Ù‚Ù„ Ù…Ù„ÙƒÙŠØ© Ø£Ùˆ Ø­Ø°Ù ÙØ¹Ù„ÙŠ.</p>
+              </div>
+              <LockKeyhole className="h-6 w-6 text-[#EF4444]" />
+            </div>
+            <div className="grid gap-3 md:grid-cols-3">
+              <DangerAction title="Archive project" description="Ø¥Ø®ÙØ§Ø¡ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ù…Ù† Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„ÙŠÙˆÙ…ÙŠ." />
+              <DangerAction title="Transfer ownership" description="ØªØ­Ø¶ÙŠØ± Ù†Ù‚Ù„ Ù…Ù„ÙƒÙŠØ© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹." />
+              <DangerAction title="Delete project" description="Ø¥Ø¬Ø±Ø§Ø¡ Ø®Ø·ÙŠØ± ØºÙŠØ± Ù…ÙØ¹Ù„." />
+            </div>
+          </GlassCard>
+        </div>
+
+        <aside className="space-y-5">
+          <GlassCard className="p-5">
+            <Badge tone="gold">Permissions Summary</Badge>
+            <h3 className="mt-3 text-xl font-black text-white">Ù…Ù„Ø®Øµ Ø§Ù„ØµÙ„Ø§Ø­ÙŠØ§Øª</h3>
+            <div className="mt-5 grid gap-3">
+              <ContextRow label="Owner" value="Ø³Ø¹ÙŠØ¯ Ø§Ù„Ø´Ø±ÙÙŠ" />
+              <ContextRow label="Admins" value="2" />
+              <ContextRow label="Editors" value="4" />
+              <ContextRow label="Viewers" value="8" />
+              <ContextRow label="Access overview" value="Private workspace" />
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <div className="flex items-start gap-4">
+              <VoraVisual variant="avatar" className="h-16 w-16 rounded-2xl" sizes="64px" />
+              <div>
+                <Badge tone="blue">VORA Settings</Badge>
+                <h3 className="mt-3 text-xl font-black text-white">ØªÙˆØµÙŠØ© Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª</h3>
+              </div>
+            </div>
+            <p className="mt-5 text-sm leading-7 text-ds-text/60">
+              Ø£Ù†ØµØ­ Ø¨ØªÙØ¹ÙŠÙ„ ØªÙ†Ø¨ÙŠÙ‡Ø§Øª Ø§Ù„ØªØ£Ø®ÙŠØ± ÙˆØ§Ù„Ù…Ø®Ø§Ø·Ø± Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹ÙŠØ© Ø®Ù„Ø§Ù„ Ù…Ø±Ø­Ù„Ø© Ø§Ù„ØªÙ†ÙÙŠØ°ØŒ Ù…Ø¹ Ø¥Ø¨Ù‚Ø§Ø¡ Ù…Ù„Ø®Øµ VORA ØªÙ„Ù‚Ø§Ø¦ÙŠØ§Ù‹ Ù„Ù„ÙØ±ÙŠÙ‚ Ø§Ù„Ø¥Ø¯Ø§Ø±ÙŠ.
+            </p>
+          </GlassCard>
+
+          <GlassCard className="p-5">
+            <Badge tone="neutral">Access Overview</Badge>
+            <div className="mt-5 space-y-4">
+              <ProgressBar value={100} label="Owner access" tone="gold" />
+              <ProgressBar value={72} label="Editor access" tone="blue" />
+              <ProgressBar value={38} label="Viewer access" tone="success" />
+            </div>
+          </GlassCard>
+        </aside>
+      </div>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function SettingsSection({ title, badge, icon, children }: { title: string; badge: string; icon: React.ReactNode; children: React.ReactNode }) {
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-5">
+      <div className="mb-5 flex items-center gap-3">
+        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+        <div>
+          <Badge tone="gold">{badge}</Badge>
+          <h3 className="mt-2 text-2xl font-black text-white">{title}</h3>
+        </div>
+      </div>
+      {children}
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function SettingsInput({ label, value }: { label: string; value: string }) {
+  return (<AutoLocalizedContent>
+    <label className="block">
+      <span className="mb-2 block text-xs font-black uppercase text-ds-text/42">{label}</span>
+      <input defaultValue={value} className="h-12 w-full rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none transition focus:border-[#D4AF37]/44" />
+    </label>
+  </AutoLocalizedContent>);
+}
+
+function SettingsTextarea({ label, value }: { label: string; value: string }) {
+  return (<AutoLocalizedContent>
+    <label className="block">
+      <span className="mb-2 block text-xs font-black uppercase text-ds-text/42">{label}</span>
+      <textarea defaultValue={value} rows={4} className="w-full resize-none rounded-2xl border border-white/10 bg-black/24 px-4 py-3 text-sm font-bold leading-7 text-ds-text outline-none transition focus:border-[#D4AF37]/44" />
+    </label>
+  </AutoLocalizedContent>);
+}
+
+function SettingsSelect({ label, value, options }: { label: string; value: string; options: string[] }) {
+  return (<AutoLocalizedContent>
+    <label className="block">
+      <span className="mb-2 block text-xs font-black uppercase text-ds-text/42">{label}</span>
+      <select defaultValue={value} className="h-12 w-full rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-bold text-ds-text outline-none transition focus:border-[#D4AF37]/44">
+        {Array.from(new Set(options)).map((option) => (
+          <option key={option} value={option}>{option}</option>
+        ))}
+      </select>
+    </label>
+  </AutoLocalizedContent>);
+}
+
+function SettingsToggle({ label, enabled }: { label: string; enabled: boolean }) {
+  return (<AutoLocalizedContent>
+    <button type="button" className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4 text-right transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <span>
+        <span className="block font-black text-white">{label}</span>
+        <span className="mt-1 block text-xs font-bold text-ds-text/42">{enabled ? "Enabled for this workspace" : "Disabled by default"}</span>
+      </span>
+      <span className={`relative h-7 w-12 rounded-full border transition ${enabled ? "border-[#16C784]/35 bg-[#16C784]/20" : "border-white/10 bg-black/30"}`}>
+        <span className={`absolute top-1 h-5 w-5 rounded-full transition ${enabled ? "right-6 bg-[#16C784] shadow-[0_0_18px_rgba(22,199,132,.55)]" : "right-1 bg-ds-text/45"}`} />
+      </span>
+    </button>
+  </AutoLocalizedContent>);
+}
+
+function DangerAction({ title, description }: { title: string; description: string }) {
+  return (<AutoLocalizedContent>
+    <div className="rounded-3xl border border-[#EF4444]/18 bg-[#EF4444]/8 p-4">
+      <Badge tone="danger">{title}</Badge>
+      <p className="mt-3 min-h-12 text-sm leading-6 text-ds-text/54">{description}</p>
+      <Button className="mt-4 w-full" variant="danger" icon={<LockKeyhole className="h-4 w-4" />}>UI only</Button>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function WorkspaceTabScaffold({ tab, project }: { tab: string; project: ProjectWorkspaceProject }) {
+  const current = workspaceTabs.find((item) => item.value === tab);
+  return (<AutoLocalizedContent>
+    <GlassCard className="p-6">
+      <EmptyState
+        title={`${current?.label || "Workspace"} Â· ${project.title}`}
+        description="ØªÙ… ØªØ¬Ù‡ÙŠØ² Ù…Ø³Ø§Ø­Ø© Ù‡Ø°Ø§ Ø§Ù„Ù‚Ø³Ù… Ø¨ØµØ±ÙŠØ§Ù‹ ÙÙ‚Ø· ÙÙŠ Sprint 7.1. Ø³ÙŠØªÙ… Ø±Ø¨Ø· Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„Ù…ØªØ®ØµØµ Ù…Ù† Ø§Ù„ÙˆØ¸Ø§Ø¦Ù Ø§Ù„Ø­Ø§Ù„ÙŠØ© Ø¨Ø¯ÙˆÙ† Ø¥Ø¶Ø§ÙØ© Ù…Ù†Ø·Ù‚ Ø®Ù„ÙÙŠ Ø¬Ø¯ÙŠØ¯."
+        action={
+          <Link href={tab === "ai" ? "/tools/document" : tab === "knowledge" ? "/projects#knowledge" : "/projects"}>
+            <Button variant="secondary" icon={<Plus className="h-4 w-4" />}>ÙØªØ­ Ø§Ù„Ù…Ø³Ø§Ø± Ø§Ù„Ø­Ø§Ù„ÙŠ</Button>
+          </Link>
+        }
+      />
+    </GlassCard>
+  </AutoLocalizedContent>);
+}
+
+function MiniMetric({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
+  return (<AutoLocalizedContent>
+    <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
+      <div className="flex items-center gap-2 text-gold">{icon}<span className="text-xs font-black text-ds-text/52">{label}</span></div>
+      <p className="mt-2 text-2xl font-black text-white">{value}</p>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function BudgetMetricCard({ title, value, detail, icon, tone }: { title: string; value: string; detail: string; icon: React.ReactNode; tone: "gold" | "blue" | "success" }) {
+  return (<AutoLocalizedContent>
+    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-4 shadow-ds-sm transition hover:-translate-y-1 hover:border-[#D4AF37]/28 hover:bg-white/[0.065]">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <Badge tone={tone}>{title}</Badge>
+          <p className="mt-4 text-2xl font-black text-white">{value}</p>
+          <p className="mt-2 text-xs font-bold leading-5 text-ds-text/48">{detail}</p>
+        </div>
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#D4AF37]/10 text-gold shadow-gold-glow">{icon}</span>
+      </div>
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function BudgetActionContent({ action }: { action: { title: string; description: string; icon: React.ReactNode; tone: "gold" | "blue" | "success" | "neutral" } }) {
+  return (<AutoLocalizedContent>
+    <span className="flex items-start gap-3">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#D4AF37]/12 text-gold transition group-hover:-rotate-6">{action.icon}</span>
+      <span>
+        <Badge tone={action.tone}>{action.title}</Badge>
+        <span className="mt-2 block text-sm leading-6 text-ds-text/56">{action.description}</span>
+      </span>
+    </span>
+  </AutoLocalizedContent>);
+}
+
+function ProgressPanel({ label, value, tone }: { label: string; value: number; tone: "gold" | "blue" | "success" }) {
+  return (<AutoLocalizedContent>
+    <div className="rounded-3xl border border-white/10 bg-black/20 p-4">
+      <p className="mb-4 text-sm font-black text-ds-text/70">{label}</p>
+      <ProgressBar value={value} tone={tone} />
+    </div>
+  </AutoLocalizedContent>);
+}
+
+function ActionLink({ href, icon, title }: { href: string; icon: React.ReactNode; title: string }) {
+  return (<AutoLocalizedContent>
+    <Link href={href} className="group rounded-3xl border border-white/10 bg-white/[0.045] p-4 transition hover:-translate-y-1 hover:border-[#D4AF37]/32 hover:bg-white/[0.07]">
+      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#D4AF37]/12 text-gold transition group-hover:-rotate-6">{icon}</span>
+      <span className="mt-4 block font-black text-white">{title}</span>
+      <span className="mt-2 block text-xs leading-5 text-ds-text/46">Ù…ØªØ§Ø­ Ø¹Ø¨Ø± Ø§Ù„ÙˆØ¸Ø§Ø¦Ù Ø§Ù„Ø­Ø§Ù„ÙŠØ©</span>
+    </Link>
+  </AutoLocalizedContent>);
+}
+
