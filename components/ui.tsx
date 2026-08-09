@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useId } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -313,8 +314,8 @@ export function Avatar({ name, src, size = "md" }: { name: string; src?: string;
     .join("")
     .toUpperCase();
   return (<AutoLocalizedContent>
-    <span className={cn("grid shrink-0 place-items-center overflow-hidden rounded-ds-md bg-gradient-to-br from-[#F3D584] to-[#A77A2D] font-black text-black shadow-gold-glow ring-1 ring-white/15", sizes[size])}>
-      {src ? <img src={src} alt={name} className="h-full w-full object-cover" /> : initials || "V"}
+    <span className={cn("relative grid shrink-0 place-items-center overflow-hidden rounded-ds-md bg-gradient-to-br from-[#F3D584] to-[#A77A2D] font-black text-black shadow-gold-glow ring-1 ring-white/15", sizes[size])}>
+      {src ? <Image src={src} alt={name} fill sizes={size === "lg" ? "56px" : size === "sm" ? "32px" : "40px"} unoptimized className="object-cover" /> : initials || "V"}
     </span>
   </AutoLocalizedContent>);
 }

@@ -19,18 +19,19 @@ function initialState<T>(data: T): ContractState<T> {
 
 export function useContracts(filters: ContractFilters = {}) {
   const [state, setState] = useState<ContractState<Contract[]>>(() => initialState(contractRepository.list()));
+  const { query, status, category, supplier, projectId, organizationId } = filters;
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    contractRepository.getContracts(filters).then((result) => {
+    contractRepository.getContracts({ query, status, category, supplier, projectId, organizationId }).then((result) => {
       if (!active) return;
       setState({ ...result, loading: false });
     });
     return () => {
       active = false;
     };
-  }, [filters.query, filters.status, filters.category, filters.supplier, filters.projectId, filters.organizationId]);
+  }, [query, status, category, supplier, projectId, organizationId]);
 
   return state;
 }

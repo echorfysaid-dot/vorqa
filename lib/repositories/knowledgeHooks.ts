@@ -19,11 +19,12 @@ export function useKnowledgeRepository(filters: KnowledgeArticleFilters = {}): K
     isFallback: false,
     loading: true
   });
+  const { organizationId, projectId, category, tag, status, query } = filters;
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    knowledgeRepository.getKnowledge(filters).then((result) => {
+    knowledgeRepository.getKnowledge({ organizationId, projectId, category, tag, status, query }).then((result) => {
       if (!active) return;
       setState({
         data: result.data,
@@ -36,7 +37,7 @@ export function useKnowledgeRepository(filters: KnowledgeArticleFilters = {}): K
     return () => {
       active = false;
     };
-  }, [filters.organizationId, filters.projectId, filters.category, filters.tag, filters.status, filters.query]);
+  }, [organizationId, projectId, category, tag, status, query]);
 
   return state;
 }

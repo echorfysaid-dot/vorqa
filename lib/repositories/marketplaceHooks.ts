@@ -19,11 +19,28 @@ function initialState<T>(data: T): MarketplaceState<T> {
 
 export function useMarketplaceCompanies(filters: MarketplaceFilters = {}) {
   const [state, setState] = useState<MarketplaceState<MarketplaceCompany[]>>(() => initialState(marketplaceRepository.listCompanies()));
+  const { query, country, city, category, experience, rating, verified, availability, sort, languages, services, page, pageSize } = filters;
+  const languagesKey = JSON.stringify(languages ?? null);
+  const servicesKey = JSON.stringify(services ?? null);
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    marketplaceRepository.getCompanies(filters).then((result) => {
+    marketplaceRepository.getCompanies({
+      query,
+      country,
+      city,
+      category,
+      experience,
+      rating,
+      verified,
+      availability,
+      sort,
+      languages: languagesKey === "null" ? undefined : JSON.parse(languagesKey) as string[],
+      services: servicesKey === "null" ? undefined : JSON.parse(servicesKey) as string[],
+      page,
+      pageSize
+    }).then((result) => {
       if (!active) return;
       setState({ ...result, loading: false });
     });
@@ -31,17 +48,19 @@ export function useMarketplaceCompanies(filters: MarketplaceFilters = {}) {
       active = false;
     };
   }, [
-    filters.query,
-    filters.country,
-    filters.city,
-    filters.category,
-    filters.experience,
-    filters.rating,
-    filters.verified,
-    filters.availability,
-    filters.sort,
-    filters.languages?.join("|"),
-    filters.services?.join("|")
+    query,
+    country,
+    city,
+    category,
+    experience,
+    rating,
+    verified,
+    availability,
+    sort,
+    languagesKey,
+    servicesKey,
+    page,
+    pageSize
   ]);
 
   return state;

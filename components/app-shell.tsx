@@ -247,15 +247,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const unreadCount = demoNotificationItems.filter((item) => item.unread && !notificationReadIds.includes(item.id)).length;
   const dataSourceMode = getDataSourceMode();
   const dataSourceLabel = translate(dataSourceMode === "supabase" ? "Production data" : dataSourceMode === "auto" ? "Auto data mode" : "Demo mode");
-  const identity = onboarding.profile?.accountType ? {
+  const identity = useMemo(() => onboarding.profile?.accountType ? {
     accountType: onboarding.profile.accountType,
     primaryRole: onboarding.profile.primaryRole,
     organizationType: onboarding.profile.organizationType
-  } : null;
+  } : null, [onboarding.profile?.accountType, onboarding.profile?.primaryRole, onboarding.profile?.organizationType]);
   const workspaceLabel = identity?.accountType === "organization" && identity.organizationType
     ? organizationTypeDisplayNames[identity.organizationType]
     : identity?.primaryRole ? roleDisplayNames[identity.primaryRole] : undefined;
-  const roleNavigation = useMemo(() => identity ? navigationForIdentity(identity).map((item) => ({ ...item, icon: iconForRoleNavigation(item.label) })) : [], [identity?.accountType, identity?.primaryRole, identity?.organizationType]);
+  const roleNavigation = useMemo(() => identity ? navigationForIdentity(identity).map((item) => ({ ...item, icon: iconForRoleNavigation(item.label) })) : [], [identity]);
 
   const isPublicAuthExperience = pathname === "/login" || pathname === "/register" || pathname === "/pricing" || (pathname === "/onboarding" && !session);
 

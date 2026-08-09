@@ -19,18 +19,19 @@ function initialState<T>(data: T): RfqState<T> {
 
 export function useRfqs(filters: RFQFilters = {}) {
   const [state, setState] = useState<RfqState<RFQ[]>>(() => initialState(rfqRepository.list()));
+  const { query, status, category, projectId, organizationId, priority, supplier } = filters;
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    rfqRepository.getRfqs(filters).then((result) => {
+    rfqRepository.getRfqs({ query, status, category, projectId, organizationId, priority, supplier }).then((result) => {
       if (!active) return;
       setState({ ...result, loading: false });
     });
     return () => {
       active = false;
     };
-  }, [filters.query, filters.status, filters.category, filters.projectId, filters.organizationId, filters.priority, filters.supplier]);
+  }, [query, status, category, projectId, organizationId, priority, supplier]);
 
   return state;
 }

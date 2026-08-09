@@ -19,18 +19,19 @@ function initialState<T>(data: T): NotificationState<T> {
 
 export function useNotifications(filters: NotificationFilters = {}) {
   const [state, setState] = useState<NotificationState<Notification[]>>(() => initialState(notificationRepository.list()));
+  const { query, status, priority, type, module, page, pageSize } = filters;
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    notificationRepository.getNotifications(filters).then((result) => {
+    notificationRepository.getNotifications({ query, status, priority, type, module, page, pageSize }).then((result) => {
       if (!active) return;
       setState({ ...result, loading: false });
     });
     return () => {
       active = false;
     };
-  }, [filters.query, filters.status, filters.priority, filters.type, filters.module, filters.page, filters.pageSize]);
+  }, [query, status, priority, type, module, page, pageSize]);
 
   return state;
 }

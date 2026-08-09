@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { memo, useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
@@ -877,7 +878,7 @@ function DocumentsTab({ project }: { project: ProjectWorkspaceProject }) {
               </div>
               <Button type="button" variant="secondary" size="sm" onClick={() => setPreview(null)}>إغلاق</Button>
             </div>
-            {preview.url && preview.document.mimeType?.startsWith("image/") && <img src={preview.url} alt={preview.document.title} className="max-h-[520px] w-full rounded-3xl object-contain" />}
+            {preview.url && preview.document.mimeType?.startsWith("image/") && <Image src={preview.url} alt={preview.document.title} width={1600} height={900} unoptimized className="max-h-[520px] w-full rounded-3xl object-contain" />}
             {preview.url && preview.document.mimeType === "application/pdf" && <iframe src={preview.url} title={preview.document.title} className="h-[520px] w-full rounded-3xl border border-white/10" />}
             {preview.text && <pre className="max-h-[520px] overflow-auto whitespace-pre-wrap rounded-3xl border border-white/10 bg-black/24 p-4 text-sm leading-7 text-ds-text/70">{preview.text}</pre>}
           </GlassCard>

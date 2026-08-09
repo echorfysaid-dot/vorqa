@@ -19,18 +19,19 @@ function initialState<T>(data: T): QuotationState<T> {
 
 export function useQuotations(filters: QuotationFilters = {}) {
   const [state, setState] = useState<QuotationState<Quotation[]>>(() => initialState(quotationRepository.list()));
+  const { query, rfqId, supplier, status, category, recommendation } = filters;
 
   useEffect(() => {
     let active = true;
     setState((current) => ({ ...current, loading: true }));
-    quotationRepository.getQuotations(filters).then((result) => {
+    quotationRepository.getQuotations({ query, rfqId, supplier, status, category, recommendation }).then((result) => {
       if (!active) return;
       setState({ ...result, loading: false });
     });
     return () => {
       active = false;
     };
-  }, [filters.query, filters.rfqId, filters.supplier, filters.status, filters.category, filters.recommendation]);
+  }, [query, rfqId, supplier, status, category, recommendation]);
 
   return state;
 }
