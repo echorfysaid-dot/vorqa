@@ -162,7 +162,7 @@ export default function RiskAssessmentPage() {
 
   const assessment = result?.riskAssessment;
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <PageHeader
         eyebrow="VORA Intelligence"
@@ -304,44 +304,44 @@ export default function RiskAssessmentPage() {
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Metric({ label, value }: { label: string; value: string }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <p className="text-xs font-black uppercase tracking-[0.12em] text-ds-token-text/42">{label}</p>
       <p className="mt-2 text-2xl font-black capitalize text-ds-token-text">{value}</p>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function StatusRow({ label, active }: { label: string; active: boolean }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="flex items-center justify-between rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
       <span className="text-sm font-black text-ds-token-text/68">{label}</span>
       <span className={active ? "text-ds-token-success" : "text-ds-token-text/32"}>
         <CheckCircle2 className="h-4 w-4" />
       </span>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewBlock({ title, children }: { title: string; children?: React.ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-ds-token-text/68">{children}</p>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function RiskMatrix({ entries }: { entries: readonly RiskMatrixEntry[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">Risk Matrix Summary</h3>
       <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -353,12 +353,12 @@ function RiskMatrix({ entries }: { entries: readonly RiskMatrixEntry[] }) {
         )) : <p className="text-sm text-ds-token-text/48">No matrix entries yet.</p>}
       </div>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function RiskTable({ risks }: { risks: readonly RiskItem[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">Detected Risks</h3>
       <div className="mt-3 overflow-x-auto">
@@ -386,12 +386,12 @@ function RiskTable({ risks }: { risks: readonly RiskItem[] }) {
         </table>
       </div>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewList({ title, items }: { title: string; items: readonly string[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <ul className="mt-3 space-y-2">
@@ -403,12 +403,12 @@ function ReviewList({ title, items }: { title: string; items: readonly string[] 
         ))}
       </ul>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function WarningList({ warnings }: { warnings: readonly Readonly<{ code: string; message: string; severity: string }>[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <Alert title="Risk Assessment warnings" tone="warning">
       <ul className="mt-2 space-y-1">
         {warnings.slice(0, 6).map((warning) => (
@@ -416,5 +416,5 @@ function WarningList({ warnings }: { warnings: readonly Readonly<{ code: string;
         ))}
       </ul>
     </Alert>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }

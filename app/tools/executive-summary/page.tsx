@@ -134,7 +134,7 @@ export default function ExecutiveSummaryPage() {
   const summary = result?.executiveSummary;
   const coverage = summary?.analysisCoverage;
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <PageHeader
         eyebrow="VORA Intelligence"
@@ -275,7 +275,7 @@ export default function ExecutiveSummaryPage() {
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Metrics({ summary }: { summary: ExecutiveSummaryResult }) {
@@ -286,7 +286,7 @@ function Metrics({ summary }: { summary: ExecutiveSummaryResult }) {
     ["Confidence", `${summary.overallConfidence ?? 0}%`, CheckCircle2],
     ["Warnings", String(summary.warnings?.length ?? 0), TriangleAlert]
   ];
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="grid gap-3 md:grid-cols-4">
       {entries.map(([label, value, Icon]) => (
         <div key={String(label)} className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
@@ -298,32 +298,32 @@ function Metrics({ summary }: { summary: ExecutiveSummaryResult }) {
         </div>
       ))}
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function StatusRow({ label, value, active }: { label: string; value: string; active: boolean }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="flex items-center justify-between rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
       <span className="text-sm font-black text-ds-token-text/68">{label}</span>
       <span className={active ? "text-ds-token-text" : "text-ds-token-text/32"}>{value}</span>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewBlock({ title, children }: { title: string; children?: React.ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-ds-token-text/68">{children}</p>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function AnalysisList({ title, analyses }: { title: string; analyses: readonly Analysis[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       {analyses.length ? (
@@ -339,12 +339,12 @@ function AnalysisList({ title, analyses }: { title: string; analyses: readonly A
         <p className="mt-3 text-sm text-ds-token-text/48">No analyses in this section.</p>
       )}
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewList({ title, items }: { title: string; items: readonly string[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <ul className="mt-3 space-y-2">
@@ -356,5 +356,5 @@ function ReviewList({ title, items }: { title: string; items: readonly string[] 
         ))}
       </ul>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }

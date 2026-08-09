@@ -164,7 +164,7 @@ export default function BoqReviewPage() {
   const review = result?.boqReview;
   const preview = boqText.trim().slice(0, 1200);
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <PageHeader
         eyebrow="VORA Intelligence"
@@ -309,29 +309,29 @@ export default function BoqReviewPage() {
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function StatusRow({ label, active }: { label: string; active: boolean }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="flex items-center justify-between rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
       <span className="text-sm font-black text-ds-token-text/68">{label}</span>
       <span className={active ? "text-ds-token-success" : "text-ds-token-text/32"}>
         <CheckCircle2 className="h-4 w-4" />
       </span>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewBlock({ title, children }: { title: string; children?: React.ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-ds-token-text/68">{children}</p>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Metrics({ review }: { review: BoqReviewResult }) {
@@ -345,7 +345,7 @@ function Metrics({ review }: { review: BoqReviewResult }) {
     ["Mismatches", stats?.arithmeticMismatchCount ?? 0],
     ["Total", stats?.totalAmount ?? "N/A"]
   ];
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="grid gap-3 sm:grid-cols-3">
       {entries.map(([label, value]) => (
         <div key={label} className="rounded-2xl border border-ds-token-border bg-black/18 p-4">
@@ -354,12 +354,12 @@ function Metrics({ review }: { review: BoqReviewResult }) {
         </div>
       ))}
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewList({ title, items }: { title: string; items: readonly string[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <ul className="mt-3 space-y-2">
@@ -371,12 +371,12 @@ function ReviewList({ title, items }: { title: string; items: readonly string[] 
         ))}
       </ul>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function IssueList({ title, issues }: { title: string; issues: readonly BoqIssue[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       {issues.length ? (
@@ -391,12 +391,12 @@ function IssueList({ title, issues }: { title: string; issues: readonly BoqIssue
         <p className="mt-3 text-sm text-ds-token-text/52">No deterministic issue in this category.</p>
       )}
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function DuplicateList({ duplicates }: { duplicates: readonly Readonly<{ type: string; value: string; rowNumbers: readonly number[] }>[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">Potential Duplicates</h3>
       {duplicates.length ? (
@@ -411,13 +411,13 @@ function DuplicateList({ duplicates }: { duplicates: readonly Readonly<{ type: s
         <p className="mt-3 text-sm text-ds-token-text/52">No duplicate candidate detected.</p>
       )}
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ArithmeticList({ checks }: { checks: readonly Readonly<{ rowNumber: number; status: string; calculatedAmount?: number; amount?: number; difference?: number }>[] }) {
   const { locale } = useI18n();
   const mismatches = checks.filter((check) => check.status === "mismatch");
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">Arithmetic Checks</h3>
       {mismatches.length ? (
@@ -432,5 +432,5 @@ function ArithmeticList({ checks }: { checks: readonly Readonly<{ rowNumber: num
         <p className="mt-3 text-sm text-ds-token-text/52">No computable mismatch detected.</p>
       )}
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }

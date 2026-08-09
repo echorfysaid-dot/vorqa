@@ -167,7 +167,7 @@ export default function PlanningReviewPage() {
   const review = result?.planningReview;
   const preview = planningText.trim().slice(0, 1000);
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <PageHeader
         eyebrow="VORA Intelligence"
@@ -297,19 +297,19 @@ export default function PlanningReviewPage() {
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function StatusRow({ label, active }: { label: string; active: boolean }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="flex items-center justify-between rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
       <span className="text-sm font-black text-ds-token-text/68">{label}</span>
       <span className={active ? "text-ds-token-success" : "text-ds-token-text/32"}>
         <CheckCircle2 className="h-4 w-4" />
       </span>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Metrics({ review }: { review: PlanningReviewResult }) {
@@ -322,7 +322,7 @@ function Metrics({ review }: { review: PlanningReviewResult }) {
     ["Issues", summary?.issueCount ?? 0],
     ["Completeness", `${summary?.structuralCompleteness ?? 0}%`]
   ];
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="grid gap-3 sm:grid-cols-5">
       {entries.map(([label, value]) => (
         <div key={label} className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-3">
@@ -331,22 +331,22 @@ function Metrics({ review }: { review: PlanningReviewResult }) {
         </div>
       ))}
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewBlock({ title, children }: { title: string; children?: React.ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-ds-token-text/68">{children}</p>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ActivityTable({ activities }: { activities: readonly PlanningActivity[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">Detected Activities</h3>
       <div className="mt-3 overflow-x-auto">
@@ -374,12 +374,12 @@ function ActivityTable({ activities }: { activities: readonly PlanningActivity[]
         </table>
       </div>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function IssueList({ title, issues }: { title: string; issues: readonly PlanningIssue[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       {issues.length ? (
@@ -394,12 +394,12 @@ function IssueList({ title, issues }: { title: string; issues: readonly Planning
         <p className="mt-3 text-sm text-ds-token-text/48">No deterministic issues in this section.</p>
       )}
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function ReviewList({ title, items }: { title: string; items: readonly string[] }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <section className="rounded-2xl border border-ds-token-border bg-white/[0.045] p-4">
       <h3 className="font-black text-ds-token-text">{title}</h3>
       <ul className="mt-3 space-y-2">
@@ -411,5 +411,5 @@ function ReviewList({ title, items }: { title: string; items: readonly string[] 
         ))}
       </ul>
     </section>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }

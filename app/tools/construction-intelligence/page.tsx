@@ -61,7 +61,7 @@ export default function ConstructionIntelligencePage() {
   });
   const workflow = createAnalysisWorkflow(recentProjectSession);
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <section className="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(214,179,106,.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(56,189,248,.14),transparent_32%),linear-gradient(135deg,rgba(8,9,10,.96),rgba(12,18,27,.92))] p-5 shadow-ds-lg sm:p-7">
         <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#D6B36A]/60 to-transparent" />
@@ -206,7 +206,7 @@ export default function ConstructionIntelligencePage() {
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function FeatureCard({
@@ -221,7 +221,7 @@ function FeatureCard({
   const { locale } = useI18n();
   const isActive = feature.status === "active" && Boolean(feature.href);
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <GlassCard className="flex min-h-[280px] flex-col p-5" delay={index * 0.04}>
       <div className="flex items-start justify-between gap-3">
         <span className="grid h-12 w-12 place-items-center rounded-2xl border border-[#D6B36A]/20 bg-[#D6B36A]/12 text-[#D6B36A] shadow-gold-glow">
@@ -258,12 +258,12 @@ function FeatureCard({
         </button>
       )}
     </GlassCard>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function MetricCard({ icon: Icon, label, value, detail }: { icon: LucideIcon; label: string; value: string; detail: string }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <GlassCard className="p-5">
       <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#38BDF8]/12 text-[#7DD3FC]">
         <Icon className="h-5 w-5" />
@@ -272,22 +272,22 @@ function MetricCard({ icon: Icon, label, value, detail }: { icon: LucideIcon; la
       <p className="mt-2 text-3xl font-black text-white">{value}</p>
       <p className="mt-2 text-xs leading-5 text-ds-token-text/48">{detail}</p>
     </GlassCard>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function QuickAction({ href, icon, title }: { href: string; icon: ReactNode; title: string }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <Link href={href} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-3 font-black text-white transition hover:-translate-y-0.5 hover:border-[#D6B36A]/28 hover:bg-white/[0.07]">
       <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[#D6B36A]/12 text-[#D6B36A]">{icon}</span>
       {title}
     </Link>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function StatusRow({ label, value, tone }: { label: string; value: string; tone: "success" | "blue" | "gold" | "neutral" }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
         <span className="text-xs font-black uppercase tracking-[0.12em] text-ds-token-text/42">{label}</span>
@@ -295,5 +295,5 @@ function StatusRow({ label, value, tone }: { label: string; value: string; tone:
       </div>
       <p className="text-sm font-black text-white">{value}</p>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }

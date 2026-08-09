@@ -18,16 +18,16 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
   const { data: project, loading, error, isFallback } = useProjectRepository(projectId);
 
   if (loading) {
-    return (<LocalizedContent locale={locale}>(
+    return (<LocalizedContent locale={locale}>
       <div className="space-y-6">
         <SkeletonCard />
         <SkeletonCard />
       </div>
-    )</LocalizedContent>);
+    </LocalizedContent>);
   }
 
   if (!project) {
-    return (<LocalizedContent locale={locale}>(
+    return (<LocalizedContent locale={locale}>
       <GlassCard className="p-6">
         <p className="text-2xl font-black text-white">Project Intelligence unavailable</p>
         <p className="mt-2 max-w-2xl text-sm leading-7 text-ds-text/58">
@@ -38,7 +38,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
           <Button variant="secondary" icon={<ArrowLeft className="h-4 w-4" />}>Back to projects</Button>
         </Link>
       </GlassCard>
-    )</LocalizedContent>);
+    </LocalizedContent>);
   }
 
   const session = createProjectIntelligenceSession({
@@ -50,7 +50,7 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
   });
   const workflow = createAnalysisWorkflow(session);
 
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="space-y-6">
       <PageHeader
         eyebrow="Project Intelligence Session"
@@ -193,12 +193,12 @@ export default function ProjectIntelligencePage({ params }: { params: { id: stri
         </aside>
       </section>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function WorkflowStageRow({ stage, index }: { stage: AnalysisWorkflowStage; index: number }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-4 lg:grid-cols-[48px_minmax(0,1fr)_160px] lg:items-center">
       <span className={`grid h-11 w-11 place-items-center rounded-2xl font-black ${stage.isCompleted ? "bg-ds-token-success/12 text-ds-token-success" : stage.isCurrent ? "bg-ds-token-gold/12 text-gold" : "bg-white/[0.055] text-ds-text/42"}`}>
         {stage.isCompleted ? <CheckCircle2 className="h-5 w-5" /> : index + 1}
@@ -223,35 +223,35 @@ function WorkflowStageRow({ stage, index }: { stage: AnalysisWorkflowStage; inde
         )}
       </div>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Metric({ label, value, icon }: { label: string; value: string; icon: ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <GlassCard className="p-5">
       <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#D4AF37]/12 text-gold">{icon}</span>
       <p className="mt-4 text-xs font-black uppercase tracking-[0.12em] text-ds-text/42">{label}</p>
       <p className="mt-2 text-2xl font-black text-white">{value}</p>
     </GlassCard>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function Info({ label, value }: { label: string; value: string }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
       <p className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">{label}</p>
       <p className="mt-1 truncate text-sm font-black text-white">{value}</p>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function AnalysisCard({ analysis, projectId }: { analysis: ProjectIntelligenceAnalysis; projectId: string }) {
   const { locale } = useI18n();
   const active = analysis.status === "completed" || analysis.status === "pending";
   const href = analysis.href || `/projects/${encodeURIComponent(projectId)}/intelligence`;
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <GlassCard className="p-4">
       <div className="flex items-start justify-between gap-3">
         <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#51D8FF]/12 text-[#7DD3FC]">
@@ -275,12 +275,12 @@ function AnalysisCard({ analysis, projectId }: { analysis: ProjectIntelligenceAn
         </button>
       )}
     </GlassCard>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function TimelineEvent({ event, isLast }: { event: ProjectIntelligenceTimelineEvent; isLast: boolean }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <div className="flex gap-4">
       <div className="flex flex-col items-center">
         <span className={`grid h-10 w-10 place-items-center rounded-2xl ${event.status === "completed" ? "bg-ds-token-success/12 text-ds-token-success" : "bg-white/[0.055] text-ds-text/42"}`}>
@@ -296,15 +296,15 @@ function TimelineEvent({ event, isLast }: { event: ProjectIntelligenceTimelineEv
         <p className="mt-2 text-sm leading-6 text-ds-text/56">{event.description}</p>
       </div>
     </div>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
 
 function QuickAction({ href, title, icon }: { href: string; title: string; icon: ReactNode }) {
   const { locale } = useI18n();
-  return (<LocalizedContent locale={locale}>(
+  return (<LocalizedContent locale={locale}>
     <Link href={href} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-3 font-black text-white transition hover:-translate-y-0.5 hover:border-[#D4AF37]/28">
       <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[#D4AF37]/12 text-gold">{icon}</span>
       {title}
     </Link>
-  )</LocalizedContent>);
+  </LocalizedContent>);
 }
