@@ -6,6 +6,7 @@ import { ArrowLeft, FileText, Heart, MapPin, MessageSquare, Search, Star, Trash2
 import { Badge, Button, EmptyState, GlassCard, ProgressBar } from "@/components/ui";
 import { marketplaceRepository, type DemoMarketplaceCompany } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { marketplaceSelection } from "@/lib/marketplace-selection";
 
 const marketplaceCompanies = marketplaceRepository.listCompanies();
 type MarketplaceCompany = DemoMarketplaceCompany;
@@ -18,7 +19,17 @@ const initialShortlist = [
 ];
 
 export default function MarketplaceShortlistPage() {
-  const [items, setItems] = useState(initialShortlist);
+  const [items, setItemsState] = useState(() => {
+    const saved = marketplaceSelection.getShortlist();
+    return saved.length
+      ? saved.map((slug) => initialShortlist.find((item) => item.slug === slug) || { slug, priority: "Medium", project: "Unassigned", notes: "Saved from the marketplace." })
+      : initialShortlist;
+  });
+  const setItems = (update: typeof items | ((current: typeof items) => typeof items)) => setItemsState((current) => {
+    const next = typeof update === "function" ? update(current) : update;
+    marketplaceSelection.setShortlist(next.map((item) => item.slug));
+    return next;
+  });
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
   const [projectFilter, setProjectFilter] = useState("All projects");
@@ -108,8 +119,8 @@ function ShortlistCard({ item, company, onRemove }: { item: (typeof initialShort
       </div>
       <div className="mt-4"><ProgressBar value={company.insights.fit} label="VORA fit score" /></div>
       <div className="mt-5 grid gap-2">
-        <Button icon={<MessageSquare className="h-4 w-4" />}>Contact</Button>
-        <Button variant="secondary" icon={<FileText className="h-4 w-4" />}>Request quotation</Button>
+        <Link href={`/marketplace/${company.slug}`}><Button className="w-full" icon={<MessageSquare className="h-4 w-4" />}>Contact</Button></Link>
+        <Link href={`/marketplace/rfq/new?company=${encodeURIComponent(company.slug)}`}><Button className="w-full" variant="secondary" icon={<FileText className="h-4 w-4" />}>Request quotation</Button></Link>
         <Link href={`/marketplace/${company.slug}`}><Button className="w-full" variant="secondary" icon={<MapPin className="h-4 w-4" />}>Open profile</Button></Link>
       </div>
     </GlassCard>

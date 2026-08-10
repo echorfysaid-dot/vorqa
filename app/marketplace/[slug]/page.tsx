@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   BriefcaseBusiness,
@@ -26,15 +28,31 @@ import { MarketplaceProfileActions } from "@/components/marketplace-profile-acti
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 
 type MarketplaceCompany = DemoMarketplaceCompany;
-const marketplaceCompanies = marketplaceRepository.listCompanies();
-
-export function generateStaticParams() {
-  return marketplaceCompanies.map((company) => ({ slug: company.slug }));
-}
-
 export default function MarketplaceCompanyProfilePage({ params }: { params: { slug: string } }) {
-  const company = marketplaceRepository.getCompanyBySlug(params.slug);
-  if (!company) notFound();
+  const demoCompany = marketplaceRepository.getCompanyBySlug(params.slug);
+  const [company, setCompany] = useState<MarketplaceCompany | undefined>(demoCompany);
+  const [loading, setLoading] = useState(!demoCompany);
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    let active = true;
+    marketplaceRepository.getCompany(params.slug).then((result) => {
+      if (!active) return;
+      setCompany(result.data);
+      setError(result.error);
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [params.slug]);
+
+  if (loading) {
+    return <GlassCard className="p-8"><p className="text-sm font-bold text-ds-text/60">Loading company profile...</p></GlassCard>;
+  }
+  if (!company) {
+    return <EmptyState title="Company profile unavailable" description={error ? "Marketplace data could not be loaded. Please try again." : "This company is not available in the current marketplace."} action={<Link href="/marketplace"><Button>Back to marketplace</Button></Link>} />;
+  }
 
   return (<AutoLocalizedContent>
     <div className="space-y-6">

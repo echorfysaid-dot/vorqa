@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Building2,
@@ -24,6 +24,8 @@ import { BlueprintOverlay } from "@/components/vorqa-official-visuals";
 import { marketplaceRepository, useMarketplaceCompanies, type DemoMarketplaceCompany } from "@/lib/repositories";
 import type { MarketplaceSort } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useToast } from "@/components/app-shell";
+import { marketplaceSelection } from "@/lib/marketplace-selection";
 
 const marketplaceCategories = marketplaceRepository.listCategories();
 const marketplaceCompanies = marketplaceRepository.listCompanies();
@@ -40,6 +42,7 @@ const categoryIcons = {
 } as const;
 
 export default function MarketplacePage() {
+  const { pushToast } = useToast();
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
   const [countryFilter, setCountryFilter] = useState("All countries");
@@ -51,8 +54,44 @@ export default function MarketplacePage() {
   const [languageFilter, setLanguageFilter] = useState("All languages");
   const [serviceFilter, setServiceFilter] = useState("All services");
   const [sortFilter, setSortFilter] = useState<MarketplaceSort>("recommended");
-  const [compareSlugs, setCompareSlugs] = useState<string[]>([]);
-  const [shortlistSlugs, setShortlistSlugs] = useState<string[]>([]);
+  const [compareSlugs, setCompareSlugsState] = useState<string[]>(() => marketplaceSelection.getCompare());
+  const [shortlistSlugs, setShortlistSlugsState] = useState<string[]>(() => marketplaceSelection.getShortlist());
+
+  const setCompareSlugs = (update: string[] | ((current: string[]) => string[])) => {
+    setCompareSlugsState((current) => {
+      const next = typeof update === "function" ? update(current) : update;
+      marketplaceSelection.setCompare(next);
+      return next;
+    });
+  };
+
+  const setShortlistSlugs = (update: string[] | ((current: string[]) => string[])) => {
+    setShortlistSlugsState((current) => {
+      const next = typeof update === "function" ? update(current) : update;
+      marketplaceSelection.setShortlist(next);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(window.localStorage.getItem("vorqa-marketplace-filters") || "null") as Record<string, string> | null;
+      if (!saved) return;
+      setQuery(saved.query || "");
+      setCategoryFilter(saved.categoryFilter || "All categories");
+      setCountryFilter(saved.countryFilter || "All countries");
+      setCityFilter(saved.cityFilter || "All cities");
+      setVerificationFilter(saved.verificationFilter || "All verification");
+      setRatingFilter(saved.ratingFilter || "All ratings");
+      setExperienceFilter(saved.experienceFilter || "All experience");
+      setAvailabilityFilter(saved.availabilityFilter || "All availability");
+      setLanguageFilter(saved.languageFilter || "All languages");
+      setServiceFilter(saved.serviceFilter || "All services");
+      setSortFilter((saved.sortFilter as MarketplaceSort) || "recommended");
+    } catch {
+      window.localStorage.removeItem("vorqa-marketplace-filters");
+    }
+  }, []);
 
   const marketplaceState = useMarketplaceCompanies({
     query,
@@ -103,13 +142,13 @@ export default function MarketplacePage() {
               />
             </label>
 
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
               {marketplaceCategories.slice(0, 5).map((category) => (
                 <button
                   key={category.name}
                   type="button"
                   onClick={() => setCategoryFilter(category.name)}
-                  className="rounded-full border border-white/10 bg-white/[0.045] px-4 py-2 text-sm font-black text-ds-text/64 transition hover:-translate-y-0.5 hover:border-[#D4AF37]/32 hover:text-white"
+                  className="min-h-11 rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-center text-sm font-black text-ds-text/64 transition hover:-translate-y-0.5 hover:border-[#D4AF37]/32 hover:text-white"
                 >
                   {category.name}
                 </button>
@@ -216,7 +255,10 @@ export default function MarketplacePage() {
             <Badge tone="gold">Featured Companies</Badge>
             <h2 className="mt-3 text-2xl font-black text-white">Verified construction partners</h2>
           </div>
-          <Button variant="secondary" icon={<Filter className="h-4 w-4" />}>Save filters</Button>
+          <Button variant="secondary" icon={<Filter className="h-4 w-4" />} onClick={() => {
+            window.localStorage.setItem("vorqa-marketplace-filters", JSON.stringify({ query, categoryFilter, countryFilter, cityFilter, verificationFilter, ratingFilter, experienceFilter, availabilityFilter, languageFilter, serviceFilter, sortFilter }));
+            pushToast("Marketplace filters saved", "Your current marketplace search can now be restored on this device.");
+          }}>Save filters</Button>
         </div>
 
         {marketplaceState.loading ? (

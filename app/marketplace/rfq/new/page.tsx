@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Building2, CheckCircle2, FileText, PackageCheck, WalletCards } from "lucide-react";
 import { Badge, Button, GlassCard, ProgressBar } from "@/components/ui";
 import { marketplaceRepository, rfqRepository } from "@/lib/repositories";
@@ -14,6 +14,11 @@ export default function NewRfqPage() {
   const [step, setStep] = useState(0);
   const [selectedCompanies, setSelectedCompanies] = useState(["atlas-construction", "northbuild-engineering", "betonpro-materials"]);
   const progress = ((step + 1) / rfqWizardSteps.length) * 100;
+
+  useEffect(() => {
+    const company = new URLSearchParams(window.location.search).get("company");
+    if (company && marketplaceCompanies.some((item) => item.slug === company)) setSelectedCompanies([company]);
+  }, []);
 
   return (<AutoLocalizedContent>
     <div className="space-y-6">

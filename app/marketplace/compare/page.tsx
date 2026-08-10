@@ -6,6 +6,7 @@ import { ArrowLeft, Building2, CheckCircle2, Plus, Star, Trash2, WandSparkles } 
 import { Badge, Button, EmptyState, GlassCard, ProgressBar } from "@/components/ui";
 import { marketplaceRepository, type DemoMarketplaceCompany } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { marketplaceSelection } from "@/lib/marketplace-selection";
 
 const marketplaceCompanies = marketplaceRepository.listCompanies();
 type MarketplaceCompany = DemoMarketplaceCompany;
@@ -33,7 +34,12 @@ const comparisonRows = [
 ];
 
 export default function MarketplaceComparePage() {
-  const [selectedSlugs, setSelectedSlugs] = useState(initialCompare);
+  const [selectedSlugs, setSelectedSlugsState] = useState(() => marketplaceSelection.getCompare().length ? marketplaceSelection.getCompare() : initialCompare);
+  const setSelectedSlugs = (update: string[] | ((current: string[]) => string[])) => setSelectedSlugsState((current) => {
+    const next = typeof update === "function" ? update(current) : update;
+    marketplaceSelection.setCompare(next);
+    return next;
+  });
   const selectedCompanies = useMemo(() => marketplaceCompanies.filter((company) => selectedSlugs.includes(company.slug)), [selectedSlugs]);
   const recommended = selectedCompanies.reduce<MarketplaceCompany | null>((best, company) => !best || company.insights.fit > best.insights.fit ? company : best, null);
 
