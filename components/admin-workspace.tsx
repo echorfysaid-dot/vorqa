@@ -25,6 +25,8 @@ import {
 import { Badge, Button, EmptyState, GlassCard, Input, PageHeader, ProgressBar, Table } from "@/components/ui";
 import type { AdminStatus, AuditEventType } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatDate as formatLocalizedDate, formatNumber as formatLocalizedNumber } from "@/lib/utils/format";
 import {
   useAdminAudit,
   useAdminDashboard,
@@ -58,13 +60,13 @@ function statusTone(status: AdminStatus | "success" | "failed" | "warning") {
   return "blue";
 }
 
-function formatNumber(value: number) {
-  return new Intl.NumberFormat("en-US").format(value);
+function formatNumber(value: number, locale: "ar" | "fr" | "en") {
+  return formatLocalizedNumber(value, locale);
 }
 
-function formatDate(value?: string) {
+function formatDate(value: string | undefined, locale: "ar" | "fr" | "en") {
   if (!value) return "غير متوفر";
-  return new Intl.DateTimeFormat("ar-MA", { dateStyle: "medium" }).format(new Date(value));
+  return formatLocalizedDate(value, locale);
 }
 
 function AdminNavigation({ active }: { active: AdminView }) {
@@ -120,20 +122,21 @@ function MetricCard({ title, value, hint, icon, tone = "gold" }: { title: string
 }
 
 function AdminDashboardView() {
+  const { locale } = useI18n();
   const state = useAdminDashboard();
   const metrics = state.data.metrics;
   return (<AutoLocalizedContent>
     <AdminShell view="dashboard">
       {state.error && state.isFallback && <GlassCard className="p-4 text-sm font-bold text-warning">يتم عرض لوحة الإدارة من بيانات demo fallback لأن عروض Supabase الإدارية غير متاحة بعد.</GlassCard>}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <MetricCard title="Total users" value={formatNumber(metrics.totalUsers)} hint="Users" icon={<UsersRound className="h-5 w-5" />} />
-        <MetricCard title="Active organizations" value={formatNumber(metrics.activeOrganizations)} hint="Organizations" icon={<Building2 className="h-5 w-5" />} tone="success" />
-        <MetricCard title="Revenue foundation" value={`${formatNumber(metrics.revenue)} ${metrics.currency}`} hint="MRR" icon={<Landmark className="h-5 w-5" />} />
-        <MetricCard title="AI usage" value={formatNumber(metrics.aiRequests)} hint="Requests" icon={<Sparkles className="h-5 w-5" />} tone="blue" />
-        <MetricCard title="Projects" value={formatNumber(metrics.projects)} hint="Projects" icon={<Activity className="h-5 w-5" />} tone="blue" />
-        <MetricCard title="Marketplace companies" value={formatNumber(metrics.marketplaceCompanies)} hint="B2B" icon={<BadgeCheck className="h-5 w-5" />} tone="success" />
-        <MetricCard title="RFQs" value={formatNumber(metrics.rfqs)} hint="Procurement" icon={<FileSearch className="h-5 w-5" />} tone="warning" />
-        <MetricCard title="Contracts" value={formatNumber(metrics.contracts)} hint="Awards" icon={<Lock className="h-5 w-5" />} tone="gold" />
+        <MetricCard title="Total users" value={formatNumber(metrics.totalUsers, locale)} hint="Users" icon={<UsersRound className="h-5 w-5" />} />
+        <MetricCard title="Active organizations" value={formatNumber(metrics.activeOrganizations, locale)} hint="Organizations" icon={<Building2 className="h-5 w-5" />} tone="success" />
+        <MetricCard title="Revenue foundation" value={`${formatNumber(metrics.revenue, locale)} ${metrics.currency}`} hint="MRR" icon={<Landmark className="h-5 w-5" />} />
+        <MetricCard title="AI usage" value={formatNumber(metrics.aiRequests, locale)} hint="Requests" icon={<Sparkles className="h-5 w-5" />} tone="blue" />
+        <MetricCard title="Projects" value={formatNumber(metrics.projects, locale)} hint="Projects" icon={<Activity className="h-5 w-5" />} tone="blue" />
+        <MetricCard title="Marketplace companies" value={formatNumber(metrics.marketplaceCompanies, locale)} hint="B2B" icon={<BadgeCheck className="h-5 w-5" />} tone="success" />
+        <MetricCard title="RFQs" value={formatNumber(metrics.rfqs, locale)} hint="Procurement" icon={<FileSearch className="h-5 w-5" />} tone="warning" />
+        <MetricCard title="Contracts" value={formatNumber(metrics.contracts, locale)} hint="Awards" icon={<Lock className="h-5 w-5" />} tone="gold" />
       </div>
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <GlassCard className="p-5">
@@ -172,6 +175,7 @@ function AdminDashboardView() {
 }
 
 function AdminUsersView() {
+  const { locale } = useI18n();
   const [query, setQuery] = useState("");
   const state = useAdminUsers(query);
   const rows = state.data.map((user) => [
@@ -179,7 +183,7 @@ function AdminUsersView() {
     <Badge key="r" tone="blue">{user.role}</Badge>,
     user.organization || "غير مرتبط",
     <Badge key="s" tone={statusTone(user.status)}>{user.status}</Badge>,
-    formatNumber(user.aiRequests),
+    formatNumber(user.aiRequests, locale),
     <div key="a" className="flex gap-2"><Button size="sm" variant="secondary">Suspend</Button><Button size="sm" variant="ghost">Restore</Button></div>
   ]);
   return (<AutoLocalizedContent>
@@ -220,6 +224,7 @@ function AdminOrganizationsView() {
 }
 
 function AdminSubscriptionsView() {
+  const { locale } = useI18n();
   const state = useAdminSubscriptions();
   return (<AutoLocalizedContent>
     <AdminShell view="subscriptions">
@@ -231,7 +236,7 @@ function AdminSubscriptionsView() {
             subscription.plan,
             <Badge key="s" tone={statusTone(subscription.status)}>{subscription.status}</Badge>,
             `${subscription.mrr} ${subscription.currency}`,
-            formatDate(subscription.renewalDate),
+            formatDate(subscription.renewalDate, locale),
             <div key="u" className="min-w-36"><ProgressBar value={subscription.usagePercent} tone={subscription.usagePercent > 80 ? "warning" : "success"} /></div>
           ])}
         />
@@ -241,6 +246,7 @@ function AdminSubscriptionsView() {
 }
 
 function AdminAuditView() {
+  const { locale } = useI18n();
   const [query, setQuery] = useState("");
   const [type, setType] = useState<"all" | AuditEventType>("all");
   const state = useAdminAudit(query, type);
@@ -253,7 +259,7 @@ function AdminAuditView() {
         </div>
       </div>
       <GlassCard className="p-5">
-        <Table columns={["Type", "Actor", "Action", "Target", "Status", "Date"]} rows={state.data.map((event) => [event.type, event.actor, event.action, event.target, <Badge key="s" tone={statusTone(event.status)}>{event.status}</Badge>, formatDate(event.createdAt)])} />
+        <Table columns={["Type", "Actor", "Action", "Target", "Status", "Date"]} rows={state.data.map((event) => [event.type, event.actor, event.action, event.target, <Badge key="s" tone={statusTone(event.status)}>{event.status}</Badge>, formatDate(event.createdAt, locale)])} />
       </GlassCard>
     </AdminShell>
   </AutoLocalizedContent>);
@@ -300,18 +306,19 @@ function AdminSystemView() {
 }
 
 function AdminAiView() {
+  const { locale } = useI18n();
   const dashboard = useAdminDashboard();
   const aiEvents = useMemo(() => dashboard.data.audit.filter((event) => event.type === "ai"), [dashboard.data.audit]);
   return (<AutoLocalizedContent>
     <AdminShell view="ai">
       <div className="grid gap-4 sm:grid-cols-3">
-        <MetricCard title="AI requests" value={formatNumber(dashboard.data.metrics.aiRequests)} hint="This period" icon={<Sparkles className="h-5 w-5" />} tone="blue" />
-        <MetricCard title="Active AI users" value={formatNumber(dashboard.data.users.filter((user) => user.aiRequests > 0).length)} hint="Users" icon={<UsersRound className="h-5 w-5" />} tone="success" />
-        <MetricCard title="AI events" value={formatNumber(aiEvents.length)} hint="Audit" icon={<Bot className="h-5 w-5" />} tone="gold" />
+        <MetricCard title="AI requests" value={formatNumber(dashboard.data.metrics.aiRequests, locale)} hint="This period" icon={<Sparkles className="h-5 w-5" />} tone="blue" />
+        <MetricCard title="Active AI users" value={formatNumber(dashboard.data.users.filter((user) => user.aiRequests > 0).length, locale)} hint="Users" icon={<UsersRound className="h-5 w-5" />} tone="success" />
+        <MetricCard title="AI events" value={formatNumber(aiEvents.length, locale)} hint="Audit" icon={<Bot className="h-5 w-5" />} tone="gold" />
       </div>
       <GlassCard className="p-5">
         <h2 className="mb-4 text-xl font-black text-ds-text">VORA usage foundation</h2>
-        <Table columns={["User", "Organization", "Requests", "Last active"]} rows={dashboard.data.users.map((user) => [user.name, user.organization || "-", formatNumber(user.aiRequests), formatDate(user.lastActiveAt)])} />
+        <Table columns={["User", "Organization", "Requests", "Last active"]} rows={dashboard.data.users.map((user) => [user.name, user.organization || "-", formatNumber(user.aiRequests, locale), formatDate(user.lastActiveAt, locale)])} />
       </GlassCard>
     </AdminShell>
   </AutoLocalizedContent>);

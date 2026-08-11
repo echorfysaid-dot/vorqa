@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { KnowledgeWorkspace } from "@/components/knowledge-workspace";
 import { useI18n } from "@/components/i18n-provider";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { LocalizedContent } from "@/components/localized-content";
 import { Avatar, Badge, Button, ChartContainer, ChatBubble, Dropdown, EmptyState, GlassCard, IconButton, Input, PageHeader, ProgressBar, Table, Tabs, Textarea, TimelineCard } from "@/components/ui";
 import { BlueprintOverlay, VillaVisual, VoraVisual } from "@/components/vorqa-official-visuals";
@@ -1076,7 +1077,7 @@ function KnowledgeTab({ project }: { project: ProjectWorkspaceProject }) {
                 </div>
                 <div className="mt-4 grid gap-2 text-xs text-ds-text/55">
                   <span>وثيقة مرتبطة: {article.documentTitle || "غير محددة"}</span>
-                  <span>آخر تحديث: {article.updatedAt ? new Date(article.updatedAt).toLocaleDateString("ar-MA") : "غير محدد"}</span>
+                  <span>آخر تحديث: {article.updatedAt ? formatDate(article.updatedAt, locale) : "غير محدد"}</span>
                 </div>
                 <div className="mt-4 flex gap-2">
                   <Button size="sm" variant="secondary" onClick={() => {
@@ -1184,6 +1185,7 @@ function MetricPanel({ label, value, hint, icon }: { label: string; value: React
 }
 
 function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: ProjectDetail }) {
+  const { locale } = useI18n();
   const organizationId = project.organizationId || "atlas";
   const budgetState = useBudgetRepository(project.id);
   const departmentState = useDepartmentsRepository(organizationId);
@@ -1347,9 +1349,9 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-              <BudgetMetricCard title="الميزانية المخططة" value={formatMoney(stats.planned)} detail="Total planned budget" icon={<Coins className="h-6 w-6" />} tone="gold" />
-              <BudgetMetricCard title="التكلفة الفعلية" value={formatMoney(stats.actual)} detail="Actual paid/captured cost" icon={<Gauge className="h-6 w-6" />} tone="blue" />
-              <BudgetMetricCard title="الميزانية المتبقية" value={formatMoney(stats.remaining)} detail="Remaining after actual and committed" icon={<CheckCircle2 className="h-6 w-6" />} tone="success" />
+              <BudgetMetricCard title="الميزانية المخططة" value={formatMoney(stats.planned, locale)} detail="Total planned budget" icon={<Coins className="h-6 w-6" />} tone="gold" />
+              <BudgetMetricCard title="التكلفة الفعلية" value={formatMoney(stats.actual, locale)} detail="Actual paid/captured cost" icon={<Gauge className="h-6 w-6" />} tone="blue" />
+              <BudgetMetricCard title="الميزانية المتبقية" value={formatMoney(stats.remaining, locale)} detail="Remaining after actual and committed" icon={<CheckCircle2 className="h-6 w-6" />} tone="success" />
             </div>
 
             <div className="mt-5 rounded-[1.75rem] border border-white/10 bg-black/24 p-5">
@@ -1373,11 +1375,11 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <h3 className="mt-3 text-xl font-black text-white">رؤية VORA المالية</h3>
             </div>
           </div>
-          <p className="mt-4 text-sm leading-7 text-ds-text/60">رصدت VORA {stats.overBudget ? `${stats.overBudget} بنداً فوق الميزانية` : "استقراراً في الميزانية الحالية"}، والتوقع الحالي هو {formatMoney(stats.forecast)}.</p>
+          <p className="mt-4 text-sm leading-7 text-ds-text/60">رصدت VORA {stats.overBudget ? `${stats.overBudget} بنداً فوق الميزانية` : "استقراراً في الميزانية الحالية"}، والتوقع الحالي هو {formatMoney(stats.forecast, locale)}.</p>
           <div className="mt-4 grid gap-3">
             <ContextRow label="Cost overrun" value={stats.overBudget ? `${stats.overBudget} items` : "None"} />
-            <ContextRow label="Unused budget" value={formatMoney(stats.remaining)} />
-            <ContextRow label="Forecast" value={formatMoney(stats.forecast)} />
+            <ContextRow label="Unused budget" value={formatMoney(stats.remaining, locale)} />
+            <ContextRow label="Forecast" value={formatMoney(stats.forecast, locale)} />
             <ContextRow label="المشروع" value={project.id} />
           </div>
         </GlassCard>
@@ -1402,7 +1404,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <Badge tone="neutral">{budget.categories.length} فئات</Badge>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              {budget.categories.map((category) => <BudgetCategoryCard key={category.id} category={category} total={stats.topCategories.find((entry) => entry.category.id === category.id)?.total || 0} planned={stats.planned} onUpdate={(input) => void updateCategory(category.id, input)} onArchive={() => void archiveCategory(category.id)} />)}
+              {budget.categories.map((category) => <BudgetCategoryCard key={category.id} category={category} total={stats.topCategories.find((entry) => entry.category.id === category.id)?.total || 0} planned={stats.planned} locale={locale} onUpdate={(input) => void updateCategory(category.id, input)} onArchive={() => void archiveCategory(category.id)} />)}
             </div>
           </GlassCard>
 
@@ -1424,7 +1426,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <EmptyState title="لا توجد بنود مطابقة" description="عدّل البحث أو أضف بند ميزانية جديد." />
             ) : (
               <div className="grid gap-3">
-                {filteredItems.map((item) => <BudgetItemRow key={item.id} item={item} categories={budget.categories} departments={departmentState.data} onUpdate={(input) => void updateBudgetItem(item.id, input)} onArchive={() => void archiveBudgetItem(item.id)} />)}
+                {filteredItems.map((item) => <BudgetItemRow key={item.id} item={item} categories={budget.categories} departments={departmentState.data} locale={locale} onUpdate={(input) => void updateBudgetItem(item.id, input)} onArchive={() => void archiveBudgetItem(item.id)} />)}
               </div>
             )}
           </GlassCard>
@@ -1503,7 +1505,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
             <div className="mt-4 grid gap-3">
               <ContextRow label="المصدر" value={budgetState.source} />
               <ContextRow label="Fallback" value={budgetState.isFallback ? "مفعل" : "غير مفعل"} />
-              <ContextRow label="Committed" value={formatMoney(stats.committed)} />
+              <ContextRow label="Committed" value={formatMoney(stats.committed, locale)} />
             </div>
           </GlassCard>
         </aside>
@@ -1512,7 +1514,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
   </AutoLocalizedContent>);
 }
 
-function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: { category: BudgetCategory; total: number; planned: number; onUpdate: (input: Partial<BudgetCategoryInput>) => void; onArchive: () => void }) {
+function BudgetCategoryCard({ category, total, planned, locale, onUpdate, onArchive }: { category: BudgetCategory; total: number; planned: number; locale: "ar" | "fr" | "en"; onUpdate: (input: Partial<BudgetCategoryInput>) => void; onArchive: () => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Partial<BudgetCategoryInput>>({ name: category.name, description: category.description, color: category.color });
   const percent = planned ? Math.round((total / planned) * 100) : 0;
@@ -1521,7 +1523,7 @@ function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: {
       <div className="flex items-start justify-between gap-3">
         <div>
           <Badge tone="gold">{category.name}</Badge>
-          <p className="mt-4 text-2xl font-black text-white">{formatMoney(total)}</p>
+          <p className="mt-4 text-2xl font-black text-white">{formatMoney(total, locale)}</p>
           <p className="mt-2 text-xs leading-5 text-ds-text/48">{category.description || "Budget category"}</p>
         </div>
         <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: category.color || "#D4AF37" }} />
@@ -1542,7 +1544,7 @@ function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: {
   </AutoLocalizedContent>);
 }
 
-function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: { item: ProjectBudgetItem; categories: BudgetCategory[]; departments: Array<{ id: string; name: string }>; onUpdate: (input: Partial<ProjectBudgetItemInput>) => void; onArchive: () => void }) {
+function BudgetItemRow({ item, categories, departments, locale, onUpdate, onArchive }: { item: ProjectBudgetItem; categories: BudgetCategory[]; departments: Array<{ id: string; name: string }>; locale: "ar" | "fr" | "en"; onUpdate: (input: Partial<ProjectBudgetItemInput>) => void; onArchive: () => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Partial<ProjectBudgetItemInput>>({
     categoryId: item.categoryId,
@@ -1568,8 +1570,8 @@ function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: {
           <h3 className="mt-3 text-lg font-black text-white">{item.title}</h3>
           <p className="mt-2 text-xs leading-5 text-ds-text/50">{item.categoryName || "بدون فئة"} · {item.departmentName || "عام"} · {item.endDate || "بدون تاريخ"}</p>
         </div>
-        <ContextRow label="Planned" value={formatMoney(item.plannedCost)} />
-        <ContextRow label="Used" value={formatMoney(used)} />
+        <ContextRow label="Planned" value={formatMoney(item.plannedCost, locale)} />
+        <ContextRow label="Used" value={formatMoney(used, locale)} />
         <div className="flex gap-2">
           <Button type="button" size="sm" variant="secondary" onClick={() => setEditing((current) => !current)}>تعديل</Button>
           <Button type="button" size="sm" variant="danger" onClick={onArchive}>أرشفة</Button>
@@ -1596,8 +1598,8 @@ function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: {
   </AutoLocalizedContent>);
 }
 
-function formatMoney(value: number) {
-  return `${Math.round(value).toLocaleString("en-US")} MAD`;
+function formatMoney(value: number, locale: "ar" | "fr" | "en") {
+  return formatCurrency(value, "MAD", locale);
 }
 
 function budgetStatusTone(status: BudgetItemStatus): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {

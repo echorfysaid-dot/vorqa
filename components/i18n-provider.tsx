@@ -50,7 +50,6 @@ export function I18nProvider({ initialLocale, children }: { initialLocale: Local
     document.documentElement.dir = dir;
     setLocaleState(nextLocale);
     router.refresh();
-    window.setTimeout(() => window.location.reload(), 0);
   }, [locale, router]);
 
   const translate = useCallback((value: string) => translateUiText(value, locale), [locale]);

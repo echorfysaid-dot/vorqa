@@ -5,8 +5,11 @@ import { Badge, Button, EmptyState, GlassCard, ProgressBar, Table } from "@/comp
 import { VoraVisual } from "@/components/vorqa-official-visuals";
 import { quotationRepository } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { getRequestLocale } from "@/lib/i18n-server";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
 
 export default function QuotationDetailsPage({ params }: { params: { id: string } }) {
+  const locale = getRequestLocale();
   const quotation = quotationRepository.getById(params.id);
   if (!quotation) notFound();
   const totals = {
@@ -63,18 +66,18 @@ export default function QuotationDetailsPage({ params }: { params: { id: string 
                   <span key="description" className="font-black text-white">{item.description}</span>,
                   item.quantity,
                   item.unit,
-                  formatMoney(item.unitPrice),
-                  formatMoney(item.tax || 0),
-                  <span key="total" className="font-black text-gold">{formatMoney(item.total)}</span>
+                  formatCurrency(item.unitPrice, "MAD", locale),
+                  formatCurrency(item.tax || 0, "MAD", locale),
+                  <span key="total" className="font-black text-gold">{formatCurrency(item.total, "MAD", locale)}</span>
                 ])}
               />
             ) : (
               <EmptyState title="No line items" description="Line items will appear when a supplier quotation includes itemized pricing." />
             )}
             <div className="mt-5 grid gap-3 md:grid-cols-3">
-              <Metric label="Subtotal" value={formatMoney(totals.subtotal)} compact />
-              <Metric label="Tax" value={formatMoney(totals.tax)} compact />
-              <Metric label="Grand total" value={formatMoney(totals.total)} compact />
+              <Metric label="Subtotal" value={formatCurrency(totals.subtotal, "MAD", locale)} compact />
+              <Metric label="Tax" value={formatCurrency(totals.tax, "MAD", locale)} compact />
+              <Metric label="Grand total" value={formatCurrency(totals.total, "MAD", locale)} compact />
             </div>
           </GlassCard>
 
@@ -106,7 +109,7 @@ export default function QuotationDetailsPage({ params }: { params: { id: string 
           <GlassCard className="p-5">
             <SectionHeader title="Commercial terms" icon={<Clock3 className="h-5 w-5" />} />
             <div className="grid gap-3">
-              <Metric label="Submission date" value={quotation.submissionDate ? new Date(quotation.submissionDate).toLocaleDateString("en-GB") : "N/A"} compact />
+              <Metric label="Submission date" value={quotation.submissionDate ? formatDate(quotation.submissionDate, locale) : "N/A"} compact />
               <Metric label="Expiration date" value={quotation.expirationDate || "N/A"} compact />
               <Metric label="Delivery terms" value={quotation.deliveryTerms || "N/A"} compact />
               <Metric label="Start availability" value={quotation.startAvailability} compact />
@@ -168,8 +171,4 @@ function Metric({ label, value, compact = false }: { label: string; value?: stri
 
 function Insight({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
   return (<AutoLocalizedContent><div className="rounded-2xl border border-white/10 bg-white/[0.045] p-4"><div className="flex items-center gap-2 text-gold">{icon}<p className="font-black text-white">{title}</p></div><p className="mt-2 text-sm leading-6 text-ds-text/58">{text}</p></div></AutoLocalizedContent>);
-}
-
-function formatMoney(value: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "MAD", maximumFractionDigits: 0 }).format(value);
 }

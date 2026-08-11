@@ -7,8 +7,11 @@ import { Badge, Button, EmptyState, GlassCard, ProgressBar, SkeletonCard } from 
 import { useContracts, useContractSummary } from "@/lib/repositories";
 import type { Contract } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatCurrency } from "@/lib/utils/format";
 
 export default function ContractsPage() {
+  const { locale } = useI18n();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
@@ -34,7 +37,7 @@ export default function ContractsPage() {
         <ContractKpi label="Awaiting approval" value={summaryState.loading ? "..." : String(summaryState.data.awaitingApproval)} icon={<Clock3 className="h-5 w-5" />} />
         <ContractKpi label="Upcoming milestones" value={summaryState.loading ? "..." : String(summaryState.data.upcomingMilestones.length)} icon={<CheckCircle2 className="h-5 w-5" />} />
         <ContractKpi label="Upcoming payments" value={summaryState.loading ? "..." : String(summaryState.data.upcomingPayments.length)} icon={<CalendarDays className="h-5 w-5" />} />
-        <ContractKpi label="Total value" value={summaryState.loading ? "..." : formatMoney(summaryState.data.totalValue)} icon={<ShieldCheck className="h-5 w-5" />} />
+        <ContractKpi label="Total value" value={summaryState.loading ? "..." : formatCurrency(summaryState.data.totalValue, "MAD", locale)} icon={<ShieldCheck className="h-5 w-5" />} />
       </div>
 
       <GlassCard className="p-5">
@@ -92,8 +95,4 @@ function MiniMetric({ label, value }: { label: string; value: string }) {
 
 function FilterSelect({ value, onChange, options }: { value: string; onChange: (value: string) => void; options: string[] }) {
   return (<AutoLocalizedContent><select value={value} onChange={(event) => onChange(event.target.value)} className="h-12 rounded-2xl border border-white/10 bg-black/24 px-4 text-sm font-black text-white outline-none transition focus:border-[#D4AF37]/44">{options.map((option) => <option key={option} value={option} className="bg-[#111827] text-white">{option}</option>)}</select></AutoLocalizedContent>);
-}
-
-function formatMoney(value: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "MAD", maximumFractionDigits: 0 }).format(value);
 }

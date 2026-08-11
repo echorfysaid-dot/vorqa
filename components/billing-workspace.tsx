@@ -5,6 +5,8 @@ import { CheckCircle2, CreditCard, Download, Gauge, ReceiptText, Sparkles } from
 import { Badge, Button, GlassCard, ProgressBar, SkeletonCard, Table } from "@/components/ui";
 import type { BillingSummary, Invoice, Plan, UsageRecord } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
 
 export function BillingNav({ active }: { active: "overview" | "plans" | "invoices" | "usage" }) {
   const items = [
@@ -25,6 +27,7 @@ export function BillingNav({ active }: { active: "overview" | "plans" | "invoice
 }
 
 export function BillingHero({ summary, loading, source }: { summary: BillingSummary; loading: boolean; source?: string }) {
+  const { locale } = useI18n();
   return (<AutoLocalizedContent>
     <GlassCard className="relative overflow-hidden p-6">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_12%,rgba(81,216,255,.14),transparent_28%),radial-gradient(circle_at_16%_10%,rgba(215,180,90,.16),transparent_30%)]" />
@@ -44,7 +47,7 @@ export function BillingHero({ summary, loading, source }: { summary: BillingSumm
         <div className="rounded-[1.75rem] border border-[#D4AF37]/20 bg-black/28 p-5">
           <p className="text-sm font-black text-ds-text/52">Current plan</p>
           <p className="mt-2 text-3xl font-black text-[#F2D487]">{loading ? "..." : summary.plan.name}</p>
-          <p className="mt-2 text-sm leading-6 text-ds-text/58">Renews {summary.renewalDate ? new Date(summary.renewalDate).toLocaleDateString("en-GB") : "manually"}</p>
+          <p className="mt-2 text-sm leading-6 text-ds-text/58">Renews {summary.renewalDate ? formatDate(summary.renewalDate, locale) : "manually"}</p>
           <div className="mt-5">
             <ProgressBar value={trialProgress(summary)} label="Trial progress" tone="gold" />
           </div>
@@ -70,6 +73,7 @@ export function BillingMetricGrid({ summary }: { summary: BillingSummary }) {
 }
 
 export function PlanCards({ plans, currentPlanId }: { plans: Plan[]; currentPlanId?: string }) {
+  const { locale } = useI18n();
   return (<AutoLocalizedContent>
     <div className="grid gap-5 lg:grid-cols-4">
       {plans.map((plan) => (
@@ -81,7 +85,7 @@ export function PlanCards({ plans, currentPlanId }: { plans: Plan[]; currentPlan
               <p className="mt-2 text-sm leading-6 text-ds-text/58">{plan.description}</p>
             </div>
           </div>
-          <p className="mt-5 text-3xl font-black text-[#F2D487]">{plan.priceMonthly ? `${plan.priceMonthly} ${plan.currency}` : plan.id === "enterprise" ? "Custom" : "Free"}</p>
+          <p className="mt-5 text-3xl font-black text-[#F2D487]">{plan.priceMonthly ? formatCurrency(plan.priceMonthly, plan.currency, locale) : plan.id === "enterprise" ? "Custom" : "Free"}</p>
           <div className="mt-5 grid gap-3">
             {plan.features.map((feature) => (
               <p key={feature} className="flex items-center gap-2 text-sm font-bold text-ds-text/70">
@@ -113,14 +117,15 @@ export function UsageTable({ usage }: { usage: UsageRecord[] }) {
 }
 
 export function InvoiceTable({ invoices }: { invoices: Invoice[] }) {
+  const { locale } = useI18n();
   return (<AutoLocalizedContent>
     <Table
       columns={["Invoice", "Status", "Amount", "Issued", "Action"]}
       rows={invoices.map((invoice) => [
         invoice.invoiceNumber,
         <Badge key={`${invoice.id}-status`} tone={invoice.status === "paid" ? "success" : invoice.status === "open" ? "warning" : "neutral"}>{invoice.status}</Badge>,
-        `${invoice.amountTotal.toLocaleString("en-US")} ${invoice.currency}`,
-        new Date(invoice.issuedAt).toLocaleDateString("en-GB"),
+        formatCurrency(invoice.amountTotal, invoice.currency, locale),
+        formatDate(invoice.issuedAt, locale),
         <Button key={`${invoice.id}-download`} variant="ghost" size="sm" icon={<Download className="h-4 w-4" />}>Download</Button>
       ])}
     />

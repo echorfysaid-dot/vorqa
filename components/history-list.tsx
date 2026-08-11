@@ -5,6 +5,8 @@ import { Clock3, FileText } from "lucide-react";
 import { EmptyState, GlassCard, SkeletonCard } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatDateTime } from "@/lib/utils/format";
 
 type HistoryRow = {
   id: string;
@@ -14,15 +16,16 @@ type HistoryRow = {
   created_at: string;
 };
 
-function formatDate(value: string) {
+function localizedDate(value: string, locale: "ar" | "fr" | "en") {
   try {
-    return new Intl.DateTimeFormat("ar", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+    return formatDateTime(value, locale);
   } catch {
     return value;
   }
 }
 
 export function HistoryList() {
+  const { locale } = useI18n();
   const [history, setHistory] = useState<HistoryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -95,7 +98,7 @@ export function HistoryList() {
               <p className="mt-1 line-clamp-2 text-sm leading-6 text-[#f8efd7]/48">{item.output_content}</p>
               <p className="mt-2 inline-flex items-center gap-1 text-xs font-black text-[#f1cf72]">
                 <Clock3 className="h-3.5 w-3.5" />
-                {formatDate(item.created_at)}
+                {localizedDate(item.created_at, locale)}
               </p>
             </div>
           </div>

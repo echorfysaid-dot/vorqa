@@ -21,6 +21,8 @@ import { Badge, Button, EmptyState, GlassCard, Input, ProgressBar, SkeletonCard 
 import { notificationRepository, useNotificationSummary, useNotifications } from "@/lib/repositories";
 import type { Notification as VorqaNotification, NotificationFilters, NotificationPriority, NotificationStatus, NotificationType } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatDate } from "@/lib/utils/format";
 
 const statuses: Array<"All" | NotificationStatus> = ["All", "Unread", "Read", "Archived"];
 const priorities: Array<"All" | NotificationPriority> = ["All", "Critical", "High", "Medium", "Normal", "Low"];
@@ -42,6 +44,7 @@ const statusTone: Record<NotificationStatus, "gold" | "blue" | "success" | "warn
 };
 
 export default function NotificationsPage() {
+  const { locale } = useI18n();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<"All" | NotificationStatus>("All");
   const [priority, setPriority] = useState<"All" | NotificationPriority>("All");
@@ -133,7 +136,7 @@ export default function NotificationsPage() {
         {notificationsState.loading ? (
           Array.from({ length: 4 }).map((_, index) => <SkeletonCard key={index} />)
         ) : notifications.length ? (
-          notifications.map((item, index) => <NotificationCard key={item.id} item={item} index={index} onAction={action} />)
+          notifications.map((item, index) => <NotificationCard key={item.id} item={item} index={index} locale={locale} onAction={action} />)
         ) : (
           <EmptyState
             title="No notifications found"
@@ -190,7 +193,7 @@ function FilterSelect({ label, value, options, onChange }: { label: string; valu
   </AutoLocalizedContent>);
 }
 
-function NotificationCard({ item, index, onAction }: { item: VorqaNotification; index: number; onAction: (id: string, status: NotificationStatus) => void }) {
+function NotificationCard({ item, index, locale, onAction }: { item: VorqaNotification; index: number; locale: "ar" | "fr" | "en"; onAction: (id: string, status: NotificationStatus) => void }) {
   return (<AutoLocalizedContent>
     <motion.article
       initial={{ opacity: 0, y: 14 }}
@@ -211,7 +214,7 @@ function NotificationCard({ item, index, onAction }: { item: VorqaNotification; 
             </div>
             <h2 className="mt-3 text-xl font-black text-white">{item.title}</h2>
             <p className="mt-2 max-w-4xl text-sm leading-7 text-ds-text/62">{item.message}</p>
-            <p className="mt-3 text-xs font-bold text-ds-text/42">{item.context} · {item.createdAt ? new Date(item.createdAt).toLocaleDateString("en-GB") : "Now"}</p>
+            <p className="mt-3 text-xs font-bold text-ds-text/42">{item.context} · {item.createdAt ? formatDate(item.createdAt, locale) : "Now"}</p>
           </div>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">

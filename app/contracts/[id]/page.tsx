@@ -6,8 +6,11 @@ import { VoraVisual } from "@/components/vorqa-official-visuals";
 import { contractRepository } from "@/lib/repositories";
 import type { Contract } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { getRequestLocale } from "@/lib/i18n-server";
+import { formatCurrency } from "@/lib/utils/format";
 
 export default function ContractDetailsPage({ params }: { params: { id: string } }) {
+  const locale = getRequestLocale();
   const contract = contractRepository.getById(params.id);
   if (!contract) notFound();
 
@@ -50,7 +53,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
               <div className="grid gap-4 md:grid-cols-3">
                 <Metric label="Winning quotation" value={contract.award.quotationId} />
                 <Metric label="Award date" value={contract.award.awardDate} />
-                <Metric label="Award value" value={formatMoney(contract.award.awardValue)} />
+                <Metric label="Award value" value={formatCurrency(contract.award.awardValue, "MAD", locale)} />
                 <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-4 md:col-span-3">
                   <p className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">Award reason</p>
                   <p className="mt-2 text-sm font-bold leading-7 text-ds-text/62">{contract.award.awardReason}</p>
@@ -184,8 +187,4 @@ function SectionHeader({ title, icon }: { title: string; icon: React.ReactNode }
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (<AutoLocalizedContent><div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3"><div className="flex items-center gap-2 text-gold"><ShieldCheck className="h-4 w-4" /><span className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">{label}</span></div><p className="mt-2 text-sm font-black leading-6 text-white">{value}</p></div></AutoLocalizedContent>);
-}
-
-function formatMoney(value: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "MAD", maximumFractionDigits: 0 }).format(value);
 }

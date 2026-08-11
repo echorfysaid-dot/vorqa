@@ -5,6 +5,7 @@ import frCatalog from "@/lib/locales/fr.json";
 import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
+import { formatCurrency, formatDate, formatNumber, resolveIntlLocale } from "@/lib/utils/format";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -244,6 +245,52 @@ export const tests = [
     run: () => {
       const projectName = "PRJ-1048 · Luxury Villa Casablanca";
       assert(translateUiText(projectName, "ar") === projectName, "Project data must not be translated implicitly");
+    }
+  },
+  {
+    name: "canonical system statuses and priorities localize in every locale",
+    run: () => {
+      const values = ["Open", "Draft", "Pending", "Approved", "Rejected", "Planning", "Execution", "High", "Medium", "Low"];
+      const catalogs = { ar: arCatalog, fr: frCatalog, en: enCatalog } as const;
+      values.forEach((value) => locales.forEach((locale) => {
+        const translated = translateUiText(value, locale);
+        assert(Boolean(translated.trim()), `Empty ${locale} translation for ${value}`);
+        assert(translated === catalogs[locale][value as keyof typeof arCatalog], `Incorrect ${locale} system value: ${value}`);
+      }));
+    }
+  },
+  {
+    name: "dates numbers and currencies use the active locale",
+    run: () => {
+      assert(resolveIntlLocale("ar") === "ar-MA", "Arabic Intl locale mismatch");
+      assert(resolveIntlLocale("fr") === "fr-FR", "French Intl locale mismatch");
+      assert(resolveIntlLocale("en") === "en-GB", "English Intl locale mismatch");
+      const date = "2026-08-04T12:00:00.000Z";
+      assert(formatDate(date, "ar") !== formatDate(date, "fr"), "Arabic and French dates should differ");
+      assert(formatNumber(1234567, "fr") !== formatNumber(1234567, "en"), "French and English numbers should differ");
+      locales.forEach((locale) => assert(formatCurrency(245000, "MAD", locale).includes("245"), `Currency formatting failed for ${locale}`));
+    }
+  },
+  {
+    name: "language switching has one cookie-backed path without a reload flash",
+    run: () => {
+      const provider = fs.readFileSync(path.join(process.cwd(), "components/i18n-provider.tsx"), "utf8");
+      const selector = fs.readFileSync(path.join(process.cwd(), "components/language-selector.tsx"), "utf8");
+      assert(provider.includes("useState<Locale>(initialLocale)"), "Provider must initialize from the server locale");
+      assert(provider.includes("vorqa-locale=${nextLocale}"), "Locale switch must update the canonical cookie");
+      assert(provider.includes("router.refresh()"), "Locale switch must refresh server components");
+      assert(!provider.includes("window.location.reload"), "Locale switch must not force a second render flash");
+      assert(selector.includes("setLocale(item)"), "Language selector must use the global locale setter");
+    }
+  },
+  {
+    name: "report export UI follows the application locale while preserving an explicit report language",
+    run: () => {
+      const source = fs.readFileSync(path.join(process.cwd(), "components/project-analysis-dashboard.tsx"), "utf8");
+      assert(source.includes("initialLanguage={locale"), "Report language must initialize from the application locale");
+      assert(source.includes('translate("Export professional report")'), "Report dialog title must use application localization");
+      assert(source.includes('translate("Report options")'), "Report options must use application localization");
+      assert(source.includes("options.language"), "Report export must retain an explicit output language option");
     }
   }
 ];
