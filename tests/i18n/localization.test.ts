@@ -1,4 +1,4 @@
-≠rá^—f•ñÿ¶{nÏy 'v√Æ∂õ≠import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, translateUiText } from "@/lib/i18n";
+import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, translateUiText } from "@/lib/i18n";
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";

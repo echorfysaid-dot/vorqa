@@ -1,4 +1,4 @@
-≠rá^—f•ñÿ¶{mÏy 'v√Æ∂õ≠import arCatalog from "@/lib/locales/ar.json";
+import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
 
