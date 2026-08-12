@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 1.4 seconds
+Output:
 import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, translateUiText } from "@/lib/i18n";
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
@@ -186,6 +189,21 @@ export const tests = [
     }
   },
   {
+    name: "global More navigation has complete AR FR EN semantic labels",
+    run: () => {
+      const moreKeys = ["more", "tools", "rfq", "quotations", "contracts", "billing", "admin", "notifications", "knowledge", "documents", "history", "saved", "favorites", "pricing", "settings"] as const;
+      const expectedTitles = { ar: "المزيد", fr: "Plus", en: "More" } as const;
+      locales.forEach((locale) => {
+        const nav = dictionaries[locale].nav;
+        moreKeys.forEach((key) => assert(Boolean(nav[key]?.trim()), `Missing ${locale} More navigation label: ${key}`));
+        assert(nav.more === expectedTitles[locale], `Incorrect ${locale} More section title`);
+      });
+
+      const shell = fs.readFileSync(path.join(process.cwd(), "components/app-shell.tsx"), "utf8");
+      assert(shell.includes("const label = t.nav[item.key]"), "More navigation must use the canonical locale dictionary");
+    }
+  },
+  {
     name: "HeaderMeta label is deterministic for the initial locale",
     run: () => {
       const expected = { ar: "الحالة", fr: "Statut", en: "Status" } as const;
@@ -326,3 +344,4 @@ export const tests = [
     }
   }
 ];
+
