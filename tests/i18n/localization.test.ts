@@ -195,7 +195,6 @@ export const tests = [
         moreKeys.forEach((key) => assert(Boolean(nav[key]?.trim()), `Missing ${locale} More navigation label: ${key}`));
         assert(nav.more === expectedTitles[locale], `Incorrect ${locale} More section title`);
       });
-
       const shell = fs.readFileSync(path.join(process.cwd(), "components/app-shell.tsx"), "utf8");
       assert(shell.includes("const label = t.nav[item.key]"), "More navigation must use the canonical locale dictionary");
     }
