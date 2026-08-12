@@ -1,7 +1,3 @@
-Exit code: 0
-Wall time: 1.2 seconds
-Total output lines: 1058
-Output:
 "use client";
 
 import Link from "next/link";
@@ -257,448 +253,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     organizationType: onboarding.profile.organizationType
   } : null, [onboarding.profile?.accountType, onboarding.profile?.primaryRole, onboarding.profile?.organizationType]);
   const workspaceLabel = identity?.accountType === "organization" && identity.organizationType
-    ? organizationTypeDisplayNames[identity.organizationType]
-    : identity?.primaryRole ? roleDisplayNames[identity.primaryRole] : undefined;
-  const roleNavigation = useMemo(() => identity ? navigationForIdentity(identity).map((item) => ({ ...item, icon: iconForRoleNavigation(item.label) })) : [], [identity]);
-
-  const isPublicAuthExperience = pathname === "/login" || pathname === "/register" || pathname === "/pricing" || (pathname === "/onboarding" && !session);
-
-  if (pathname === "/" || isPublicAuthExperience) {
-    return (<AutoLocalizedContent>
-      <ToastContext.Provider value={toastValue}>
-        <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] text-[#f8efd7] transition dark:bg-[#0A0A0A] dark:text-[#f8efd7]">
-          {pathname !== "/" && <div className="fixed end-4 top-4 z-[120] sm:end-6 sm:top-6"><LanguageSelector compact /></div>}
-          {children}
-        </div>
-      </ToastContext.Provider>
-    </AutoLocalizedContent>);
-  }
-
-  return (<AutoLocalizedContent>
-    <ToastContext.Provider value={toastValue}>
-      <div className="min-h-screen overflow-x-hidden bg-ds-token-bg text-ds-token-text">
-        <div className="pointer-events-none fixed inset-0 bg-ds-token-bg" />
-
-        <a href="#vorqa-workspace-content" className="ds-focusable fixed start-4 top-4 z-[130] -translate-y-24 rounded-ds-md border border-ds-token-gold/30 bg-ds-token-secondary/96 px-4 py-2 text-sm font-bold text-ds-token-gold shadow-ds-lg backdrop-blur-xl transition focus:translate-y-0">
-          {translate("Skip to workspace")}
-        </a>
-
-        <aside aria-label={translate("Primary workspace navigation")} className={`fixed inset-y-0 ${shellSide} z-50 hidden overflow-visible border-ds-token-border bg-ds-token-secondary p-4 transition-[width] duration-ds-slow lg:block ${sidebarCollapsed ? "w-20" : "w-[17.5rem]"}`}>
-          <SidebarContent pathname={pathname} collapsed={sidebarCollapsed} activeOrganization={activeOrganization} onOrganizationChange={setActiveOrganization} onToggle={() => setSidebarCollapsed((value) => !value)} roleNavigation={identity ? roleNavigation : undefined} workspaceLabel={workspaceLabel ? translate(workspaceLabel) : undefined} />
-        </aside>
-
-        <AnimatePresence>
-          {sidebarOpen && (
-            <>
-              <motion.button className="fixed inset-0 z-50 bg-black/78 backdrop-blur-sm lg:hidden" aria-label={translate("Close menu")} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSidebarOpen(false)} />
-              <motion.aside
-                role="dialog"
-                aria-modal="true"
-                aria-label={translate("Primary workspace navigation")}
-                className={`fixed inset-y-0 ${mobileSide} z-50 w-[min(300px,calc(100vw-1rem))] border-ds-token-border bg-ds-token-overlay p-4 shadow-ds-lg lg:hidden`}
-                initial={{ x: drawerOffset }}
-                animate={{ x: 0 }}
-                exit={{ x: drawerOffset }}
-                transition={{ type: "spring", stiffness: 260, damping: 28 }}
-              >
-                <SidebarContent pathname={pathname} activeOrganization={activeOrganization} onOrganizationChange={setActiveOrganization} onNavigate={() => setSidebarOpen(false)} roleNavigation={identity ? roleNavigation : undefined} workspaceLabel={workspaceLabel ? translate(workspaceLabel) : undefined} />
-              </motion.aside>
-            </>
-          )}
-        </AnimatePresence>
-
-        <div className={`relative transition-all duration-ds-slow ${contentMargin}`}>
-          <header className="sticky top-0 z-40 border-b border-ds-token-border bg-ds-token-bg/90 backdrop-blur-xl">
-            <div className="mx-auto flex min-h-16 max-w-ds-content items-center gap-2 px-4 sm:gap-2.5 sm:px-6 lg:px-8">
-              <IconButton className="lg:hidden" onClick={() => setSidebarOpen(true)} ariaLabel={translate("Open menu")}>
-                <Menu className="h-5 w-5" />
-              </IconButton>
-
-              <div className="hidden">
-                <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ds-token-gold">{translate("VORA Project Workspace")}</p>
-                  <Badge tone="blue" className="hidden 2xl:inline-flex">{t.shell.workspaceBadge}</Badge>
-                  <Badge tone={dataSourceMode === "supabase" ? "success" : dataSourceMode === "auto" ? "blue" : "warning"} className="hidden 2xl:inline-flex">{dataSourceLabel}</Badge>
-                  <Badge tone={activeOrganization.status === "Active" ? "success" : activeOrganization.status === "Pending invitation" ? "warning" : "danger"} className="hidden 2xl:inline-flex">{translate(activeOrganization.status)}</Badge>
-                </div>
-                <h1 className="mt-1 truncate text-lg font-black sm:text-xl">{currentPage}</h1>
-                <p className="mt-1 hidden truncate text-xs font-bold text-ds-text/46 sm:block">{activeOrganization.name} ¬∑ {activeOrganization.workspace}</p>
-      ‚Ä¶4556 tokens truncated‚Ä¶acity: 0, y: 10, scale: 0.98 }}
-      className={`absolute z-[90] w-[min(360px,calc(100vw-2rem))] rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 p-4 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${className}`}
-    >
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-gold">{translate("Organizations")}</p>
-          <h3 className="mt-1 font-black">{translate("Switch workspace")}</h3>
-        </div>
-        <Badge tone="blue">{translate("UI state")}</Badge>
-      </div>
-
-      <label className="mt-4 flex h-10 items-center gap-3 rounded-ds-md border border-ds-token-border bg-black/24 px-3 shadow-inner shadow-black/20 transition focus-within:border-ds-token-gold/40">
-        <Search className="h-4 w-4 text-gold" />
-        <input value={query} onChange={(event) => setQuery(event.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-ds-text/36" placeholder={translate("Search organizations")} />
-      </label>
-
-      <div className="mt-4 grid gap-4">
-        <OrganizationGroup title={translate("Recent organizations")} organizations={recentOrganizations} activeOrganization={activeOrganization} onSelect={onSelect} />
-        <OrganizationGroup title={translate("All organizations")} organizations={organizations} activeOrganization={activeOrganization} onSelect={onSelect} />
-      </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
-        <button type="button" className="flex items-center justify-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.035] px-3 py-2 text-xs font-bold text-ds-token-muted transition hover:bg-white/[0.06]">
-          <Plus className="h-4 w-4 text-gold" />
-          {translate("Create organization")}
-        </button>
-        <button type="button" className="flex items-center justify-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.035] px-3 py-2 text-xs font-bold text-ds-token-muted transition hover:bg-white/[0.06]">
-          <UserPlus className="h-4 w-4 text-gold" />
-          {translate("Join organization")}
-        </button>
-      </div>
-    </motion.div>
-  </AutoLocalizedContent>);
-}
-
-function OrganizationGroup({
-  title,
-  organizations,
-  activeOrganization,
-  onSelect
-}: {
-  title: string;
-  organizations: DemoOrganization[];
-  activeOrganization: DemoOrganization;
-  onSelect: (organization: DemoOrganization) => void;
-}) {
-  const { translate } = useI18n();
-  return (<AutoLocalizedContent>
-    <div>
-      <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-ds-text/42">{title}</p>
-      <div className="grid gap-2">
-        {organizations.length ? (
-          organizations.map((organization) => {
-            const active = organization.id === activeOrganization.id;
-            return (
-              <button
-                type="button"
-                key={`${title}-${organization.id}`}
-                onClick={() => onSelect(organization)}
-                className={`flex items-center gap-3 rounded-ds-md border p-3 text-start transition ${
-                  active ? "border-ds-token-gold/36 bg-ds-token-gold/12" : "border-ds-token-border bg-white/[0.03] hover:bg-white/[0.055]"
-                }`}
-              >
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold/12 text-xs font-black text-gold">{organization.logo}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-black">{organization.name}</span>
-                  <span className="mt-1 block truncate text-xs text-ds-text/46">{translate(organization.role)} ¬∑ {translate(organization.status)}</span>
-                </span>
-                {active && <span className="h-2.5 w-2.5 rounded-full bg-gold shadow-gold-glow" />}
-              </button>
-            );
-          })
-        ) : (
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-sm text-ds-text/50">{translate("No organizations found.")}</div>
-        )}
-      </div>
-    </div>
-  </AutoLocalizedContent>);
-}
-
-function QuickActionsMenu() {
-  const { dir, translate } = useI18n();
-  return (<AutoLocalizedContent>
-    <FloatingPanel className={dir === "rtl" ? "left-0" : "right-0"}>
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">{translate("Quick actions")}</p>
-          <h2 className="mt-1 font-black">{translate("Move faster")}</h2>
-        </div>
-        <Rocket className="h-5 w-5 text-gold" />
-      </div>
-      <div className="grid gap-2">
-        {quickActions.map((action) => {
-          const Icon = action.icon;
-          return (
-            <Link key={action.title} href={action.href} className="group flex items-center gap-3 rounded-ds-md border border-ds-token-border bg-white/[0.03] p-3 transition hover:border-ds-token-gold/20 hover:bg-white/[0.055]">
-              <span className="grid h-9 w-9 place-items-center rounded-ds-sm bg-ds-token-gold/12 text-ds-token-gold">
-                <Icon className="h-4 w-4 transition group-hover:-rotate-6" />
-              </span>
-              <span className="font-black">{translate(action.title)}</span>
-            </Link>
-          );
-        })}
-      </div>
-    </FloatingPanel>
-  </AutoLocalizedContent>);
-}
-
-function CommandPalette({ onClose, onOpenNotifications }: { onClose: () => void; onOpenNotifications: () => void }) {
-  const router = useRouter();
-  const { translate } = useI18n();
-  const [query, setQuery] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const normalizedQuery = query.toLowerCase();
-  const filteredSearch = globalSearchItems.filter((item) => `${item.title} ${item.type} ${item.context} ${item.status}`.toLowerCase().includes(normalizedQuery));
-  const filteredCommands = commandItems.filter((item) => `${item.title} ${item.category}`.toLowerCase().includes(normalizedQuery));
-  const paletteItems = [
-    ...filteredCommands.map((item) => ({ ...item, kind: "command" as const, type: item.category, context: "Command palette", status: "Ready" })),
-    ...filteredSearch.map((item) => ({ ...item, kind: "search" as const }))
-  ];
-  const recentCommands = commandItems.slice(0, 3);
-  const suggestedCommands = commandItems.slice(3, 7);
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
-
-  function openSelected() {
-    const selected = paletteItems[selectedIndex];
-    if (!selected) return;
-    if (selected.title === "View notifications") {
-      onOpenNotifications();
-      onClose();
-      return;
-    }
-    router.push(selected.href);
-    onClose();
-  }
-
-  return (<AutoLocalizedContent>
-    <motion.div className="fixed inset-0 z-[120] bg-black/72 p-3 backdrop-blur-xl sm:p-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div
-        role="dialog"
-        aria-modal="true"
-        aria-label={translate("Global search and command palette")}
-        aria-describedby="command-palette-help"
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 18, scale: 0.98 }}
-        className="mx-auto flex h-[min(760px,calc(100vh-1.5rem))] max-w-4xl flex-col overflow-hidden rounded-ds-2xl border border-ds-token-border bg-ds-token-secondary/98 shadow-ds-lg ring-1 ring-white/[0.025] backdrop-blur-xl sm:h-[min(760px,calc(100vh-3rem))]"
-        onKeyDown={(event) => {
-          if (event.key === "Escape") onClose();
-          if (event.key === "ArrowDown") {
-            event.preventDefault();
-            setSelectedIndex((value) => Math.min(value + 1, Math.max(0, paletteItems.length - 1)));
-          }
-          if (event.key === "ArrowUp") {
-            event.preventDefault();
-            setSelectedIndex((value) => Math.max(value - 1, 0));
-          }
-          if (event.key === "Enter") {
-            event.preventDefault();
-            openSelected();
-          }
-        }}
-      >
-        <div className="border-b border-white/10 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex min-w-0 flex-1 items-center gap-3 rounded-ds-md border border-ds-token-gold/22 bg-black/28 px-4 py-3 shadow-inner shadow-black/20">
-              <Search className="h-5 w-5 shrink-0 text-gold" />
-              <input
-                autoFocus
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                className="w-full bg-transparent text-base font-bold text-ds-text outline-none placeholder:text-ds-text/36"
-                placeholder={translate("Search projects, organizations, people, reports, tools...")}
-                aria-label={translate("Search Vorqa workspace")}
-                aria-controls="command-palette-results"
-                aria-activedescendant={paletteItems[selectedIndex] ? `command-palette-result-${selectedIndex}` : undefined}
-              />
-              <KeyboardHint keys={["Esc"]} className="hidden bg-white/[0.045] sm:inline-flex" />
-            </div>
-            <button type="button" onClick={onClose} className="ds-focusable grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/[0.055] text-ds-text/58 transition hover:-translate-y-0.5 hover:bg-white/[0.085] hover:text-ds-text" aria-label={translate("Close command palette")}>
-              <ChevronDown className="h-5 w-5 rotate-180" />
-            </button>
-          </div>
-        </div>
-
-        <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[260px_minmax(0,1fr)]">
-          <aside className="hidden border-e border-white/10 bg-white/[0.018] p-4 lg:block">
-            <PaletteSection title={translate("Recent commands")} commands={recentCommands} />
-            <div className="mt-5">
-              <PaletteSection title={translate("Suggested commands")} commands={suggestedCommands} />
-            </div>
-          </aside>
-
-          <div className="min-h-0 overflow-y-auto p-4">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <div id="command-palette-help">
-                <Badge tone="gold">{translate("Global discovery")}</Badge>
-                <p className="mt-2 text-sm text-ds-text/54">{paletteItems.length} {translate("results across Vorqa")}</p>
-              </div>
-              <div className="hidden gap-2 text-[10px] font-black text-ds-text/38 sm:flex">
-                <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-2 py-1"><KeyboardHint keys={["‚Üë", "‚Üì"]} className="border-0 p-0" /> {translate("Navigate")}</span>
-                <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-2 py-1"><KeyboardHint keys={["Enter"]} className="border-0 p-0" /> {translate("Open")}</span>
-              </div>
-            </div>
-
-            {paletteItems.length ? (
-              <div id="command-palette-results" role="listbox" aria-label={translate("Command palette results")} className="grid gap-2">
-                {paletteItems.map((item, index) => {
-                  const Icon = item.icon;
-                  const active = index === selectedIndex;
-                  return (
-                    <Link
-                      key={`${item.kind}-${item.title}`}
-                      id={`command-palette-result-${index}`}
-                      role="option"
-                      aria-selected={active}
-                      href={item.href}
-                      onClick={(event) => {
-                        if (item.title === "View notifications") {
-                          event.preventDefault();
-                          onOpenNotifications();
-                        }
-                        onClose();
-                      }}
-                      onMouseEnter={() => setSelectedIndex(index)}
-                      className={`group flex items-center gap-3 rounded-ds-md border p-3 text-start shadow-sm transition ${
-                        active ? "border-ds-token-gold/38 bg-ds-token-gold/12" : "border-ds-token-border bg-white/[0.03] hover:border-ds-token-border-strong hover:bg-white/[0.055]"
-                      }`}
-                    >
-                      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl border transition ${active ? "border-gold/28 bg-gold/16 text-gold" : "border-white/10 bg-white/[0.04] text-gold"}`}>
-                        <Icon className="h-5 w-5 transition group-hover:-rotate-6" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate font-black text-white">{translate(item.title)}</span>
-                        <span className="mt-1 block truncate text-xs text-ds-text/46">{translate(item.type)} ¬∑ {translate(item.context)}</span>
-                      </span>
-                      <Badge tone={item.kind === "command" ? "blue" : "neutral"}>{translate(item.status)}</Badge>
-                    </Link>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="grid min-h-80 place-items-center rounded-ds-xl border border-ds-token-border bg-white/[0.03] p-8 text-center">
-                <div>
-                  <Search className="mx-auto h-10 w-10 text-gold" />
-                  <h3 className="mt-4 text-xl font-black text-white">{translate("No results found")}</h3>
-                  <p className="mt-2 text-sm leading-6 text-ds-text/54">{translate("Try searching for a project, employee, report, organization, or VORA tool.")}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  </AutoLocalizedContent>);
-}
-
-function PaletteSection({ title, commands }: { title: string; commands: typeof commandItems }) {
-  const { translate } = useI18n();
-  return (<AutoLocalizedContent>
-    <div>
-      <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-ds-text/42">{title}</p>
-      <div className="grid gap-2">
-        {commands.map((command) => {
-          const Icon = command.icon;
-          return (
-            <Link key={command.title} href={command.href} className="group flex items-center gap-2 rounded-ds-md border border-ds-token-border bg-white/[0.03] px-3 py-2 text-sm font-bold transition hover:border-ds-token-gold/20 hover:bg-white/[0.055]">
-              <Icon className="h-4 w-4 shrink-0 text-gold transition group-hover:-rotate-6" />
-              <span className="truncate">{translate(command.title)}</span>
-            </Link>
-          );
-        })}
-      </div>
-    </div>
-  </AutoLocalizedContent>);
-}
-
-function NotificationsPanel({
-  readIds,
-  onMarkAllRead,
-  onToggleRead
-}: {
-  readIds: number[];
-  onMarkAllRead: () => void;
-  onToggleRead: (id: number) => void;
-}) {
-  const { dictionary: t, dir } = useI18n();
-  const [filter, setFilter] = useState("All");
-  const notifications = demoNotificationItems.filter((item) => {
-    const unread = item.unread && !readIds.includes(item.id);
-    if (filter === "Unread") return unread;
-    if (filter === "High priority") return item.priority === "High";
-    return true;
-  });
-  const unreadCount = demoNotificationItems.filter((item) => item.unread && !readIds.includes(item.id)).length;
-
-  return (<AutoLocalizedContent>
-    <motion.div
-      initial={{ opacity: 0, y: 10, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 10, scale: 0.98 }}
-      className={`absolute top-12 z-50 w-[min(420px,calc(100vw-1.5rem))] overflow-hidden rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${dir === "rtl" ? "left-0" : "right-0"}`}
-    >
-      <div className="border-b border-white/10 p-4">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <h2 className="font-black">{t.common.notifications}</h2>
-            <p className="mt-1 text-xs text-ds-text/48">{unreadCount} unread across projects and organizations</p>
-          </div>
-          <Badge tone="gold">{unreadCount}</Badge>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {["All", "Unread", "High priority"].map((item) => (
-            <button key={item} type="button" onClick={() => setFilter(item)} className={`rounded-full border px-3 py-1 text-xs font-black transition ${filter === item ? "border-gold/40 bg-gold/14 text-gold" : "border-white/10 bg-white/[0.04] text-ds-text/54 hover:bg-white/[0.07]"}`}>
-              {item}
-            </button>
-          ))}
-          <button type="button" onClick={onMarkAllRead} className="ms-auto rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black text-ds-text/54 transition hover:bg-white/[0.07]">
-            Mark all read
-          </button>
-        </div>
-      </div>
-      <div className="max-h-[70vh] overflow-y-auto p-4">
-        {notifications.length ? (
-          <div className="grid gap-2">
-            {notifications.map((item) => {
-              const unread = item.unread && !readIds.includes(item.id);
-              const tone = item.priority === "High" ? "danger" : item.priority === "Medium" ? "warning" : "neutral";
-              return (
-                <button key={item.id} type="button" onClick={() => onToggleRead(item.id)} className={`rounded-ds-md border p-3 text-start transition hover:bg-white/[0.055] ${unread ? "border-ds-token-gold/24 bg-ds-token-gold/10" : "border-ds-token-border bg-white/[0.03]"}`}>
-                  <div className="flex items-start gap-3">
-                    <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${unread ? "animate-pulse bg-gold" : "bg-white/18"}`} />
-                    <span className="min-w-0 flex-1">
-                      <span className="flex flex-wrap items-center gap-2">
-                        <span className="font-black text-white">{item.title}</span>
-                        <Badge tone={tone}>{item.priority}</Badge>
-                      </span>
-                      <span className="mt-1 block text-xs leading-5 text-ds-text/58">{item.message}</span>
-                      <span className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-bold text-ds-text/42">
-                        <span>{item.category}</span>
-                        <span>¬∑</span>
-                        <span>{item.context}</span>
-                        <span>¬∑</span>
-                        <span>{item.timestamp}</span>
-                      </span>
-                    </span>
-                    <span className="text-xs font-black text-gold">{item.action}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="grid min-h-56 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-center">
-            <div>
-              <Bell className="mx-auto h-9 w-9 text-gold" />
-              <h3 className="mt-4 font-black text-white">No notifications</h3>
-              <p className="mt-2 text-sm leading-6 text-ds-text/54">This filter is clear for now.</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  </AutoLocalizedContent>);
-}
-
-function FloatingPanel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (<AutoLocalizedContent>
-    <motion.div initial={{ opacity: 0, y: 10, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.98 }} className={`absolute top-12 z-50 w-80 rounded-ds-xl border border-ds-token-border bg-ds-token-secondary/98 p-4 text-ds-token-text shadow-ds-lg backdrop-blur-xl ${className}`}>
-      {children}
-    </motion.div>
-  </AutoLocalizedContent>);
-}
-
-
-
+    ? organizationTypeDisplayNames[identity.organizat˜ç<∂âûÀk∫wµÁQîΩl¿∏¿ÕtÅ¿¥ÃÅ—…ÖπÕ•—•Ω∏Å°ΩŸï»ÈâΩ…ëï»µëÃµ—Ω≠ï∏µùΩ±êº»¿Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿‘’tà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâù…•êÅ†¥‰Å‹¥‰Å¡±Öçîµ•—ïµÃµçïπ—ï»Å…Ω’πëïêµëÃµÕ¥ÅâúµëÃµ—Ω≠ï∏µùΩ±êºƒ»Å—ï·–µëÃµ—Ω≠ï∏µùΩ±êà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ%çΩ∏Åç±ÖÕÕ9ÖµîÙâ†¥–Å‹¥–Å—…ÖπÕ•—•Ω∏Åù…Ω’¿µ°ΩŸï»Ëµ…Ω—Ö—î¥ÿàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâôΩπ–µâ±Öç¨à˘Ì—…ÖπÕ±Ö—î°Öç—•Ω∏π—•—±î•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩ1•π¨¯(ÄÄÄÄÄÄÄÄÄÄ§Ï(ÄÄÄÄÄÄÄÅÙ•Ù(ÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄΩ±ΩÖ—•πùAÖπï∞¯(ÄÄΩ’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯§Ï)Ù()ô’πç—•Ω∏ÅΩµµÖπëAÖ±ï——î°ÏÅΩπ±ΩÕî∞ÅΩπ=¡ïπ9Ω—•ô•çÖ—•ΩπÃÅÙËÅÏÅΩπ±ΩÕîËÄ†§ÄÙ¯ÅŸΩ•êÏÅΩπ=¡ïπ9Ω—•ô•çÖ—•ΩπÃËÄ†§ÄÙ¯ÅŸΩ•êÅÙ§ÅÏ(ÄÅçΩπÕ–Å…Ω’—ï»ÄÙÅ’ÕïIΩ’—ï»†§Ï(ÄÅçΩπÕ–ÅÏÅ—…ÖπÕ±Ö—îÅÙÄÙÅ’Õï$ƒ·∏†§Ï(ÄÅçΩπÕ–Åm≈’ï…‰∞ÅÕï—E’ï…ÂtÄÙÅ’ÕïM—Ö—î†àà§Ï(ÄÅçΩπÕ–ÅmÕï±ïç—ïë%πëï‡∞ÅÕï—Mï±ïç—ïë%πëï·tÄÙÅ’ÕïM—Ö—î†¿§Ï(ÄÅçΩπÕ–ÅπΩ…µÖ±•ÈïëE’ï…‰ÄÙÅ≈’ï…‰π—Ω1Ω›ï…ÖÕî†§Ï(ÄÅçΩπÕ–Åô•±—ï…ïëMïÖ…ç†ÄÙÅù±ΩâÖ±MïÖ…ç°%—ïµÃπô•±—ï»†°•—ï¥§ÄÙ¯ÅÄëÌ•—ï¥π—•—±ïÙÄëÌ•—ï¥π—Â¡ïÙÄëÌ•—ï¥πçΩπ—ï·—ÙÄëÌ•—ï¥πÕ—Ö—’ÕıÄπ—Ω1Ω›ï…ÖÕî†§π•πç±’ëïÃ°πΩ…µÖ±•ÈïëE’ï…‰§§Ï(ÄÅçΩπÕ–Åô•±—ï…ïëΩµµÖπëÃÄÙÅçΩµµÖπë%—ïµÃπô•±—ï»†°•—ï¥§ÄÙ¯ÅÄëÌ•—ï¥π—•—±ïÙÄëÌ•—ï¥πçÖ—ïùΩ…ÂıÄπ—Ω1Ω›ï…ÖÕî†§π•πç±’ëïÃ°πΩ…µÖ±•ÈïëE’ï…‰§§Ï(ÄÅçΩπÕ–Å¡Ö±ï——ï%—ïµÃÄÙÅl(ÄÄÄÄ∏∏πô•±—ï…ïëΩµµÖπëÃπµÖ¿†°•—ï¥§ÄÙ¯Ä°ÏÄ∏∏π•—ï¥∞Å≠•πêËÄâçΩµµÖπêàÅÖÃÅçΩπÕ–∞Å—Â¡îËÅ•—ï¥πçÖ—ïùΩ…‰∞ÅçΩπ—ï·–ËÄâΩµµÖπêÅ¡Ö±ï——îà∞ÅÕ—Ö—’ÃËÄâIïÖë‰àÅÙ§§∞(ÄÄÄÄ∏∏πô•±—ï…ïëMïÖ…ç†πµÖ¿†°•—ï¥§ÄÙ¯Ä°ÏÄ∏∏π•—ï¥∞Å≠•πêËÄâÕïÖ…ç†àÅÖÃÅçΩπÕ–ÅÙ§§(ÄÅtÏ(ÄÅçΩπÕ–Å…ïçïπ—ΩµµÖπëÃÄÙÅçΩµµÖπë%—ïµÃπÕ±•çî†¿∞ÄÃ§Ï(ÄÅçΩπÕ–ÅÕ’ùùïÕ—ïëΩµµÖπëÃÄÙÅçΩµµÖπë%—ïµÃπÕ±•çî†Ã∞Ä‹§Ï((ÄÅ’Õïôôïç–††§ÄÙ¯ÅÏ(ÄÄÄÅÕï—Mï±ïç—ïë%πëï‡†¿§Ï(ÄÅÙ∞Åm≈’ï…Ât§Ï((ÄÅô’πç—•Ω∏ÅΩ¡ïπMï±ïç—ïê†§ÅÏ(ÄÄÄÅçΩπÕ–ÅÕï±ïç—ïêÄÙÅ¡Ö±ï——ï%—ïµÕmÕï±ïç—ïë%πëï·tÏ(ÄÄÄÅ•òÄ†ÖÕï±ïç—ïê§Å…ï—’…∏Ï(ÄÄÄÅ•òÄ°Õï±ïç—ïêπ—•—±îÄÙÙÙÄâY•ï‹ÅπΩ—•ô•çÖ—•ΩπÃà§ÅÏ(ÄÄÄÄÄÅΩπ=¡ïπ9Ω—•ô•çÖ—•ΩπÃ†§Ï(ÄÄÄÄÄÅΩπ±ΩÕî†§Ï(ÄÄÄÄÄÅ…ï—’…∏Ï(ÄÄÄÅÙ(ÄÄÄÅ…Ω’—ï»π¡’Õ†°Õï±ïç—ïêπ°…ïò§Ï(ÄÄÄÅΩπ±ΩÕî†§Ï(ÄÅÙ((ÄÅ…ï—’…∏Ä†Ò’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯(ÄÄÄÄÒµΩ—•Ω∏πë•ÿÅç±ÖÕÕ9ÖµîÙâô•·ïêÅ•πÕï–¥¿ÅËµlƒ»¡tÅâúµâ±Öç¨º‹»Å¿¥ÃÅâÖç≠ë…Ω¿µâ±’»µ·∞ÅÕ¥È¿¥ÿàÅ•π•—•Ö∞ıÌÏÅΩ¡Öç•—‰ËÄ¿ÅıÙÅÖπ•µÖ—îıÌÏÅΩ¡Öç•—‰ËÄƒÅıÙÅï·•–ıÌÏÅΩ¡Öç•—‰ËÄ¿ÅıÙ¯(ÄÄÄÄÄÄÒµΩ—•Ω∏πë•ÿ(ÄÄÄÄÄÄÄÅ…Ω±îÙâë•Ö±Ωúà(ÄÄÄÄÄÄÄÅÖ…•ÑµµΩëÖ∞Ùâ—…’îà(ÄÄÄÄÄÄÄÅÖ…•Ñµ±Öâï∞ıÌ—…ÖπÕ±Ö—î†â±ΩâÖ∞ÅÕïÖ…ç†ÅÖπêÅçΩµµÖπêÅ¡Ö±ï——îà•Ù(ÄÄÄÄÄÄÄÅÖ…•ÑµëïÕç…•âïëâ‰ÙâçΩµµÖπêµ¡Ö±ï——îµ°ï±¿à(ÄÄÄÄÄÄÄÅ•π•—•Ö∞ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄ»¿∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙ(ÄÄÄÄÄÄÄÅÖπ•µÖ—îıÌÏÅΩ¡Öç•—‰ËÄƒ∞Å‰ËÄ¿∞ÅÕçÖ±îËÄƒÅıÙ(ÄÄÄÄÄÄÄÅï·•–ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄƒ‡∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙ(ÄÄÄÄÄÄÄÅç±ÖÕÕ9ÖµîÙâµ‡µÖ’—ºÅô±ï‡Å†µmµ•∏†‹ÿ¡¡‡±çÖ±å†ƒ¿¡Ÿ†¥ƒ∏’…ï¥§•tÅµÖ‡µ‹¥—·∞Åô±ï‡µçΩ∞ÅΩŸï…ô±Ω‹µ°•ëëï∏Å…Ω’πëïêµëÃ¥…·∞ÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»ÅâúµëÃµ—Ω≠ï∏µÕïçΩπëÖ…‰º‰‡ÅÕ°ÖëΩ‹µëÃµ±úÅ…•πú¥ƒÅ…•πúµ›°•—îΩl¿∏¿»’tÅâÖç≠ë…Ω¿µâ±’»µ·∞ÅÕ¥È†µmµ•∏†‹ÿ¡¡‡±çÖ±å†ƒ¿¡Ÿ†¥Õ…ï¥§•tà(ÄÄÄÄÄÄÄÅΩπ-ïÂΩ›∏ıÏ°ïŸïπ–§ÄÙ¯ÅÏ(ÄÄÄÄÄÄÄÄÄÅ•òÄ°ïŸïπ–π≠ï‰ÄÙÙÙÄâÕçÖ¡îà§ÅΩπ±ΩÕî†§Ï(ÄÄÄÄÄÄÄÄÄÅ•òÄ°ïŸïπ–π≠ï‰ÄÙÙÙÄâ……Ω›Ω›∏à§ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÅïŸïπ–π¡…ïŸïπ—ïôÖ’±–†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÅÕï—Mï±ïç—ïë%πëï‡†°ŸÖ±’î§ÄÙ¯Å5Ö—†πµ•∏°ŸÖ±’îÄ¨Äƒ∞Å5Ö—†πµÖ‡†¿∞Å¡Ö±ï——ï%—ïµÃπ±ïπù—†Ä¥Äƒ§§§Ï(ÄÄÄÄÄÄÄÄÄÅÙ(ÄÄÄÄÄÄÄÄÄÅ•òÄ°ïŸïπ–π≠ï‰ÄÙÙÙÄâ……Ω›U¿à§ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÅïŸïπ–π¡…ïŸïπ—ïôÖ’±–†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÅÕï—Mï±ïç—ïë%πëï‡†°ŸÖ±’î§ÄÙ¯Å5Ö—†πµÖ‡°ŸÖ±’îÄ¥Äƒ∞Ä¿§§Ï(ÄÄÄÄÄÄÄÄÄÅÙ(ÄÄÄÄÄÄÄÄÄÅ•òÄ°ïŸïπ–π≠ï‰ÄÙÙÙÄâπ—ï»à§ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÅïŸïπ–π¡…ïŸïπ—ïôÖ’±–†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÅΩ¡ïπMï±ïç—ïê†§Ï(ÄÄÄÄÄÄÄÄÄÅÙ(ÄÄÄÄÄÄÄÅıÙ(ÄÄÄÄÄÄ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙââΩ…ëï»µàÅâΩ…ëï»µ›°•—îºƒ¿Å¿¥–à¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâô±ï‡Å•—ïµÃµçïπ—ï»ÅùÖ¿¥Ãà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâô±ï‡Åµ•∏µ‹¥¿Åô±ï‡¥ƒÅ•—ïµÃµçïπ—ï»ÅùÖ¿¥ÃÅ…Ω’πëïêµëÃµµêÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µùΩ±êº»»Åâúµâ±Öç¨º»‡Å¡‡¥–Å¡‰¥ÃÅÕ°ÖëΩ‹µ•ππï»ÅÕ°ÖëΩ‹µâ±Öç¨º»¿à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒMïÖ…ç†Åç±ÖÕÕ9ÖµîÙâ†¥‘Å‹¥‘ÅÕ°…•π¨¥¿Å—ï·–µùΩ±êàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ•π¡’–(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖ’—ΩΩç’Ã(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅŸÖ±’îıÌ≈’ï…ÂÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅΩπ°ÖπùîıÏ°ïŸïπ–§ÄÙ¯ÅÕï—E’ï…‰°ïŸïπ–π—Ö…ùï–πŸÖ±’î•Ù(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅç±ÖÕÕ9ÖµîÙâ‹µô’±∞Åâúµ—…ÖπÕ¡Ö…ïπ–Å—ï·–µâÖÕîÅôΩπ–µâΩ±êÅ—ï·–µëÃµ—ï·–ÅΩ’—±•πîµπΩπîÅ¡±Öçï°Ω±ëï»È—ï·–µëÃµ—ï·–ºÃÿà(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ¡±Öçï°Ω±ëï»ıÌ—…ÖπÕ±Ö—î†âMïÖ…ç†Å¡…Ω©ïç—Ã∞ÅΩ…ùÖπ•ÈÖ—•ΩπÃ∞Å¡ïΩ¡±î∞Å…ï¡Ω…—Ã∞Å—ΩΩ±Ã∏∏∏à•Ù(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖ…•Ñµ±Öâï∞ıÌ—…ÖπÕ±Ö—î†âMïÖ…ç†ÅYΩ…≈ÑÅ›Ω…≠Õ¡Öçîà•Ù(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖ…•ÑµçΩπ—…Ω±ÃÙâçΩµµÖπêµ¡Ö±ï——îµ…ïÕ’±—Ãà(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖ…•ÑµÖç—•ŸïëïÕçïπëÖπ–ıÌ¡Ö±ï——ï%—ïµÕmÕï±ïç—ïë%πëï·tÄ¸ÅÅçΩµµÖπêµ¡Ö±ï——îµ…ïÕ’±–¥ëÌÕï±ïç—ïë%πëï·ıÄÄËÅ’πëïô•πïëÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ-ïÂâΩÖ…ë!•π–Å≠ïÂÃıÌlâÕåâuÙÅç±ÖÕÕ9ÖµîÙâ°•ëëï∏Åâúµ›°•—îΩl¿∏¿–’tÅÕ¥È•π±•πîµô±ï‡àÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒâ’——Ω∏Å—Â¡îÙââ’——Ω∏àÅΩπ±•ç¨ıÌΩπ±ΩÕïÙÅç±ÖÕÕ9ÖµîÙâëÃµôΩç’ÕÖâ±îÅù…•êÅ†¥ƒ»Å‹¥ƒ»ÅÕ°…•π¨¥¿Å¡±Öçîµ•—ïµÃµçïπ—ï»Å…Ω’πëïê¥…·∞ÅâΩ…ëï»ÅâΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿‘’tÅ—ï·–µëÃµ—ï·–º‘‡Å—…ÖπÕ•—•Ω∏Å°ΩŸï»Ëµ—…ÖπÕ±Ö—îµ‰¥¿∏‘Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿‡’tÅ°ΩŸï»È—ï·–µëÃµ—ï·–àÅÖ…•Ñµ±Öâï∞ıÌ—…ÖπÕ±Ö—î†â±ΩÕîÅçΩµµÖπêÅ¡Ö±ï——îà•Ù¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ°ïŸ…ΩπΩ›∏Åç±ÖÕÕ9ÖµîÙâ†¥‘Å‹¥‘Å…Ω—Ö—î¥ƒ‡¿àÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩâ’——Ω∏¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯((ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâù…•êÅµ•∏µ†¥¿Åô±ï‡¥ƒÅùÖ¿¥¿Å±úÈù…•êµçΩ±Ãµl»ÿ¡¡·}µ•πµÖ‡†¿∞≈ô»•tà¯(ÄÄÄÄÄÄÄÄÄÄÒÖÕ•ëîÅç±ÖÕÕ9ÖµîÙâ°•ëëï∏ÅâΩ…ëï»µîÅâΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿ƒ·tÅ¿¥–Å±úÈâ±Ωç¨à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒAÖ±ï——ïMïç—•Ω∏Å—•—±îıÌ—…ÖπÕ±Ö—î†âIïçïπ–ÅçΩµµÖπëÃà•ÙÅçΩµµÖπëÃıÌ…ïçïπ—ΩµµÖπëÕÙÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâµ–¥‘à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒAÖ±ï——ïMïç—•Ω∏Å—•—±îıÌ—…ÖπÕ±Ö—î†âM’ùùïÕ—ïêÅçΩµµÖπëÃà•ÙÅçΩµµÖπëÃıÌÕ’ùùïÕ—ïëΩµµÖπëÕÙÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄΩÖÕ•ëî¯((ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâµ•∏µ†¥¿ÅΩŸï…ô±Ω‹µ‰µÖ’—ºÅ¿¥–à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâµà¥ÃÅô±ï‡Å•—ïµÃµçïπ—ï»Å©’Õ—•ô‰µâï—›ïï∏ÅùÖ¿¥Ãà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅ•êÙâçΩµµÖπêµ¡Ö±ï——îµ°ï±¿à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ	ÖëùîÅ—ΩπîÙâùΩ±êà˘Ì—…ÖπÕ±Ö—î†â±ΩâÖ∞Åë•ÕçΩŸï…‰à•ÙΩ	Öëùî¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ¿Åç±ÖÕÕ9ÖµîÙâµ–¥»Å—ï·–µÕ¥Å—ï·–µëÃµ—ï·–º‘–à˘Ì¡Ö±ï——ï%—ïµÃπ±ïπù—°ÙÅÌ—…ÖπÕ±Ö—î†â…ïÕ’±—ÃÅÖç…ΩÕÃÅYΩ…≈Ñà•ÙΩ¿¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâ°•ëëï∏ÅùÖ¿¥»Å—ï·–µlƒ¡¡·tÅôΩπ–µâ±Öç¨Å—ï·–µëÃµ—ï·–ºÃ‡ÅÕ¥Èô±ï‡à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâ•π±•πîµô±ï‡Å•—ïµÃµçïπ—ï»ÅùÖ¿¥ƒÅ…Ω’πëïêµ±úÅâΩ…ëï»ÅâΩ…ëï»µ›°•—îºƒ¿Å¡‡¥»Å¡‰¥ƒà¯Ò-ïÂâΩÖ…ë!•π–Å≠ïÂÃıÌlãäDà∞ÄãäLâuÙÅç±ÖÕÕ9ÖµîÙââΩ…ëï»¥¿Å¿¥¿àÄº¯ÅÌ—…ÖπÕ±Ö—î†â9ÖŸ•ùÖ—îà•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâ•π±•πîµô±ï‡Å•—ïµÃµçïπ—ï»ÅùÖ¿¥ƒÅ…Ω’πëïêµ±úÅâΩ…ëï»ÅâΩ…ëï»µ›°•—îºƒ¿Å¡‡¥»Å¡‰¥ƒà¯Ò-ïÂâΩÖ…ë!•π–Å≠ïÂÃıÌlâπ—ï»âuÙÅç±ÖÕÕ9ÖµîÙââΩ…ëï»¥¿Å¿¥¿àÄº¯ÅÌ—…ÖπÕ±Ö—î†â=¡ï∏à•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯((ÄÄÄÄÄÄÄÄÄÄÄÅÌ¡Ö±ï——ï%—ïµÃπ±ïπù—†Ä¸Ä†(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅ•êÙâçΩµµÖπêµ¡Ö±ï——îµ…ïÕ’±—ÃàÅ…Ω±îÙâ±•Õ—âΩ‡àÅÖ…•Ñµ±Öâï∞ıÌ—…ÖπÕ±Ö—î†âΩµµÖπêÅ¡Ö±ï——îÅ…ïÕ’±—Ãà•ÙÅç±ÖÕÕ9ÖµîÙâù…•êÅùÖ¿¥»à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÌ¡Ö±ï——ï%—ïµÃπµÖ¿†°•—ï¥∞Å•πëï‡§ÄÙ¯ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅçΩπÕ–Å%çΩ∏ÄÙÅ•—ï¥π•çΩ∏Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅçΩπÕ–ÅÖç—•ŸîÄÙÅ•πëï‡ÄÙÙÙÅÕï±ïç—ïë%πëï‡Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ…ï—’…∏Ä†(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ1•π¨(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ≠ï‰ıÌÄëÌ•—ï¥π≠•πëÙ¥ëÌ•—ï¥π—•—±ïıÅÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ•êıÌÅçΩµµÖπêµ¡Ö±ï——îµ…ïÕ’±–¥ëÌ•πëï·ıÅÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ…Ω±îÙâΩ¡—•Ω∏à(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖ…•ÑµÕï±ïç—ïêıÌÖç—•ŸïÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ°…ïòıÌ•—ï¥π°…ïôÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅΩπ±•ç¨ıÏ°ïŸïπ–§ÄÙ¯ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅ•òÄ°•—ï¥π—•—±îÄÙÙÙÄâY•ï‹ÅπΩ—•ô•çÖ—•ΩπÃà§ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅïŸïπ–π¡…ïŸïπ—ïôÖ’±–†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅΩπ=¡ïπ9Ω—•ô•çÖ—•ΩπÃ†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅΩπ±ΩÕî†§Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅıÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅΩπ5Ω’Õïπ—ï»ıÏ†§ÄÙ¯ÅÕï—Mï±ïç—ïë%πëï‡°•πëï‡•Ù(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅç±ÖÕÕ9ÖµîıÌÅù…Ω’¿Åô±ï‡Å•—ïµÃµçïπ—ï»ÅùÖ¿¥ÃÅ…Ω’πëïêµëÃµµêÅâΩ…ëï»Å¿¥ÃÅ—ï·–µÕ—Ö…–ÅÕ°ÖëΩ‹µÕ¥Å—…ÖπÕ•—•Ω∏ÄëÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÖç—•ŸîÄ¸ÄââΩ…ëï»µëÃµ—Ω≠ï∏µùΩ±êºÃ‡ÅâúµëÃµ—Ω≠ï∏µùΩ±êºƒ»àÄËÄââΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»Åâúµ›°•—îΩl¿∏¿ÕtÅ°ΩŸï»ÈâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»µÕ—…ΩπúÅ°ΩŸï»Èâúµ›°•—îΩl¿∏¿‘’tà(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅıÅÙ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîıÌÅù…•êÅ†¥ƒƒÅ‹¥ƒƒÅÕ°…•π¨¥¿Å¡±Öçîµ•—ïµÃµçïπ—ï»Å…Ω’πëïê¥…·∞ÅâΩ…ëï»Å—…ÖπÕ•—•Ω∏ÄëÌÖç—•ŸîÄ¸ÄââΩ…ëï»µùΩ±êº»‡ÅâúµùΩ±êºƒÿÅ—ï·–µùΩ±êàÄËÄââΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿—tÅ—ï·–µùΩ±êâıÅÙ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ%çΩ∏Åç±ÖÕÕ9ÖµîÙâ†¥‘Å‹¥‘Å—…ÖπÕ•—•Ω∏Åù…Ω’¿µ°ΩŸï»Ëµ…Ω—Ö—î¥ÿàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâµ•∏µ‹¥¿Åô±ï‡¥ƒà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙââ±Ωç¨Å—…’πçÖ—îÅôΩπ–µâ±Öç¨Å—ï·–µ›°•—îà˘Ì—…ÖπÕ±Ö—î°•—ï¥π—•—±î•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâµ–¥ƒÅâ±Ωç¨Å—…’πçÖ—îÅ—ï·–µ·ÃÅ—ï·–µëÃµ—ï·–º–ÿà˘Ì—…ÖπÕ±Ö—î°•—ï¥π—Â¡î•ÙÉ
+‹ÅÌ—…ÖπÕ±Ö—î°•—ï¥πçΩπ—ï·–•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ	ÖëùîÅ—ΩπîıÌ•—ï¥π≠•πêÄÙÙÙÄâçΩµµÖπêàÄ¸Äââ±’îàÄËÄâπï’—…Ö∞âÙ˘Ì—…ÖπÕ±Ö—î°•—ï¥πÕ—Ö—’Ã•ÙΩ	Öëùî¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩ1•π¨¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ§Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÙ•Ù(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄ§ÄËÄ†(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâù…•êÅµ•∏µ†¥‡¿Å¡±Öçîµ•—ïµÃµçïπ—ï»Å…Ω’πëïêµëÃµ·∞ÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»Åâúµ›°•—îΩl¿∏¿ÕtÅ¿¥‡Å—ï·–µçïπ—ï»à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒMïÖ…ç†Åç±ÖÕÕ9ÖµîÙâµ‡µÖ’—ºÅ†¥ƒ¿Å‹¥ƒ¿Å—ï·–µùΩ±êàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ†ÃÅç±ÖÕÕ9ÖµîÙâµ–¥–Å—ï·–µ·∞ÅôΩπ–µâ±Öç¨Å—ï·–µ›°•—îà˘Ì—…ÖπÕ±Ö—î†â9ºÅ…ïÕ’±—ÃÅôΩ’πêà•ÙΩ†Ã¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ¿Åç±ÖÕÕ9ÖµîÙâµ–¥»Å—ï·–µÕ¥Å±ïÖë•πú¥ÿÅ—ï·–µëÃµ—ï·–º‘–à˘Ì—…ÖπÕ±Ö—î†âQ…‰ÅÕïÖ…ç°•πúÅôΩ»ÅÑÅ¡…Ω©ïç–∞Åïµ¡±ΩÂïî∞Å…ï¡Ω…–∞ÅΩ…ùÖπ•ÈÖ—•Ω∏∞ÅΩ»ÅY=IÅ—ΩΩ∞∏à•ÙΩ¿¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄ•Ù(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄΩµΩ—•Ω∏πë•ÿ¯(ÄÄÄÄΩµΩ—•Ω∏πë•ÿ¯(ÄÄΩ’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯§Ï)Ù()ô’πç—•Ω∏ÅAÖ±ï——ïMïç—•Ω∏°ÏÅ—•—±î∞ÅçΩµµÖπëÃÅÙËÅÏÅ—•—±îËÅÕ—…•πúÏÅçΩµµÖπëÃËÅ—Â¡ïΩòÅçΩµµÖπë%—ïµÃÅÙ§ÅÏ(ÄÅçΩπÕ–ÅÏÅ—…ÖπÕ±Ö—îÅÙÄÙÅ’Õï$ƒ·∏†§Ï(ÄÅ…ï—’…∏Ä†Ò’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯(ÄÄÄÄÒë•ÿ¯(ÄÄÄÄÄÄÒ¿Åç±ÖÕÕ9ÖµîÙâµà¥»Å—ï·–µ·ÃÅôΩπ–µâ±Öç¨Å’¡¡ï…çÖÕîÅ—…Öç≠•πúµl¿∏ƒ—ïµtÅ—ï·–µëÃµ—ï·–º–»à˘Ì—•—±ïÙΩ¿¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâù…•êÅùÖ¿¥»à¯(ÄÄÄÄÄÄÄÅÌçΩµµÖπëÃπµÖ¿†°çΩµµÖπê§ÄÙ¯ÅÏ(ÄÄÄÄÄÄÄÄÄÅçΩπÕ–Å%çΩ∏ÄÙÅçΩµµÖπêπ•çΩ∏Ï(ÄÄÄÄÄÄÄÄÄÅ…ï—’…∏Ä†(ÄÄÄÄÄÄÄÄÄÄÄÄÒ1•π¨Å≠ï‰ıÌçΩµµÖπêπ—•—±ïÙÅ°…ïòıÌçΩµµÖπêπ°…ïôÙÅç±ÖÕÕ9ÖµîÙâù…Ω’¿Åô±ï‡Å•—ïµÃµçïπ—ï»ÅùÖ¿¥»Å…Ω’πëïêµëÃµµêÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»Åâúµ›°•—îΩl¿∏¿ÕtÅ¡‡¥ÃÅ¡‰¥»Å—ï·–µÕ¥ÅôΩπ–µâΩ±êÅ—…ÖπÕ•—•Ω∏Å°ΩŸï»ÈâΩ…ëï»µëÃµ—Ω≠ï∏µùΩ±êº»¿Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿‘’tà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ%çΩ∏Åç±ÖÕÕ9ÖµîÙâ†¥–Å‹¥–ÅÕ°…•π¨¥¿Å—ï·–µùΩ±êÅ—…ÖπÕ•—•Ω∏Åù…Ω’¿µ°ΩŸï»Ëµ…Ω—Ö—î¥ÿàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâ—…’πçÖ—îà˘Ì—…ÖπÕ±Ö—î°çΩµµÖπêπ—•—±î•ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩ1•π¨¯(ÄÄÄÄÄÄÄÄÄÄ§Ï(ÄÄÄÄÄÄÄÅÙ•Ù(ÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄΩë•ÿ¯(ÄÄΩ’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯§Ï)Ù()ô’πç—•Ω∏Å9Ω—•ô•çÖ—•ΩπÕAÖπï∞°Ï(ÄÅ…ïÖë%ëÃ∞(ÄÅΩπ5Ö…≠±±IïÖê∞(ÄÅΩπQΩùù±ïIïÖê)ÙËÅÏ(ÄÅ…ïÖë%ëÃËÅπ’µâï…mtÏ(ÄÅΩπ5Ö…≠±±IïÖêËÄ†§ÄÙ¯ÅŸΩ•êÏ(ÄÅΩπQΩùù±ïIïÖêËÄ°•êËÅπ’µâï»§ÄÙ¯ÅŸΩ•êÏ)Ù§ÅÏ(ÄÅçΩπÕ–ÅÏÅë•ç—•ΩπÖ…‰ËÅ–∞Åë•»ÅÙÄÙÅ’Õï$ƒ·∏†§Ï(ÄÅçΩπÕ–Åmô•±—ï»∞ÅÕï—•±—ï…tÄÙÅ’ÕïM—Ö—î†â±∞à§Ï(ÄÅçΩπÕ–ÅπΩ—•ô•çÖ—•ΩπÃÄÙÅëïµΩ9Ω—•ô•çÖ—•Ωπ%—ïµÃπô•±—ï»†°•—ï¥§ÄÙ¯ÅÏ(ÄÄÄÅçΩπÕ–Å’π…ïÖêÄÙÅ•—ï¥π’π…ïÖêÄòòÄÖ…ïÖë%ëÃπ•πç±’ëïÃ°•—ï¥π•ê§Ï(ÄÄÄÅ•òÄ°ô•±—ï»ÄÙÙÙÄâUπ…ïÖêà§Å…ï—’…∏Å’π…ïÖêÏ(ÄÄÄÅ•òÄ°ô•±—ï»ÄÙÙÙÄâ!•ù†Å¡…•Ω…•—‰à§Å…ï—’…∏Å•—ï¥π¡…•Ω…•—‰ÄÙÙÙÄâ!•ù†àÏ(ÄÄÄÅ…ï—’…∏Å—…’îÏ(ÄÅÙ§Ï(ÄÅçΩπÕ–Å’π…ïÖëΩ’π–ÄÙÅëïµΩ9Ω—•ô•çÖ—•Ωπ%—ïµÃπô•±—ï»†°•—ï¥§ÄÙ¯Å•—ï¥π’π…ïÖêÄòòÄÖ…ïÖë%ëÃπ•πç±’ëïÃ°•—ï¥π•ê§§π±ïπù—†Ï((ÄÅ…ï—’…∏Ä†Ò’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯(ÄÄÄÄÒµΩ—•Ω∏πë•ÿ(ÄÄÄÄÄÅ•π•—•Ö∞ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄƒ¿∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙ(ÄÄÄÄÄÅÖπ•µÖ—îıÌÏÅΩ¡Öç•—‰ËÄƒ∞Å‰ËÄ¿∞ÅÕçÖ±îËÄƒÅıÙ(ÄÄÄÄÄÅï·•–ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄƒ¿∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙ(ÄÄÄÄÄÅç±ÖÕÕ9ÖµîıÌÅÖâÕΩ±’—îÅ—Ω¿¥ƒ»ÅË¥‘¿Å‹µmµ•∏†–»¡¡‡±çÖ±å†ƒ¿¡Ÿ‹¥ƒ∏’…ï¥§•tÅΩŸï…ô±Ω‹µ°•ëëï∏Å…Ω’πëïêµëÃµ·∞ÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»ÅâúµëÃµ—Ω≠ï∏µÕïçΩπëÖ…‰º‰‡Å—ï·–µëÃµ—Ω≠ï∏µ—ï·–ÅÕ°ÖëΩ‹µëÃµ±úÅâÖç≠ë…Ω¿µâ±’»µ·∞ÄëÌë•»ÄÙÙÙÄâ…—∞àÄ¸Äâ±ïô–¥¿àÄËÄâ…•ù°–¥¿âıÅÙ(ÄÄÄÄ¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙââΩ…ëï»µàÅâΩ…ëï»µ›°•—îºƒ¿Å¿¥–à¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâô±ï‡Å•—ïµÃµçïπ—ï»Å©’Õ—•ô‰µâï—›ïï∏ÅùÖ¿¥Ãà¯(ÄÄÄÄÄÄÄÄÄÄÒë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒ†»Åç±ÖÕÕ9ÖµîÙâôΩπ–µâ±Öç¨à˘Ì–πçΩµµΩ∏ππΩ—•ô•çÖ—•ΩπÕÙΩ†»¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒ¿Åç±ÖÕÕ9ÖµîÙâµ–¥ƒÅ—ï·–µ·ÃÅ—ï·–µëÃµ—ï·–º–‡à˘Ì’π…ïÖëΩ’π—ÙÅ’π…ïÖêÅÖç…ΩÕÃÅ¡…Ω©ïç—ÃÅÖπêÅΩ…ùÖπ•ÈÖ—•ΩπÃΩ¿¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÒ	ÖëùîÅ—ΩπîÙâùΩ±êà˘Ì’π…ïÖëΩ’π—ÙΩ	Öëùî¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâµ–¥–Åô±ï‡Åô±ï‡µ›…Ö¿ÅùÖ¿¥»à¯(ÄÄÄÄÄÄÄÄÄÅÌlâ±∞à∞ÄâUπ…ïÖêà∞Äâ!•ù†Å¡…•Ω…•—‰âtπµÖ¿†°•—ï¥§ÄÙ¯Ä†(ÄÄÄÄÄÄÄÄÄÄÄÄÒâ’——Ω∏Å≠ï‰ıÌ•—ïµÙÅ—Â¡îÙââ’——Ω∏àÅΩπ±•ç¨ıÏ†§ÄÙ¯ÅÕï—•±—ï»°•—ï¥•ÙÅç±ÖÕÕ9ÖµîıÌÅ…Ω’πëïêµô’±∞ÅâΩ…ëï»Å¡‡¥ÃÅ¡‰¥ƒÅ—ï·–µ·ÃÅôΩπ–µâ±Öç¨Å—…ÖπÕ•—•Ω∏ÄëÌô•±—ï»ÄÙÙÙÅ•—ï¥Ä¸ÄââΩ…ëï»µùΩ±êº–¿ÅâúµùΩ±êºƒ–Å—ï·–µùΩ±êàÄËÄââΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿—tÅ—ï·–µëÃµ—ï·–º‘–Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿›tâıÅÙ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÅÌ•—ïµÙ(ÄÄÄÄÄÄÄÄÄÄÄÄΩâ’——Ω∏¯(ÄÄÄÄÄÄÄÄÄÄ§•Ù(ÄÄÄÄÄÄÄÄÄÄÒâ’——Ω∏Å—Â¡îÙââ’——Ω∏àÅΩπ±•ç¨ıÌΩπ5Ö…≠±±IïÖëÙÅç±ÖÕÕ9ÖµîÙâµÃµÖ’—ºÅ…Ω’πëïêµô’±∞ÅâΩ…ëï»ÅâΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿—tÅ¡‡¥ÃÅ¡‰¥ƒÅ—ï·–µ·ÃÅôΩπ–µâ±Öç¨Å—ï·–µëÃµ—ï·–º‘–Å—…ÖπÕ•—•Ω∏Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿›tà¯(ÄÄÄÄÄÄÄÄÄÄÄÅ5Ö…¨ÅÖ±∞Å…ïÖê(ÄÄÄÄÄÄÄÄÄÄΩâ’——Ω∏¯(ÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâµÖ‡µ†µl‹¡Ÿ°tÅΩŸï…ô±Ω‹µ‰µÖ’—ºÅ¿¥–à¯(ÄÄÄÄÄÄÄÅÌπΩ—•ô•çÖ—•ΩπÃπ±ïπù—†Ä¸Ä†(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâù…•êÅùÖ¿¥»à¯(ÄÄÄÄÄÄÄÄÄÄÄÅÌπΩ—•ô•çÖ—•ΩπÃπµÖ¿†°•—ï¥§ÄÙ¯ÅÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÅçΩπÕ–Å’π…ïÖêÄÙÅ•—ï¥π’π…ïÖêÄòòÄÖ…ïÖë%ëÃπ•πç±’ëïÃ°•—ï¥π•ê§Ï(ÄÄÄÄÄÄÄÄÄÄÄÄÄÅçΩπÕ–Å—ΩπîÄÙÅ•—ï¥π¡…•Ω…•—‰ÄÙÙÙÄâ!•ù†àÄ¸ÄâëÖπùï»àÄËÅ•—ï¥π¡…•Ω…•—‰ÄÙÙÙÄâ5ïë•’¥àÄ¸Äâ›Ö…π•πúàÄËÄâπï’—…Ö∞àÏ(ÄÄÄÄÄÄÄÄÄÄÄÄÄÅ…ï—’…∏Ä†(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒâ’——Ω∏Å≠ï‰ıÌ•—ï¥π•ëÙÅ—Â¡îÙââ’——Ω∏àÅΩπ±•ç¨ıÏ†§ÄÙ¯ÅΩπQΩùù±ïIïÖê°•—ï¥π•ê•ÙÅç±ÖÕÕ9ÖµîıÌÅ…Ω’πëïêµëÃµµêÅâΩ…ëï»Å¿¥ÃÅ—ï·–µÕ—Ö…–Å—…ÖπÕ•—•Ω∏Å°ΩŸï»Èâúµ›°•—îΩl¿∏¿‘’tÄëÌ’π…ïÖêÄ¸ÄââΩ…ëï»µëÃµ—Ω≠ï∏µùΩ±êº»–ÅâúµëÃµ—Ω≠ï∏µùΩ±êºƒ¿àÄËÄââΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»Åâúµ›°•—îΩl¿∏¿ÕtâıÅÙ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâô±ï‡Å•—ïµÃµÕ—Ö…–ÅùÖ¿¥Ãà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîıÌÅµ–¥ƒÅ†¥»∏‘Å‹¥»∏‘ÅÕ°…•π¨¥¿Å…Ω’πëïêµô’±∞ÄëÌ’π…ïÖêÄ¸ÄâÖπ•µÖ—îµ¡’±ÕîÅâúµùΩ±êàÄËÄââúµ›°•—îºƒ‡âıÅÙÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâµ•∏µ‹¥¿Åô±ï‡¥ƒà¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâô±ï‡Åô±ï‡µ›…Ö¿Å•—ïµÃµçïπ—ï»ÅùÖ¿¥»à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâôΩπ–µâ±Öç¨Å—ï·–µ›°•—îà˘Ì•—ï¥π—•—±ïÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ	ÖëùîÅ—ΩπîıÌ—ΩπïÙ˘Ì•—ï¥π¡…•Ω…•—ÂÙΩ	Öëùî¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâµ–¥ƒÅâ±Ωç¨Å—ï·–µ·ÃÅ±ïÖë•πú¥‘Å—ï·–µëÃµ—ï·–º‘‡à˘Ì•—ï¥πµïÕÕÖùïÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâµ–¥»Åô±ï‡Åô±ï‡µ›…Ö¿Å•—ïµÃµçïπ—ï»ÅùÖ¿¥»Å—ï·–µlƒ≈¡·tÅôΩπ–µâΩ±êÅ—ï·–µëÃµ—ï·–º–»à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏˘Ì•—ï¥πçÖ—ïùΩ…ÂÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏˚
+‹ΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏˘Ì•—ï¥πçΩπ—ï·—ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏˚
+‹ΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏˘Ì•—ï¥π—•µïÕ—Öµ¡ÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÕ¡Ö∏Åç±ÖÕÕ9ÖµîÙâ—ï·–µ·ÃÅôΩπ–µâ±Öç¨Å—ï·–µùΩ±êà˘Ì•—ï¥πÖç—•ΩπÙΩÕ¡Ö∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄΩâ’——Ω∏¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ§Ï(ÄÄÄÄÄÄÄÄÄÄÄÅÙ•Ù(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄ§ÄËÄ†(ÄÄÄÄÄÄÄÄÄÄÒë•ÿÅç±ÖÕÕ9ÖµîÙâù…•êÅµ•∏µ†¥‘ÿÅ¡±Öçîµ•—ïµÃµçïπ—ï»Å…Ω’πëïê¥…·∞ÅâΩ…ëï»ÅâΩ…ëï»µ›°•—îºƒ¿Åâúµ›°•—îΩl¿∏¿—tÅ¿¥ÿÅ—ï·–µçïπ—ï»à¯(ÄÄÄÄÄÄÄÄÄÄÄÄÒë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ	ï±∞Åç±ÖÕÕ9ÖµîÙâµ‡µÖ’—ºÅ†¥‰Å‹¥‰Å—ï·–µùΩ±êàÄº¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ†ÃÅç±ÖÕÕ9ÖµîÙâµ–¥–ÅôΩπ–µâ±Öç¨Å—ï·–µ›°•—îà˘9ºÅπΩ—•ô•çÖ—•ΩπÃΩ†Ã¯(ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒ¿Åç±ÖÕÕ9ÖµîÙâµ–¥»Å—ï·–µÕ¥Å±ïÖë•πú¥ÿÅ—ï·–µëÃµ—ï·–º‘–à˘Q°•ÃÅô•±—ï»Å•ÃÅç±ïÖ»ÅôΩ»ÅπΩ‹∏Ω¿¯(ÄÄÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄÄÄÄÄ•Ù(ÄÄÄÄÄÄΩë•ÿ¯(ÄÄÄÄΩµΩ—•Ω∏πë•ÿ¯(ÄÄΩ’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯§Ï)Ù()ô’πç—•Ω∏Å±ΩÖ—•πùAÖπï∞°ÏÅç°•±ë…ï∏∞Åç±ÖÕÕ9ÖµîÄÙÄààÅÙËÅÏÅç°•±ë…ï∏ËÅIïÖç–πIïÖç—9ΩëîÏÅç±ÖÕÕ9Öµî¸ËÅÕ—…•πúÅÙ§ÅÏ(ÄÅ…ï—’…∏Ä†Ò’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯(ÄÄÄÄÒµΩ—•Ω∏πë•ÿÅ•π•—•Ö∞ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄƒ¿∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙÅÖπ•µÖ—îıÌÏÅΩ¡Öç•—‰ËÄƒ∞Å‰ËÄ¿∞ÅÕçÖ±îËÄƒÅıÙÅï·•–ıÌÏÅΩ¡Öç•—‰ËÄ¿∞Å‰ËÄƒ¿∞ÅÕçÖ±îËÄ¿∏‰‡ÅıÙÅç±ÖÕÕ9ÖµîıÌÅÖâÕΩ±’—îÅ—Ω¿¥ƒ»ÅË¥‘¿Å‹¥‡¿Å…Ω’πëïêµëÃµ·∞ÅâΩ…ëï»ÅâΩ…ëï»µëÃµ—Ω≠ï∏µâΩ…ëï»ÅâúµëÃµ—Ω≠ï∏µÕïçΩπëÖ…‰º‰‡Å¿¥–Å—ï·–µëÃµ—Ω≠ï∏µ—ï·–ÅÕ°ÖëΩ‹µëÃµ±úÅâÖç≠ë…Ω¿µâ±’»µ·∞ÄëÌç±ÖÕÕ9ÖµïıÅÙ¯(ÄÄÄÄÄÅÌç°•±ë…ïπÙ(ÄÄÄÄΩµΩ—•Ω∏πë•ÿ¯(ÄÄΩ’—Ω1ΩçÖ±•ÈïëΩπ—ïπ–¯§Ï)Ù(4(4(
