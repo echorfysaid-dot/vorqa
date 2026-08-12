@@ -1,4 +1,4 @@
-import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, translateUiText } from "@/lib/i18n";
+­r‡^Ñf¥–Ø¦{nìyÊ'vÃ®¶›­import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, translateUiText } from "@/lib/i18n";
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
@@ -195,6 +195,7 @@ export const tests = [
         moreKeys.forEach((key) => assert(Boolean(nav[key]?.trim()), `Missing ${locale} More navigation label: ${key}`));
         assert(nav.more === expectedTitles[locale], `Incorrect ${locale} More section title`);
       });
+
       const shell = fs.readFileSync(path.join(process.cwd(), "components/app-shell.tsx"), "utf8");
       assert(shell.includes("const label = t.nav[item.key]"), "More navigation must use the canonical locale dictionary");
     }
@@ -273,6 +274,33 @@ export const tests = [
         assert(Boolean(translated.trim()), `Empty ${locale} translation for ${value}`);
         assert(translated === catalogs[locale][value as keyof typeof arCatalog], `Incorrect ${locale} system value: ${value}`);
       }));
+    }
+  },
+  {
+    name: "AI actions quotation labels and dynamic units never leak English into Arabic UI",
+    run: () => {
+      const systemLabels = [
+        "Analyze this project", "Create project schedule", "Review BOQ", "Create report", "Risk assessment",
+        "Submitted", "Under review", "Shortlisted", "Awarded", "Lowest", "Highest", "Best value",
+        "Technical score", "Commercial score", "Technical compliance", "Commercial compliance"
+      ];
+      systemLabels.forEach((label) => {
+        assert(translateUiText(label, "ar") !== label, `Arabic system label leaked English: ${label}`);
+        assert(translateUiText(label, "fr") !== label || label === "Commercial", `French system label leaked English: ${label}`);
+        assert(Boolean(translateUiText(label, "en").trim()), `Missing English system label: ${label}`);
+      });
+
+      ["1 day", "10 days", "1 week", "8 weeks", "1 month", "24 months", "1 year", "18 years"].forEach((value) => {
+        assert(!/\b(day|days|week|weeks|month|months|year|years)\b/i.test(translateUiText(value, "ar")), `Arabic duration leaked English: ${value}`);
+        assert(!/\b(day|days|week|weeks|month|months|year|years)\b/i.test(translateUiText(value, "fr")), `French duration leaked English: ${value}`);
+      });
+      assert(translateUiText("Technical 92%", "ar").startsWith("ØªÙ‚Ù†ÙŠ"), "Arabic technical score was not localized");
+      assert(translateUiText("Commercial 88%", "fr").startsWith("Commercial"), "French commercial score was not localized");
+      assert(translateUiText("18 years in business", "ar").includes("Ø³Ù†ÙˆØ§Øª Ø§Ù„Ø®Ø¨Ø±Ø©"), "Arabic experience metadata was not localized");
+
+      const aiTools = fs.readFileSync(path.join(process.cwd(), "app/tools/page.tsx"), "utf8");
+      const mojibake = /[Ã˜Ã™][^\s"']*/;
+      assert(!mojibake.test(aiTools), "AI Tools contains corrupted locale-specific fixture text");
     }
   },
   {

@@ -1,4 +1,4 @@
-import arCatalog from "@/lib/locales/ar.json";
+­r‡^Ñf¥–Ø¦{mìyÊ'vÃ®¶›­import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
 
@@ -253,489 +253,4 @@ export const dictionaries = {
           category: "Ù…Ø³Ø§Ø± Ù…Ù‡Ù†ÙŠ",
           badge: "ØªÙ†ÙÙŠØ°ÙŠ",
           cta: "ØªÙˆÙ„ÙŠØ¯ CV",
-          pageDescription: "Ø­ÙˆÙ‘Ù„ Ø§Ù„Ø®Ø¨Ø±Ø§Øª ÙˆØ§Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ø¥Ù„Ù‰ CV Ø§Ø­ØªØ±Ø§ÙÙŠ ÙˆÙ…Ù†Ø¸Ù….",
-          fields: {
-            fullName: "Ø§Ù„Ø§Ø³Ù… Ø§Ù„ÙƒØ§Ù…Ù„",
-            jobTitle: "Ø§Ù„Ù…Ø³Ù…Ù‰ Ø§Ù„ÙˆØ¸ÙŠÙÙŠ",
-            experience: "Ø§Ù„Ø®Ø¨Ø±Ø©",
-            education: "Ø§Ù„ØªØ¹Ù„ÙŠÙ…",
-            skills: "Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª",
-            languages: "Ø§Ù„Ù„ØºØ§Øª",
-            style: "Ø§Ù„Ù†Ù…Ø·"
-          }
-        },
-        "landing-page": {
-          title: "Ù…ÙˆÙ„Ø¯ ØµÙØ­Ø§Øª Ø§Ù„Ù‡Ø¨ÙˆØ·",
-          shortTitle: "Ù…ÙˆÙ„Ø¯ ØµÙØ­Ø§Øª Ø§Ù„Ù‡Ø¨ÙˆØ·",
-          description: "ÙˆÙ„Ù‘Ø¯ ØµÙØ­Ø© Ù‡Ø¨ÙˆØ· Ø¹Ø§Ù„ÙŠØ© Ø§Ù„ØªØ­ÙˆÙŠÙ„ Ù…Ø¹ Ù‚ØµØ© Ø¨ÙŠØ¹ ÙˆÙÙˆØ§Ø¦Ø¯ ÙˆØªØ³Ù„Ø³Ù„ Ù…Ù‚Ù†Ø¹.",
-          category: "Ù†Ù…Ùˆ",
-          badge: "Ø¥Ø·Ù„Ø§Ù‚",
-          cta: "ØªÙˆÙ„ÙŠØ¯ ØµÙØ­Ø© Ù‡Ø¨ÙˆØ·",
-          pageDescription: "ÙˆÙ„Ù‘Ø¯ ØµÙØ­Ø© Ù‡Ø¨ÙˆØ· Ø¬Ø§Ù‡Ø²Ø© Ù„Ù„Ø¥Ø·Ù„Ø§Ù‚ Ù…Ø¹ Ø¹Ø±Ø¶ ÙˆÙÙˆØ§Ø¦Ø¯ ÙˆØ¯Ø¹ÙˆØ© Ø¥Ø¬Ø±Ø§Ø¡.",
-          fields: {
-            productName: "Ø§Ø³Ù… Ø§Ù„Ù…Ù†ØªØ¬",
-            productDescription: "ÙˆØµÙ Ø§Ù„Ù…Ù†ØªØ¬",
-            targetAudience: "Ø§Ù„Ø¬Ù…Ù‡ÙˆØ± Ø§Ù„Ù…Ø³ØªÙ‡Ø¯Ù",
-            price: "Ø§Ù„Ø³Ø¹Ø±",
-            mainBenefits: "Ø§Ù„ÙÙˆØ§Ø¦Ø¯ Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©",
-            ctaText: "Ù†Øµ Ø§Ù„Ø¯Ø¹ÙˆØ© Ù„Ù„Ø¥Ø¬Ø±Ø§Ø¡",
-            language: "Ù„ØºØ© Ø§Ù„Ù…Ø®Ø±Ø¬"
-          }
-        },
-        "business-idea": {
-          title: "Ù…ÙˆÙ„Ø¯ Ø£ÙÙƒØ§Ø± Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹",
-          shortTitle: "Ù…ÙˆÙ„Ø¯ Ø£ÙÙƒØ§Ø± Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹",
-          description: "Ø§ÙƒØªØ´Ù ÙÙƒØ±Ø© Ù…Ø´Ø±ÙˆØ¹ Ø¹Ù…Ù„ÙŠØ© Ù…Ø¹ Ù†Ù…ÙˆØ°Ø¬ Ø±Ø¨Ø­ ÙˆØ¬Ù…Ù‡ÙˆØ± ÙˆØ®Ø§Ø±Ø·Ø© Ø§Ù†Ø·Ù„Ø§Ù‚.",
-          category: "Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ©",
-          badge: "Ù…Ø´Ø±ÙˆØ¹",
-          cta: "ØªÙˆÙ„ÙŠØ¯ ÙÙƒØ±Ø© Ù…Ø´Ø±ÙˆØ¹",
-          pageDescription: "Ø§ÙƒØªØ´Ù ÙÙƒØ±Ø© Ù…Ø´Ø±ÙˆØ¹ Ø¹Ù…Ù„ÙŠØ© Ù…Ø¹ Ù†Ù…ÙˆØ°Ø¬ Ø±Ø¨Ø­ ÙˆØ®Ø·Ø© Ø§Ù†Ø·Ù„Ø§Ù‚.",
-          fields: {
-            industry: "Ø§Ù„Ù…Ø¬Ø§Ù„",
-            budget: "Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©",
-            skills: "Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª",
-            country: "Ø§Ù„Ø¨Ù„Ø¯",
-            goal: "Ø§Ù„Ù‡Ø¯Ù"
-          }
-        },
-        marketing: {
-          title: "Ù…ÙˆÙ„Ø¯ Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØªØ³ÙˆÙŠÙ‚ÙŠ",
-          shortTitle: "Ù…ÙˆÙ„Ø¯ Ø§Ù„Ù…Ø­ØªÙˆÙ‰ Ø§Ù„ØªØ³ÙˆÙŠÙ‚ÙŠ",
-          description: "Ø§ÙƒØªØ¨ Ø¥Ø¹Ù„Ø§Ù†Ø§Øª ÙˆØ±Ø³Ø§Ø¦Ù„ ØªØ³ÙˆÙŠÙ‚ÙŠØ© Ø¨Ù†Ø¨Ø±Ø© ÙØ§Ø®Ø±Ø© ÙˆÙˆØ§Ø¶Ø­Ø© ÙˆÙ…Ù‚Ù†Ø¹Ø©.",
-          category: "ØªØ³ÙˆÙŠÙ‚",
-          badge: "Ø¹Ù„Ø§Ù…Ø© ØªØ¬Ø§Ø±ÙŠØ©",
-          cta: "ØªÙˆÙ„ÙŠØ¯ Ù…Ø­ØªÙˆÙ‰",
-          pageDescription: "Ø£Ù†Ø´Ø¦ Ù…Ø­ØªÙˆÙ‰ ØªØ³ÙˆÙŠÙ‚ÙŠØ§Ù‹ Ù…Ù†Ø§Ø³Ø¨Ø§Ù‹ Ù„Ù„Ù‚Ù†Ø§Ø© ÙˆØ§Ù„Ù†Ø¨Ø±Ø© ÙˆØ§Ù„Ø¬Ù…Ù‡ÙˆØ±.",
-          fields: {
-            brand: "Ø§Ù„Ø¹Ù„Ø§Ù…Ø© Ø§Ù„ØªØ¬Ø§Ø±ÙŠØ©",
-            offer: "Ø§Ù„Ø¹Ø±Ø¶",
-            channel: "Ø§Ù„Ù‚Ù†Ø§Ø©",
-            tone: "Ø§Ù„Ù†Ø¨Ø±Ø©",
-            language: "Ù„ØºØ© Ø§Ù„Ù…Ø®Ø±Ø¬"
-          }
-        }
-      },
-      options: {
-        documentType: ["ØªÙ‚Ø±ÙŠØ±", "Ù…Ù‚ØªØ±Ø­ Ø¹Ù…Ù„", "Ø®Ø·Ø© Ù…Ø´Ø±ÙˆØ¹", "Ø±Ø³Ø§Ù„Ø© Ù…Ù‡Ù†ÙŠØ©", "Ù…Ù„Ø®Øµ ØªÙ†ÙÙŠØ°ÙŠ"],
-        outputLanguage: ["Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©", "FranÃ§ais", "English"],
-        tone: ["Ø§Ø­ØªØ±Ø§ÙÙŠ", "Ø±Ø³Ù…ÙŠ", "Ù…Ù‚Ù†Ø¹", "Ø¨Ø³ÙŠØ· ÙˆÙˆØ§Ø¶Ø­", "ÙØ§Ø®Ø±"],
-        style: ["Modern", "Executive", "Creative", "Minimal"],
-        channel: ["Instagram", "Facebook", "Email", "LinkedIn", "Website"]
-      }
-    },
-    projects: {
-      title: "Ù…Ø¹Ø±Ø¶ Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹",
-      description: "ÙƒÙ„ Ù…Ø´Ø±ÙˆØ¹ ÙŠØ­ØªÙØ¸ Ø¨Ù†ÙˆØ¹ Ø§Ù„Ø£Ø¯Ø§Ø©ØŒ Ø§Ù„Ø­Ø§Ù„Ø©ØŒ Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«ØŒ ÙˆÙ†Ø³Ø¨Ø© Ø§Ù„Ø¬Ø§Ù‡Ø²ÙŠØ©.",
-      newProject: "Ù…Ø´Ø±ÙˆØ¹ Ø¬Ø¯ÙŠØ¯",
-      search: "Ø§Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹...",
-      knowledgeBadge: "Knowledge Workspace",
-      knowledgeTitle: "Ù…Ø³Ø§Ø­Ø© Ù…Ø¹Ø±ÙØ© Ø§Ù„Ù…Ø´Ø±ÙˆØ¹",
-      knowledgeDescription: "Ø§Ø±ÙØ¹ Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø¯Ø§Ø®Ù„ ÙƒÙ„ Ù…Ø´Ø±ÙˆØ¹ Ù„ØªÙ†Ø¸ÙŠÙ… Ø§Ù„Ù…ØµØ§Ø¯Ø± ÙˆØ§Ù„ÙˆØ«Ø§Ø¦Ù‚. Ø§Ù„Ù‚Ø±Ø§Ø¡Ø© Ø§Ù„Ø°ÙƒÙŠØ© Ùˆ RAG Ø³ØªØ£ØªÙŠ ÙÙŠ Ù…Ø±Ø§Ø­Ù„ Ù„Ø§Ø­Ù‚Ø©.",
-      selectProject: "Ø§Ù„Ù…Ø´Ø±ÙˆØ¹",
-      uploadTitle: "Ø§Ø³Ø­Ø¨ Ø§Ù„Ù…Ù„ÙØ§Øª Ù‡Ù†Ø§ Ø£Ùˆ Ø§Ø®ØªØ±Ù‡Ø§ Ù…Ù† Ø¬Ù‡Ø§Ø²Ùƒ",
-      uploadHint: "PDF, DOCX, TXT, MD, CSV, XLSX, PPTX, PNG, JPG, JPEG, WEBP",
-      uploadTarget: "Ø³ÙŠØªÙ… Ø§Ù„Ø­ÙØ¸ Ø¯Ø§Ø®Ù„:",
-      uploadProgress: "ØªÙ‚Ø¯Ù… Ø§Ù„Ø±ÙØ¹",
-      fileSearch: "Ø§Ø¨Ø­Ø« Ø¯Ø§Ø®Ù„ Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø¹Ø±ÙØ©...",
-      emptyProjects: "Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ø´Ø§Ø±ÙŠØ¹ Ø¨Ø¹Ø¯",
-      emptyProjectsText: "Ø£Ù†Ø´Ø¦ Ù…Ø´Ø±ÙˆØ¹Ø§Ù‹ Ù…Ù† Ø£Ø¯ÙˆØ§Øª VORA Ø£ÙˆÙ„Ø§Ù‹ØŒ Ø«Ù… Ø³ØªØ¸Ù‡Ø± Ù‡Ù†Ø§ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø¹Ø±ÙØ© Ø§Ù„Ø®Ø§ØµØ© Ø¨Ù‡.",
-      emptyFiles: "Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ù…Ø¹Ø±ÙØ© ÙØ§Ø±ØºØ©",
-      emptyFilesText: "Ø§Ø±ÙØ¹ Ù…Ù„ÙØ§Øª Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ù„ØªØ¨Ù‚Ù‰ Ù…Ù†Ø¸Ù…Ø© ÙˆÙ‚Ø§Ø¨Ù„Ø© Ù„Ù„Ø¥Ø¯Ø§Ø±Ø© Ù…Ù† Ù…ÙƒØ§Ù† ÙˆØ§Ø­Ø¯.",
-      chooseProject: "ÙŠØ±Ø¬Ù‰ Ø§Ø®ØªÙŠØ§Ø± Ù…Ø´Ø±ÙˆØ¹ Ù‚Ø¨Ù„ Ø±ÙØ¹ Ø§Ù„Ù…Ù„ÙØ§Øª.",
-      loginFirst: "ÙŠØ±Ø¬Ù‰ ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„ Ù‚Ø¨Ù„ Ø±ÙØ¹ Ø§Ù„Ù…Ù„ÙØ§Øª.",
-      uploadFailed: "ØªØ¹Ø°Ø± Ø±ÙØ¹ Ø§Ù„Ù…Ù„Ù.",
-      deleteFailed: "ØªØ¹Ø°Ø± Ø­Ø°Ù Ø§Ù„Ù…Ù„Ù.",
-      downloadFailed: "ØªØ¹Ø°Ø± ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ù„Ù.",
-      fileCount: "Ù…Ù„Ù"
-    },
-    pages: {
-      loginTitle: "Ø§Ø¯Ø®Ù„ Ø¥Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„ÙØ§Ø®Ø±Ø©",
-      loginDescription: "Ù…ØµØ§Ø¯Ù‚Ø© Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¹Ø¨Ø± Supabase Auth Ù…Ø¹ Ù…Ù„ÙØ§Øª Ø´Ø®ØµÙŠØ© ÙˆÙ…Ø´Ø§Ø±ÙŠØ¹ ÙˆÙ…Ø®Ø±Ø¬Ø§Øª Ù…Ø­ÙÙˆØ¸Ø©.",
-      loginHeading: "ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„",
-      loginHint: "Ø³Ø¬Ù‘Ù„ Ø§Ù„Ø¯Ø®ÙˆÙ„ Ù„Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ Ù…Ø´Ø§Ø±ÙŠØ¹Ùƒ ÙˆÙ…Ø®Ø±Ø¬Ø§ØªÙƒ Ø§Ù„Ù…Ø­ÙÙˆØ¸Ø©.",
-      registerWelcome: "Ù…Ø±Ø­Ø¨Ø§Ù‹ Ø¨Ùƒ ÙÙŠ VORQA",
-      registerText: "Ø£Ù†Ø§ VORAØŒ Ù…Ø³Ø§Ø¹Ø¯Ùƒ Ø§Ù„Ø°ÙƒÙŠ. Ø³Ø£Ø±Ø§ÙÙ‚Ùƒ ÙÙŠ ÙƒÙ„ Ø®Ø·ÙˆØ© Ù„Ø¨Ù†Ø§Ø¡ Ù…Ø´Ø±ÙˆØ¹Ùƒ Ù…Ù† Ø§Ù„ÙÙƒØ±Ø© Ø§Ù„Ø£ÙˆÙ„Ù‰ Ø­ØªÙ‰ Ø§ÙƒØªÙ…Ø§Ù„ Ø§Ù„ØªÙ†ÙÙŠØ°.",
-      registerChoose: "Ø§Ø®ØªØ± Ù†ÙˆØ¹ Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨ Ù„Ùƒ",
-      registerCreate: "Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø­Ø³Ø§Ø¨",
-      registerNote: "ÙŠÙ…ÙƒÙ†Ùƒ ØªØ¹Ø¯ÙŠÙ„ Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ù„Ø§Ø­Ù‚Ø§Ù‹.",
-      pricingTitle: "Ø®Ø·Ø· Ù…ØµÙ…Ù…Ø© Ù„Ù„Ù†Ù…Ùˆ",
-      pricingDescription: "ØªØ³Ø¹ÙŠØ± ÙØ§Ø®Ø± ÙˆÙˆØ§Ø¶Ø­ØŒ Ø¬Ø§Ù‡Ø² Ù„Ù„Ø±Ø¨Ø· Ù„Ø§Ø­Ù‚Ø§Ù‹ Ù…Ø¹ Stripe Ø£Ùˆ Ù…Ø²ÙˆØ¯ Ø¯ÙØ¹ Ù…Ø­Ù„ÙŠ.",
-      settingsTitle: "Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Vorqa AI",
-      settingsDescription: "Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª Ø§Ù„Ù…Ù†ØªØ¬ØŒ Ø§Ù„Ù…Ø²ÙˆØ¯Ø§ØªØŒ SupabaseØŒ Ø§Ù„Ø¹Ù„Ø§Ù…Ø©ØŒ Ø§Ù„ØªÙ†Ø¨ÙŠÙ‡Ø§ØªØŒ ÙˆØªØ¬Ø±Ø¨Ø© Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù….",
-      savedTitle: "Ø§Ù„Ù…Ø®Ø±Ø¬Ø§Øª Ø§Ù„Ù…Ø­ÙÙˆØ¸Ø©",
-      savedDescription: "Ø§Ù„Ù…Ø®Ø±Ø¬Ø§Øª Ø§Ù„Ù…Ø­ÙÙˆØ¸Ø© Ø¬Ø§Ù‡Ø²Ø© Ù„Ù„ØªÙ†Ø¸ÙŠÙ…ØŒ Ø§Ù„Ø¨Ø­Ø«ØŒ ÙˆØ§Ù„ØªØµØ¯ÙŠØ± ÙÙŠ Ø§Ù„Ù…Ø±Ø­Ù„Ø© Ø§Ù„ØªØ§Ù„ÙŠØ©.",
-      favoritesTitle: "Ø§Ù„Ù…ÙØ¶Ù„Ø©",
-      favoritesDescription: "Ø£ÙØ¶Ù„ Ø§Ù„Ù…Ø®Ø±Ø¬Ø§Øª Ù…Ø«Ø¨ØªØ© ÙÙŠ Ù…ÙƒØ§Ù† ÙˆØ§Ø­Ø¯ Ù„Ù„Ø±Ø¬ÙˆØ¹ Ø§Ù„Ø³Ø±ÙŠØ¹.",
-      historyTitle: "Ø³Ø¬Ù„ VORA",
-      historyDescription: "Ø³Ø¬Ù„ Ø²Ù…Ù†ÙŠ Ù„ÙƒÙ„ Ø§Ù„Ø£Ù†Ø´Ø·Ø© ÙˆØ§Ù„Ù…Ø®Ø±Ø¬Ø§Øª Ø§Ù„Ù…Ø­ÙÙˆØ¸Ø© Ø¯Ø§Ø®Ù„ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„."
-    }
-  },
-  fr: {
-    meta: { title: "Vorqa AI - Espace de travail IA premium", description: "Plateforme IA pour documents, CV, landing pages et idÃ©es de projets." },
-    common: {
-      appName: "Vorqa AI", vora: "VORA", getStarted: "Commencer", startJourney: "DÃ©marrer", login: "Connexion", register: "CrÃ©er un compte", logout: "DÃ©connexion",
-      search: "Rechercher...", searchWorkspace: "Rechercher projets, sorties, outils...", language: "Langue", all: "Tout", save: "Enregistrer", delete: "Supprimer",
-      download: "TÃ©lÃ©charger", copy: "Copier", exportMarkdown: "Exporter Markdown", loading: "Chargement", retry: "RÃ©essayer", empty: "Aucun Ã©lÃ©ment",
-      viewAll: "Voir tout", activeSession: "Session active", guestMode: "Mode invitÃ©", profileSettings: "ParamÃ¨tres du profil", workspace: "Espace principal",
-      notifications: "Notifications", primary: "Principal", prepared: "PrÃ©parÃ©", email: "E-mail", password: "Mot de passe", fullName: "Nom complet"
-    },
-    nav: { home: "Accueil", features: "FonctionnalitÃ©s", workflow: "Flux", showcase: "AperÃ§us", pricing: "Tarifs", about: "Ã€ propos", dashboard: "Tableau de bord", more: "Plus", tools: "Outils IA", rfq: "Demandes de prix", quotations: "Devis", contracts: "Contrats", billing: "Facturation", admin: "Administration", notifications: "Notifications", knowledge: "Connaissances", documents: "Documents", projects: "Projets", history: "Historique", saved: "EnregistrÃ©s", favorites: "Favoris", settings: "ParamÃ¨tres" },
-    shell: {
-      workspaceBadge: "Espace principal", askVora: "Demander Ã  VORA", askVoraText: "CrÃ©ez un document, un projet ou une idÃ©e depuis un seul espace.", productivity: "ProductivitÃ© du jour", productivityText: "7 sorties et 3 projets suivis.",
-      notifications: [["VORA est prÃªte", "Lancez un document ou un projet depuis les actions rapides."], ["Sorties enregistrÃ©es", "Les derniÃ¨res gÃ©nÃ©rations sont disponibles dans lâ€™espace."], ["Conseil productivitÃ©", "Ã‰pinglez les projets importants en haut du tableau de bord."]]
-    },
-    landing: {
-      heroBadge: "Suite dâ€™exÃ©cution intelligente avec VORA", heroLanguage: "Arabe, franÃ§ais et anglais", brandLine: "De lâ€™idÃ©e Ã  la livraison, avec clartÃ©.",
-      titleA: "Transformez vos idÃ©es en projets exÃ©cutables", titleB: "et en documents professionnels avec VORA",
-      subtitle: "Vorqa AI aide les fondateurs et les Ã©quipes Ã  planifier, gÃ©nÃ©rer, organiser et suivre leur travail dans une expÃ©rience premium.",
-      seeWorkflow: "Voir le fonctionnement", trust: "AdoptÃ© par des Ã©quipes innovantes", capabilitiesTitle: "Une plateforme pour planifier, produire et organiser",
-      capabilitiesText: "Tout ce quâ€™il faut pour passer dâ€™une idÃ©e Ã  des livrables clairs.", workflowTitle: "Un flux de travail clair qui garde lâ€™Ã©lan",
-      workflowText: "Chaque Ã©tape rÃ©duit lâ€™ambiguÃ¯tÃ© et transforme la dÃ©cision suivante en action.", voraPreviewTitle: "Un assistant exÃ©cutif qui comprend le contexte",
-      showcaseTitle: "Des aperÃ§us conÃ§us pour dÃ©cider vite", statsTitle: "Des rÃ©sultats mesurables dÃ¨s le dÃ©part", rolesTitle: "Une expÃ©rience pour plusieurs rÃ´les",
-      testimonialsTitle: "Une qualitÃ© prÃªte pour les investisseurs", pricingTitle: "Commencez maintenant, Ã©voluez ensuite", faqTitle: "Questions frÃ©quentes",
-      finalTitle: "Lancez votre prochain projet avec plus de clartÃ©", finalText: "Laissez VORA transformer votre premiÃ¨re idÃ©e en documents, plan dâ€™action et livrables.",
-      cards: ["Planification intelligente", "Gestion organisÃ©e", "ExÃ©cution fiable"]
-    },
-    dashboard: {
-      badge: "Espace principal", title: "Bonjour, transformons la journÃ©e en rÃ©sultats clairs", description: "Suivez les projets, crÃ©ez des documents, surveillez VORA et gardez vos meilleures sorties au mÃªme endroit.",
-      dateLocale: "fr-FR", generateDocument: "GÃ©nÃ©rer un document", createProject: "CrÃ©er un projet", quickSearchTitle: "Rechercher dans lâ€™espace", assistantTip: "Suggestion : commencez par le projet de lancement, câ€™est le plus actif.",
-      stats: ["Projets", "Documents gÃ©nÃ©rÃ©s", "GÃ©nÃ©rations IA", "Taux dâ€™achÃ¨vement", "Stockage", "ActivitÃ© du jour"],
-      quickActions: [["CrÃ©er un projet", "DÃ©marrer un nouvel espace"], ["GÃ©nÃ©rer un document", "Un document pro en quelques minutes"], ["Chat VORA", "Interroger lâ€™assistant"], ["ModÃ¨les", "Partir dâ€™une structure prÃªte"]],
-      insightsTitle: "Meilleure action maintenant", projectsTitle: "Travaux en cours", recentActivity: "ActivitÃ© rÃ©cente de VORA", recentOutputs: "Sorties rÃ©centes", calendar: "Calendrier", recentFiles: "Fichiers rÃ©cents", emptyTitle: "Aucune tÃ¢che en attente", emptyText: "VORA affichera ici les sorties Ã  rÃ©viser."
-    },
-    tools: {} as any,
-    projects: {} as any,
-    pages: {} as any
-  },
-  en: {
-    meta: { title: "Vorqa AI - Premium AI Workspace", description: "AI platform for documents, CVs, landing pages, and project ideas." },
-    common: {
-      appName: "Vorqa AI", vora: "VORA", getStarted: "Get Started", startJourney: "Start Your Journey", login: "Log in", register: "Create account", logout: "Log out",
-      search: "Search...", searchWorkspace: "Search projects, outputs, tools...", language: "Language", all: "All", save: "Save", delete: "Delete", download: "Download",
-      copy: "Copy", exportMarkdown: "Export Markdown", loading: "Loading", retry: "Retry", empty: "Nothing here yet", viewAll: "View all", activeSession: "Active session",
-      guestMode: "Guest mode", profileSettings: "Profile settings", workspace: "Main workspace", notifications: "Notifications", primary: "Primary", prepared: "Prepared", email: "Email", password: "Password", fullName: "Full name"
-    },
-    nav: { home: "Home", features: "Features", workflow: "Workflow", showcase: "Showcase", pricing: "Pricing", about: "About", dashboard: "Dashboard", more: "More", tools: "AI Tools", rfq: "RFQs", quotations: "Quotations", contracts: "Contracts", billing: "Billing", admin: "Administration", notifications: "Notifications", knowledge: "Knowledge", documents: "Documents", projects: "Projects", history: "History", saved: "Saved", favorites: "Favorites", settings: "Settings" },
-    shell: {
-      workspaceBadge: "Main workspace", askVora: "Ask VORA", askVoraText: "Start a document, project, or business idea from one place.", productivity: "Todayâ€™s productivity", productivityText: "7 outputs and 3 projects in progress.",
-      notifications: [["VORA is ready", "Start a document or project from quick actions."], ["Saved outputs", "Latest generations are ready in your workspace."], ["Productivity tip", "Pin key projects to keep them at the top."]]
-    },
-    landing: {
-      heroBadge: "Intelligent execution suite powered by VORA", heroLanguage: "Arabic, French, and English", brandLine: "From idea to delivery, with clarity.",
-      titleA: "Turn ideas into executable projects", titleB: "and professional documents with VORA",
-      subtitle: "Vorqa AI helps founders and teams plan, generate, organize, and track work in one premium workspace.",
-      seeWorkflow: "See how it works", trust: "Trusted by innovative teams", capabilitiesTitle: "One platform to plan, produce, and organize",
-      capabilitiesText: "Everything you need to turn ideas into clear deliverables.", workflowTitle: "A clear workflow that keeps momentum",
-      workflowText: "Each stage reduces ambiguity and turns the next decision into action.", voraPreviewTitle: "An executive assistant that understands context",
-      showcaseTitle: "Preview boards designed for decisions", statsTitle: "Measurable outcomes from day one", rolesTitle: "One experience for multiple roles",
-      testimonialsTitle: "Investor-ready product quality", pricingTitle: "Start now, scale as projects grow", faqTitle: "Frequently asked questions",
-      finalTitle: "Start your next project with more clarity", finalText: "Let VORA turn your first idea into documents, an execution plan, and ready-to-use outputs.",
-      cards: ["Smart planning", "Organized management", "Reliable execution"]
-    },
-    dashboard: {
-      badge: "Main workspace", title: "Welcome, letâ€™s turn today into clear outcomes", description: "Track projects, create documents, monitor VORA, and keep important outputs in one focused workspace.",
-      dateLocale: "en-US", generateDocument: "Generate document", createProject: "Create project", quickSearchTitle: "Search your workspace", assistantTip: "Suggestion: review the launch project first; it has the most activity.",
-      stats: ["Projects", "Generated documents", "AI generations", "Completion rate", "Storage", "Todayâ€™s activity"],
-      quickActions: [["Create project", "Start a new workspace"], ["Generate document", "A professional doc in minutes"], ["VORA Chat", "Ask the assistant"], ["Templates", "Start from a ready structure"]],
-      insightsTitle: "Best next action", projectsTitle: "Work in progress", recentActivity: "Recent VORA activity", recentOutputs: "Recent outputs", calendar: "Work calendar", recentFiles: "Recent files", emptyTitle: "No pending tasks", emptyText: "VORA will show review items here when they appear."
-    },
-    tools: {} as any,
-    projects: {} as any,
-    pages: {} as any
-  }
-};
-
-function mergeLocale<T extends Record<string, unknown>>(base: T, partial: Partial<T>): T {
-  return { ...base, ...partial } as T;
-}
-
-dictionaries.fr.tools = mergeLocale(dictionaries.ar.tools, {
-  pageTitle: "BibliothÃ¨que dâ€™outils premium",
-  pageDescription: "Des outils professionnels organisÃ©s par usage, avec des formulaires riches et des sorties prÃªtes Ã  enregistrer.",
-  studioDescription: "Remplissez le formulaire pour obtenir une sortie claire, structurÃ©e et exploitable.",
-  askVora: "Demander Ã  VORA",
-  retryVora: "RÃ©essayer",
-  outputAtelier: "Atelier de sortie VORA",
-  openaiConnected: "OpenAI connectÃ©",
-  mockMode: "Mode dÃ©mo",
-  emptyOutput: "Remplissez le formulaire pour que VORA rÃ©dige une sortie professionnelle.",
-  copiedTitle: "CopiÃ©",
-  copiedText: "La sortie a Ã©tÃ© copiÃ©e dans le presse-papiers.",
-  markdownTitle: "Markdown",
-  markdownText: "Le fichier Markdown est prÃªt.",
-  successTitle: "GÃ©nÃ©ration terminÃ©e",
-  successOpenAi: "La sortie a Ã©tÃ© gÃ©nÃ©rÃ©e avec OpenAI et enregistrÃ©e dans lâ€™historique.",
-  successMock: "La sortie a Ã©tÃ© gÃ©nÃ©rÃ©e en mode dÃ©mo et enregistrÃ©e.",
-  failTitle: "GÃ©nÃ©ration impossible",
-  failText: "VÃ©rifiez les informations et rÃ©essayez.",
-  readError: "Impossible de lire la rÃ©ponse du serveur.",
-  createError: "Impossible de gÃ©nÃ©rer le contenu pour le moment.",
-  networkError: "Erreur de connexion."
-});
-dictionaries.en.tools = mergeLocale(dictionaries.ar.tools, {
-  pageTitle: "Premium tool library",
-  pageDescription: "Professional tools organized by workflow, with rich forms and outputs ready to save and search.",
-  studioDescription: "Fill the form to receive a structured, useful professional output.",
-  askVora: "Ask VORA",
-  retryVora: "Retry VORA",
-  outputAtelier: "VORA Output Atelier",
-  openaiConnected: "OpenAI connected",
-  mockMode: "Demo mode",
-  emptyOutput: "Fill the form to let VORA craft a professional output, then copy or export it as Markdown.",
-  copiedTitle: "Copied",
-  copiedText: "The output was copied to your clipboard.",
-  markdownTitle: "Markdown",
-  markdownText: "Markdown export is ready.",
-  successTitle: "Generation complete",
-  successOpenAi: "The output was generated with OpenAI and saved to history.",
-  successMock: "The output was generated in demo mode and saved to history.",
-  failTitle: "Could not generate content",
-  failText: "Review the inputs and try again.",
-  readError: "Could not read the server response.",
-  createError: "Could not generate content right now.",
-  networkError: "Connection error."
-});
-
-dictionaries.fr.projects = mergeLocale(dictionaries.ar.projects, {
-  title: "Galerie de projets",
-  description: "Chaque projet conserve son type, son Ã©tat, sa derniÃ¨re mise Ã  jour et sa progression.",
-  newProject: "Nouveau projet",
-  search: "Rechercher des projets...",
-  knowledgeTitle: "Espace de connaissance du projet",
-  knowledgeDescription: "Importez les fichiers de connaissance de chaque projet pour organiser les sources et documents. La lecture IA et le RAG viendront plus tard.",
-  selectProject: "Projet",
-  uploadTitle: "Glissez vos fichiers ici ou choisissez-les",
-  uploadTarget: "EnregistrÃ© dans :",
-  uploadProgress: "Progression",
-  fileSearch: "Rechercher dans les fichiers...",
-  emptyProjects: "Aucun projet pour le moment",
-  emptyProjectsText: "CrÃ©ez dâ€™abord un projet avec VORA, puis son espace de connaissance apparaÃ®tra ici.",
-  emptyFiles: "Lâ€™espace de connaissance est vide",
-  emptyFilesText: "Importez les fichiers du projet pour les garder organisÃ©s.",
-  chooseProject: "Veuillez choisir un projet avant lâ€™import.",
-  loginFirst: "Veuillez vous connecter avant dâ€™importer des fichiers.",
-  uploadFailed: "Import impossible.",
-  deleteFailed: "Suppression impossible.",
-  downloadFailed: "TÃ©lÃ©chargement impossible.",
-  fileCount: "fichier"
-});
-dictionaries.en.projects = mergeLocale(dictionaries.ar.projects, {
-  title: "Project gallery",
-  description: "Every project keeps its tool type, status, latest update, and readiness score.",
-  newProject: "New project",
-  search: "Search projects...",
-  knowledgeTitle: "Project Knowledge Workspace",
-  knowledgeDescription: "Upload project knowledge files to organize sources and documents. AI reading and RAG will come later.",
-  selectProject: "Project",
-  uploadTitle: "Drop files here or choose from your device",
-  uploadTarget: "Saved inside:",
-  uploadProgress: "Upload progress",
-  fileSearch: "Search knowledge files...",
-  emptyProjects: "No projects yet",
-  emptyProjectsText: "Create a project with VORA first, then its knowledge workspace will appear here.",
-  emptyFiles: "Knowledge workspace is empty",
-  emptyFilesText: "Upload project files to keep them organized in one place.",
-  chooseProject: "Choose a project before uploading files.",
-  loginFirst: "Log in before uploading files.",
-  uploadFailed: "Upload failed.",
-  deleteFailed: "Delete failed.",
-  downloadFailed: "Download failed.",
-  fileCount: "file"
-});
-
-dictionaries.fr.pages = mergeLocale(dictionaries.ar.pages, {
-  loginTitle: "AccÃ©dez Ã  votre espace de travail premium",
-  loginDescription: "Authentification Supabase avec profils, projets et sorties enregistrÃ©es.",
-  loginHeading: "Connexion",
-  loginHint: "Connectez-vous pour accÃ©der Ã  vos projets et sorties.",
-  registerWelcome: "Bienvenue dans VORQA",
-  registerText: "Je suis VORA, votre assistant intelligent. Je vous accompagne de lâ€™idÃ©e Ã  lâ€™exÃ©cution.",
-  registerChoose: "Choisissez le type de compte adaptÃ©",
-  registerCreate: "CrÃ©er le compte",
-  registerNote: "Vous pourrez modifier ces informations plus tard.",
-  pricingTitle: "Des plans conÃ§us pour grandir",
-  pricingDescription: "Une tarification claire, prÃªte pour Stripe ou un fournisseur local.",
-  settingsTitle: "ParamÃ¨tres Vorqa AI",
-  settingsDescription: "ParamÃ¨tres produit, fournisseurs, Supabase, marque, notifications et expÃ©rience utilisateur.",
-  savedTitle: "Sorties enregistrÃ©es",
-  savedDescription: "Vos sorties enregistrÃ©es sont prÃªtes Ã  organiser, rechercher et exporter.",
-  favoritesTitle: "Favoris",
-  favoritesDescription: "Vos meilleures sorties au mÃªme endroit.",
-  historyTitle: "Historique VORA",
-  historyDescription: "Chronologie des activitÃ©s et sorties enregistrÃ©es."
-});
-dictionaries.en.pages = mergeLocale(dictionaries.ar.pages, {
-  loginTitle: "Enter your premium workspace",
-  loginDescription: "Real Supabase authentication with profiles, projects, and saved outputs.",
-  loginHeading: "Log in",
-  loginHint: "Log in to access your projects and saved outputs.",
-  registerWelcome: "Welcome to VORQA",
-  registerText: "Iâ€™m VORA, your intelligent assistant. Iâ€™ll guide each step from idea to execution.",
-  registerChoose: "Choose the right account type",
-  registerCreate: "Create account",
-  registerNote: "You can update this information later.",
-  pricingTitle: "Plans designed for growth",
-  pricingDescription: "Clear premium pricing, ready for Stripe or a local payment provider later.",
-  settingsTitle: "Vorqa AI Settings",
-  settingsDescription: "Product, providers, Supabase, brand, notifications, and user experience settings.",
-  savedTitle: "Saved outputs",
-  savedDescription: "Saved outputs are ready to organize, search, and export.",
-  favoritesTitle: "Favorites",
-  favoritesDescription: "Your best outputs pinned in one place.",
-  historyTitle: "VORA History",
-  historyDescription: "A timeline of activity and saved outputs."
-});
-
-export type Dictionary = (typeof dictionaries)[Locale];
-
-type TranslationCatalog = Record<Locale, Record<string, string>>;
-
-const supplementalUiTranslations: Array<readonly [string, string, string]> = [
-  ["Runtime error", "Erreur dâ€™exÃ©cution", "Ø®Ø·Ø£ ÙÙŠ Ø§Ù„ØªØ´ØºÙŠÙ„"],
-  ["An unexpected error occurred", "Une erreur inattendue sâ€™est produite", "Ø­Ø¯Ø« Ø®Ø·Ø£ ØºÙŠØ± Ù…ØªÙˆÙ‚Ø¹"],
-  ["Your data was not changed. Try again, and review production logs if the error continues.", "Vos donnÃ©es nâ€™ont pas Ã©tÃ© modifiÃ©es. RÃ©essayez et consultez les journaux de production si lâ€™erreur persiste.", "Ù„Ù… ÙŠØªÙ… ØªØºÙŠÙŠØ± Ø¨ÙŠØ§Ù†Ø§ØªÙƒ. Ø£Ø¹Ø¯ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø©ØŒ ÙˆØ±Ø§Ø¬Ø¹ Ø³Ø¬Ù„Ø§Øª Ø§Ù„Ø¥Ù†ØªØ§Ø¬ Ø¥Ø°Ø§ Ø§Ø³ØªÙ…Ø± Ø§Ù„Ø®Ø·Ø£."],
-  ["Page not found", "Page introuvable", "Ø§Ù„ØµÙØ­Ø© ØºÙŠØ± Ù…ÙˆØ¬ÙˆØ¯Ø©"],
-  ["The requested route is unavailable or has moved. Return to the workspace to continue.", "La page demandÃ©e est indisponible ou a Ã©tÃ© dÃ©placÃ©e. Revenez Ã  lâ€™espace de travail pour continuer.", "Ø§Ù„Ù…Ø³Ø§Ø± Ø§Ù„Ù…Ø·Ù„ÙˆØ¨ ØºÙŠØ± Ù…ØªØ§Ø­ Ø£Ùˆ ØªÙ… Ù†Ù‚Ù„Ù‡. Ø¹ÙØ¯ Ø¥Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„ Ù„Ù„Ù…ØªØ§Ø¨Ø¹Ø©."],
-  ["Back to dashboard", "Retour au tableau de bord", "Ø§Ù„Ø¹ÙˆØ¯Ø© Ø¥Ù„Ù‰ Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…"],
-  ["Try again", "RÃ©essayer", "Ø¥Ø¹Ø§Ø¯Ø© Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø©"],
-  ["Skip to workspace", "Aller Ã  lâ€™espace de travail", "ØªØ®Ø·ÙŠ Ø¥Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„"],
-  ["Primary workspace navigation", "Navigation principale de lâ€™espace de travail", "Ø§Ù„ØªÙ†Ù‚Ù„ Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠ ÙÙŠ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„"],
-  ["Close menu", "Fermer le menu", "Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©"],
-  ["Command Center", "Centre de commande", "Ù…Ø±ÙƒØ² Ø§Ù„Ù‚ÙŠØ§Ø¯Ø©"],
-  ["Organizations", "Organisations", "Ø§Ù„Ù…Ø¤Ø³Ø³Ø§Øª"],
-  ["Marketplace", "MarchÃ©", "Ø§Ù„Ø³ÙˆÙ‚"],
-  ["More", "Plus", "Ø§Ù„Ù…Ø²ÙŠØ¯"],
-  ["AI Tools", "Outils IA", "Ø£Ø¯ÙˆØ§Øª Ø§Ù„Ø°ÙƒØ§Ø¡ Ø§Ù„Ø§ØµØ·Ù†Ø§Ø¹ÙŠ"],
-  ["RFQs", "Appels dâ€™offres", "Ø·Ù„Ø¨Ø§Øª Ø¹Ø±ÙˆØ¶ Ø§Ù„Ø£Ø³Ø¹Ø§Ø±"],
-  ["Quotations", "Devis", "Ø¹Ø±ÙˆØ¶ Ø§Ù„Ø£Ø³Ø¹Ø§Ø±"],
-  ["Contracts", "Contrats", "Ø§Ù„Ø¹Ù‚ÙˆØ¯"],
-  ["Billing", "Facturation", "Ø§Ù„ÙÙˆØªØ±Ø©"],
-  ["Admin", "Administration", "Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©"],
-  ["Notifications", "Notifications", "Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª"],
-  ["Knowledge", "Connaissances", "Ø§Ù„Ù…Ø¹Ø±ÙØ©"],
-  ["Documents", "Documents", "Ø§Ù„Ù…Ø³ØªÙ†Ø¯Ø§Øª"],
-  ["Production data", "DonnÃ©es de production", "Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¥Ù†ØªØ§Ø¬"],
-  ["Auto data mode", "Mode de donnÃ©es automatique", "ÙˆØ¶Ø¹ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„ØªÙ„Ù‚Ø§Ø¦ÙŠ"],
-  ["Demo mode", "Mode dÃ©mo", "Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠ"],
-  ["Search", "Rechercher", "Ø¨Ø­Ø«"],
-  ["Search workspace", "Rechercher dans lâ€™espace de travail", "Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ù…Ø³Ø§Ø­Ø© Ø§Ù„Ø¹Ù…Ù„"],
-  ["Open dashboard", "Ouvrir le tableau de bord", "ÙØªØ­ Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…"],
-  ["Open projects", "Ouvrir les projets", "ÙØªØ­ Ø§Ù„Ù…Ø´Ø§Ø±ÙŠØ¹"],
-  ["Open organizations", "Ouvrir les organisations", "ÙØªØ­ Ø§Ù„Ù…Ø¤Ø³Ø³Ø§Øª"],
-  ["Open marketplace", "Ouvrir le marchÃ©", "ÙØªØ­ Ø§Ù„Ø³ÙˆÙ‚"],
-  ["Open settings", "Ouvrir les paramÃ¨tres", "ÙØªØ­ Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª"],
-  ["View notifications", "Voir les notifications", "Ø¹Ø±Ø¶ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª"],
-  ["Create project", "CrÃ©er un projet", "Ø¥Ù†Ø´Ø§Ø¡ Ù…Ø´Ø±ÙˆØ¹"],
-  ["New project", "Nouveau projet", "Ù…Ø´Ø±ÙˆØ¹ Ø¬Ø¯ÙŠØ¯"],
-  ["Upload document", "Importer un document", "Ø±ÙØ¹ Ù…Ø³ØªÙ†Ø¯"],
-  ["Generate report", "GÃ©nÃ©rer un rapport", "Ø¥Ù†Ø´Ø§Ø¡ ØªÙ‚Ø±ÙŠØ±"],
-  ["Open organization", "Ouvrir lâ€™organisation", "ÙØªØ­ Ø§Ù„Ù…Ø¤Ø³Ø³Ø©"],
-  ["Mark all as read", "Tout marquer comme lu", "ØªØ­Ø¯ÙŠØ¯ Ø§Ù„ÙƒÙ„ ÙƒÙ…Ù‚Ø±ÙˆØ¡"],
-  ["All notifications", "Toutes les notifications", "ÙƒÙ„ Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª"],
-  ["Unread", "Non lues", "ØºÙŠØ± Ù…Ù‚Ø±ÙˆØ¡Ø©"],
-  ["High priority", "PrioritÃ© Ã©levÃ©e", "Ø£ÙˆÙ„ÙˆÙŠØ© Ø¹Ø§Ù„ÙŠØ©"],
-  ["Loading", "Chargement", "Ø¬Ø§Ø±Ù Ø§Ù„ØªØ­Ù…ÙŠÙ„"],
-  ["No results", "Aucun rÃ©sultat", "Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬"],
-  ["No data available", "Aucune donnÃ©e disponible", "Ù„Ø§ ØªÙˆØ¬Ø¯ Ø¨ÙŠØ§Ù†Ø§Øª Ù…ØªØ§Ø­Ø©"],
-  ["Save company", "Enregistrer lâ€™entreprise", "Ø­ÙØ¸ Ø§Ù„Ø´Ø±ÙƒØ©"],
-  ["Saved to shortlist", "AjoutÃ©e Ã  la sÃ©lection", "ØªÙ…Øª Ø§Ù„Ø¥Ø¶Ø§ÙØ© Ø¥Ù„Ù‰ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„Ù…Ø®ØªØµØ±Ø©"],
-  ["View shortlist", "Voir la sÃ©lection", "Ø¹Ø±Ø¶ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„Ù…Ø®ØªØµØ±Ø©"],
-  ["Coming Soon", "BientÃ´t disponible", "Ù‚Ø±ÙŠØ¨Ø§Ù‹"],
-  ["Active", "Actif", "Ù†Ø´Ø·"],
-  ["Draft", "Brouillon", "Ù…Ø³ÙˆØ¯Ø©"],
-  ["Completed", "TerminÃ©", "Ù…ÙƒØªÙ…Ù„"],
-  ["Archived", "ArchivÃ©", "Ù…Ø¤Ø±Ø´Ù"],
-  ["Pending", "En attente", "Ù‚ÙŠØ¯ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø±"],
-  ["Status", "Statut", "Ø§Ù„Ø­Ø§Ù„Ø©"],
-  ["Project", "Projet", "Ø§Ù„Ù…Ø´Ø±ÙˆØ¹"],
-  ["Organization", "Organisation", "Ø§Ù„Ù…Ø¤Ø³Ø³Ø©"],
-  ["Department", "DÃ©partement", "Ø§Ù„Ù‚Ø³Ù…"],
-  ["Employee", "EmployÃ©", "Ø§Ù„Ù…ÙˆØ¸Ù"],
-  ["Report", "Rapport", "Ø§Ù„ØªÙ‚Ø±ÙŠØ±"],
-  ["Settings", "ParamÃ¨tres", "Ø§Ù„Ø¥Ø¹Ø¯Ø§Ø¯Ø§Øª"],
-  ["Overview", "Vue dâ€™ensemble", "Ù†Ø¸Ø±Ø© Ø¹Ø§Ù…Ø©"],
-  ["Team", "Ã‰quipe", "Ø§Ù„ÙØ±ÙŠÙ‚"],
-  ["Tasks", "TÃ¢ches", "Ø§Ù„Ù…Ù‡Ø§Ù…"],
-  ["Timeline", "Calendrier", "Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ"],
-  ["Budget", "Budget", "Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©"],
-  ["Reports", "Rapports", "Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±"],
-  ["Search...", "Rechercher...", "Ø§Ø¨Ø­Ø«..."],
-  ["Cancel", "Annuler", "Ø¥Ù„ØºØ§Ø¡"],
-  ["Close", "Fermer", "Ø¥ØºÙ„Ø§Ù‚"],
-  ["Create", "CrÃ©er", "Ø¥Ù†Ø´Ø§Ø¡"],
-  ["Edit", "Modifier", "ØªØ¹Ø¯ÙŠÙ„"],
-  ["Archive", "Archiver", "Ø£Ø±Ø´ÙØ©"],
-  ["Delete", "Supprimer", "Ø­Ø°Ù"],
-  ["Download", "TÃ©lÃ©charger", "ØªÙ†Ø²ÙŠÙ„"],
-  ["Continue", "Continuer", "Ù…ØªØ§Ø¨Ø¹Ø©"],
-  ["Previous", "PrÃ©cÃ©dent", "Ø§Ù„Ø³Ø§Ø¨Ù‚"],
-  ["Next", "Suivant", "Ø§Ù„ØªØ§Ù„ÙŠ"]
-  ,["Building the future together", "Construisons lâ€™avenir ensemble", "Ù†Ø¨Ù†ÙŠ Ø§Ù„Ù…Ø³ØªÙ‚Ø¨Ù„ Ù…Ø¹Ø§Ù‹"]
-  ,["Welcome, Iâ€™ll help you return to your project workspace safely.", "Bienvenue, je vous aide Ã  retrouver votre espace projet en toute sÃ©curitÃ©.", "Ù…Ø±Ø­Ø¨Ø§Ù‹ØŒ Ø³Ø£Ø³Ø§Ø¹Ø¯Ùƒ Ø¹Ù„Ù‰ Ø§Ù„Ø¹ÙˆØ¯Ø© Ø¥Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© Ù…Ø´Ø±ÙˆØ¹Ùƒ Ø¨Ø£Ù…Ø§Ù†."]
-  ,["High security", "SÃ©curitÃ© renforcÃ©e", "Ø£Ù…Ø§Ù† Ø¹Ø§Ù„ÙŠ"]
-  ,["Your data is protected", "Protection de vos donnÃ©es", "Ø­Ù…Ø§ÙŠØ© Ø¨ÙŠØ§Ù†Ø§ØªÙƒ"]
-  ,["Cloud storage", "Stockage infonuagique", "Ø­ÙØ¸ Ø³Ø­Ø§Ø¨ÙŠ"]
-  ,["Access your projects", "AccÃ¨s Ã  vos projets", "Ø§Ù„ÙˆØµÙˆÙ„ Ù„Ù…Ø´Ø§Ø±ÙŠØ¹Ùƒ"]
-  ,["Artificial intelligence", "Intelligence artificielle", "Ø°ÙƒØ§Ø¡ Ø§ØµØ·Ù†Ø§Ø¹ÙŠ"]
-  ,["Analysis and recommendations", "Analyses et recommandations", "ØªØ­Ù„ÙŠÙ„ ÙˆØ§Ù‚ØªØ±Ø§Ø­Ø§Øª"]
-  ,["Integrated collaboration", "Collaboration intÃ©grÃ©e", "ØªØ¹Ø§ÙˆÙ† Ù…ØªÙƒØ§Ù…Ù„"]
-  ,["Across all stakeholders", "Entre toutes les parties prenantes", "Ø¨ÙŠÙ† ÙƒÙ„ Ø§Ù„Ø£Ø·Ø±Ø§Ù"]
-  ,["Professional reports", "Rapports professionnels", "ØªÙ‚Ø§Ø±ÙŠØ± Ø§Ø­ØªØ±Ø§ÙÙŠØ©"]
-  ,["Better decisions", "De meilleures dÃ©cisions", "Ù‚Ø±Ø§Ø±Ø§Øª Ø£ÙØ¶Ù„"]
-];
-
-function flattenDictionary(value: unknown, prefix = "", output: Record<string, string> = {}) {
-  if (typeof value === "string") {
-    output[prefix] = value;
-    return output;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((entry, index) => flattenDictionary(entry, `${prefix}.${index}`, output));
-    return output;
-  }
-  if (value && typeof value === "object") {
-    Object.entries(value).forEach(([key, entry]) => flattenDictionary(entry, prefix ? `${prefix}.${key}` : key, output));
-  }
-  return output;
-}
-
-function buildTranslationCatalog(): TranslationCatalog {
-  const flattened = Object.fromEntries(locales.map((locale) => [locale, flattenDictionary(dictionaries[locale])])) as Record<Locale, Record<string, string>>;
-  const catalog = Object.fromEntries(locales.map((locale) => [locale, {}])) as TranslationCatalog;
-
-  const paths = new Set(locales.flatMap((locale) => Object.keys(flattened[locale])));
-  paths.forEach((path) => {
-    const values = locales.map((locale) => flattened[locale][path]);
-    values.forEach((source) => {
-      if (!source) return;
-      locales.forEach((locale, index) => {
-        if (values[index]) catalog[locale][source.trim()] = values[index].trim();
-      });
-    });
-  });
-
-  supplementalUiTranslations.forEach(([en, fr, ar]) => {
-    const values: Record<Locale, string> = { en, fr, ar };
-    locales.forEach((locale) => {
-      [en, fr, ar].forEach((source) => {
-        catalog[locale][source] = values[locale];
-      });
-    });
-  });
-
-  return catalog;
-}
-
-export const uiTranslationCatalog: TranslationCatalog = {
-  ar: arCatalog,
-  fr: frCatalog,
-  en: enCatalog
-};
-
-export function translateUiText(value: string, locale: Locale): string {
-  const leading = value.match(/^\s*/)?.[0] || "";
-  const trailing = value.match(/\s*$/)?.[0] || "";
-  const source = value.trim();
-  if (!source) return value;
-  return `${leading}${uiTranslationCatalog[locale][source] || source}${trailing}`;
-}
+          pageDescription: "Ø­ÙˆÙ‘Ù„ Ø§Ù„Ø®Ø¨Ø±Ø§Øª ÙˆØ§Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ø¥Ù„ïßt¶‰Ëkºwµçfbä‰t°(€l‰e½ÕÈ‘…Ñ„İ…Ì¹½Ğ¡…¹•¸QÉä……¥¸°…¹É•Ù¥•ÜÁÉ½‘ÕÑ¥½¸±½Ì¥˜Ñ¡”•ÉÉ½È½¹Ñ¥¹Õ•Ì¸ˆ°€‰Y½Ì‘½¹»¥•Ì»Še½¹ĞÁ…Ìƒ¥Ó¤µ½‘¥™§¥•Ì¸K¥•ÍÍ…å•è•Ğ½¹ÍÕ±Ñ•è±•Ì©½ÕÉ¹…Õà‘”ÁÉ½‘ÕÑ¥½¸Í¤³Še•ÉÉ•ÕÈÁ•ÉÍ¥ÍÑ”¸ˆ°€‹ffƒf+b«fƒb«bëf+f+bÄƒb£f+bŸfbŸb«f¸ƒbbçb¼ƒbŸffb·bŸf#fb§b0ƒf#bÇbŸb³bäƒbÏb³fbŸb¨ƒbŸfb—fb«bŸb°ƒb—bÃbœƒbŸbÏb«fbÄƒbŸfb»bßbŒ¸‰t°(€l‰A…”¹½Ğ™½Õ¹ˆ°€‰A…”¥¹ÑÉ½ÕÙ…‰±”ˆ°€‹bŸfb×fb·b¤ƒbëf+bÄƒff#b³f#b¿b¤‰t°(€l‰Q¡”É•ÅÕ•ÍÑ•É½ÕÑ”¥ÌÕ¹…Ù…¥±…‰±”½È¡…Ìµ½Ù•¸I•ÑÕÉ¸Ñ¼Ñ¡”İ½É­ÍÁ…”Ñ¼½¹Ñ¥¹Õ”¸ˆ°€‰1„Á…”‘•µ…¹“¥”•ÍĞ¥¹‘¥ÍÁ½¹¥‰±”½Ô„ƒ¥Ó¤“¥Á±…¥”¸I•Ù•¹•èƒ€³Še•ÍÁ…”‘”ÑÉ…Ù…¥°Á½ÕÈ½¹Ñ¥¹Õ•È¸ˆ°€‹bŸffbÏbŸbÄƒbŸffbßff#b ƒbëf+bÄƒfb«bŸb´ƒbf ƒb«fƒffff¸ƒbçf?b¼ƒb—ff$ƒfbÏbŸb·b¤ƒbŸfbçffƒfffb«bŸb£bçb¤¸‰t°(€l‰	…¬Ñ¼‘…Í¡‰½…Éˆ°€‰I•Ñ½ÕÈ…ÔÑ…‰±•…Ô‘”‰½Éˆ°€‹bŸfbçf#b¿b¤ƒb—ff$ƒff#b·b¤ƒbŸfb«b·ff‰t°(€l‰QÉä……¥¸ˆ°€‰K¥•ÍÍ…å•Èˆ°€‹b—bçbŸb¿b¤ƒbŸffb·bŸf#fb¤‰t°(€l‰M­¥ÀÑ¼İ½É­ÍÁ…”ˆ°€‰±±•Èƒ€³Še•ÍÁ…”‘”ÑÉ…Ù…¥°ˆ°€‹b«b»bßf(ƒb—ff$ƒfbÏbŸb·b¤ƒbŸfbçff‰t°(€l‰AÉ¥µ…Éäİ½É­ÍÁ…”¹…Ù¥…Ñ¥½¸ˆ°€‰9…Ù¥…Ñ¥½¸ÁÉ¥¹¥Á…±”‘”³Še•ÍÁ…”‘”ÑÉ…Ù…¥°ˆ°€‹bŸfb«fffƒbŸfbÇb›f+bÏf(ƒff(ƒfbÏbŸb·b¤ƒbŸfbçff‰t°(€l‰±½Í”µ•¹Ôˆ°€‰•Éµ•È±”µ•¹Ôˆ°€‹b—bëfbŸfƒbŸffbŸb›fb¤‰t°(€l‰½µµ…¹•¹Ñ•Èˆ°€‰•¹ÑÉ”‘”½µµ…¹‘”ˆ°€‹fbÇfbÈƒbŸfff+bŸb¿b¤‰t°(€l‰=É…¹¥é…Ñ¥½¹Ìˆ°€‰=É…¹¥Í…Ñ¥½¹Ìˆ°€‹bŸffb“bÏbÏbŸb¨‰t°(€l‰5…É­•ÑÁ±…”ˆ°€‰5…É£¤ˆ°€‹bŸfbÏf#f‰t°(€l‰5½É”ˆ°€‰A±ÕÌˆ°€‹bŸffbËf+b¼‰t°(€l‰$Q½½±Ìˆ°€‰=ÕÑ¥±Ì%ˆ°€‹bb¿f#bŸb¨ƒbŸfbÃfbŸb„ƒbŸfbŸb×bßfbŸbçf(‰t°(€l‰IEÌˆ°€‰ÁÁ•±Ì“Še½™™É•Ìˆ°€‹bßfb£bŸb¨ƒbçbÇf#bØƒbŸfbbÏbçbŸbÄ‰t°(€l‰EÕ½Ñ…Ñ¥½¹Ìˆ°€‰•Ù¥Ìˆ°€‹bçbÇf#bØƒbŸfbbÏbçbŸbÄ‰t°(€l‰½¹ÑÉ…ÑÌˆ°€‰½¹ÑÉ…ÑÌˆ°€‹bŸfbçff#b¼‰t°(€l‰	¥±±¥¹œˆ°€‰…ÑÕÉ…Ñ¥½¸ˆ°€‹bŸfff#b«bÇb¤‰t°(€l‰‘µ¥¸ˆ°€‰‘µ¥¹¥ÍÑÉ…Ñ¥½¸ˆ°€‹bŸfb—b¿bŸbÇb¤‰t°(€l‰9½Ñ¥™¥…Ñ¥½¹Ìˆ°€‰9½Ñ¥™¥…Ñ¥½¹Ìˆ°€‹bŸfb—bÓbçbŸbÇbŸb¨‰t°(€l‰-¹½İ±•‘”ˆ°€‰½¹¹…¥ÍÍ…¹•Ìˆ°€‹bŸffbçbÇfb¤‰t°(€l‰½Õµ•¹ÑÌˆ°€‰½Õµ•¹ÑÌˆ°€‹bŸffbÏb«fb¿bŸb¨‰t°(€l‰AÉ½‘ÕÑ¥½¸‘…Ñ„ˆ°€‰½¹»¥•Ì‘”ÁÉ½‘ÕÑ¥½¸ˆ°€‹b£f+bŸfbŸb¨ƒbŸfb—fb«bŸb°‰t°(€l‰ÕÑ¼‘…Ñ„µ½‘”ˆ°€‰5½‘”‘”‘½¹»¥•Ì…ÕÑ½µ…Ñ¥ÅÕ”ˆ°€‹f#bÛbäƒbŸfb£f+bŸfbŸb¨ƒbŸfb«ffbŸb›f(‰t°(€l‰•µ¼µ½‘”ˆ°€‰5½‘”“¥µ¼ˆ°€‹bŸff#bÛbäƒbŸfb«b³bÇf+b£f(‰t°(€l‰M•…É ˆ°€‰I•¡•É¡•Èˆ°€‹b£b·b¬‰t°(€l‰M•…É İ½É­ÍÁ…”ˆ°€‰I•¡•É¡•È‘…¹Ì³Še•ÍÁ…”‘”ÑÉ…Ù…¥°ˆ°€‹bŸfb£b·b¬ƒff(ƒfbÏbŸb·b¤ƒbŸfbçff‰t°(€l‰=Á•¸‘…Í¡‰½…Éˆ°€‰=ÕÙÉ¥È±”Ñ…‰±•…Ô‘”‰½Éˆ°€‹fb«b´ƒff#b·b¤ƒbŸfb«b·ff‰t°(€l‰=Á•¸ÁÉ½©•ÑÌˆ°€‰=ÕÙÉ¥È±•ÌÁÉ½©•ÑÌˆ°€‹fb«b´ƒbŸffbÓbŸbÇf+bä‰t°(€l‰=Á•¸½É…¹¥é…Ñ¥½¹Ìˆ°€‰=ÕÙÉ¥È±•Ì½É…¹¥Í…Ñ¥½¹Ìˆ°€‹fb«b´ƒbŸffb“bÏbÏbŸb¨‰t°(€l‰=Á•¸µ…É­•ÑÁ±…”ˆ°€‰=ÕÙÉ¥È±”µ…É£¤ˆ°€‹fb«b´ƒbŸfbÏf#f‰t°(€l‰=Á•¸Í•ÑÑ¥¹Ìˆ°€‰=ÕÙÉ¥È±•ÌÁ…É…·¡ÑÉ•Ìˆ°€‹fb«b´ƒbŸfb—bçb¿bŸb¿bŸb¨‰t°(€l‰Y¥•Ü¹½Ñ¥™¥…Ñ¥½¹Ìˆ°€‰Y½¥È±•Ì¹½Ñ¥™¥…Ñ¥½¹Ìˆ°€‹bçbÇbØƒbŸfb—bÓbçbŸbÇbŸb¨‰t°(€l‰É•…Ñ”ÁÉ½©•Ğˆ°€‰Ë¥•ÈÕ¸ÁÉ½©•Ğˆ°€‹b—fbÓbŸb„ƒfbÓbÇf#bä‰t°(€l‰9•ÜÁÉ½©•Ğˆ°€‰9½ÕÙ•…ÔÁÉ½©•Ğˆ°€‹fbÓbÇf#bäƒb³b¿f+b¼‰t°(€l‰UÁ±½…‘½Õµ•¹Ğˆ°€‰%µÁ½ÉÑ•ÈÕ¸‘½Õµ•¹Ğˆ°€‹bÇfbäƒfbÏb«fb¼‰t°(€l‰•¹•É…Ñ”É•Á½ÉĞˆ°€‰¥»¥É•ÈÕ¸É…ÁÁ½ÉĞˆ°€‹b—fbÓbŸb„ƒb«fbÇf+bÄ‰t°(€l‰=Á•¸½É…¹¥é…Ñ¥½¸ˆ°€‰=ÕÙÉ¥È³Še½É…¹¥Í…Ñ¥½¸ˆ°€‹fb«b´ƒbŸffb“bÏbÏb¤‰t°(€l‰5…É¬…±°…ÌÉ•…ˆ°€‰Q½ÕĞµ…ÉÅÕ•È½µµ”±Ôˆ°€‹b«b·b¿f+b¼ƒbŸfffƒfffbÇf#b„‰t°(€l‰±°¹½Ñ¥™¥…Ñ¥½¹Ìˆ°€‰Q½ÕÑ•Ì±•Ì¹½Ñ¥™¥…Ñ¥½¹Ìˆ°€‹ffƒbŸfb—bÓbçbŸbÇbŸb¨‰t°(€l‰U¹É•…ˆ°€‰9½¸±Õ•Ìˆ°€‹bëf+bÄƒffbÇf#b‡b¤‰t°(€l‰!¥ ÁÉ¥½É¥Ñäˆ°€‰AÉ¥½É¥Ó¤ƒ¥±•Û¥”ˆ°€‹bf#ff#f+b¤ƒbçbŸff+b¤‰t°(€l‰1½…‘¥¹œˆ°€‰¡…É•µ•¹Ğˆ°€‹b³bŸbÇf4ƒbŸfb«b·ff+f‰t°(€l‰9¼É•ÍÕ±ÑÌˆ°€‰ÕÕ¸Ë¥ÍÕ±Ñ…Ğˆ°€‹fbœƒb«f#b³b¼ƒfb«bŸb›b°‰t°(€l‰9¼‘…Ñ„…Ù…¥±…‰±”ˆ°€‰ÕÕ¹”‘½¹»¥”‘¥ÍÁ½¹¥‰±”ˆ°€‹fbœƒb«f#b³b¼ƒb£f+bŸfbŸb¨ƒfb«bŸb·b¤‰t°(€l‰M…Ù”½µÁ…¹äˆ°€‰¹É•¥ÍÑÉ•È³Še•¹ÑÉ•ÁÉ¥Í”ˆ°€‹b·fbàƒbŸfbÓbÇfb¤‰t°(€l‰M…Ù•Ñ¼Í¡½ÉÑ±¥ÍĞˆ°€‰©½ÕÓ¥”ƒ€±„Ï¥±•Ñ¥½¸ˆ°€‹b«fb¨ƒbŸfb—bÛbŸfb¤ƒb—ff$ƒbŸffbŸb›fb¤ƒbŸffb»b«b×bÇb¤‰t°(€l‰Y¥•ÜÍ¡½ÉÑ±¥ÍĞˆ°€‰Y½¥È±„Ï¥±•Ñ¥½¸ˆ°€‹bçbÇbØƒbŸffbŸb›fb¤ƒbŸffb»b«b×bÇb¤‰t°(€l‰½µ¥¹œM½½¸ˆ°€‰	¥•¹ÓÑĞ‘¥ÍÁ½¹¥‰±”ˆ°€‹fbÇf+b£bŸf,‰t°(€l‰Ñ¥Ù”ˆ°€‰Ñ¥˜ˆ°€‹fbÓbÜ‰t°(€l‰É…™Ğˆ°€‰	É½Õ¥±±½¸ˆ°€‹fbÏf#b¿b¤‰t°(€l‰½µÁ±•Ñ•ˆ°€‰Q•Éµ¥»¤ˆ°€‹ffb«ff‰t°(€l‰É¡¥Ù•ˆ°€‰É¡¥Û¤ˆ°€‹fb“bÇbÓf‰t°(€l‰A•¹‘¥¹œˆ°€‰¸…ÑÑ•¹Ñ”ˆ°€‹ff+b¼ƒbŸfbŸfb«bãbŸbÄ‰t°(€l‰MÑ…ÑÕÌˆ°€‰MÑ…ÑÕĞˆ°€‹bŸfb·bŸfb¤‰t°(€l‰AÉ½©•Ğˆ°€‰AÉ½©•Ğˆ°€‹bŸffbÓbÇf#bä‰t°(€l‰=É…¹¥é…Ñ¥½¸ˆ°€‰=É…¹¥Í…Ñ¥½¸ˆ°€‹bŸffb“bÏbÏb¤‰t°(€l‰•Á…ÉÑµ•¹Ğˆ°€‰¥Á…ÉÑ•µ•¹Ğˆ°€‹bŸffbÏf‰t°(€l‰µÁ±½å•”ˆ°€‰µÁ±½ç¤ˆ°€‹bŸfff#bãf‰t°(€l‰I•Á½ÉĞˆ°€‰I…ÁÁ½ÉĞˆ°€‹bŸfb«fbÇf+bÄ‰t°(€l‰M•ÑÑ¥¹Ìˆ°€‰A…É…·¡ÑÉ•Ìˆ°€‹bŸfb—bçb¿bŸb¿bŸb¨‰t°(€l‰=Ù•ÉÙ¥•Üˆ°€‰YÕ”“Še•¹Í•µ‰±”ˆ°€‹fbãbÇb¤ƒbçbŸfb¤‰t°(€l‰Q•…´ˆ°€‹%ÅÕ¥Á”ˆ°€‹bŸffbÇf+f‰t°(€l‰Q…Í­Ìˆ°€‰S‰¡•Ìˆ°€‹bŸfffbŸf‰t°(€l‰Q¥µ•±¥¹”ˆ°€‰…±•¹‘É¥•Èˆ°€‹bŸfb³b¿f#fƒbŸfbËfff(‰t°(€l‰	Õ‘•Ğˆ°€‰	Õ‘•Ğˆ°€‹bŸfff+bËbŸff+b¤‰t°(€l‰I•Á½ÉÑÌˆ°€‰I…ÁÁ½ÉÑÌˆ°€‹bŸfb«fbŸbÇf+bÄ‰t°(€l‰¹…±åé”Ñ¡¥ÌÁÉ½©•Ğˆ°€‰¹…±åÍ•È”ÁÉ½©•Ğˆ°€‹b«b·ff+fƒfbÃbœƒbŸffbÓbÇf#bä‰t°(€l‰É•…Ñ”ÁÉ½©•ĞÍ¡•‘Õ±”ˆ°€‰Ë¥•È±”Á±…¹¹¥¹œ‘ÔÁÉ½©•Ğˆ°€‹b—fbÓbŸb„ƒbŸfb³b¿f#fƒbŸfbËfff(ƒfffbÓbÇf#bä‰t°(€l‰•¹•É…Ñ”	=Dˆ°€‰¥»¥É•È±”‰½É‘•É•…Ô‘”ÅÕ…¹Ñ¥Ó¥Ìˆ°€‹b—fbÓbŸb„ƒb³b¿f#fƒbŸffff+bŸb¨‰t°(€l‰I•Ù¥•Ü	=Dˆ°€‰K¥Ù¥Í•È±”‰½É‘•É•…Ô‘”ÅÕ…¹Ñ¥Ó¥Ìˆ°€‹fbÇbŸb³bçb¤ƒb³b¿f#fƒbŸffff+bŸb¨‰t°(€l‰I¥Í¬…ÍÍ•ÍÍµ•¹Ğˆ°€‹%Ù…±Õ…Ñ¥½¸‘•ÌÉ¥ÍÅÕ•Ìˆ°€‹b«ff+f+fƒbŸffb»bŸbßbÄ‰t°(€l‰É•…Ñ”É•Á½ÉĞˆ°€‰Ë¥•ÈÕ¸É…ÁÁ½ÉĞˆ°€‹b—fbÓbŸb„ƒb«fbÇf+bÄ‰t°(€l‰I•Ù¥•Ü½¹ÑÉ…Ğˆ°€‰K¥Ù¥Í•È±”½¹ÑÉ…Ğˆ°€‹fbÇbŸb³bçb¤ƒbŸfbçfb¼‰t°(€l‰É•…Ñ”µ••Ñ¥¹œÍÕµµ…Éäˆ°€‰Ë¥•ÈÕ¸½µÁÑ”É•¹‘Ô‘”Ë¥Õ¹¥½¸ˆ°€‹b—fbÓbŸb„ƒffb»bÔƒbŸfbŸb³b«fbŸbä‰t°(€l‰áÑÉ…ĞÉ¥Í­Ì°½ÁÁ½ÉÑÕ¹¥Ñ¥•Ì°…¹É•½µµ•¹‘•¹•áĞÍÑ•ÁÌ¸ˆ°€‰%‘•¹Ñ¥™¥•È±•ÌÉ¥ÍÅÕ•Ì°±•Ì½ÁÁ½ÉÑÕ¹¥Ó¥Ì•Ğ±•ÌÁÉ½¡…¥¹•Ìƒ¥Ñ…Á•ÌÉ•½µµ…¹“¥•Ì¸ˆ°€‹bŸbÏb«b»bÇbŸb°ƒbŸffb»bŸbßbÄƒf#bŸffbÇbÔƒf#bŸfb»bßf#bŸb¨ƒbŸfb«bŸff+b¤ƒbŸfff#b×f$ƒb£fbœ¸‰t°(€l‰QÕÉ¸Ñ¡”ÁÉ½©•ĞÁ¡…Í•Ì¥¹Ñ¼…¸•á•ÕÑ¥½¸Í¡•‘Õ±”¸ˆ°€‰QÉ…¹Í™½Éµ•È±•ÌÁ¡…Í•Ì‘ÔÁÉ½©•Ğ•¸Á±…¹¹¥¹œ“Še•ã¥ÕÑ¥½¸¸ˆ°€‹b«b·f#f+fƒfbÇbŸb·fƒbŸffbÓbÇf#bäƒb—ff$ƒb³b¿f#fƒbËfff(ƒffb«fff+bÀ¸‰t°(€l‰AÉ•Á…É”„ÍÑÉÕÑÕÉ•‘É…™Ğ‰¥±°½˜ÅÕ…¹Ñ¥Ñ¥•Ì¸ˆ°€‰AË¥Á…É•ÈÕ¸ÁÉ½©•ĞÍÑÉÕÑÕË¤‘”‰½É‘•É•…Ô‘”ÅÕ…¹Ñ¥Ó¥Ì¸ˆ°€‹b—bçb¿bŸb¼ƒfbÏf#b¿b¤ƒffbãfb¤ƒfb³b¿f#fƒbŸffff+bŸb¨¸‰t°(€l‰I•Ù¥•ÜÑ¡”‰¥±°½˜ÅÕ…¹Ñ¥Ñ¥•Ì™½È…ÁÌ…¹‘ÕÁ±¥…Ñ•Ì¸ˆ°€‰K¥Ù¥Í•È±”‰½É‘•É•…Ô‘”ÅÕ…¹Ñ¥Ó¥ÌÁ½ÕÈ“¥Ñ•Ñ•È±•Ì±…Õ¹•Ì•Ğ±•Ì‘½Õ‰±½¹Ì¸ˆ°€‹fbÇbŸb³bçb¤ƒb³b¿f#fƒbŸffff+bŸb¨ƒfbŸfb«bÓbŸfƒbŸfff#bŸfbÔƒf#bŸfb«fbÇbŸbÇbŸb¨¸‰t°(€l‰ÍÍ•ÍÌÁÉ½©•ĞÉ¥Í­Ì…¹Á½Ñ•¹Ñ¥…°‘•±…åÌ¸ˆ°€‹%Ù…±Õ•È±•ÌÉ¥ÍÅÕ•Ì‘ÔÁÉ½©•Ğ•Ğ±•ÌÉ•Ñ…É‘ÌÁ½Ñ•¹Ñ¥•±Ì¸ˆ°€‹b«ff+f+fƒfb»bŸbßbÄƒbŸffbÓbÇf#bäƒf#bŸb·b«fbŸfbŸb¨ƒbŸfb«bb»f+bÄ¸‰t°(€l‰É•…Ñ”…¸•á•ÕÑ¥Ù”É•Á½ÉĞ™½Èµ…¹…•µ•¹Ğ¸ˆ°€‰Ë¥•ÈÕ¸É…ÁÁ½ÉĞ•ã¥ÕÑ¥˜Á½ÕÈ±„‘¥É•Ñ¥½¸¸ˆ°€‹b—fbÓbŸb„ƒb«fbÇf+bÄƒb«fff+bÃf(ƒffb—b¿bŸbÇb¤¸‰t°(€l‰I•Ù¥•Ü„½¹ÍÑÉÕÑ¥½¸½¹ÑÉ…Ğ™½ÈÉ¥Í­Ì…¹µ¥ÍÍ¥¹œ¥¹™½Éµ…Ñ¥½¸¸ˆ°€‰K¥Ù¥Í•ÈÕ¸½¹ÑÉ…Ğ‘”½¹ÍÑÉÕÑ¥½¸Á½ÕÈ¥‘•¹Ñ¥™¥•È±•ÌÉ¥ÍÅÕ•Ì•Ğ±•Ì¥¹™½Éµ…Ñ¥½¹Ìµ…¹ÅÕ…¹Ñ•Ì¸ˆ°€‹fbÇbŸb³bçb¤ƒbçfb¼ƒbŸfb£fbŸb„ƒfbŸfb«bÓbŸfƒbŸffb»bŸbßbÄƒf#bŸffbçff#fbŸb¨ƒbŸffbŸfb×b¤¸‰t°(€l‰QÕÉ¸Ñ¡”Ñ•…´µ••Ñ¥¹œ¥¹Ñ¼…Ñ¥½¹…‰±”Á½¥¹ÑÌ¸ˆ°€‰QÉ…¹Í™½Éµ•È±„Ë¥Õ¹¥½¸“Šg¥ÅÕ¥Á”•¸…Ñ¥½¹Ì½¹Ë¡Ñ•Ì¸ˆ°€‹b«b·f#f+fƒbŸb³b«fbŸbäƒbŸffbÇf+fƒb—ff$ƒffbŸbÜƒfbŸb£fb¤ƒffb«fff+bÀ¸‰t°(€l‰=¹”İ½É­ÍÁ…”™½È½¹ÑÉ…ĞÉ•Ù¥•İÌ°‰¥±±Ì½˜ÅÕ…¹Ñ¥Ñ¥•Ì°…¹Y=I½¹ÍÑÉÕÑ¥½¸Ñ½½±Ìİ¥Ñ¡½ÕĞ¡…¹¥¹œ•á¥ÍÑ¥¹œİ½É­™±½İÌ¸ˆ°€‰U¸•ÍÁ…”Õ¹¥ÅÕ”Á½ÕÈ±•ÌË¥Ù¥Í¥½¹Ì‘”½¹ÑÉ…ÑÌ°±•Ì‰½É‘•É•…Õà‘”ÅÕ…¹Ñ¥Ó¥Ì•Ğ±•Ì½ÕÑ¥±Ì‘”½¹ÍÑÉÕÑ¥½¸Y=I°Í…¹Ìµ½‘¥™¥•È±•ÌÁÉ½•ÍÍÕÌ•á¥ÍÑ…¹ÑÌ¸ˆ°€‹fbÏbŸb·b¤ƒf#bŸb·b¿b¤ƒffbÇbŸb³bçb¤ƒbŸfbçff#b¼ƒf#b³b¿bŸf#fƒbŸffff+bŸb¨ƒf#bb¿f#bŸb¨Y=Iƒffb£fbŸb„ƒb¿f#fƒb«bëf+f+bÄƒbÏf+bÄƒbŸfbçffƒbŸfb·bŸff(¸‰t°(€l‰MÕ‰µ¥ÑÑ•ˆ°€‰M½Õµ¥Ìˆ°€‹ff?fb¿fGf;f‰t°(€l‰•ÁÑ•ˆ°€‰•ÁÓ¤ˆ°€‹ffb£f#f‰t°(€l‰U¹‘•ÈÉ•Ù¥•Üˆ°€‰¸½ÕÉÌ“Še•á…µ•¸ˆ°€‹ff+b¼ƒbŸffbÇbŸb³bçb¤‰t°(€l‰U¹‘•ÈI•Ù¥•Üˆ°€‰¸½ÕÉÌ“Še•á…µ•¸ˆ°€‹ff+b¼ƒbŸffbÇbŸb³bçb¤‰t°(€l‰M¡½ÉÑ±¥ÍÑ•ˆ°€‰AË¥Ï¥±•Ñ¥½¹»¤ˆ°€‹bÛffƒbŸffbŸb›fb¤ƒbŸffb»b«b×bÇb¤‰t°(€l‰İ…É‘•ˆ°€‰ÑÑÉ¥‰×¤ˆ°€‹b«fb¨ƒbŸfb«bÇbÏf+b¤‰t°(€l‰AÕ‰±¥Í¡•ˆ°€‰AÕ‰±§¤ˆ°€‹ffbÓf#bÄ‰t°(€l‰±½Í•ˆ°€‰³ÑÑÕË¤ˆ°€‹fbëff‰t°(€l‰…¹•±±•ˆ°€‰¹¹Õ³¤ˆ°€‹ffbëf$‰t°(€l‰±°ÍÑ…ÑÕÍ•Ìˆ°€‰Q½ÕÌ±•ÌÍÑ…ÑÕÑÌˆ°€‹ffƒbŸfb·bŸfbŸb¨‰t°(€l‰Q•¡¹¥…°ˆ°€‰Q•¡¹¥ÅÕ”ˆ°€‹b«fff(‰t°(€l‰½µµ•É¥…°ˆ°€‰½µµ•É¥…°ˆ°€‹b«b³bŸbÇf(‰t°(€l‰Q•¡¹¥…°Í½É”ˆ°€‰M½É”Ñ•¡¹¥ÅÕ”ˆ°€‹bŸfb«ff+f+fƒbŸfb«fff(‰t°(€l‰½µµ•É¥…°Í½É”ˆ°€‰M½É”½µµ•É¥…°ˆ°€‹bŸfb«ff+f+fƒbŸfb«b³bŸbÇf(‰t°(€l‰Q•¡¹¥…°½µÁ±¥…¹”ˆ°€‰½¹™½Éµ¥Ó¤Ñ•¡¹¥ÅÕ”ˆ°€‹bŸffbßbŸb£fb¤ƒbŸfb«fff+b¤‰t°(€l‰½µµ•É¥…°½µÁ±¥…¹”ˆ°€‰½¹™½Éµ¥Ó¤½µµ•É¥…±”ˆ°€‹bŸffbßbŸb£fb¤ƒbŸfb«b³bŸbÇf+b¤‰t°(€l‰Q•¡¹¥…°•Ù…±Õ…Ñ¥½¸ˆ°€‹%Ù…±Õ…Ñ¥½¸Ñ•¡¹¥ÅÕ”ˆ°€‹bŸfb«ff+f+fƒbŸfb«fff(‰t°(€l‰Q•¡¹¥…°Ù…±Õ…Ñ¥½¸ˆ°€‹%Ù…±Õ…Ñ¥½¸Ñ•¡¹¥ÅÕ”ˆ°€‹bŸfb«ff+f+fƒbŸfb«fff(‰t°(€l‰½µµ•É¥…°•Ù…±Õ…Ñ¥½¸ˆ°€‹%Ù…±Õ…Ñ¥½¸½µµ•É¥…±”ˆ°€‹bŸfb«ff+f+fƒbŸfb«b³bŸbÇf(‰t°(€l‰½µµ•É¥…°Ù…±Õ…Ñ¥½¸ˆ°€‹%Ù…±Õ…Ñ¥½¸½µµ•É¥…±”ˆ°€‹bŸfb«ff+f+fƒbŸfb«b³bŸbÇf(‰t°(€l‰½µµ•É¥…°Ñ•ÉµÌˆ°€‰½¹‘¥Ñ¥½¹Ì½µµ•É¥…±•Ìˆ°€‹bŸfbÓbÇf#bÜƒbŸfb«b³bŸbÇf+b¤‰t°(€l‰1½İ•ÍĞˆ°€‰1”Á±ÕÌ™…¥‰±”ˆ°€‹bŸfbb¿ff$‰t°(€l‰!¥¡•ÍĞˆ°€‰1”Á±ÕÌƒ¥±•Û¤ˆ°€‹bŸfbbçff$‰t°(€l‰	•ÍĞÙ…±Õ”ˆ°€‰5•¥±±•ÕÈÉ…ÁÁ½ÉĞÅÕ…±¥Ó¤µÁÉ¥àˆ°€‹bfbÛfƒff+fb¤‰t°(€l‰1½İ•ÍĞÁÉ¥”ˆ°€‰AÉ¥à±”Á±ÕÌ‰…Ìˆ°€‹bffƒbÏbçbÄ‰t°(€l‰1½İ•ÍĞÉ¥Í¬ˆ°€‰I¥ÍÅÕ”±”Á±ÕÌ™…¥‰±”ˆ°€‹bffƒfb»bŸbßbÇb¤‰t°(€l‰!¥¡•ÍĞÉ…Ñ•ˆ°€‰5¥•Õà¹½Ó¤ˆ°€‹bŸfbbçff$ƒb«ff+f+fbŸf,‰t°(€l‰…ÍÑ•ÍĞˆ°€‰1”Á±ÕÌÉ…Á¥‘”ˆ°€‹bŸfbbÏbÇbä‰t°(€l‰…ÍÑ•ÍĞ‘•±¥Ù•Éäˆ°€‰1¥ÙÉ…¥Í½¸±„Á±ÕÌÉ…Á¥‘”ˆ°€‹bbÏbÇbäƒb«bÏff+f‰t°(€l‰I•½µµ•¹‘•ˆ°€‰I•½µµ…¹“¤ˆ°€‹ff#b×f$ƒb£f‰t°(€l‰	•ÍĞQ•¡¹¥…°ˆ°€‰5•¥±±•ÕÉ”½™™É”Ñ•¡¹¥ÅÕ”ˆ°€‹bfbÛfƒbçbÇbØƒb«fff(‰t°(€l‰1½İ•ÍĞAÉ¥”ˆ°€‰AÉ¥à±”Á±ÕÌ‰…Ìˆ°€‹bffƒbÏbçbÄ‰t°(€l‰	•ÍĞÙ…±Õ”™½Èµ½¹•äˆ°€‰5•¥±±•ÕÈÉ…ÁÁ½ÉĞÅÕ…±¥Ó¤µÁÉ¥àˆ°€‹bfbÛfƒff+fb¤ƒffbŸb£fƒbŸfbÏbçbÄ‰t°(€l‰e•…ÉÌ¥¸‰ÕÍ¥¹•ÍÌˆ°€‰¹»¥•Ì“Še…Ñ¥Ù¥Ó¤ˆ°€‹bÏff#bŸb¨ƒbŸfb»b£bÇb¤‰t°(€l‰‘…äˆ°€‰©½ÕÈˆ°€‹f+f#f‰t°(€l‰‘…åÌˆ°€‰©½ÕÉÌˆ°€‹bf+bŸf‰t°(€l‰İ••¬ˆ°€‰Í•µ…¥¹”ˆ°€‹bbÏb£f#bä‰t°(€l‰İ••­Ìˆ°€‰Í•µ…¥¹•Ìˆ°€‹bbÏbŸb£f+bä‰t°(€l‰µ½¹Ñ ˆ°€‰µ½¥Ìˆ°€‹bÓfbÄ‰t°(€l‰µ½¹Ñ¡Ìˆ°€‰µ½¥Ìˆ°€‹bbÓfbÄ‰t°(€l‰å•…Èˆ°€‰…¸ˆ°€‹bÏfb¤‰t°(€l‰å•…ÉÌˆ°€‰…¹Ìˆ°€‹bÏff#bŸb¨‰t°(€l‰M•…É ¸¸¸ˆ°€‰I•¡•É¡•È¸¸¸ˆ°€‹bŸb£b·b¬¸¸¸‰t°(€l‰…¹•°ˆ°€‰¹¹Õ±•Èˆ°€‹b—fbëbŸb„‰t°(€l‰±½Í”ˆ°€‰•Éµ•Èˆ°€‹b—bëfbŸf‰t°(€l‰É•…Ñ”ˆ°€‰Ë¥•Èˆ°€‹b—fbÓbŸb„‰t°(€l‰‘¥Ğˆ°€‰5½‘¥™¥•Èˆ°€‹b«bçb¿f+f‰t°(€l‰É¡¥Ù”ˆ°€‰É¡¥Ù•Èˆ°€‹bbÇbÓfb¤‰t°(€l‰•±•Ñ”ˆ°€‰MÕÁÁÉ¥µ•Èˆ°€‹b·bÃf‰t°(€l‰½İ¹±½…ˆ°€‰S¥³¥¡…É•Èˆ°€‹b«fbËf+f‰t°(€l‰½¹Ñ¥¹Õ”ˆ°€‰½¹Ñ¥¹Õ•Èˆ°€‹fb«bŸb£bçb¤‰t°(€l‰AÉ•Ù¥½ÕÌˆ°€‰AË¥¥‘•¹Ğˆ°€‹bŸfbÏbŸb£f‰t°(€l‰9•áĞˆ°€‰MÕ¥Ù…¹Ğˆ°€‹bŸfb«bŸff(‰t(€€±l‰	Õ¥±‘¥¹œÑ¡”™ÕÑÕÉ”Ñ½•Ñ¡•Èˆ°€‰½¹ÍÑÉÕ¥Í½¹Ì³Še…Ù•¹¥È•¹Í•µ‰±”ˆ°€‹fb£ff(ƒbŸffbÏb«fb£fƒfbçbŸf,‰t(€€±l‰]•±½µ”°'Še±°¡•±Àå½ÔÉ•ÑÕÉ¸Ñ¼å½ÕÈÁÉ½©•Ğİ½É­ÍÁ…”Í…™•±ä¸ˆ°€‰	¥•¹Ù•¹Õ”°©”Ù½ÕÌ…¥‘”ƒ€É•ÑÉ½ÕÙ•ÈÙ½ÑÉ”•ÍÁ…”ÁÉ½©•Ğ•¸Ñ½ÕÑ”Ï¥ÕÉ¥Ó¤¸ˆ°€‹fbÇb·b£bŸf/b0ƒbÏbbÏbŸbçb¿fƒbçff$ƒbŸfbçf#b¿b¤ƒb—ff$ƒfbÏbŸb·b¤ƒfbÓbÇf#bçfƒb£bfbŸf¸‰t(€€±l‰!¥ Í•ÕÉ¥Ñäˆ°€‰O¥ÕÉ¥Ó¤É•¹™½É¥”ˆ°€‹bfbŸfƒbçbŸff(‰t(€€±l‰e½ÕÈ‘…Ñ„¥ÌÁÉ½Ñ•Ñ•ˆ°€‰AÉ½Ñ•Ñ¥½¸‘”Ù½Ì‘½¹»¥•Ìˆ°€‹b·fbŸf+b¤ƒb£f+bŸfbŸb«f‰t(€€±l‰±½ÕÍÑ½É…”ˆ°€‰MÑ½­…”¥¹™½¹Õ…¥ÅÕ”ˆ°€‹b·fbàƒbÏb·bŸb£f(‰t(€€±l‰•ÍÌå½ÕÈÁÉ½©•ÑÌˆ°€‰¡Ìƒ€Ù½ÌÁÉ½©•ÑÌˆ°€‹bŸff#b×f#fƒffbÓbŸbÇf+bçf‰t(€€±l‰ÉÑ¥™¥¥…°¥¹Ñ•±±¥•¹”ˆ°€‰%¹Ñ•±±¥•¹”…ÉÑ¥™¥¥•±±”ˆ°€‹bÃfbŸb„ƒbŸb×bßfbŸbçf(‰t(€€±l‰¹…±åÍ¥Ì…¹É•½µµ•¹‘…Ñ¥½¹Ìˆ°€‰¹…±åÍ•Ì•ĞÉ•½µµ…¹‘…Ñ¥½¹Ìˆ°€‹b«b·ff+fƒf#bŸfb«bÇbŸb·bŸb¨‰t(€€±l‰%¹Ñ•É…Ñ•½±±…‰½É…Ñ¥½¸ˆ°€‰½±±…‰½É…Ñ¥½¸¥¹Ó¥Ë¥”ˆ°€‹b«bçbŸf#fƒfb«fbŸff‰t(€€±l‰É½ÍÌ…±°ÍÑ…­•¡½±‘•ÉÌˆ°€‰¹ÑÉ”Ñ½ÕÑ•Ì±•ÌÁ…ÉÑ¥•ÌÁÉ•¹…¹Ñ•Ìˆ°€‹b£f+fƒffƒbŸfbbßbÇbŸf‰t(€€±l‰AÉ½™•ÍÍ¥½¹…°É•Á½ÉÑÌˆ°€‰I…ÁÁ½ÉÑÌÁÉ½™•ÍÍ¥½¹¹•±Ìˆ°€‹b«fbŸbÇf+bÄƒbŸb·b«bÇbŸff+b¤‰t(€€±l‰	•ÑÑ•È‘•¥Í¥½¹Ìˆ°€‰”µ•¥±±•ÕÉ•Ì“¥¥Í¥½¹Ìˆ°€‹fbÇbŸbÇbŸb¨ƒbfbÛf‰t)tì()™Õ¹Ñ¥½¸™±…ÑÑ•¹¥Ñ¥½¹…Éä¡Ù…±Õ”èÕ¹­¹½İ¸°ÁÉ•™¥à€ô€ˆˆ°½ÕÑÁÕĞèI•½ÉñÍÑÉ¥¹œ°ÍÑÉ¥¹œø€ôíô¤ì(€¥˜€¡ÑåÁ•½˜Ù…±Õ”€ôôô€‰ÍÑÉ¥¹œˆ¤ì(€€€½ÕÑÁÕÑmÁÉ•™¥át€ôÙ…±Õ”ì(€€€É•ÑÕÉ¸½ÕÑÁÕĞì(€ô(€¥˜€¡ÉÉ…ä¹¥ÍÉÉ…ä¡Ù…±Õ”¤¤ì(€€€Ù…±Õ”¹™½É…  ¡•¹ÑÉä°¥¹‘•à¤€ôø™±…ÑÑ•¹¥Ñ¥½¹…Éä¡•¹ÑÉä°€‘íÁÉ•™¥áô¸‘í¥¹‘•áõ€°½ÕÑÁÕĞ¤¤ì(€€€É•ÑÕÉ¸½ÕÑÁÕĞì(€ô(€¥˜€¡Ù…±Õ”€˜˜ÑåÁ•½˜Ù…±Õ”€ôôô€‰½‰©•Ğˆ¤ì(€€€=‰©•Ğ¹•¹ÑÉ¥•Ì¡Ù…±Õ”¤¹™½É…  ¡m­•ä°•¹ÑÉåt¤€ôø™±…ÑÑ•¹¥Ñ¥½¹…Éä¡•¹ÑÉä°ÁÉ•™¥à€ü€‘íÁÉ•™¥áô¸‘í­•åõ€€è­•ä°½ÕÑÁÕĞ¤¤ì(€ô(€É•ÑÕÉ¸½ÕÑÁÕĞì)ô()™Õ¹Ñ¥½¸‰Õ¥±‘QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ ¤èQÉ…¹Í±…Ñ¥½¹…Ñ…±½œì(€½¹ÍĞ™±…ÑÑ•¹•€ô=‰©•Ğ¹™É½µ¹ÑÉ¥•Ì¡±½…±•Ì¹µ…À ¡±½…±”¤€ôøm±½…±”°™±…ÑÑ•¹¥Ñ¥½¹…Éä¡‘¥Ñ¥½¹…É¥•Ím±½…±•t¥t¤¤…ÌI•½Éñ1½…±”°I•½ÉñÍÑÉ¥¹œ°ÍÑÉ¥¹œøøì(€½¹ÍĞ…Ñ…±½œ€ô=‰©•Ğ¹™É½µ¹ÑÉ¥•Ì¡±½…±•Ì¹µ…À ¡±½…±”¤€ôøm±½…±”°íõt¤¤…ÌQÉ…¹Í±…Ñ¥½¹…Ñ…±½œì((€½¹ÍĞÁ…Ñ¡Ì€ô¹•ÜM•Ğ¡±½…±•Ì¹™±…Ñ5…À ¡±½…±”¤€ôø=‰©•Ğ¹­•åÌ¡™±…ÑÑ•¹•‘m±½…±•t¤¤¤ì(€Á…Ñ¡Ì¹™½É…  ¡Á…Ñ ¤€ôøì(€€€½¹ÍĞÙ…±Õ•Ì€ô±½…±•Ì¹µ…À ¡±½…±”¤€ôø™±…ÑÑ•¹•‘m±½…±•umÁ…Ñ¡t¤ì(€€€Ù…±Õ•Ì¹™½É…  ¡Í½ÕÉ”¤€ôøì(€€€€€¥˜€ …Í½ÕÉ”¤É•ÑÕÉ¸ì(€€€€€±½…±•Ì¹™½É…  ¡±½…±”°¥¹‘•à¤€ôøì(€€€€€€€¥˜€¡Ù…±Õ•Ím¥¹‘•át¤…Ñ…±½m±½…±•umÍ½ÕÉ”¹ÑÉ¥´ ¥t€ôÙ…±Õ•Ím¥¹‘•át¹ÑÉ¥´ ¤ì(€€€€€ô¤ì(€€€ô¤ì(€ô¤ì((€ÍÕÁÁ±•µ•¹Ñ…±U¥QÉ…¹Í±…Ñ¥½¹Ì¹™½É…  ¡m•¸°™È°…Ét¤€ôøì(€€€½¹ÍĞÙ…±Õ•ÌèI•½Éñ1½…±”°ÍÑÉ¥¹œø€ôì•¸°™È°…Èôì(€€€±½…±•Ì¹™½É…  ¡±½…±”¤€ôøì(€€€€€m•¸°™È°…Ét¹™½É…  ¡Í½ÕÉ”¤€ôøì(€€€€€€€…Ñ…±½m±½…±•umÍ½ÕÉ•t€ôÙ…±Õ•Ím±½…±•tì(€€€€€ô¤ì(€€€ô¤ì(€ô¤ì((€É•ÑÕÉ¸…Ñ…±½œì)ô()½¹ÍĞ•¹•É…Ñ•‘U¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ€ô‰Õ¥±‘QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ ¤ì()•áÁ½ÉĞ½¹ÍĞÕ¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½œèQÉ…¹Í±…Ñ¥½¹…Ñ…±½œ€ôì(€…Èèì€¸¸¹•¹•É…Ñ•‘U¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ¹…È°€¸¸¹…É…Ñ…±½œô°(€™Èèì€¸¸¹•¹•É…Ñ•‘U¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ¹™È°€¸¸¹™É…Ñ…±½œô°(€•¸èì€¸¸¹•¹•É…Ñ•‘U¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½œ¹•¸°€¸¸¹•¹…Ñ…±½œô)ôì()•áÁ½ÉĞ™Õ¹Ñ¥½¸ÑÉ…¹Í±…Ñ•U¥Q•áĞ¡Ù…±Õ”èÍÑÉ¥¹œ°±½…±”è1½…±”¤èÍÑÉ¥¹œì(€½¹ÍĞ±•…‘¥¹œ€ôÙ…±Õ”¹µ…Ñ  ½yqÌ¨¼¤ü¹lÁtñğ€ˆˆì(€½¹ÍĞÑÉ…¥±¥¹œ€ôÙ…±Õ”¹µ…Ñ  ½qÌ¨¼¤ü¹lÁtñğ€ˆˆì(€½¹ÍĞÍ½ÕÉ”€ôÙ…±Õ”¹ÑÉ¥´ ¤ì(€¥˜€ …Í½ÕÉ”¤É•ÑÕÉ¸Ù…±Õ”ì(€½¹ÍĞ•á…Ğ€ôÕ¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½m±½…±•umÍ½ÕÉ•tì(€¥˜€¡•á…Ğ¤É•ÑÕÉ¸€‘í±•…‘¥¹ô‘í•á…Ñô‘íÑÉ…¥±¥¹õ€ì((€½¹ÍĞÅÕ…¹Ñ¥ÑåU¹¥Ğ€ôÍ½ÕÉ”¹µ…Ñ  ½x¡q¬ üél¸±uq¬¤ü¥qÌ¬¡‘…åñ‘…åÍñİ••­ñİ••­Íñµ½¹Ñ¡ñµ½¹Ñ¡Íñå•…Éñå•…ÉÌ¤½¤¤ì(€¥˜€¡ÅÕ…¹Ñ¥ÑåU¹¥Ğ¤ì(€€€½¹ÍĞl°…µ½Õ¹Ğ°Õ¹¥Ñt€ôÅÕ…¹Ñ¥ÑåU¹¥Ğì(€€€½¹ÍĞ±½…±¥é•‘U¹¥Ğ€ôÕ¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½m±½…±•umÕ¹¥Ğ¹Ñ½1½İ•É…Í” ¥tñğÕ¹¥Ğì(€€€É•ÑÕÉ¸€‘í±•…‘¥¹ô‘í…µ½Õ¹Ñô€‘í±½…±¥é•‘U¹¥Ñô‘íÑÉ…¥±¥¹õ€ì(€ô((€½¹ÍĞÍ½É”€ôÍ½ÕÉ”¹µ…Ñ  ½x¡Q•¡¹¥…±ñ½µµ•É¥…°¥qÌ¬¡q¬ üél¸±uq¬¤ü¤”½¤¤ì(€¥˜€¡Í½É”¤ì(€€€½¹ÍĞl°±…‰•°°…µ½Õ¹Ñt€ôÍ½É”ì(€€€½¹ÍĞ±½…±¥é•‘1…‰•°€ôÕ¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½m±½…±•um±…‰•±tñğ±…‰•°ì(€€€É•ÑÕÉ¸€‘í±•…‘¥¹ô‘í±½…±¥é•‘1…‰•±ô€‘í…µ½Õ¹Ñô”‘íÑÉ…¥±¥¹õ€ì(€ô((€½¹ÍĞ•áÁ•É¥•¹”€ôÍ½ÕÉ”¹µ…Ñ  ½x¡q¬¥qÌ­å•…ÉÌıqÌ­¥¹qÌ­‰ÕÍ¥¹•ÍÌ½¤¤ì(€¥˜€¡•áÁ•É¥•¹”¤ì(€€€½¹ÍĞ±…‰•°€ôÕ¥QÉ…¹Í±…Ñ¥½¹…Ñ…±½m±½…±•ul‰e•…ÉÌ¥¸‰ÕÍ¥¹•ÍÌ‰tñğ€‰e•…ÉÌ¥¸‰ÕÍ¥¹•ÍÌˆì(€€€É•ÑÕÉ¸±½…±”€ôôô€‰…Èˆ(€€€€€€ü€‘í±•…‘¥¹ô‘í±…‰•±ôè€‘í•áÁ•É¥•¹•lÅuô‘íÑÉ…¥±¥¹õ€(€€€€€€è€‘í±•…‘¥¹ô‘í•áÁ•É¥•¹•lÅuô€‘í±…‰•°¹Ñ½1½…±•1½İ•É…Í”¡±½…±”€ôôô€‰™Èˆ€ü€‰™Èˆ€è€‰•¸ˆ¥ô‘íÑÉ…¥±¥¹õ€ì(€ô((€É•ÑÕÉ¸Ù…±Õ”ì)ô(

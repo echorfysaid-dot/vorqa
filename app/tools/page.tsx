@@ -1,4 +1,4 @@
-"use client";
+�r�^�f��ئ{m�y�'vî���"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -34,14 +34,14 @@ import { AutoLocalizedContent } from "@/components/auto-localized-content";
 const cardTools = tools.map(({ icon, ...tool }) => tool);
 
 const suggestedPrompts = [
-  { title: "Analyze this project", text: "استخرج المخاطر والفرص والخطوات التالية.", href: "/tools/document", icon: BrainCircuit },
-  { title: "Create project schedule", text: "حوّل مراحل المشروع إلى جدول تنفيذي.", href: "/tools/planning-review", icon: CalendarDays },
-  { title: "Generate BOQ", text: "جهّز مسودة كميات منظمة.", href: "/tools/document", icon: ClipboardList },
-  { title: "Review BOQ", text: "راجع جدول الكميات واكتشف النواقص والتكرارات.", href: "/tools/boq-review", icon: Calculator },
-  { title: "Risk assessment", text: "حلّل المخاطر واحتمالات التأخير.", href: "/tools/risk-assessment", icon: AlertTriangle },
-  { title: "Create report", text: "أنشئ تقريراً تنفيذياً للإدارة.", href: "/tools/document", icon: FileText },
-  { title: "Review contract", text: "راجع عقد بناء واستخرج المخاطر والنواقص.", href: "/tools/contract-review", icon: Scale },
-  { title: "Create meeting summary", text: "لخّص اجتماع الفريق في نقاط قابلة للتنفيذ.", href: "/tools/marketing", icon: MessageSquareText }
+  { title: "Analyze this project", text: "Extract risks, opportunities, and recommended next steps.", href: "/tools/document", icon: BrainCircuit },
+  { title: "Create project schedule", text: "Turn the project phases into an execution schedule.", href: "/tools/planning-review", icon: CalendarDays },
+  { title: "Generate BOQ", text: "Prepare a structured draft bill of quantities.", href: "/tools/document", icon: ClipboardList },
+  { title: "Review BOQ", text: "Review the bill of quantities for gaps and duplicates.", href: "/tools/boq-review", icon: Calculator },
+  { title: "Risk assessment", text: "Assess project risks and potential delays.", href: "/tools/risk-assessment", icon: AlertTriangle },
+  { title: "Create report", text: "Create an executive report for management.", href: "/tools/document", icon: FileText },
+  { title: "Review contract", text: "Review a construction contract for risks and missing information.", href: "/tools/contract-review", icon: Scale },
+  { title: "Create meeting summary", text: "Turn the team meeting into actionable points.", href: "/tools/marketing", icon: MessageSquareText }
 ];
 
 const quickTools = [
@@ -105,7 +105,7 @@ function ConstructionIntelligenceGateway() {
             </div>
             <h2 className="mt-3 text-2xl font-black text-white">Construction Intelligence</h2>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-ds-token-text/58">
-              Ù…Ø±ÙƒØ² ÙˆØ§Ø­Ø¯ Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø¹Ù‚ÙˆØ¯ØŒ Ø¬Ø¯Ø§ÙˆÙ„ Ø§Ù„ÙƒÙ…ÙŠØ§ØªØŒ ÙˆØ£Ø¯ÙˆØ§Øª VORA Ø§Ù„Ù…Ø¹Ù…Ø§Ø±ÙŠØ© Ø§Ù„Ù‚Ø§Ø¯Ù…Ø© Ø¯ÙˆÙ† ØªØºÙŠÙŠØ± Ø§Ù„ØªØ¯ÙÙ‚Ø§Øª Ø§Ù„Ø­Ø§Ù„ÙŠØ©.
+              One workspace for contract reviews, bills of quantities, and VORA construction tools without changing existing workflows.
             </p>
           </div>
         </div>
