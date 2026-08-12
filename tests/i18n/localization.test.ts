@@ -6,6 +6,8 @@ import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
 import { formatCurrency, formatDate, formatNumber, resolveIntlLocale } from "@/lib/utils/format";
+import { getDemoCatalogKeys, getMarketplaceCategoryKeys, localizeMarketplaceCategory, translateDemoKey } from "@/lib/locales/demo";
+import { localizeDemoDate } from "@/lib/demo-localization";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -269,6 +271,36 @@ export const tests = [
       assert(formatDate(date, "ar") !== formatDate(date, "fr"), "Arabic and French dates should differ");
       assert(formatNumber(1234567, "fr") !== formatNumber(1234567, "en"), "French and English numbers should differ");
       locales.forEach((locale) => assert(formatCurrency(245000, "MAD", locale).includes("245"), `Currency formatting failed for ${locale}`));
+    }
+  },
+  {
+    name: "demo localization catalog has exact AR FR EN parity",
+    run: () => {
+      getDemoCatalogKeys().forEach((key) => locales.forEach((locale) => {
+        assert(Boolean(translateDemoKey(key, locale)?.trim()), `Missing ${locale} demo translation for ${key}`);
+      }));
+    }
+  },
+  {
+    name: "all marketplace demo categories localize in AR FR and EN",
+    run: () => {
+      assert(getMarketplaceCategoryKeys().length === 26, "Marketplace category catalog must cover every canonical demo category");
+      getMarketplaceCategoryKeys().forEach((key) => locales.forEach((locale) => {
+        const localized = localizeMarketplaceCategory(key, "fallback", locale);
+        assert(localized.name !== "", `Missing ${locale} marketplace category name for ${key}`);
+        assert(localized.description !== "fallback", `Missing ${locale} marketplace category description for ${key}`);
+      }));
+    }
+  },
+  {
+    name: "RFQ demo titles and long dates follow the active locale",
+    run: () => {
+      assert(translateDemoKey("rfq.demo.luxuryVilla.title", "ar") === "حزمة تنفيذ فيلا فاخرة بالدار البيضاء", "Arabic RFQ title mismatch");
+      assert(translateDemoKey("rfq.demo.luxuryVilla.title", "fr")?.startsWith("Lot d’exécution"), "French RFQ title mismatch");
+      assert(translateDemoKey("rfq.demo.luxuryVilla.title", "en") === "Luxury Villa Casablanca execution package", "English RFQ title mismatch");
+      assert(localizeDemoDate("2026-07-28", "ar", (value) => value).includes("يوليو"), "Arabic month must be localized");
+      assert(localizeDemoDate("2026-07-28", "fr", (value) => value).includes("juillet"), "French month must be localized");
+      assert(localizeDemoDate("2026-07-28", "en", (value) => value).includes("July"), "English month must be localized");
     }
   },
   {

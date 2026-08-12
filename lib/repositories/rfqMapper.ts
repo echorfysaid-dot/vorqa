@@ -126,7 +126,10 @@ export function mapDemoRfqToDomain(rfq: DemoRfq): RFQ {
       executiveSummary: `VORA recommends validating scope completeness, comparing supplier capacity, and preparing an executive award memo before final decision.`
     },
     metadata: {
-      progress: progressForStatus(status)
+      progress: progressForStatus(status),
+      titleKey: rfq.titleKey,
+      descriptionKey: rfq.descriptionKey,
+      demo: true
     },
     createdAt: "2026-07-12T09:00:00.000Z",
     updatedAt: "2026-07-18T11:00:00.000Z"

@@ -6,10 +6,13 @@ import { ArrowLeft, Clock3, FileText, Filter, PackageCheck, Plus, Search, Trophy
 import { Badge, Button, EmptyState, GlassCard, ProgressBar } from "@/components/ui";
 import { rfqRepository } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { localizeDemoDate, localizeDemoValue } from "@/lib/demo-localization";
 
 const demoRfqs = rfqRepository.list();
 
 export default function RfqDashboardPage() {
+  const { locale, translate } = useI18n();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
@@ -56,7 +59,7 @@ export default function RfqDashboardPage() {
 
       {filteredRfqs.length ? (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {filteredRfqs.map((rfq) => <RfqCard key={rfq.id} rfq={rfq} />)}
+          {filteredRfqs.map((rfq) => <RfqCard key={rfq.id} rfq={rfq} locale={locale} translate={translate} />)}
         </div>
       ) : (
         <EmptyState title="No RFQs found" description="Adjust your search or filters to restore the RFQ dashboard." action={<Button variant="secondary" onClick={() => { setQuery(""); setStatusFilter("All statuses"); setCategoryFilter("All categories"); }}>Reset filters</Button>} />
@@ -65,19 +68,19 @@ export default function RfqDashboardPage() {
   </AutoLocalizedContent>);
 }
 
-function RfqCard({ rfq }: { rfq: (typeof demoRfqs)[number] }) {
+function RfqCard({ rfq, locale, translate }: { rfq: (typeof demoRfqs)[number]; locale: "ar" | "fr" | "en"; translate: (value: string) => string }) {
   const tone = rfq.status === "Open" ? "success" : rfq.status === "Draft" ? "warning" : rfq.status === "Awarded" ? "gold" : "neutral";
   return (<AutoLocalizedContent>
     <Link href={`/marketplace/rfq/${rfq.id}`} className="group block rounded-[2rem] outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]/70">
       <GlassCard className="p-5 transition group-hover:border-[#D4AF37]/30">
         <div className="flex items-start justify-between gap-4"><Badge tone={tone}>{rfq.status}</Badge><span className="font-black text-gold">{rfq.id}</span></div>
-        <h2 className="mt-5 text-2xl font-black text-white">{rfq.title}</h2>
-        <p className="mt-2 text-sm leading-7 text-ds-text/58">{rfq.description}</p>
+        <h2 className="mt-5 text-2xl font-black text-white">{localizeDemoValue({ value: rfq.title, key: String(rfq.metadata?.titleKey || "") }, locale, translate)}</h2>
+        <p className="mt-2 text-sm leading-7 text-ds-text/58">{localizeDemoValue({ value: rfq.description || "", key: String(rfq.metadata?.descriptionKey || "") }, locale, translate)}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <MiniMetric label="Project" value={rfq.project} />
           <MiniMetric label="Budget" value={rfq.budget} />
           <MiniMetric label="Timeline" value={rfq.timeline} />
-          <MiniMetric label="Due" value={rfq.dueDate} />
+          <MiniMetric label="Due" value={localizeDemoDate(rfq.dueDate, locale, translate)} />
         </div>
         <div className="mt-5"><ProgressBar value={rfq.status === "Awarded" ? 100 : rfq.status === "Closed" ? 84 : rfq.status === "Open" ? 52 : 24} label="RFQ progress" tone={tone} /></div>
       </GlassCard>

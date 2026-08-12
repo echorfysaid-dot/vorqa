@@ -22,10 +22,14 @@ export function formatCurrency(amount: number, currency = "MAD", locale: Locale 
   }).format(amount);
 }
 
-export function formatDate(value: string | Date, locale: Locale | string = "en"): string {
+export function formatDate(
+  value: string | Date,
+  locale: Locale | string = "en",
+  options: { month?: "short" | "long" } = {}
+): string {
   return new Intl.DateTimeFormat(resolveIntlLocale(locale), {
     year: "numeric",
-    month: "short",
+    month: options.month || "short",
     day: "numeric"
   }).format(new Date(value));
 }

@@ -26,6 +26,8 @@ import type { MarketplaceSort } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 import { useToast } from "@/components/app-shell";
 import { marketplaceSelection } from "@/lib/marketplace-selection";
+import { useI18n } from "@/components/i18n-provider";
+import { localizeMarketplaceCategory } from "@/lib/locales/demo";
 
 const marketplaceCategories = marketplaceRepository.listCategories();
 const marketplaceCompanies = marketplaceRepository.listCompanies();
@@ -42,6 +44,7 @@ const categoryIcons = {
 } as const;
 
 export default function MarketplacePage() {
+  const { locale } = useI18n();
   const { pushToast } = useToast();
   const [query, setQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
@@ -199,6 +202,7 @@ export default function MarketplacePage() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {marketplaceCategories.map((category) => {
             const Icon = categoryIcons[category.name as keyof typeof categoryIcons] || Building2;
+            const localizedCategory = localizeMarketplaceCategory(category.name, category.description, locale);
             return (
               <button
                 key={category.name}
@@ -212,8 +216,8 @@ export default function MarketplacePage() {
                   </span>
                   <Badge tone="gold">{category.count} companies</Badge>
                 </div>
-                <h3 className="mt-4 text-lg font-black text-white">{category.name}</h3>
-                <p className="mt-2 text-sm leading-6 text-ds-text/56">{category.description}</p>
+                <h3 className="mt-4 text-lg font-black text-white">{localizedCategory.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-ds-text/56">{localizedCategory.description}</p>
               </button>
             );
           })}

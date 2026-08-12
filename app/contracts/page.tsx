@@ -9,9 +9,10 @@ import type { Contract } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 import { useI18n } from "@/components/i18n-provider";
 import { formatCurrency } from "@/lib/utils/format";
+import { localizeDemoDate } from "@/lib/demo-localization";
 
 export default function ContractsPage() {
-  const { locale } = useI18n();
+  const { locale, translate } = useI18n();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [categoryFilter, setCategoryFilter] = useState("All categories");
@@ -66,6 +67,8 @@ export default function ContractsPage() {
 }
 
 function ContractCard({ contract }: { contract: Contract }) {
+  const { locale, translate } = useI18n();
+  const isDemo = contract.ownerId === "demo-user";
   const tone = contract.status === "Active" ? "success" : contract.status === "Draft" ? "warning" : contract.status === "Completed" ? "gold" : "danger";
   return (<AutoLocalizedContent>
     <Link href={`/contracts/${contract.id}`} className="group block rounded-[2rem] outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]/70">
@@ -77,7 +80,7 @@ function ContractCard({ contract }: { contract: Contract }) {
           <MiniMetric label="Linked RFQ" value={contract.linkedRfq} />
           <MiniMetric label="Company" value={contract.winningCompany} />
           <MiniMetric label="Value" value={contract.value} />
-          <MiniMetric label="End date" value={contract.endDate} />
+          <MiniMetric label="End date" value={localizeDemoDate(contract.endDate, locale, isDemo ? translate : (value) => value)} />
         </div>
         <div className="mt-5"><ProgressBar value={contract.status === "Completed" ? 100 : contract.status === "Active" ? 42 : contract.status === "Expiring" ? 88 : 18} label="Contract progress" tone={tone} /></div>
       </GlassCard>

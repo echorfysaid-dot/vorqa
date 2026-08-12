@@ -5,10 +5,15 @@ import { Badge, Button, EmptyState, GlassCard, ProgressBar, TimelineCard } from 
 import { VoraVisual } from "@/components/vorqa-official-visuals";
 import { rfqRepository } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { getRequestLocale } from "@/lib/i18n-server";
+import { translateUiText } from "@/lib/i18n";
+import { localizeDemoDate, localizeDemoValue } from "@/lib/demo-localization";
 
 const demoQuotations = rfqRepository.listQuotations();
 
 export default function RfqDetailsPage({ params }: { params: { id: string } }) {
+  const locale = getRequestLocale();
+  const translate = (value: string) => translateUiText(value, locale);
   const rfq = rfqRepository.getById(params.id);
   if (!rfq) notFound();
 
@@ -19,8 +24,8 @@ export default function RfqDetailsPage({ params }: { params: { id: string } }) {
           <div>
             <Link href="/marketplace/rfq" className="mb-4 inline-flex items-center gap-2 text-sm font-black text-gold hover:text-white"><ArrowLeft className="h-4 w-4" />Back to RFQs</Link>
             <div className="flex flex-wrap gap-2"><Badge tone="gold">{rfq.id}</Badge><Badge tone={rfq.status === "Open" ? "success" : "neutral"}>{rfq.status}</Badge></div>
-            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">{rfq.title}</h1>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-ds-text/58">{rfq.description}</p>
+            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">{localizeDemoValue({ value: rfq.title, key: String(rfq.metadata?.titleKey || "") }, locale, translate)}</h1>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-ds-text/58">{localizeDemoValue({ value: rfq.description || "", key: String(rfq.metadata?.descriptionKey || "") }, locale, translate)}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Link href={`/marketplace/rfq/${rfq.id}/compare`}><Button variant="secondary" icon={<Scale className="h-4 w-4" />}>Compare quotations</Button></Link>
@@ -36,7 +41,7 @@ export default function RfqDetailsPage({ params }: { params: { id: string } }) {
             <div className="grid gap-4 md:grid-cols-4">
               <Metric label="Budget" value={rfq.budget} />
               <Metric label="Timeline" value={rfq.timeline} />
-              <Metric label="Due date" value={rfq.dueDate} />
+              <Metric label="Due date" value={localizeDemoDate(rfq.dueDate, locale, translate)} />
               <Metric label="Invited" value={String(rfq.companies.length)} />
             </div>
             <div className="mt-5"><ProgressBar value={58} label="RFQ timeline" /></div>

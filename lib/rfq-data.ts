@@ -1,30 +1,36 @@
 export const demoRfqs = [
   {
     id: "RFQ-1001",
+    titleKey: "rfq.demo.luxuryVilla.title",
+    descriptionKey: "rfq.demo.luxuryVilla.description",
     title: "Luxury Villa Casablanca execution package",
     project: "Luxury Villa Casablanca",
     status: "Open",
     budget: "MAD 8M - 12M",
     timeline: "6 months",
     category: "Contractors",
-    dueDate: "28 July 2026",
+    dueDate: "2026-07-28",
     companies: ["Atlas Construction Group", "NorthBuild Engineering", "BetonPro Materials", "GeoConsult Africa"],
     description: "Requesting technical and commercial proposals for structural execution, material supply, engineering validation, and geotechnical advisory."
   },
   {
     id: "RFQ-1002",
+    titleKey: "rfq.demo.rabatReview.title",
+    descriptionKey: "rfq.demo.rabatReview.description",
     title: "Residential Complex Rabat permit and engineering review",
     project: "Residential Complex Rabat",
     status: "Draft",
     budget: "MAD 1.5M - 2.4M",
     timeline: "8 weeks",
     category: "Engineering Firms",
-    dueDate: "04 August 2026",
+    dueDate: "2026-08-04",
     companies: ["NorthBuild Engineering", "UrbanForm Architects"],
     description: "Engineering and design review support before resubmitting permit documentation."
   },
   {
     id: "RFQ-1003",
+    titleKey: "rfq.demo.tangierLogistics.title",
+    descriptionKey: "rfq.demo.tangierLogistics.description",
     title: "Tangier warehouse steel and logistics support",
     project: "Industrial Warehouse Tangier",
     status: "Awarded",
@@ -37,6 +43,8 @@ export const demoRfqs = [
   },
   {
     id: "RFQ-1004",
+    titleKey: "rfq.demo.marrakechAdvisory.title",
+    descriptionKey: "rfq.demo.marrakechAdvisory.description",
     title: "Marrakech office tower foundation advisory",
     project: "Office Tower Marrakech",
     status: "Closed",

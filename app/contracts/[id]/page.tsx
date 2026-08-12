@@ -7,7 +7,7 @@ import { contractRepository } from "@/lib/repositories";
 import type { Contract } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 import { getRequestLocale } from "@/lib/i18n-server";
-import { formatCurrency } from "@/lib/utils/format";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
 
 export default function ContractDetailsPage({ params }: { params: { id: string } }) {
   const locale = getRequestLocale();
@@ -38,7 +38,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
               <Metric label="Winning company" value={contract.winningCompany} />
               <Metric label="Project" value={contract.project} />
               <Metric label="Contract value" value={contract.value} />
-              <Metric label="Period" value={`${contract.startDate} - ${contract.endDate}`} />
+              <Metric label="Period" value={`${formatDisplayDate(contract.startDate, locale)} - ${formatDisplayDate(contract.endDate, locale)}`} />
             </div>
             <div className="mt-5 grid gap-4 md:grid-cols-3">
               <Metric label="Contract type" value={contract.contractType || contract.category || "Contract"} />
@@ -72,7 +72,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
                 <div key={milestone.title} className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-4">
                   <Badge tone={milestone.status === "Complete" ? "success" : milestone.status === "Scheduled" ? "warning" : "neutral"}>{milestone.status}</Badge>
                   <h3 className="mt-3 text-lg font-black text-white">{milestone.title}</h3>
-                  <p className="mt-1 text-sm text-ds-text/50">{milestone.date}</p>
+                  <p className="mt-1 text-sm text-ds-text/50">{formatDisplayDate(milestone.date, locale)}</p>
                   <div className="mt-4"><ProgressBar value={milestone.progress} label="Milestone progress" /></div>
                 </div>
               )) : <EmptyState title="No milestones in this demo contract" />}
@@ -132,7 +132,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
           <GlassCard className="p-5">
             <SectionHeader title="Contract timeline" icon={<Clock3 className="h-5 w-5" />} />
             <div className="grid gap-4">
-              {(contract.timeline.length ? contract.timeline : [{ title: "Draft", date: contract.startDate, text: contract.summary || "Contract timeline is ready for future workflow events." }]).map((item, index) => <TimelineCard key={item.title} index={index + 1} title={`${item.title} · ${item.date}`} text={item.text} />)}
+              {(contract.timeline.length ? contract.timeline : [{ title: "Draft", date: contract.startDate, text: contract.summary || "Contract timeline is ready for future workflow events." }]).map((item, index) => <TimelineCard key={item.title} index={index + 1} title={`${item.title} · ${formatDisplayDate(item.date, locale)}`} text={item.text} />)}
             </div>
           </GlassCard>
 
@@ -146,6 +146,11 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
       </div>
     </div>
   </AutoLocalizedContent>);
+}
+
+function formatDisplayDate(value: string, locale: "ar" | "fr" | "en") {
+  const timestamp = Date.parse(value);
+  return Number.isNaN(timestamp) ? value : formatDate(value, locale, { month: "long" });
 }
 
 function PartiesPanel({ title, party }: { title: string; party: Contract["parties"]["client"] }) {

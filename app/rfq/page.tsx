@@ -6,6 +6,8 @@ import { Clock3, FileText, Filter, PackageCheck, Plus, Search, Trophy, WandSpark
 import { Badge, Button, EmptyState, GlassCard, ProgressBar, SkeletonCard } from "@/components/ui";
 import { useRfqs, useRfqSummary } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { localizeDemoDate, localizeDemoValue } from "@/lib/demo-localization";
 
 export default function RfqPage() {
   const [query, setQuery] = useState("");
@@ -79,6 +81,8 @@ export default function RfqPage() {
 }
 
 function RfqCard({ rfq }: { rfq: ReturnType<typeof useRfqs>["data"][number] }) {
+  const { locale, translate } = useI18n();
+  const isDemo = rfq.ownerId === "demo-user";
   const tone = rfq.status === "Published" || rfq.status === "Open" || rfq.status === "Pending Responses" ? "success" : rfq.status === "Draft" ? "warning" : rfq.status === "Awarded" ? "gold" : rfq.status === "Cancelled" ? "danger" : "neutral";
   const progress = Number(rfq.metadata?.progress || (rfq.status === "Awarded" ? 100 : rfq.status === "Closed" ? 88 : rfq.status === "Draft" ? 18 : 52));
   return (<AutoLocalizedContent>
@@ -88,12 +92,12 @@ function RfqCard({ rfq }: { rfq: ReturnType<typeof useRfqs>["data"][number] }) {
           <Badge tone={tone}>{rfq.status}</Badge>
           <span className="font-black text-gold">{rfq.id}</span>
         </div>
-        <h2 className="mt-5 text-2xl font-black text-white">{rfq.title}</h2>
-        <p className="mt-2 text-sm leading-7 text-ds-text/58">{rfq.description}</p>
+        <h2 className="mt-5 text-2xl font-black text-white">{isDemo ? localizeDemoValue({ value: rfq.title, key: String(rfq.metadata?.titleKey || "") }, locale, translate) : rfq.title}</h2>
+        <p className="mt-2 text-sm leading-7 text-ds-text/58">{isDemo ? localizeDemoValue({ value: rfq.description || "", key: String(rfq.metadata?.descriptionKey || "") }, locale, translate) : rfq.description}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <MiniMetric label="Project" value={rfq.project} />
           <MiniMetric label="Budget" value={rfq.budget} />
-          <MiniMetric label="Deadline" value={rfq.dueDate} />
+          <MiniMetric label="Deadline" value={isDemo ? localizeDemoDate(rfq.dueDate, locale, translate) : localizeDemoDate(rfq.dueDate, locale, (value) => value)} />
           <MiniMetric label="Suppliers" value={String(rfq.suppliers?.length || rfq.companies.length)} />
         </div>
         <div className="mt-5"><ProgressBar value={progress} label="RFQ workflow progress" tone={tone} /></div>
