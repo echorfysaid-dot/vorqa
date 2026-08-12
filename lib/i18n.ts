@@ -346,7 +346,162 @@ export const dictionaries = {
       uploadFailed: "تعذر رفع الملف.",
       deleteFailed: "تعذر حذف الملف.",
       downloadFailed: "تعذر تحميل الملف.",
-      fileCount: "م…3492 tokens truncated…connaissance du projet",
+      fileCount: "ملف"
+    },
+    pages: {
+      loginTitle: "ادخل إلى مساحة العمل الفاخرة",
+      loginDescription: "مصادقة حقيقية عبر Supabase Auth مع ملفات شخصية ومشاريع ومخرجات محفوظة.",
+      loginHeading: "تسجيل الدخول",
+      loginHint: "سجّل الدخول للوصول إلى مشاريعك ومخرجاتك المحفوظة.",
+      registerWelcome: "مرحباً بك في VORQA",
+      registerText: "أنا VORA، مساعدك الذكي. سأرافقك في كل خطوة لبناء مشروعك من الفكرة الأولى حتى اكتمال التنفيذ.",
+      registerChoose: "اختر نوع الحساب المناسب لك",
+      registerCreate: "إنشاء الحساب",
+      registerNote: "يمكنك تعديل هذه المعلومات لاحقاً.",
+      pricingTitle: "خطط مصممة للنمو",
+      pricingDescription: "تسعير فاخر وواضح، جاهز للربط لاحقاً مع Stripe أو مزود دفع محلي.",
+      settingsTitle: "إعدادات Vorqa AI",
+      settingsDescription: "إعدادات المنتج، المزودات، Supabase، العلامة، التنبيهات، وتجربة المستخدم.",
+      savedTitle: "المخرجات المحفوظة",
+      savedDescription: "المخرجات المحفوظة جاهزة للتنظيم، البحث، والتصدير في المرحلة التالية.",
+      favoritesTitle: "المفضلة",
+      favoritesDescription: "أفضل المخرجات مثبتة في مكان واحد للرجوع السريع.",
+      historyTitle: "سجل VORA",
+      historyDescription: "سجل زمني لكل الأنشطة والمخرجات المحفوظة داخل مساحة العمل."
+    }
+  },
+  fr: {
+    meta: { title: "Vorqa AI - Espace de travail IA premium", description: "Plateforme IA pour documents, CV, landing pages et idées de projets." },
+    common: {
+      appName: "Vorqa AI", vora: "VORA", getStarted: "Commencer", startJourney: "Démarrer", login: "Connexion", register: "Créer un compte", logout: "Déconnexion",
+      search: "Rechercher...", searchWorkspace: "Rechercher projets, sorties, outils...", language: "Langue", all: "Tout", save: "Enregistrer", delete: "Supprimer",
+      download: "Télécharger", copy: "Copier", exportMarkdown: "Exporter Markdown", loading: "Chargement", retry: "Réessayer", empty: "Aucun élément",
+      viewAll: "Voir tout", activeSession: "Session active", guestMode: "Mode invité", profileSettings: "Paramètres du profil", workspace: "Espace principal",
+      notifications: "Notifications", primary: "Principal", prepared: "Préparé", email: "E-mail", password: "Mot de passe", fullName: "Nom complet"
+    },
+    nav: { home: "Accueil", features: "Fonctionnalités", workflow: "Flux", showcase: "Aperçus", pricing: "Tarifs", about: "À propos", dashboard: "Tableau de bord", more: "Plus", tools: "Outils IA", rfq: "Demandes de prix", quotations: "Devis", contracts: "Contrats", billing: "Facturation", admin: "Administration", notifications: "Notifications", knowledge: "Connaissances", documents: "Documents", projects: "Projets", history: "Historique", saved: "Enregistrés", favorites: "Favoris", settings: "Paramètres" },
+    shell: {
+      workspaceBadge: "Espace principal", askVora: "Demander à VORA", askVoraText: "Créez un document, un projet ou une idée depuis un seul espace.", productivity: "Productivité du jour", productivityText: "7 sorties et 3 projets suivis.",
+      notifications: [["VORA est prête", "Lancez un document ou un projet depuis les actions rapides."], ["Sorties enregistrées", "Les dernières générations sont disponibles dans l’espace."], ["Conseil productivité", "Épinglez les projets importants en haut du tableau de bord."]]
+    },
+    landing: {
+      heroBadge: "Suite d’exécution intelligente avec VORA", heroLanguage: "Arabe, français et anglais", brandLine: "De l’idée à la livraison, avec clarté.",
+      titleA: "Transformez vos idées en projets exécutables", titleB: "et en documents professionnels avec VORA",
+      subtitle: "Vorqa AI aide les fondateurs et les équipes à planifier, générer, organiser et suivre leur travail dans une expérience premium.",
+      seeWorkflow: "Voir le fonctionnement", trust: "Adopté par des équipes innovantes", capabilitiesTitle: "Une plateforme pour planifier, produire et organiser",
+      capabilitiesText: "Tout ce qu’il faut pour passer d’une idée à des livrables clairs.", workflowTitle: "Un flux de travail clair qui garde l’élan",
+      workflowText: "Chaque étape réduit l’ambiguïté et transforme la décision suivante en action.", voraPreviewTitle: "Un assistant exécutif qui comprend le contexte",
+      showcaseTitle: "Des aperçus conçus pour décider vite", statsTitle: "Des résultats mesurables dès le départ", rolesTitle: "Une expérience pour plusieurs rôles",
+      testimonialsTitle: "Une qualité prête pour les investisseurs", pricingTitle: "Commencez maintenant, évoluez ensuite", faqTitle: "Questions fréquentes",
+      finalTitle: "Lancez votre prochain projet avec plus de clarté", finalText: "Laissez VORA transformer votre première idée en documents, plan d’action et livrables.",
+      cards: ["Planification intelligente", "Gestion organisée", "Exécution fiable"]
+    },
+    dashboard: {
+      badge: "Espace principal", title: "Bonjour, transformons la journée en résultats clairs", description: "Suivez les projets, créez des documents, surveillez VORA et gardez vos meilleures sorties au même endroit.",
+      dateLocale: "fr-FR", generateDocument: "Générer un document", createProject: "Créer un projet", quickSearchTitle: "Rechercher dans l’espace", assistantTip: "Suggestion : commencez par le projet de lancement, c’est le plus actif.",
+      stats: ["Projets", "Documents générés", "Générations IA", "Taux d’achèvement", "Stockage", "Activité du jour"],
+      quickActions: [["Créer un projet", "Démarrer un nouvel espace"], ["Générer un document", "Un document pro en quelques minutes"], ["Chat VORA", "Interroger l’assistant"], ["Modèles", "Partir d’une structure prête"]],
+      insightsTitle: "Meilleure action maintenant", projectsTitle: "Travaux en cours", recentActivity: "Activité récente de VORA", recentOutputs: "Sorties récentes", calendar: "Calendrier", recentFiles: "Fichiers récents", emptyTitle: "Aucune tâche en attente", emptyText: "VORA affichera ici les sorties à réviser."
+    },
+    tools: {} as any,
+    projects: {} as any,
+    pages: {} as any
+  },
+  en: {
+    meta: { title: "Vorqa AI - Premium AI Workspace", description: "AI platform for documents, CVs, landing pages, and project ideas." },
+    common: {
+      appName: "Vorqa AI", vora: "VORA", getStarted: "Get Started", startJourney: "Start Your Journey", login: "Log in", register: "Create account", logout: "Log out",
+      search: "Search...", searchWorkspace: "Search projects, outputs, tools...", language: "Language", all: "All", save: "Save", delete: "Delete", download: "Download",
+      copy: "Copy", exportMarkdown: "Export Markdown", loading: "Loading", retry: "Retry", empty: "Nothing here yet", viewAll: "View all", activeSession: "Active session",
+      guestMode: "Guest mode", profileSettings: "Profile settings", workspace: "Main workspace", notifications: "Notifications", primary: "Primary", prepared: "Prepared", email: "Email", password: "Password", fullName: "Full name"
+    },
+    nav: { home: "Home", features: "Features", workflow: "Workflow", showcase: "Showcase", pricing: "Pricing", about: "About", dashboard: "Dashboard", more: "More", tools: "AI Tools", rfq: "RFQs", quotations: "Quotations", contracts: "Contracts", billing: "Billing", admin: "Administration", notifications: "Notifications", knowledge: "Knowledge", documents: "Documents", projects: "Projects", history: "History", saved: "Saved", favorites: "Favorites", settings: "Settings" },
+    shell: {
+      workspaceBadge: "Main workspace", askVora: "Ask VORA", askVoraText: "Start a document, project, or business idea from one place.", productivity: "Today’s productivity", productivityText: "7 outputs and 3 projects in progress.",
+      notifications: [["VORA is ready", "Start a document or project from quick actions."], ["Saved outputs", "Latest generations are ready in your workspace."], ["Productivity tip", "Pin key projects to keep them at the top."]]
+    },
+    landing: {
+      heroBadge: "Intelligent execution suite powered by VORA", heroLanguage: "Arabic, French, and English", brandLine: "From idea to delivery, with clarity.",
+      titleA: "Turn ideas into executable projects", titleB: "and professional documents with VORA",
+      subtitle: "Vorqa AI helps founders and teams plan, generate, organize, and track work in one premium workspace.",
+      seeWorkflow: "See how it works", trust: "Trusted by innovative teams", capabilitiesTitle: "One platform to plan, produce, and organize",
+      capabilitiesText: "Everything you need to turn ideas into clear deliverables.", workflowTitle: "A clear workflow that keeps momentum",
+      workflowText: "Each stage reduces ambiguity and turns the next decision into action.", voraPreviewTitle: "An executive assistant that understands context",
+      showcaseTitle: "Preview boards designed for decisions", statsTitle: "Measurable outcomes from day one", rolesTitle: "One experience for multiple roles",
+      testimonialsTitle: "Investor-ready product quality", pricingTitle: "Start now, scale as projects grow", faqTitle: "Frequently asked questions",
+      finalTitle: "Start your next project with more clarity", finalText: "Let VORA turn your first idea into documents, an execution plan, and ready-to-use outputs.",
+      cards: ["Smart planning", "Organized management", "Reliable execution"]
+    },
+    dashboard: {
+      badge: "Main workspace", title: "Welcome, let’s turn today into clear outcomes", description: "Track projects, create documents, monitor VORA, and keep important outputs in one focused workspace.",
+      dateLocale: "en-US", generateDocument: "Generate document", createProject: "Create project", quickSearchTitle: "Search your workspace", assistantTip: "Suggestion: review the launch project first; it has the most activity.",
+      stats: ["Projects", "Generated documents", "AI generations", "Completion rate", "Storage", "Today’s activity"],
+      quickActions: [["Create project", "Start a new workspace"], ["Generate document", "A professional doc in minutes"], ["VORA Chat", "Ask the assistant"], ["Templates", "Start from a ready structure"]],
+      insightsTitle: "Best next action", projectsTitle: "Work in progress", recentActivity: "Recent VORA activity", recentOutputs: "Recent outputs", calendar: "Work calendar", recentFiles: "Recent files", emptyTitle: "No pending tasks", emptyText: "VORA will show review items here when they appear."
+    },
+    tools: {} as any,
+    projects: {} as any,
+    pages: {} as any
+  }
+};
+
+function mergeLocale<T extends Record<string, unknown>>(base: T, partial: Partial<T>): T {
+  return { ...base, ...partial } as T;
+}
+
+dictionaries.fr.tools = mergeLocale(dictionaries.ar.tools, {
+  pageTitle: "Bibliothèque d’outils premium",
+  pageDescription: "Des outils professionnels organisés par usage, avec des formulaires riches et des sorties prêtes à enregistrer.",
+  studioDescription: "Remplissez le formulaire pour obtenir une sortie claire, structurée et exploitable.",
+  askVora: "Demander à VORA",
+  retryVora: "Réessayer",
+  outputAtelier: "Atelier de sortie VORA",
+  openaiConnected: "OpenAI connecté",
+  mockMode: "Mode démo",
+  emptyOutput: "Remplissez le formulaire pour que VORA rédige une sortie professionnelle.",
+  copiedTitle: "Copié",
+  copiedText: "La sortie a été copiée dans le presse-papiers.",
+  markdownTitle: "Markdown",
+  markdownText: "Le fichier Markdown est prêt.",
+  successTitle: "Génération terminée",
+  successOpenAi: "La sortie a été générée avec OpenAI et enregistrée dans l’historique.",
+  successMock: "La sortie a été générée en mode démo et enregistrée.",
+  failTitle: "Génération impossible",
+  failText: "Vérifiez les informations et réessayez.",
+  readError: "Impossible de lire la réponse du serveur.",
+  createError: "Impossible de générer le contenu pour le moment.",
+  networkError: "Erreur de connexion."
+});
+dictionaries.en.tools = mergeLocale(dictionaries.ar.tools, {
+  pageTitle: "Premium tool library",
+  pageDescription: "Professional tools organized by workflow, with rich forms and outputs ready to save and search.",
+  studioDescription: "Fill the form to receive a structured, useful professional output.",
+  askVora: "Ask VORA",
+  retryVora: "Retry VORA",
+  outputAtelier: "VORA Output Atelier",
+  openaiConnected: "OpenAI connected",
+  mockMode: "Demo mode",
+  emptyOutput: "Fill the form to let VORA craft a professional output, then copy or export it as Markdown.",
+  copiedTitle: "Copied",
+  copiedText: "The output was copied to your clipboard.",
+  markdownTitle: "Markdown",
+  markdownText: "Markdown export is ready.",
+  successTitle: "Generation complete",
+  successOpenAi: "The output was generated with OpenAI and saved to history.",
+  successMock: "The output was generated in demo mode and saved to history.",
+  failTitle: "Could not generate content",
+  failText: "Review the inputs and try again.",
+  readError: "Could not read the server response.",
+  createError: "Could not generate content right now.",
+  networkError: "Connection error."
+});
+
+dictionaries.fr.projects = mergeLocale(dictionaries.ar.projects, {
+  title: "Galerie de projets",
+  description: "Chaque projet conserve son type, son état, sa dernière mise à jour et sa progression.",
+  newProject: "Nouveau projet",
+  search: "Rechercher des projets...",
+  knowledgeTitle: "Espace de connaissance du projet",
   knowledgeDescription: "Importez les fichiers de connaissance de chaque projet pour organiser les sources et documents. La lecture IA et le RAG viendront plus tard.",
   selectProject: "Projet",
   uploadTitle: "Glissez vos fichiers ici ou choisissez-les",
@@ -670,4 +825,3 @@ export function translateUiText(value: string, locale: Locale): string {
 
   return value;
 }
-
