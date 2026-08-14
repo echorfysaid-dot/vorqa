@@ -20,7 +20,7 @@ require.extensions[".ts"] = function loadTypeScript(module, filename) {
 
 const { locales, translateUiText } = require(path.join(root, "lib", "i18n.ts"));
 const visibleAttributes = new Set(["aria-label", "placeholder", "title", "alt", "label", "description", "eyebrow", "message", "hint"]);
-const structuredUiProps = new Set(["title", "label", "description", "subtitle", "eyebrow", "helper", "hint", "message", "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt"]);
+const structuredUiProps = new Set(["title", "label", "description", "subtitle", "eyebrow", "helper", "hint", "message", "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt", "action", "summary", "reason", "risks", "negotiationPoints"]);
 const ignored = /^(?:[a-z]+:|\/|#|\.|--|[\w-]+\.(?:png|jpe?g|webp|svg|pdf|docx|xlsx|csv)|[A-Z]{2,}-\d+|[\d\s.,%+:/-]+)$/i;
 const localeNeutral = /^(?:VORA|Vorqa|Supabase|OpenAI|Anthropic|Gemini|OpenRouter|PDF|DOCX|XLSX|CSV|BIM|BOQ|RAG|OCR|API|AI|Email|Website|Kanban|Markdown|MRR|B2B|OK)$/i;
 const intentionalUserOrFileData = /^(?:VORA AI|Atlas Construction Group|Nadia Benali|Luxury Villa Casablanca|Supplier Comparison\.xlsx|(?:RFQ|QTN|CON)-\d+\b)/i;
@@ -35,10 +35,22 @@ function isVisibleCopy(value) {
 }
 
 function collect() {
-  const files = childProcess.execFileSync("rg", ["--files", "app", "components", "-g", "*.tsx", "-g", "*.ts"], {
+  const presentationFiles = childProcess.execFileSync("rg", ["--files", "app", "components", "-g", "*.tsx", "-g", "*.ts"], {
     cwd: root,
     encoding: "utf8"
   }).trim().split(/\r?\n/).filter(Boolean);
+  const repositoryRuntimeFiles = childProcess.execFileSync("rg", ["--files", "lib/repositories", "-g", "*DemoAdapter.ts", "-g", "*Mapper.ts"], {
+    cwd: root,
+    encoding: "utf8"
+  }).trim().split(/\r?\n/).filter(Boolean);
+  const runtimeFiles = [
+    ...repositoryRuntimeFiles,
+    "lib/rfq-data.ts",
+    "lib/marketplace-data.ts",
+    "lib/contracts-data.ts",
+    "lib/platform-data.ts"
+  ];
+  const files = [...new Set([...presentationFiles, ...runtimeFiles])];
   const findings = [];
 
   for (const file of files) {
@@ -58,7 +70,21 @@ function collect() {
       }
       if (ts.isPropertyAssignment(node)) {
         const key = ts.isIdentifier(node.name) || ts.isStringLiteral(node.name) ? node.name.text : "";
-        if (structuredUiProps.has(key) && ts.isStringLiteralLike(node.initializer)) add(node, node.initializer.text, `property:${key}`);
+        if (structuredUiProps.has(key)) {
+          const collectPropertyStrings = (value) => {
+            if (ts.isStringLiteralLike(value)) {
+              const parent = value.parent;
+              const isTypeofToken = ts.isBinaryExpression(parent) && (
+                (parent.right === value && ts.isTypeOfExpression(parent.left)) ||
+                (parent.left === value && ts.isTypeOfExpression(parent.right))
+              );
+              const isLookupToken = ts.isCallExpression(parent);
+              if (!isTypeofToken && !isLookupToken) add(value, value.text, `property:${key}`);
+            }
+            ts.forEachChild(value, collectPropertyStrings);
+          };
+          collectPropertyStrings(node.initializer);
+        }
       }
       ts.forEachChild(node, visit);
     };

@@ -8,6 +8,7 @@ import ts from "typescript";
 import { formatCurrency, formatDate, formatNumber, resolveIntlLocale } from "@/lib/utils/format";
 import { getDemoCatalogKeys, getMarketplaceCategoryKeys, localizeMarketplaceCategory, translateDemoKey } from "@/lib/locales/demo";
 import { localizeDemoDate } from "@/lib/demo-localization";
+import { getRuntimeSystemKey, runtimeSystemMessages } from "@/lib/locales/runtime";
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -30,7 +31,7 @@ const genericAuditPlaceholders = new Set([
 
 const structuredUiProps = new Set([
   "title", "label", "description", "subtitle", "eyebrow", "helper", "hint", "message",
-  "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt"
+  "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt", "action", "summary", "reason", "risks", "negotiationPoints"
 ]);
 const intentionalUserOrFileData = /^(?:VORA AI|Atlas Construction Group|Nadia Benali|Luxury Villa Casablanca|Supplier Comparison\.xlsx|(?:RFQ|QTN|CON)-\d+\b)/i;
 
@@ -421,6 +422,65 @@ export const tests = [
       assert(localizeDemoDate("2026-07-28", "ar", (value) => value).includes("يوليو"), "Arabic month must be localized");
       assert(localizeDemoDate("2026-07-28", "fr", (value) => value).includes("juillet"), "French month must be localized");
       assert(localizeDemoDate("2026-07-28", "en", (value) => value).includes("July"), "English month must be localized");
+    }
+  },
+  {
+    name: "runtime system catalog has semantic AR FR EN parity",
+    run: () => {
+      runtimeSystemMessages.forEach((message) => locales.forEach((locale) => {
+        assert(translateUiText(message.key, locale) === message[locale], `Semantic runtime key failed: ${message.key} (${locale})`);
+        assert(translateUiText(message.en, locale) === message[locale], `English runtime source leaked: ${message.en} (${locale})`);
+        assert(getRuntimeSystemKey(message.en) === message.key, `Missing semantic key for ${message.en}`);
+      }));
+    }
+  },
+  {
+    name: "Admin audit events and fallback statuses never leak across locales",
+    run: () => {
+      const auditActions = [
+        "Login successful",
+        "Generated budget risk review",
+        "Updated milestone progress",
+        "Opened supplier connection",
+        "Reviewed award decision",
+        "Invoice payment overdue",
+        "Changed feature flag rollout"
+      ];
+      const statuses = ["degraded", "unhealthy", "suspended", "past_due", "warning", "beta", "Suspended organization"];
+      [...auditActions, ...statuses].forEach((value) => {
+        assert(translateUiText(value, "ar") !== value, `Arabic Admin leaked English: ${value}`);
+        assert(translateUiText(value, "fr") !== value, `French Admin leaked English: ${value}`);
+        assert(Boolean(translateUiText(value, "en").trim()), `English Admin translation is empty: ${value}`);
+      });
+    }
+  },
+  {
+    name: "quotation runtime comparison and fallback messages localize deterministically",
+    run: () => {
+      const staticValues = [
+        "Quotation comparison command center.",
+        "Manage supplier offers, evaluate technical and commercial strength, compare RFQ responses, and prepare VORA-backed award recommendations.",
+        "Production quotation data is unavailable, so Vorqa is showing demo fallback quotations.",
+        "Supplier offer evaluation matrix.",
+        "No quotations are available for comparison yet."
+      ];
+      const dynamicValues = [
+        "Buildora has the lowest submitted total.",
+        "Buildora balances commercial, technical, and risk factors.",
+        "VORA compared 4 supplier quotations for RFQ-1001 across cost, compliance, delivery, and risk.",
+        "Buildora: review scope assumptions and cost completeness.",
+        "Buildora is recommended for balanced award review, while Atlas should be checked for scope completeness before any price-led decision."
+      ];
+      [...staticValues, ...dynamicValues].forEach((value) => {
+        assert(translateUiText(value, "ar") !== value, `Arabic quotation runtime leaked English: ${value}`);
+        assert(translateUiText(value, "fr") !== value, `French quotation runtime leaked English: ${value}`);
+        assert(Boolean(translateUiText(value, "en").trim()), `English quotation runtime is empty: ${value}`);
+      });
+      const quotationsPage = fs.readFileSync(path.join(process.cwd(), "app/quotations/page.tsx"), "utf8");
+      const comparisonPage = fs.readFileSync(path.join(process.cwd(), "app/quotations/compare/page.tsx"), "utf8");
+      assert(quotationsPage.includes("quotation.command.title"), "Quotation page must render the semantic title key");
+      assert(quotationsPage.includes("quotation.fallback.demoNotice"), "Quotation page must render the semantic fallback key");
+      assert(comparisonPage.includes("quotation.compare.title"), "Quotation comparison must render the semantic title key");
     }
   },
   {

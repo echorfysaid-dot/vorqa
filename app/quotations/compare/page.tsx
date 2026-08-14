@@ -22,9 +22,9 @@ export default function QuotationComparisonPage() {
               <Badge tone="blue">{comparison.rfqId || "RFQ-1001"}</Badge>
               <Badge tone={comparisonState.source === "supabase" ? "success" : comparisonState.isFallback ? "warning" : "neutral"}>{comparisonState.source === "supabase" ? "Supabase" : comparisonState.isFallback ? "Demo fallback" : "Demo"}</Badge>
             </div>
-            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">Supplier offer evaluation matrix.</h1>
+            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">quotation.compare.title</h1>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-ds-text/58">
-              Compare supplier quotations by price, compliance, delivery, warranty, payment terms, risk, and VORA fit before preparing an award decision.
+              quotation.compare.description
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

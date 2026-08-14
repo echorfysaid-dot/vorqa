@@ -1,6 +1,7 @@
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
+import { translateRuntimeSystemText } from "@/lib/locales/runtime";
 import { finalSystemTranslations } from "@/lib/locales/system";
 
 export const locales = ["ar", "fr", "en"] as const;
@@ -1092,6 +1093,8 @@ export function translateUiText(value: string, locale: Locale): string {
   const trailing = value.match(/\s*$/)?.[0] || "";
   const source = value.trim();
   if (!source) return value;
+  const runtimeTranslation = translateRuntimeSystemText(source, locale);
+  if (runtimeTranslation) return `${leading}${runtimeTranslation}${trailing}`;
   const exact = uiTranslationCatalog[locale][source];
   if (exact) return `${leading}${exact}${trailing}`;
 

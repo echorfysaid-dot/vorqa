@@ -30,9 +30,9 @@ export default function QuotationsPage() {
               <Badge tone="blue">RFQs · Marketplace · Projects</Badge>
               <Badge tone={quotationsState.source === "supabase" ? "success" : quotationsState.isFallback ? "warning" : "neutral"}>{quotationsState.source === "supabase" ? "Supabase" : quotationsState.isFallback ? "Demo fallback" : "Demo"}</Badge>
             </div>
-            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">Quotation comparison command center.</h1>
+            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">quotation.command.title</h1>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-ds-text/58">
-              Manage supplier offers, evaluate technical and commercial strength, compare RFQ responses, and prepare VORA-backed award recommendations.
+              quotation.command.description
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -60,7 +60,7 @@ export default function QuotationsPage() {
           <QuoteFilter value={supplierFilter} onChange={setSupplierFilter} options={["All suppliers", ...suppliers]} />
           <QuoteFilter value={categoryFilter} onChange={setCategoryFilter} options={["All categories", ...categories]} />
         </div>
-        {quotationsState.error && quotationsState.isFallback && <p className="mt-3 text-sm font-bold text-warning">Production quotation data is unavailable, so Vorqa is showing demo fallback quotations.</p>}
+        {quotationsState.error && quotationsState.isFallback && <p className="mt-3 text-sm font-bold text-warning">quotation.fallback.demoNotice</p>}
       </GlassCard>
 
       {quotationsState.loading ? (

@@ -27,6 +27,7 @@ import type { AdminStatus, AuditEventType } from "@/lib/models";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 import { useI18n } from "@/components/i18n-provider";
 import { formatDate as formatLocalizedDate, formatNumber as formatLocalizedNumber } from "@/lib/utils/format";
+import { getRuntimeSystemKey } from "@/lib/locales/runtime";
 import {
   useAdminAudit,
   useAdminDashboard,
@@ -161,7 +162,7 @@ function AdminDashboardView() {
             {state.data.audit.slice(0, 5).map((event) => (
               <div key={event.id} className="rounded-2xl border border-white/10 bg-black/20 p-3">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="font-black text-ds-text">{event.action}</p>
+                  <p className="font-black text-ds-text">{getRuntimeSystemKey(event.action) || event.action}</p>
                   <Badge tone={statusTone(event.status)}>{event.type}</Badge>
                 </div>
                 <p className="mt-1 text-sm text-ds-text/56">{event.actor} · {event.target}</p>
@@ -259,7 +260,7 @@ function AdminAuditView() {
         </div>
       </div>
       <GlassCard className="p-5">
-        <Table columns={["Type", "Actor", "Action", "Target", "Status", "Date"]} rows={state.data.map((event) => [event.type, event.actor, event.action, event.target, <Badge key="s" tone={statusTone(event.status)}>{event.status}</Badge>, formatDate(event.createdAt, locale)])} />
+        <Table columns={["Type", "Actor", "Action", "Target", "Status", "Date"]} rows={state.data.map((event) => [event.type, event.actor, getRuntimeSystemKey(event.action) || event.action, event.target, <Badge key="s" tone={statusTone(event.status)}>{event.status}</Badge>, formatDate(event.createdAt, locale)])} />
       </GlassCard>
     </AdminShell>
   </AutoLocalizedContent>);
