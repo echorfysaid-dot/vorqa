@@ -79,7 +79,10 @@ function ContractCard({ contract }: { contract: Contract }) {
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <MiniMetric label="Linked RFQ" value={contract.linkedRfq} />
           <MiniMetric label="Company" value={contract.winningCompany} />
-          <MiniMetric label="Value" value={contract.value} />
+          <MiniMetric
+            label="Value"
+            value={contract.valueAmount == null ? contract.value : formatCurrency(contract.valueAmount, contract.currency || "MAD", locale)}
+          />
           <MiniMetric label="End date" value={localizeDemoDate(contract.endDate, locale, isDemo ? translate : (value) => value)} />
         </div>
         <div className="mt-5"><ProgressBar value={contract.status === "Completed" ? 100 : contract.status === "Active" ? 42 : contract.status === "Expiring" ? 88 : 18} label="Contract progress" tone={tone} /></div>

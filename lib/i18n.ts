@@ -1,6 +1,7 @@
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
+import { finalSystemTranslations } from "@/lib/locales/system";
 
 export const locales = ["ar", "fr", "en"] as const;
 
@@ -718,6 +719,263 @@ const supplementalUiTranslations: Array<readonly [string, string, string]> = [
   ["months", "mois", "أشهر"],
   ["year", "an", "سنة"],
   ["years", "ans", "سنوات"],
+  ["star", "étoile", "نجمة"],
+  ["stars", "étoiles", "نجوم"],
+  ["file", "fichier", "ملف"],
+  ["files", "fichiers", "ملفات"],
+  ["project", "projet", "مشروع"],
+  ["projects", "projets", "مشاريع"],
+  ["output", "résultat", "مخرج"],
+  ["outputs", "résultats", "مخرجات"],
+  ["quotation", "devis", "عرض سعر"],
+  ["quotations", "devis", "عروض أسعار"],
+  ["approval", "approbation", "موافقة"],
+  ["approvals", "approbations", "موافقات"],
+  ["member", "membre", "عضو"],
+  ["members", "membres", "أعضاء"],
+  ["request", "demande", "طلب"],
+  ["requests", "demandes", "طلبات"],
+  ["contract", "contrat", "عقد"],
+  ["contracts", "contrats", "عقود"],
+  ["document", "document", "مستند"],
+  ["documents", "documents", "مستندات"],
+  ["workspace", "espace de travail", "مساحة عمل"],
+  ["workspaces", "espaces de travail", "مساحات عمل"],
+  ["notification", "notification", "إشعار"],
+  ["notifications", "notifications", "إشعارات"],
+  ["action", "action", "إجراء"],
+  ["actions", "actions", "إجراءات"],
+  ["Workspace context", "Contexte de l’espace", "سياق مساحة العمل"],
+  ["Current project", "Projet actuel", "المشروع الحالي"],
+  ["Selected language", "Langue sélectionnée", "اللغة المختارة"],
+  ["AI mode", "Mode IA", "وضع الذكاء الاصطناعي"],
+  ["Online", "En ligne", "متصل"],
+  ["AI Status: Ready", "État IA : prête", "حالة الذكاء الاصطناعي: جاهز"],
+  ["Construction Command Center", "Centre de commande de construction", "مركز قيادة البناء"],
+  ["Project-aware", "Conscient du projet", "مدرك لسياق المشروع"],
+  ["Context Panel", "Panneau de contexte", "لوحة السياق"],
+  ["Uploaded documents", "Documents importés", "المستندات المرفوعة"],
+  ["Active knowledge", "Connaissances actives", "المعرفة النشطة"],
+  ["Context readiness", "Préparation du contexte", "جاهزية السياق"],
+  ["AI Memory", "Mémoire IA", "ذاكرة الذكاء الاصطناعي"],
+  ["Quick Tools", "Outils rapides", "أدوات سريعة"],
+  ["Suggested Prompts", "Suggestions de requêtes", "اقتراحات جاهزة"],
+  ["Tool Library", "Bibliothèque d’outils", "مكتبة الأدوات"],
+  ["Recent conversation", "Conversation récente", "محادثة حديثة"],
+  ["Recent output", "Résultat récent", "مخرج حديث"],
+  ["Recent report", "Rapport récent", "تقرير حديث"],
+  ["Budget health summary", "Synthèse de santé budgétaire", "ملخص سلامة الميزانية"],
+  ["Favorite prompt", "Requête favorite", "طلب مفضل"],
+  ["New conversation", "Nouvelle conversation", "محادثة جديدة"],
+  ["Search knowledge", "Rechercher dans les connaissances", "البحث في المعرفة"],
+  ["VORA is typing", "VORA rédige", "VORA يكتب"],
+  ["You", "Vous", "أنت"],
+  ["Enabled", "Activé", "مفعّل"],
+  ["Not set", "Non défini", "غير محدد"],
+  ["Not scheduled", "Non planifié", "غير مجدول"],
+  ["Not available", "Indisponible", "غير متوفر"],
+  ["All suppliers", "Tous les fournisseurs", "كل الموردين"],
+  ["All categories", "Toutes les catégories", "كل الفئات"],
+  ["All countries", "Tous les pays", "كل البلدان"],
+  ["All cities", "Toutes les villes", "كل المدن"],
+  ["All verification", "Tous les niveaux de vérification", "كل حالات التوثيق"],
+  ["All ratings", "Toutes les évaluations", "كل التقييمات"],
+  ["All experience", "Tous les niveaux d’expérience", "كل مستويات الخبرة"],
+  ["All availability", "Toutes les disponibilités", "كل حالات التوفر"],
+  ["All languages", "Toutes les langues", "كل اللغات"],
+  ["All services", "Tous les services", "كل الخدمات"],
+  ["Pending verification", "Vérification en attente", "قيد التوثيق"],
+  ["Available", "Disponible", "متاح"],
+  ["Limited slots", "Places limitées", "أماكن محدودة"],
+  ["By request", "Sur demande", "حسب الطلب"],
+  ["recommended", "recommandé", "موصى به"],
+  ["rating", "évaluation", "التقييم"],
+  ["experience", "expérience", "الخبرة"],
+  ["completed-projects", "projets terminés", "المشاريع المكتملة"],
+  ["response-time", "délai de réponse", "وقت الاستجابة"],
+  ["newest", "plus récent", "الأحدث"],
+  ["Morocco", "Maroc", "المغرب"],
+  ["Casablanca", "Casablanca", "الدار البيضاء"],
+  ["Rabat", "Rabat", "الرباط"],
+  ["Tangier", "Tanger", "طنجة"],
+  ["Marrakech", "Marrakech", "مراكش"],
+  ["Agadir", "Agadir", "أكادير"],
+  ["Fez", "Fès", "فاس"],
+  ["Tetouan", "Tétouan", "تطوان"],
+  ["Arabic", "Arabe", "العربية"],
+  ["French", "Français", "الفرنسية"],
+  ["English", "Anglais", "الإنجليزية"],
+  ["Spanish", "Espagnol", "الإسبانية"],
+  ["Theme", "Thème", "المظهر"],
+  ["Dark luxury default with light mode prepared", "Thème sombre premium par défaut, mode clair disponible", "مظهر داكن فاخر افتراضياً مع توفر الوضع الفاتح"],
+  ["In-app notification center prepared", "Centre de notifications intégré prêt", "مركز الإشعارات داخل التطبيق جاهز"],
+  ["Authentication", "Authentification", "المصادقة"],
+  ["Supabase Auth environment prepared", "Environnement Supabase Auth prêt", "بيئة مصادقة Supabase جاهزة"],
+  ["AI Providers", "Fournisseurs IA", "مزودو الذكاء الاصطناعي"],
+  ["Supabase Integration", "Intégration Supabase", "تكامل Supabase"],
+  ["Feature Flags", "Fonctionnalités contrôlées", "مفاتيح الميزات"],
+  ["API latency", "Latence API", "زمن استجابة API"],
+  ["Error rate", "Taux d’erreur", "معدل الأخطاء"],
+  ["Uptime", "Disponibilité", "مدة التشغيل"],
+  ["System health", "Santé du système", "سلامة النظام"],
+  ["Platform administration center", "Centre d’administration de la plateforme", "مركز إدارة المنصة"],
+  ["Internal workspace for organizations, users, subscriptions, usage, and audit operations.", "Espace interne pour gérer les organisations, les utilisateurs, les abonnements, l’utilisation et l’audit.", "مساحة داخلية لإدارة المؤسسات والمستخدمين والاشتراكات والاستخدام وعمليات التدقيق."],
+  ["Administrative data is unavailable, so Vorqa is showing the demo fallback.", "Les données administratives sont indisponibles. Vorqa affiche donc les données de démonstration.", "بيانات الإدارة غير متاحة، لذلك تعرض Vorqa البيانات التجريبية البديلة."],
+  ["Not linked", "Non lié", "غير مرتبط"],
+  ["Recent audit events", "Événements d’audit récents", "أحداث التدقيق الأخيرة"],
+  ["Total users", "Total des utilisateurs", "إجمالي المستخدمين"],
+  ["Active organizations", "Organisations actives", "المؤسسات النشطة"],
+  ["Revenue foundation", "Base de revenus", "أساس الإيرادات"],
+  ["AI usage", "Utilisation IA", "استخدام الذكاء الاصطناعي"],
+  ["AI requests", "Requêtes IA", "طلبات الذكاء الاصطناعي"],
+  ["Storage", "Stockage", "التخزين"],
+  ["Jobs", "Tâches système", "مهام النظام"],
+  ["Workers", "Agents", "المعالجات"],
+  ["Locked", "Verrouillé", "مقفل"],
+  ["Editable", "Modifiable", "قابل للتعديل"],
+  ["open", "ouverte", "مفتوحة"],
+  ["paid", "payée", "مدفوعة"],
+  ["trialing", "en période d’essai", "قيد التجربة"],
+  ["manual", "manuel", "يدوي"],
+  ["Current plan", "Forfait actuel", "الخطة الحالية"],
+  ["Trial progress", "Progression de l’essai", "تقدم الفترة التجريبية"],
+  ["Metric", "Indicateur", "المؤشر"],
+  ["Used", "Utilisé", "المستخدم"],
+  ["Limit", "Limite", "الحد"],
+  ["Unit", "Unité", "الوحدة"],
+  ["Invoice", "Facture", "الفاتورة"],
+  ["Issued", "Émise", "تاريخ الإصدار"],
+  ["Plans", "Forfaits", "الخطط"],
+  ["Invoices", "Factures", "الفواتير"],
+  ["Usage", "Utilisation", "الاستخدام"],
+  ["Free", "Gratuit", "مجاني"],
+  ["Starter", "Essentiel", "المبتدئ"],
+  ["Professional", "Professionnel", "الاحترافي"],
+  ["Enterprise", "Entreprise", "المؤسسات"],
+  ["Custom", "Sur mesure", "مخصص"],
+  ["Current", "Actuel", "الحالي"],
+  ["Plan", "Forfait", "الخطة"],
+  ["Prepare upgrade", "Préparer la mise à niveau", "تحضير الترقية"],
+  ["For exploring Vorqa with one lightweight workspace.", "Pour découvrir Vorqa avec un espace de travail léger.", "لاستكشاف Vorqa ضمن مساحة عمل خفيفة."],
+  ["For small teams managing early construction projects.", "Pour les petites équipes gérant leurs premiers projets de construction.", "للفرق الصغيرة التي تدير مشاريع البناء في مراحلها الأولى."],
+  ["For construction companies coordinating projects, vendors, RFQs, and contracts.", "Pour les entreprises de construction coordonnant projets, fournisseurs, appels d’offres et contrats.", "لشركات البناء التي تنسق المشاريع والموردين وطلبات الأسعار والعقود."],
+  ["For large owners, groups, and multi-organization construction operations.", "Pour les grands maîtres d’ouvrage, groupes et opérations multi-organisations.", "لكبار ملاك المشاريع والمجموعات وعمليات البناء متعددة المؤسسات."],
+  ["Priority support", "Support prioritaire", "دعم ذو أولوية"],
+  ["Unlimited workspaces", "Espaces de travail illimités", "مساحات عمل غير محدودة"],
+  ["Custom AI limits", "Limites IA personnalisées", "حدود مخصصة للذكاء الاصطناعي"],
+  ["Dedicated onboarding", "Accompagnement dédié", "تهيئة مخصصة"],
+  ["Manual invoicing", "Facturation manuelle", "فوترة يدوية"],
+  ["Enterprise support", "Support entreprise", "دعم المؤسسات"],
+  ["Luxury Villa Casablanca execution package", "Lot d’exécution de la villa de luxe à Casablanca", "حزمة تنفيذ فيلا فاخرة بالدار البيضاء"],
+  ["Best overall execution accountability with strong reporting and site management.", "Meilleure responsabilité globale d’exécution avec un reporting et une gestion de chantier solides.", "أفضل مسؤولية شاملة عن التنفيذ مع تقارير قوية وإدارة فعالة للموقع."],
+  ["Strong technical validation partner for structural and engineering review.", "Partenaire solide de validation technique pour les revues structurelles et d’ingénierie.", "شريك قوي للتحقق التقني ومراجعة الأعمال الإنشائية والهندسية."],
+  ["Competitive material supply proposal with verified quality documentation.", "Offre compétitive de fourniture de matériaux avec documents qualité vérifiés.", "عرض تنافسي لتوريد المواد مع وثائق جودة موثقة."],
+  ["Fast geotechnical advisory and foundation risk summary.", "Conseil géotechnique rapide et synthèse des risques de fondation.", "استشارة جيوتقنية سريعة وملخص لمخاطر الأساسات."],
+  ["Included", "Inclus", "مشمول"],
+  ["Immediate", "Immédiate", "فوري"],
+  ["High", "Élevé", "عالٍ"],
+  ["Medium", "Moyen", "متوسط"],
+  ["Low", "Faible", "منخفض"],
+  ["Very high", "Très élevé", "عالٍ جداً"],
+  ["Strong", "Solide", "قوي"],
+  ["Lowest", "Le plus faible", "الأدنى"],
+  ["Budget overrun risk detected", "Risque de dépassement budgétaire détecté", "تم اكتشاف خطر تجاوز الميزانية"],
+  ["Luxury Villa Casablanca marble procurement is trending 8% above planned budget. Review supplier quotations before approval.", "Les achats de marbre de Luxury Villa Casablanca dépassent de 8 % le budget prévu. Examinez les devis avant approbation.", "تتجه مشتريات الرخام في Luxury Villa Casablanca إلى تجاوز الميزانية المخططة بنسبة 8%. راجع عروض الموردين قبل الموافقة."],
+  ["Milestone delay warning", "Alerte de retard de jalon", "تحذير تأخر مرحلة"],
+  ["Structural frame inspection is 2 days behind the baseline schedule. VORA recommends escalating the inspection checklist.", "L’inspection de la structure accuse deux jours de retard. VORA recommande d’escalader la liste de contrôle.", "يتأخر فحص الهيكل الإنشائي يومين عن الجدول الأساسي. توصي VORA بتصعيد قائمة الفحص."],
+  ["RFQ response received", "Réponse à l’appel d’offres reçue", "تم استلام رد على طلب عرض السعر"],
+  ["BetonPro Materials submitted a quotation for RFQ-1001 with a 14-day delivery window.", "BetonPro Materials a soumis un devis pour RFQ-1001 avec un délai de livraison de 14 jours.", "قدمت BetonPro Materials عرض سعر لـ RFQ-1001 بمهلة تسليم قدرها 14 يوماً."],
+  ["Contract approval required", "Approbation du contrat requise", "مطلوب اعتماد العقد"],
+  ["CON-1001 needs executive approval before the next payment milestone can be released.", "CON-1001 nécessite une approbation exécutive avant le prochain paiement d’étape.", "يحتاج CON-1001 إلى موافقة الإدارة قبل صرف دفعة المرحلة التالية."],
+  ["Missing safety document", "Document de sécurité manquant", "مستند سلامة مفقود"],
+  ["The latest site safety method statement is missing from the project knowledge base.", "La dernière méthode de sécurité chantier manque dans la base de connaissances du projet.", "بيان منهجية السلامة الأخير مفقود من قاعدة معرفة المشروع."],
+  ["Marketplace connection accepted", "Connexion à la place de marché acceptée", "تم قبول اتصال السوق"],
+  ["GeoConsult Africa accepted your connection request and is available for geotechnical review.", "GeoConsult Africa a accepté votre demande de connexion et est disponible pour la revue géotechnique.", "قبلت GeoConsult Africa طلب الاتصال وهي متاحة للمراجعة الجيوتقنية."],
+  ["Quotation comparison ready", "Comparaison des devis prête", "مقارنة عروض الأسعار جاهزة"],
+  ["VORA prepared a comparison summary for RFQ-1001 quotations and highlighted the best-value option.", "VORA a préparé une synthèse comparative des devis RFQ-1001 et mis en avant la meilleure valeur.", "أعدت VORA ملخص مقارنة لعروض RFQ-1001 وأبرزت الخيار الأفضل قيمة."],
+  ["Task workload alert", "Alerte de charge de travail", "تنبيه عبء المهام"],
+  ["Site engineering workload is above 82%. Consider moving two inspection tasks to the architecture team.", "La charge de l’ingénierie chantier dépasse 82 %. Envisagez de transférer deux inspections à l’équipe architecture.", "يتجاوز عبء الهندسة بالموقع 82%. يُنصح بنقل مهمتي تفتيش إلى فريق العمارة."],
+  ["Payment reminder", "Rappel de paiement", "تذكير بالدفع"],
+  ["Supplier advance payment review is due tomorrow for the steel procurement package.", "La revue de l’avance fournisseur est prévue demain pour le lot d’acier.", "موعد مراجعة الدفعة المقدمة للمورد غداً ضمن حزمة توريد الفولاذ."],
+  ["System maintenance window", "Fenêtre de maintenance système", "فترة صيانة النظام"],
+  ["Vorqa demo services are prepared for a short maintenance window. No user action is required.", "Les services de démonstration Vorqa sont prêts pour une courte maintenance. Aucune action utilisateur n’est requise.", "خدمات Vorqa التجريبية مهيأة لفترة صيانة قصيرة، ولا يلزم المستخدم اتخاذ أي إجراء."],
+  ["Execution phase · Structural inspection", "Phase d’exécution · Inspection structurelle", "مرحلة التنفيذ · الفحص الإنشائي"],
+  ["Supplier package", "Lot fournisseur", "حزمة المورد"],
+  ["Atlas execution contract", "Contrat d’exécution Atlas", "عقد تنفيذ Atlas"],
+  ["Documents · Safety", "Documents · Sécurité", "المستندات · السلامة"],
+  ["Marketplace · Consultants", "Place de marché · Consultants", "السوق · الاستشاريون"],
+  ["Quotation evaluation", "Évaluation des devis", "تقييم عروض الأسعار"],
+  ["Team workload · Engineering", "Charge équipe · Ingénierie", "عبء الفريق · الهندسة"],
+  ["Finance · Procurement", "Finance · Achats", "المالية · المشتريات"],
+  ["System", "Système", "النظام"],
+  ["Now", "Maintenant", "الآن"],
+  ["Luxury Villa Casablanca execution contract", "Contrat d’exécution de la villa de luxe à Casablanca", "عقد تنفيذ الفيلا الفاخرة بالدار البيضاء"],
+  ["Rabat engineering review agreement", "Accord de revue technique de Rabat", "اتفاقية المراجعة الهندسية بالرباط"],
+  ["Tangier materials supply contract", "Contrat de fourniture de matériaux de Tanger", "عقد توريد المواد بطنجة"],
+  ["GeoConsult advisory contract", "Contrat de conseil GeoConsult", "عقد استشارات GeoConsult"],
+  ["Construction execution", "Exécution de construction", "تنفيذ البناء"],
+  ["Engineering services", "Services d’ingénierie", "الخدمات الهندسية"],
+  ["Material supply", "Fourniture de matériaux", "توريد المواد"],
+  ["Consulting", "Conseil", "الاستشارات"],
+  ["Expiring", "Expire bientôt", "قارب على الانتهاء"],
+  ["Execution contract for structural works, site management, reporting, and coordinated delivery following RFQ award preview.", "Contrat d’exécution des travaux structurels, de la gestion de chantier, du reporting et de la livraison coordonnée après attribution.", "عقد لتنفيذ الأعمال الإنشائية وإدارة الموقع والتقارير والتسليم المنسق بعد ترسية طلب عرض السعر."],
+  ["Draft agreement for engineering validation and permit package review.", "Projet d’accord pour la validation technique et la revue du dossier de permis.", "مسودة اتفاقية للتحقق الهندسي ومراجعة حزمة الترخيص."],
+  ["Completed material supply agreement for warehouse execution package.", "Accord de fourniture de matériaux achevé pour le lot d’exécution de l’entrepôt.", "اتفاقية توريد مواد مكتملة لحزمة تنفيذ المستودع."],
+  ["Geotechnical advisory contract nearing closeout.", "Contrat de conseil géotechnique proche de la clôture.", "عقد استشارات جيوتقنية يقترب من الإغلاق."],
+  ["Track invoice status, taxes, totals, due dates, and future download actions.", "Suivez le statut des factures, les taxes, les totaux, les échéances et les futurs téléchargements.", "تابع حالة الفواتير والضرائب والإجماليات وتواريخ الاستحقاق وخيارات التنزيل."],
+  ["ابحث في البنود والفئات والأقسام", "Rechercher dans les postes, catégories et départements", "ابحث في البنود والفئات والأقسام"],
+  ["عدّل البحث أو أضف بند ميزانية جديد.", "Modifiez la recherche ou ajoutez un nouveau poste budgétaire.", "عدّل البحث أو أضف بند ميزانية جديداً."],
+  ["ابحث في التقارير...", "Rechercher dans les rapports...", "ابحث في التقارير..."],
+  ["Search users", "Rechercher des utilisateurs", "البحث عن المستخدمين"],
+  ["Search by name, email, role, organization...", "Rechercher par nom, e-mail, rôle ou organisation...", "ابحث بالاسم أو البريد أو الدور أو المؤسسة..."],
+  ["Adjust your search or filters.", "Modifiez votre recherche ou vos filtres.", "عدّل البحث أو عوامل التصفية."],
+  ["Search organizations...", "Rechercher des organisations...", "البحث عن المؤسسات..."],
+  ["Search audit", "Rechercher dans l’audit", "البحث في سجل التدقيق"],
+  ["Search actor, action, target...", "Rechercher un acteur, une action ou une cible...", "ابحث عن منفذ أو إجراء أو هدف..."],
+  ["Search employees...", "Rechercher des employés...", "البحث عن الموظفين..."],
+  ["Search departments...", "Rechercher des départements...", "البحث عن الأقسام..."],
+  ["Search departments or leads", "Rechercher des départements ou responsables", "البحث عن الأقسام أو المسؤولين"],
+  ["Adjust the search or filters to bring department workspaces back into view.", "Modifiez la recherche ou les filtres pour afficher les espaces des départements.", "عدّل البحث أو عوامل التصفية لإظهار مساحات الأقسام."],
+  ["Search by name, role or department", "Rechercher par nom, rôle ou département", "ابحث بالاسم أو الدور أو القسم"],
+  ["Reset filters or search another role to bring workforce records back.", "Réinitialisez les filtres ou recherchez un autre rôle pour afficher les collaborateurs.", "أعد ضبط عوامل التصفية أو ابحث عن دور آخر لإظهار سجلات الفريق."],
+  ["Search roles, departments or access", "Rechercher des rôles, départements ou accès", "البحث في الأدوار أو الأقسام أو الصلاحيات"],
+  ["Reset search or filters to review the full permissions model.", "Réinitialisez la recherche ou les filtres pour consulter toutes les autorisations.", "أعد ضبط البحث أو عوامل التصفية لمراجعة نموذج الصلاحيات كاملاً."],
+  ["VORA prioritizes risk-heavy events first: budget overruns, delayed milestones, missing documents, and pending contract approvals.", "VORA priorise les événements à risque : dépassements budgétaires, jalons retardés, documents manquants et approbations de contrats en attente.", "تعطي VORA الأولوية للأحداث الأعلى خطراً: تجاوزات الميزانية وتأخر المعالم والمستندات الناقصة واعتمادات العقود المعلقة."],
+  ["Search notifications, context, modules...", "Rechercher des notifications, contextes ou modules...", "البحث في الإشعارات والسياق والوحدات..."],
+  ["Winning company", "Entreprise attributaire", "الشركة الفائزة"],
+  ["Contract value", "Valeur du contrat", "قيمة العقد"],
+  ["Contract type", "Type de contrat", "نوع العقد"],
+  ["Retention", "Retenue", "الاحتجاز المالي"],
+  ["Award decision", "Décision d’attribution", "قرار الترسية"],
+  ["Award date", "Date d’attribution", "تاريخ الترسية"],
+  ["Award value", "Valeur attribuée", "قيمة الترسية"],
+  ["Award reason", "Motif d’attribution", "سبب الترسية"],
+  ["Milestone progress", "Progression du jalon", "تقدم المعلم"],
+  ["Deliverables", "Livrables", "المخرجات المطلوبة"],
+  ["Contract timeline", "Chronologie du contrat", "الخط الزمني للعقد"],
+  ["VORA Contract Insights", "Analyses contractuelles VORA", "رؤى VORA للعقد"],
+  ["Post-award foundation", "Gestion post-attribution", "إدارة ما بعد الترسية"],
+  ["Contract management workspace.", "Espace de gestion des contrats.", "مساحة إدارة العقود."],
+  ["Active contracts", "Contrats actifs", "العقود النشطة"],
+  ["Awaiting approval", "En attente d’approbation", "بانتظار الموافقة"],
+  ["Upcoming milestones", "Jalons à venir", "المعالم القادمة"],
+  ["Total value", "Valeur totale", "القيمة الإجمالية"],
+  ["Search contracts, RFQs, companies or projects", "Rechercher des contrats, appels d’offres, entreprises ou projets", "البحث في العقود أو طلبات الأسعار أو الشركات أو المشاريع"],
+  ["Adjust your search or filters to restore the contract dashboard.", "Modifiez la recherche ou les filtres pour réafficher le tableau des contrats.", "عدّل البحث أو عوامل التصفية لإظهار لوحة العقود."],
+  ["Linked RFQ", "Appel d’offres associé", "طلب عرض السعر المرتبط"],
+  ["Contract progress", "Progression du contrat", "تقدم العقد"],
+  ["Discover contractors, engineering firms, architects, suppliers, logistics teams, equipment providers, and consultants inside a premium B2B construction marketplace.", "Découvrez entrepreneurs, bureaux d’études, architectes, fournisseurs, logisticiens, loueurs d’équipements et consultants sur une place de marché B2B dédiée à la construction.", "اكتشف المقاولين والمكاتب الهندسية والمعماريين والموردين وشركات اللوجستيك ومزودي المعدات والاستشاريين داخل سوق مهني للبناء."],
+  ["Search companies, categories, cities or services", "Rechercher des entreprises, catégories, villes ou services", "البحث عن الشركات أو الفئات أو المدن أو الخدمات"],
+  ["Search marketplace", "Rechercher sur la place de marché", "البحث في السوق"],
+  ["Adjust the search, category, verification, city, or rating filters to discover more B2B partners.", "Modifiez la recherche, la catégorie, la vérification, la ville ou la note pour découvrir davantage de partenaires.", "عدّل البحث أو الفئة أو حالة التوثيق أو المدينة أو التقييم لاكتشاف شركاء إضافيين."],
+  ["Search shortlist", "Rechercher dans la sélection", "البحث في القائمة المختصرة"],
+  ["Search RFQs, projects, suppliers or services", "Rechercher des appels d’offres, projets, fournisseurs ou services", "البحث في طلبات الأسعار أو المشاريع أو الموردين أو الخدمات"],
+  ["Adjust search, status, category, or priority filters to find RFQs.", "Modifiez la recherche, le statut, la catégorie ou la priorité pour trouver des appels d’offres.", "عدّل البحث أو الحالة أو الفئة أو الأولوية للعثور على طلبات الأسعار."],
+  ["Search suppliers", "Rechercher des fournisseurs", "البحث عن الموردين"],
+  ["Search RFQs, projects or services", "Rechercher des appels d’offres, projets ou services", "البحث في طلبات الأسعار أو المشاريع أو الخدمات"],
+  ["Adjust your search or filters to restore the RFQ dashboard.", "Modifiez la recherche ou les filtres pour réafficher le tableau des appels d’offres.", "عدّل البحث أو عوامل التصفية لإظهار لوحة طلبات الأسعار."],
+  ["Search quotation, supplier, RFQ or project", "Rechercher un devis, fournisseur, appel d’offres ou projet", "البحث في عرض سعر أو مورد أو طلب أسعار أو مشروع"],
+  ["Adjust search and filters or open an RFQ to invite suppliers.", "Modifiez la recherche et les filtres ou ouvrez un appel d’offres pour inviter des fournisseurs.", "عدّل البحث وعوامل التصفية أو افتح طلب عرض سعر لدعوة الموردين."],
   ["Search...", "Rechercher...", "ابحث..."],
   ["Cancel", "Annuler", "إلغاء"],
   ["Close", "Fermer", "إغلاق"],
@@ -773,10 +1031,16 @@ function buildTranslationCatalog(): TranslationCatalog {
     });
   });
 
-  supplementalUiTranslations.forEach(([en, fr, ar]) => {
+  [...supplementalUiTranslations, ...finalSystemTranslations].forEach(([first, fr, third]) => {
+    // A small number of legacy screens were authored in Arabic. Their tuples
+    // intentionally use [Arabic, French, English] so all original source
+    // variants can still resolve without rewriting presentation components.
+    const arabicAuthored = /[\u0600-\u06ff]/.test(first) && !/[\u0600-\u06ff]/.test(third);
+    const en = arabicAuthored ? third : first;
+    const ar = arabicAuthored ? first : third;
     const values: Record<Locale, string> = { en, fr, ar };
     locales.forEach((locale) => {
-      [en, fr, ar].forEach((source) => {
+      [first, fr, third].forEach((source) => {
         catalog[locale][source] = values[locale];
       });
     });
@@ -787,11 +1051,41 @@ function buildTranslationCatalog(): TranslationCatalog {
 
 const generatedUiTranslationCatalog = buildTranslationCatalog();
 
-export const uiTranslationCatalog: TranslationCatalog = {
-  ar: { ...generatedUiTranslationCatalog.ar, ...arCatalog },
-  fr: { ...generatedUiTranslationCatalog.fr, ...frCatalog },
-  en: { ...generatedUiTranslationCatalog.en, ...enCatalog }
+const rejectedFlatTranslations: Record<Locale, ReadonlySet<string>> = {
+  ar: new Set([
+    "معلومات المؤسسة وأدوات إدارتها", "معلومات الفوترة وإدارة الاشتراك", "معلومات طلب عرض السعر وإجراءات المشتريات",
+    "معلومات السوق وإجراءات الشركاء", "معلومات التطبيق والإجراءات المتاحة", "عرض التفاصيل", "لا تتوفر معلومات مطابقة",
+    "البحث في المعلومات المتاحة", "معلومات الأداة والإجراءات المتاحة", "العودة إلى العرض السابق", "معلومات العقد ومتابعة التسليم",
+    "معلومات إعداد مساحة العمل", "معلومات الإدارة وأدوات التحكم في المنصة", "إنشاء سجل جديد"
+  ]),
+  fr: new Set([
+    "Informations de l’application et actions disponibles", "Informations et gestion de l’organisation",
+    "Informations de facturation et gestion de l’abonnement", "Informations de demande de devis et actions d’approvisionnement",
+    "Informations de la place de marché et actions partenaires", "Voir les détails", "Aucune information correspondante n’est disponible",
+    "Rechercher dans les informations disponibles", "Informations de l’outil et actions disponibles", "Revenir à la vue précédente",
+    "Informations contractuelles et suivi de livraison", "Informations de configuration de l’espace",
+    "Informations d’administration et contrôles de la plateforme", "Créer un nouvel élément"
+  ]),
+  en: new Set(["Application information and available actions"])
 };
+
+function preciseFlatCatalog(locale: Locale, catalog: Record<string, string>) {
+  return Object.fromEntries(Object.entries(catalog).filter(([, translated]) => !rejectedFlatTranslations[locale].has(translated)));
+}
+
+export const uiTranslationCatalog: TranslationCatalog = {
+  // The curated dictionaries are authoritative. The flat catalogs are an
+  // offline compatibility layer and may only fill keys not owned by them.
+  // This prevents broad audit placeholders from replacing precise labels.
+  ar: { ...preciseFlatCatalog("ar", arCatalog), ...generatedUiTranslationCatalog.ar },
+  fr: { ...preciseFlatCatalog("fr", frCatalog), ...generatedUiTranslationCatalog.fr },
+  en: { ...preciseFlatCatalog("en", enCatalog), ...generatedUiTranslationCatalog.en }
+};
+
+const normalizedUiTranslationCatalog = Object.fromEntries(locales.map((locale) => [
+  locale,
+  Object.fromEntries(Object.entries(uiTranslationCatalog[locale]).map(([key, translated]) => [key.toLocaleLowerCase("en"), translated]))
+])) as TranslationCatalog;
 
 export function translateUiText(value: string, locale: Locale): string {
   const leading = value.match(/^\s*/)?.[0] || "";
@@ -801,11 +1095,16 @@ export function translateUiText(value: string, locale: Locale): string {
   const exact = uiTranslationCatalog[locale][source];
   if (exact) return `${leading}${exact}${trailing}`;
 
-  const quantityUnit = source.match(/^(\d+(?:[.,]\d+)?)\s+(day|days|week|weeks|month|months|year|years)$/i);
+  const normalizedSource = source.replaceAll("_", " ");
+  const normalized = normalizedUiTranslationCatalog[locale][normalizedSource.toLocaleLowerCase("en")];
+  if (normalized) return `${leading}${normalized}${trailing}`;
+
+  const quantityUnit = source.match(/^(\d+(?:[.,]\d+)?)\+?\s+(day|days|week|weeks|month|months|year|years|star|stars|file|files|project|projects|output|outputs|quotation|quotations|approval|approvals|member|members|request|requests|contract|contracts|document|documents|workspace|workspaces|notification|notifications|action|actions)$/i);
   if (quantityUnit) {
     const [, amount, unit] = quantityUnit;
     const localizedUnit = uiTranslationCatalog[locale][unit.toLowerCase()] || unit;
-    return `${leading}${amount} ${localizedUnit}${trailing}`;
+    const plus = source.includes("+") ? "+" : "";
+    return `${leading}${amount}${plus} ${localizedUnit}${trailing}`;
   }
 
   const score = source.match(/^(Technical|Commercial)\s+(\d+(?:[.,]\d+)?)%$/i);

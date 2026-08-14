@@ -37,7 +37,10 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
             <div className="grid gap-4 md:grid-cols-4">
               <Metric label="Winning company" value={contract.winningCompany} />
               <Metric label="Project" value={contract.project} />
-              <Metric label="Contract value" value={contract.value} />
+              <Metric
+                label="Contract value"
+                value={contract.valueAmount == null ? contract.value : formatCurrency(contract.valueAmount, contract.currency || "MAD", locale)}
+              />
               <Metric label="Period" value={`${formatDisplayDate(contract.startDate, locale)} - ${formatDisplayDate(contract.endDate, locale)}`} />
             </div>
             <div className="mt-5 grid gap-4 md:grid-cols-3">
@@ -52,7 +55,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
             {contract.award ? (
               <div className="grid gap-4 md:grid-cols-3">
                 <Metric label="Winning quotation" value={contract.award.quotationId} />
-                <Metric label="Award date" value={contract.award.awardDate} />
+                <Metric label="Award date" value={formatDisplayDate(contract.award.awardDate, locale)} />
                 <Metric label="Award value" value={formatCurrency(contract.award.awardValue, "MAD", locale)} />
                 <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-4 md:col-span-3">
                   <p className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">Award reason</p>
@@ -82,7 +85,7 @@ export default function ContractDetailsPage({ params }: { params: { id: string }
           <GlassCard className="p-5">
             <SectionHeader title="Payment schedule" icon={<CalendarDays className="h-5 w-5" />} />
             <div className="grid gap-3 md:grid-cols-2">
-              {contract.payments.length ? contract.payments.map((payment) => <Metric key={payment.label} label={`${payment.label} · ${payment.due}`} value={`${payment.amount} · ${payment.status}`} />) : <EmptyState title="No payment schedule available" />}
+              {contract.payments.length ? contract.payments.map((payment) => <Metric key={payment.label} label={`${payment.label} · ${formatDisplayDate(payment.due, locale)}`} value={`${payment.amount} · ${payment.status}`} />) : <EmptyState title="No payment schedule available" />}
             </div>
           </GlassCard>
 

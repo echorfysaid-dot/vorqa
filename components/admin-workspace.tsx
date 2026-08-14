@@ -41,13 +41,13 @@ import {
 type AdminView = "dashboard" | "users" | "organizations" | "subscriptions" | "audit" | "feature-flags" | "system" | "ai";
 
 const navItems: Array<{ href: string; label: string; view: AdminView; icon: React.ReactNode }> = [
-  { href: "/admin", label: "لوحة التحكم", view: "dashboard", icon: <Gauge className="h-4 w-4" /> },
-  { href: "/admin/users", label: "المستخدمون", view: "users", icon: <UsersRound className="h-4 w-4" /> },
-  { href: "/admin/organizations", label: "المؤسسات", view: "organizations", icon: <Building2 className="h-4 w-4" /> },
-  { href: "/admin/subscriptions", label: "الاشتراكات", view: "subscriptions", icon: <CreditCard className="h-4 w-4" /> },
-  { href: "/admin/audit", label: "سجل التدقيق", view: "audit", icon: <FileSearch className="h-4 w-4" /> },
+  { href: "/admin", label: "Dashboard", view: "dashboard", icon: <Gauge className="h-4 w-4" /> },
+  { href: "/admin/users", label: "Users", view: "users", icon: <UsersRound className="h-4 w-4" /> },
+  { href: "/admin/organizations", label: "Organizations", view: "organizations", icon: <Building2 className="h-4 w-4" /> },
+  { href: "/admin/subscriptions", label: "Subscriptions", view: "subscriptions", icon: <CreditCard className="h-4 w-4" /> },
+  { href: "/admin/audit", label: "Audit log", view: "audit", icon: <FileSearch className="h-4 w-4" /> },
   { href: "/admin/feature-flags", label: "Feature Flags", view: "feature-flags", icon: <Flag className="h-4 w-4" /> },
-  { href: "/admin/system", label: "النظام", view: "system", icon: <Database className="h-4 w-4" /> },
+  { href: "/admin/system", label: "System", view: "system", icon: <Database className="h-4 w-4" /> },
   { href: "/admin/ai", label: "VORA AI", view: "ai", icon: <Bot className="h-4 w-4" /> }
 ];
 
@@ -65,7 +65,7 @@ function formatNumber(value: number, locale: "ar" | "fr" | "en") {
 }
 
 function formatDate(value: string | undefined, locale: "ar" | "fr" | "en") {
-  if (!value) return "غير متوفر";
+  if (!value) return "Not available";
   return formatLocalizedDate(value, locale);
 }
 
@@ -96,8 +96,8 @@ function AdminShell({ view, children }: { view: AdminView; children: React.React
     <div className="space-y-6">
       <PageHeader
         eyebrow="VORQA ADMIN"
-        title="مركز إدارة المنصة"
-        description="لوحة تشغيل داخلية لإدارة المؤسسات، المستخدمين، الاشتراكات، الاستخدام، وسجل التدقيق بدون تغيير أي منطق إنتاجي قائم."
+        title="Platform administration center"
+        description="Internal workspace for organizations, users, subscriptions, usage, and audit operations."
         action={<Badge tone="gold"><ShieldCheck className="h-4 w-4" /> Demo / Supabase / Auto</Badge>}
       />
       <div className="grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
@@ -127,7 +127,7 @@ function AdminDashboardView() {
   const metrics = state.data.metrics;
   return (<AutoLocalizedContent>
     <AdminShell view="dashboard">
-      {state.error && state.isFallback && <GlassCard className="p-4 text-sm font-bold text-warning">يتم عرض لوحة الإدارة من بيانات demo fallback لأن عروض Supabase الإدارية غير متاحة بعد.</GlassCard>}
+      {state.error && state.isFallback && <GlassCard className="p-4 text-sm font-bold text-warning">Administrative data is unavailable, so Vorqa is showing the demo fallback.</GlassCard>}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard title="Total users" value={formatNumber(metrics.totalUsers, locale)} hint="Users" icon={<UsersRound className="h-5 w-5" />} />
         <MetricCard title="Active organizations" value={formatNumber(metrics.activeOrganizations, locale)} hint="Organizations" icon={<Building2 className="h-5 w-5" />} tone="success" />
@@ -181,7 +181,7 @@ function AdminUsersView() {
   const rows = state.data.map((user) => [
     <div key="u" className="font-black text-ds-text">{user.name}<p className="text-xs text-ds-text/48">{user.email}</p></div>,
     <Badge key="r" tone="blue">{user.role}</Badge>,
-    user.organization || "غير مرتبط",
+    user.organization || "Not linked",
     <Badge key="s" tone={statusTone(user.status)}>{user.status}</Badge>,
     formatNumber(user.aiRequests, locale),
     <div key="a" className="flex gap-2"><Button size="sm" variant="secondary">Suspend</Button><Button size="sm" variant="ghost">Restore</Button></div>

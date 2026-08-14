@@ -14,6 +14,8 @@ import type { OrganizationMutationInput } from "@/lib/repositories/organizationM
 import { organizationPermissionLabels, supportedOrganizationPermissions } from "@/lib/repositories/organizationRoleMapper";
 import { slugifyDepartment } from "@/lib/repositories/departmentMapper";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatDate } from "@/lib/utils/format";
 
 const statusOptions = ["Active", "Suspended organization", "Archived"];
 const departmentStatusOptions: DepartmentStatus[] = ["Active", "Suspended", "Archived"];
@@ -747,6 +749,7 @@ function DepartmentsSection(props: {
 }
 
 function DepartmentCard({ department, canManage, updateDepartment, archiveDepartment }: { department: Department; canManage: boolean; updateDepartment: (department: Department) => void; archiveDepartment: (department: Department) => void }) {
+  const { locale } = useI18n();
   const [draft, setDraft] = useState(department);
   useEffect(() => setDraft(department), [department]);
   const workload = draft.workload || 0;
@@ -767,7 +770,7 @@ function DepartmentCard({ department, canManage, updateDepartment, archiveDepart
         <InfoCard label="Lead" value={draft.leadName || draft.lead || "Unassigned"} />
         <InfoCard label="Members" value={String(draft.memberCount ?? draft.employees ?? 0)} />
         <InfoCard label="Active projects" value={String(draft.activeProjectCount ?? draft.activeProjects ?? 0)} />
-        <InfoCard label="Created" value={draft.createdAt ? new Date(draft.createdAt).toLocaleDateString() : "-"} />
+        <InfoCard label="Created" value={draft.createdAt ? formatDate(draft.createdAt, locale) : "-"} />
       </div>
       <div className="mt-5"><ProgressBar value={workload} label="Workload" tone={workload > 80 ? "warning" : workload > 65 ? "blue" : "success"} /></div>
       {(draft.priorities || []).length > 0 && (

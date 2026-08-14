@@ -6,8 +6,11 @@ import { ArrowLeft, BadgeCheck, BrainCircuit, Clock3, FileStack, Filter, Receipt
 import { Badge, Button, EmptyState, GlassCard, ProgressBar, SkeletonCard } from "@/components/ui";
 import { useQuotationDashboard, useQuotations } from "@/lib/repositories";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { useI18n } from "@/components/i18n-provider";
+import { formatCurrency } from "@/lib/utils/format";
 
 export default function QuotationsPage() {
+  const { locale } = useI18n();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All statuses");
   const [supplierFilter, setSupplierFilter] = useState("All suppliers");
@@ -68,7 +71,7 @@ export default function QuotationsPage() {
         </div>
       ) : quotationsState.data.length ? (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {quotationsState.data.map((quotation) => <QuotationCard key={quotation.id || quotation.company} quotation={quotation} />)}
+          {quotationsState.data.map((quotation) => <QuotationCard key={quotation.id || quotation.company} quotation={quotation} locale={locale} />)}
         </div>
       ) : (
         <EmptyState title="No quotations found" description="Adjust search and filters or open an RFQ to invite suppliers." action={<Button variant="secondary" onClick={() => { setQuery(""); setStatusFilter("All statuses"); setSupplierFilter("All suppliers"); setCategoryFilter("All categories"); }}>Reset filters</Button>} />
@@ -77,7 +80,7 @@ export default function QuotationsPage() {
   </AutoLocalizedContent>);
 }
 
-function QuotationCard({ quotation }: { quotation: ReturnType<typeof useQuotations>["data"][number] }) {
+function QuotationCard({ quotation, locale }: { quotation: ReturnType<typeof useQuotations>["data"][number]; locale: "ar" | "fr" | "en" }) {
   const tone = quotation.status === "Shortlisted" ? "gold" : quotation.status === "Awarded" ? "success" : quotation.status === "Rejected" ? "danger" : "blue";
   return (<AutoLocalizedContent>
     <Link href={`/quotations/${quotation.id}`} className="group block rounded-[2rem] outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]/70">
@@ -89,7 +92,7 @@ function QuotationCard({ quotation }: { quotation: ReturnType<typeof useQuotatio
         <h2 className="mt-5 text-2xl font-black text-white">{quotation.company}</h2>
         <p className="mt-2 text-sm leading-7 text-ds-text/58">{quotation.rfqTitle || quotation.notes}</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <MiniMetric label="Total price" value={quotation.price} />
+          <MiniMetric label="Total price" value={formatCurrency(quotation.totalPrice, quotation.currency || "MAD", locale)} />
           <MiniMetric label="Lead time" value={quotation.duration} />
           <MiniMetric label="Warranty" value={quotation.warranty} />
           <MiniMetric label="RFQ" value={quotation.rfqId || "RFQ"} />

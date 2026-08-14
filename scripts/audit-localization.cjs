@@ -2,10 +2,28 @@ const fs = require("node:fs");
 const path = require("node:path");
 const childProcess = require("node:child_process");
 const ts = require("typescript");
+const Module = require("node:module");
 
 const root = path.resolve(__dirname, "..");
-const visibleAttributes = new Set(["aria-label", "placeholder", "title", "alt"]);
+const originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function resolveVorqaAlias(request, parent, isMain, options) {
+  if (request.startsWith("@/")) return originalResolveFilename.call(this, path.join(root, request.slice(2)), parent, isMain, options);
+  return originalResolveFilename.call(this, request, parent, isMain, options);
+};
+require.extensions[".ts"] = function loadTypeScript(module, filename) {
+  const output = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, esModuleInterop: true },
+    fileName: filename
+  });
+  module._compile(output.outputText, filename);
+};
+
+const { locales, translateUiText } = require(path.join(root, "lib", "i18n.ts"));
+const visibleAttributes = new Set(["aria-label", "placeholder", "title", "alt", "label", "description", "eyebrow", "message", "hint"]);
+const structuredUiProps = new Set(["title", "label", "description", "subtitle", "eyebrow", "helper", "hint", "message", "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt"]);
 const ignored = /^(?:[a-z]+:|\/|#|\.|--|[\w-]+\.(?:png|jpe?g|webp|svg|pdf|docx|xlsx|csv)|[A-Z]{2,}-\d+|[\d\s.,%+:/-]+)$/i;
+const localeNeutral = /^(?:VORA|Vorqa|Supabase|OpenAI|Anthropic|Gemini|OpenRouter|PDF|DOCX|XLSX|CSV|BIM|BOQ|RAG|OCR|API|AI|Email|Website|Kanban|Markdown|MRR|B2B|OK)$/i;
+const intentionalUserOrFileData = /^(?:VORA AI|Atlas Construction Group|Nadia Benali|Luxury Villa Casablanca|Supplier Comparison\.xlsx|(?:RFQ|QTN|CON)-\d+\b)/i;
 
 function normalize(value) {
   return value.replace(/\s+/g, " ").trim();
@@ -17,7 +35,7 @@ function isVisibleCopy(value) {
 }
 
 function collect() {
-  const files = childProcess.execFileSync("rg", ["--files", "app", "components", "-g", "*.tsx"], {
+  const files = childProcess.execFileSync("rg", ["--files", "app", "components", "-g", "*.tsx", "-g", "*.ts"], {
     cwd: root,
     encoding: "utf8"
   }).trim().split(/\r?\n/).filter(Boolean);
@@ -38,6 +56,10 @@ function collect() {
       if (ts.isJsxAttribute(node) && visibleAttributes.has(node.name.text) && node.initializer && ts.isStringLiteral(node.initializer)) {
         add(node, node.initializer.text, node.name.text);
       }
+      if (ts.isPropertyAssignment(node)) {
+        const key = ts.isIdentifier(node.name) || ts.isStringLiteral(node.name) ? node.name.text : "";
+        if (structuredUiProps.has(key) && ts.isStringLiteralLike(node.initializer)) add(node, node.initializer.text, `property:${key}`);
+      }
       ts.forEachChild(node, visit);
     };
     visit(sourceFile);
@@ -52,11 +74,27 @@ function main() {
   ]));
   const findings = collect();
   const unique = [...new Set(findings.map(({ text }) => text))];
-  const missing = unique.filter((text) => !["ar", "fr", "en"].every((locale) => catalogs[locale][text]));
-  const report = { scannedOccurrences: findings.length, uniqueVisibleLiterals: unique.length, cataloged: unique.length - missing.length, missing };
+  const keySets = locales.map((locale) => Object.keys(catalogs[locale]).sort());
+  const catalogParity = keySets.every((keys) => JSON.stringify(keys) === JSON.stringify(keySets[0]));
+  const bracketArtifacts = findings.filter(({ kind, text }) => kind === "jsx-text" && /^[()[\]{}]+$/.test(text));
+  const runtimeLeaks = [];
+  unique.forEach((text) => {
+    if (localeNeutral.test(text) || intentionalUserOrFileData.test(text)) return;
+    if (/^[A-Za-z][\s\S]*[A-Za-z]$/.test(text) && translateUiText(text, "ar") === text) runtimeLeaks.push({ locale: "ar", text });
+    if (/\p{Script=Arabic}/u.test(text) && translateUiText(text, "fr") === text) runtimeLeaks.push({ locale: "fr", text });
+    if (/\p{Script=Arabic}/u.test(text) && translateUiText(text, "en") === text) runtimeLeaks.push({ locale: "en", text });
+  });
+  const report = {
+    scannedOccurrences: findings.length,
+    uniqueVisibleLiterals: unique.length,
+    catalogParity,
+    bracketArtifacts,
+    runtimeLeaks
+  };
   fs.writeFileSync(path.join(root, "localization-audit.json"), `${JSON.stringify(report, null, 2)}\n`, "utf8");
-  console.log(`Localization audit: ${report.cataloged}/${report.uniqueVisibleLiterals} direct visible literals cataloged.`);
-  if (missing.length) console.log(`${missing.length} literals remain listed in localization-audit.json.`);
+  console.log(`Localization audit: ${findings.length} occurrences, ${unique.length} unique system literals.`);
+  console.log(`Catalog parity: ${catalogParity ? "pass" : "fail"}; runtime leaks: ${runtimeLeaks.length}; bracket artifacts: ${bracketArtifacts.length}.`);
+  if (!catalogParity || runtimeLeaks.length || bracketArtifacts.length) process.exitCode = 1;
 }
 
 main();

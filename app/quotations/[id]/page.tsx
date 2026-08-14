@@ -45,7 +45,7 @@ export default function QuotationDetailsPage({ params }: { params: { id: string 
           <GlassCard className="p-5">
             <SectionHeader title="Quotation overview" icon={<CircleDollarSign className="h-5 w-5" />} />
             <div className="grid gap-4 md:grid-cols-4">
-              <Metric label="Total price" value={quotation.price} />
+              <Metric label="Total price" value={formatCurrency(quotation.totalPrice, quotation.currency || "MAD", locale)} />
               <Metric label="Lead time" value={quotation.leadTime || quotation.duration} />
               <Metric label="Payment terms" value={quotation.paymentTerms} />
               <Metric label="Warranty" value={quotation.warranty} />

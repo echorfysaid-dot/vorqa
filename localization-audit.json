@@ -1,6 +1,7 @@
 {
-  "scannedOccurrences": 1309,
-  "uniqueVisibleLiterals": 1095,
-  "cataloged": 1095,
-  "missing": []
+  "scannedOccurrences": 2431,
+  "uniqueVisibleLiterals": 1779,
+  "catalogParity": true,
+  "bracketArtifacts": [],
+  "runtimeLeaks": []
 }

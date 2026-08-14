@@ -14,6 +14,25 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 const workspaceTextProps = new Set(["aria-label", "placeholder", "title", "alt", "label", "description", "eyebrow", "message"]);
+const intentionalLocaleNeutralCopy = /^(?:VORA|Vorqa|Supabase|OpenAI|Anthropic|Gemini|OpenRouter|PDF|DOCX|XLSX|CSV|BIM|BOQ|RAG|OCR|API|AI|Email|Website|Kanban|Markdown|MRR|B2B|OK)$/i;
+const genericAuditPlaceholders = new Set([
+  "معلومات المؤسسة وأدوات إدارتها", "معلومات الفوترة وإدارة الاشتراك", "معلومات طلب عرض السعر وإجراءات المشتريات",
+  "معلومات السوق وإجراءات الشركاء", "معلومات التطبيق والإجراءات المتاحة", "عرض التفاصيل", "لا تتوفر معلومات مطابقة",
+  "البحث في المعلومات المتاحة", "معلومات الأداة والإجراءات المتاحة", "العودة إلى العرض السابق", "معلومات العقد ومتابعة التسليم",
+  "معلومات إعداد مساحة العمل", "معلومات الإدارة وأدوات التحكم في المنصة", "إنشاء سجل جديد",
+  "Informations de l’application et actions disponibles", "Informations et gestion de l’organisation",
+  "Informations de facturation et gestion de l’abonnement", "Informations de demande de devis et actions d’approvisionnement",
+  "Informations de la place de marché et actions partenaires", "Voir les détails", "Aucune information correspondante n’est disponible",
+  "Rechercher dans les informations disponibles", "Informations de l’outil et actions disponibles", "Revenir à la vue précédente",
+  "Informations contractuelles et suivi de livraison", "Informations de configuration de l’espace",
+  "Informations d’administration et contrôles de la plateforme", "Créer un nouvel élément"
+]);
+
+const structuredUiProps = new Set([
+  "title", "label", "description", "subtitle", "eyebrow", "helper", "hint", "message",
+  "badge", "status", "emptyText", "emptyLabel", "placeholder", "alt"
+]);
+const intentionalUserOrFileData = /^(?:VORA AI|Atlas Construction Group|Nadia Benali|Luxury Villa Casablanca|Supplier Comparison\.xlsx|(?:RFQ|QTN|CON)-\d+\b)/i;
 
 function collectVisibleLiterals(file: string, includeLine: (line: number) => boolean = () => true) {
   const source = fs.readFileSync(path.join(process.cwd(), file), "utf8");
@@ -34,6 +53,24 @@ function collectVisibleLiterals(file: string, includeLine: (line: number) => boo
       ts.isJsxAttribute(node.parent.parent) && ts.isIdentifier(node.parent.parent.name) && workspaceTextProps.has(node.parent.parent.name.text)
     ) {
       add(node, node.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  return values;
+}
+
+function collectStructuredUiLiterals(file: string) {
+  const source = fs.readFileSync(path.join(process.cwd(), file), "utf8");
+  const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  const values: string[] = [];
+  const visit = (node: ts.Node) => {
+    if (ts.isPropertyAssignment(node)) {
+      const key = ts.isIdentifier(node.name) || ts.isStringLiteral(node.name) ? node.name.text : "";
+      if (structuredUiProps.has(key) && ts.isStringLiteralLike(node.initializer)) {
+        const value = node.initializer.text.replace(/\s+/g, " ").trim();
+        if (value && /\p{L}/u.test(value)) values.push(value);
+      }
     }
     ts.forEachChild(node, visit);
   };
@@ -131,7 +168,7 @@ export const tests = [
     }
   },
   {
-    name: "all application JSX literals resolve through every offline catalog",
+    name: "all application JSX literals resolve through the authoritative runtime catalog",
     run: () => {
       const collectFiles = (directory: string): string[] => fs.readdirSync(path.join(process.cwd(), directory), { withFileTypes: true }).flatMap((entry) => {
         const relative = path.join(directory, entry.name);
@@ -140,12 +177,23 @@ export const tests = [
       });
       const files = [...collectFiles("app"), ...collectFiles("components")];
       const keys = files.flatMap((file) => collectVisibleLiterals(file));
+      const issues: string[] = [];
       assert(keys.length > 0, "No application JSX literals were found");
       new Set(keys).forEach((key) => {
-        assert(Boolean(arCatalog[key as keyof typeof arCatalog]), `Missing Arabic application translation: ${key}`);
-        assert(Boolean(frCatalog[key as keyof typeof frCatalog]), `Missing French application translation: ${key}`);
-        assert(Boolean(enCatalog[key as keyof typeof enCatalog]), `Missing English application translation: ${key}`);
+        locales.forEach((locale) => {
+          const translated = translateUiText(key, locale).trim();
+          if (!translated) issues.push(`Missing ${locale}: ${key}`);
+          if (genericAuditPlaceholders.has(translated)) issues.push(`Generic ${locale}: ${key}`);
+        });
+        if (/^[A-Za-z][\s\S]*[A-Za-z]$/.test(key) && !intentionalLocaleNeutralCopy.test(key)) {
+          if (translateUiText(key, "ar") === key) issues.push(`English leaked into Arabic: ${key}`);
+        }
+        if (/\p{Script=Arabic}/u.test(key) && !intentionalLocaleNeutralCopy.test(key)) {
+          if (translateUiText(key, "fr") === key) issues.push(`Arabic leaked into French: ${key}`);
+          if (translateUiText(key, "en") === key) issues.push(`Arabic leaked into English: ${key}`);
+        }
       });
+      assert(issues.length === 0, `Runtime localization audit failed:\n${issues.join("\n")}`);
     }
   },
   {
@@ -170,6 +218,27 @@ export const tests = [
         visit(sourceFile);
       }
       assert(artifacts.length === 0, `Accidental bracket-only JSX text found: ${artifacts.join(", ")}`);
+    }
+  },
+  {
+    name: "structured system card metadata resolves without cross-language leakage",
+    run: () => {
+      const collectFiles = (directory: string): string[] => fs.readdirSync(path.join(process.cwd(), directory), { withFileTypes: true }).flatMap((entry) => {
+        const relative = path.join(directory, entry.name);
+        if (entry.isDirectory()) return collectFiles(relative);
+        return entry.isFile() && /\.tsx?$/.test(relative) ? [relative.replace(/\\/g, "/")] : [];
+      });
+      const values = [...collectFiles("app"), ...collectFiles("components")].flatMap(collectStructuredUiLiterals);
+      const issues: string[] = [];
+      new Set(values).forEach((value) => {
+        if (intentionalUserOrFileData.test(value)) return;
+        if (/^[A-Za-z][\s\S]*[A-Za-z]$/.test(value) && !intentionalLocaleNeutralCopy.test(value) && translateUiText(value, "ar") === value) {
+          issues.push(`English structured UI leaked into Arabic: ${value}`);
+        }
+        if (/\p{Script=Arabic}/u.test(value) && translateUiText(value, "fr") === value) issues.push(`Arabic structured UI leaked into French: ${value}`);
+        if (/\p{Script=Arabic}/u.test(value) && translateUiText(value, "en") === value) issues.push(`Arabic structured UI leaked into English: ${value}`);
+      });
+      assert(issues.length === 0, `Structured UI localization audit failed:\n${issues.join("\n")}`);
     }
   },
   {
@@ -267,12 +336,20 @@ export const tests = [
   {
     name: "canonical system statuses and priorities localize in every locale",
     run: () => {
-      const values = ["Open", "Draft", "Pending", "Approved", "Rejected", "Planning", "Execution", "High", "Medium", "Low"];
-      const catalogs = { ar: arCatalog, fr: frCatalog, en: enCatalog } as const;
-      values.forEach((value) => locales.forEach((locale) => {
-        const translated = translateUiText(value, locale);
-        assert(Boolean(translated.trim()), `Empty ${locale} translation for ${value}`);
-        assert(translated === catalogs[locale][value as keyof typeof arCatalog], `Incorrect ${locale} system value: ${value}`);
+      const expected = {
+        Open: { ar: "مفتوح", fr: "Ouvert", en: "Open" },
+        Draft: { ar: "مسودة", fr: "Brouillon", en: "Draft" },
+        Pending: { ar: "قيد الانتظار", fr: "En attente", en: "Pending" },
+        Approved: { ar: "معتمد", fr: "Approuvé", en: "Approved" },
+        Rejected: { ar: "مرفوض", fr: "Rejeté", en: "Rejected" },
+        Planning: { ar: "التخطيط", fr: "Planification", en: "Planning" },
+        Execution: { ar: "التنفيذ", fr: "Exécution", en: "Execution" },
+        High: { ar: "عالٍ", fr: "Élevé", en: "High" },
+        Medium: { ar: "متوسط", fr: "Moyen", en: "Medium" },
+        Low: { ar: "منخفض", fr: "Faible", en: "Low" }
+      } as const;
+      Object.entries(expected).forEach(([value, translations]) => locales.forEach((locale) => {
+        assert(translateUiText(value, locale) === translations[locale], `Incorrect ${locale} system value: ${value}`);
       }));
     }
   },
@@ -290,13 +367,14 @@ export const tests = [
         assert(Boolean(translateUiText(label, "en").trim()), `Missing English system label: ${label}`);
       });
 
-      ["1 day", "10 days", "1 week", "8 weeks", "1 month", "24 months", "1 year", "18 years"].forEach((value) => {
+      ["1 day", "10 days", "1 week", "8 weeks", "1 month", "24 months", "1 year", "18 years", "24 files", "3 projects", "4 quotations", "2 approvals"].forEach((value) => {
         assert(!/\b(day|days|week|weeks|month|months|year|years)\b/i.test(translateUiText(value, "ar")), `Arabic duration leaked English: ${value}`);
         assert(!/\b(day|days|week|weeks|month|months|year|years)\b/i.test(translateUiText(value, "fr")), `French duration leaked English: ${value}`);
       });
       assert(translateUiText("Technical 92%", "ar").startsWith("تقني"), "Arabic technical score was not localized");
       assert(translateUiText("Commercial 88%", "fr").startsWith("Commercial"), "French commercial score was not localized");
       assert(translateUiText("18 years in business", "ar").includes("سنوات الخبرة"), "Arabic experience metadata was not localized");
+      assert(translateUiText("pending_approval", "ar") !== "pending_approval", "Canonical underscore status leaked into Arabic");
 
       const aiTools = fs.readFileSync(path.join(process.cwd(), "app/tools/page.tsx"), "utf8");
       const mojibake = /[ØÙ][^\s"']*/;
@@ -368,4 +446,3 @@ export const tests = [
     }
   }
 ];
-
