@@ -9,6 +9,8 @@ import {
   timelineRepository
 } from "@/lib/repositories";
 import { cachedRepositoryCall } from "@/lib/repositories/repositoryCache";
+import { createProjectOwnerContext } from "@/lib/project-owner-journey";
+import type { ProjectOwnerContext } from "@/types/project-journey";
 
 export type AiConversationMemory = {
   title: string;
@@ -24,6 +26,7 @@ export type AiConversationMemory = {
 export type VoraProjectContext = {
   organization?: unknown;
   project?: unknown;
+  projectProfile?: ProjectOwnerContext;
   members: unknown[];
   departments: unknown[];
   employees: unknown[];
@@ -121,6 +124,7 @@ async function buildProjectContextUncached(projectId: string): Promise<VoraProje
     return {
       organization: resultData(organizationResult, undefined),
       project,
+      ...(project ? { projectProfile: createProjectOwnerContext(project) } : {}),
       members: resultData(membersResult, []),
       departments: organizationRepository.listDepartments(),
       employees: resultData(employeesResult, []),

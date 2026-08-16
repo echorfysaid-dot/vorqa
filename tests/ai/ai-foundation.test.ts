@@ -145,6 +145,9 @@ import { vorqaReportBranding } from "@/lib/report-branding";
 import { createProfessionalReportTemplate, renderReportPlainText } from "@/lib/report-template";
 import { createAnalysisExportModel, createProjectIntelligenceExportModel, getLatestAnalysisVersion, getSpecificAnalysisVersion } from "@/lib/project-report-export";
 import { classifyProjectDocument, createExecutiveSummaryGate, createProjectIntelligenceWorkflowSnapshot, resolveProjectNextBestAction } from "@/lib/project-intelligence-workflow";
+import { createProjectInputFromJourney, createProjectOwnerContext, createProjectOwnerExperience } from "@/lib/project-owner-journey";
+import { composeVoraPrompt } from "@/lib/vora-prompt-composer";
+import type { VoraProjectContext } from "@/lib/ai-context-repository";
 import type { Document, Project } from "@/lib/models";
 
 type TestCase = {
@@ -2909,6 +2912,164 @@ export const tests: TestCase[] = [
       assert.equal((await projectDemoAdapter.getProject("villa-test-vorqa")).data?.id, created.data!.id);
       assert.equal((await projectDemoAdapter.getProjects()).data.some((project) => project.id === created.data!.id), true);
       projectDemoAdapter.resetStoredProjects();
+    }
+  },
+  {
+    name: "Project owner journey persists only the supplied creation answers",
+    run() {
+      const input = createProjectInputFromJourney({
+        title: "Maison Anfa",
+        projectType: "villa",
+        country: "Morocco",
+        city: "Casablanca",
+        landArea: "720",
+        constructionArea: "410",
+        floors: "2",
+        budgetAmount: "4500000",
+        currency: "MAD",
+        stage: "idea",
+        drawingsStatus: "unknown",
+        organizationId: "atlas"
+      });
+
+      assert.equal(input.title, "Maison Anfa");
+      assert.equal(input.type, "Villa");
+      assert.equal(input.status, "Planning");
+      assert.equal(input.metadata.projectTypeId, "villa");
+      assert.equal(input.metadata.budget, "4500000 MAD");
+      assert.equal(input.metadata.landArea, 720);
+      assert.equal(input.metadata.permitStatus, undefined);
+    }
+  },
+  {
+    name: "Project owner journey preserves unknown values without invented defaults",
+    run() {
+      const input = createProjectInputFromJourney({
+        title: "Future project",
+        projectType: "not_decided",
+        stage: "not_decided",
+        currency: "not_decided"
+      });
+      const project: Project = {
+        id: "PRJ-OWNER-UNKNOWN",
+        title: input.title,
+        type: input.type || "Project",
+        status: input.status || "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: input.metadata
+      };
+      const experience = createProjectOwnerExperience(project);
+
+      assert.equal(input.metadata.currency, undefined);
+      assert.equal(input.metadata.budget, undefined);
+      assert.deepEqual(experience.context.missingFields, ["projectType", "country", "city", "stage", "budget"]);
+      assert.equal(experience.progress.evidencePercentage, undefined);
+      assert.equal(experience.recommendedTeam.every((item) => item.matches.length === 0), true);
+    }
+  },
+  {
+    name: "Project owner guidance is deterministic for the persisted stage",
+    run() {
+      const project: Project = {
+        id: "PRJ-OWNER-EXECUTION",
+        title: "Execution Project",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "villa", ownerStage: "under_execution", city: "Rabat", country: "Morocco" }
+      };
+      const first = createProjectOwnerExperience(project);
+      const second = createProjectOwnerExperience(project);
+
+      assert.deepEqual(first, second);
+      assert.equal(first.nextStep.id, "control_execution");
+      assert.equal(first.nextStep.route, "/tools/planning-review?projectId=PRJ-OWNER-EXECUTION");
+      assert.deepEqual(first.recommendedTeam.map((item) => item.id), ["general_contractor", "civil_engineer", "electrical_contractor", "plumbing_contractor"]);
+      assert.equal(first.recommendedTeam[0].matchingCriteria.city, "Rabat");
+      assert.equal(first.recommendedTeam[0].matchingCriteria.projectStage, "under_execution");
+    }
+  },
+  {
+    name: "VORA prompt receives the persisted project owner context",
+    run() {
+      const project: Project = {
+        id: "PRJ-VORA-CONTEXT",
+        title: "Owner Villa",
+        type: "Villa",
+        status: "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "villa", ownerStage: "idea", city: "Casablanca", country: "Morocco", budgetAmount: 2500000, currency: "MAD" }
+      };
+      const context: VoraProjectContext = {
+        project,
+        projectProfile: createProjectOwnerContext(project),
+        members: [],
+        departments: [],
+        employees: [],
+        tasks: [],
+        timeline: null,
+        milestones: [],
+        budget: null,
+        documents: [],
+        knowledge: [],
+        memory: [],
+        references: [],
+        source: "demo",
+        errors: []
+      };
+      const prompt = composeVoraPrompt("document", { language: "English", subject: "What should I do next?" }, context);
+
+      assert(prompt.contextSummary.includes("Casablanca"));
+      assert(prompt.contextSummary.includes("2500000"));
+      assert(prompt.instructions.includes("simple owner-friendly language"));
+    }
+  },
+  {
+    name: "Existing projects without owner journey metadata remain backward compatible",
+    run() {
+      const legacyProject: Project = {
+        id: "PRJ-LEGACY",
+        title: "Legacy Project",
+        type: "Residential",
+        status: "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 25,
+        budget: "MAD 1M",
+        timeline: "Q4",
+        team: 2,
+        documents: 1,
+        knowledgeFiles: 0,
+        location: "Marrakech"
+      };
+      const experience = createProjectOwnerExperience(legacyProject);
+
+      assert.equal(experience.context.projectType, "Residential");
+      assert.equal(experience.context.location, "Marrakech");
+      assert.equal(experience.context.guidanceMode, "standard");
+      assert.equal(experience.nextStep.id, "complete_context");
+      assert.equal(experience.progress.evidencePercentage, undefined);
     }
   }
 ];

@@ -47,6 +47,7 @@ export function summarizeVoraContext(context?: VoraProjectContext) {
   const projectName = context.project && typeof context.project === "object" && "title" in context.project ? String(context.project.title) : "Unknown project";
   return [
     `Project: ${projectName}`,
+    `Persisted project profile: ${stringifyCompact(context.projectProfile, 900)}`,
     `Context source: ${context.source}`,
     `References: ${context.references.join(", ")}`,
     summarizeArray("Team members", context.members, 5),
@@ -114,6 +115,7 @@ export function composeVoraPrompt(tool: ToolSlug, payload: Record<string, string
       `Prompt type: ${promptType}.`,
       `Answer language: ${language}. If Arabic is selected, write natural, polished, professional Arabic with clear RTL-friendly Markdown.`,
       `Tone: ${tone}.`,
+      ...(context?.projectProfile?.guidanceMode === "simple_owner" ? ["Use simple owner-friendly language. Explain necessary construction terms briefly and avoid unnecessary professional jargon."] : []),
       promptTypeGuidance(promptType),
       "Use the provided context. Do not invent inaccessible facts; call out assumptions when context is missing.",
       "Always produce Markdown with clear headings.",

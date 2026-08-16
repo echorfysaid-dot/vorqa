@@ -5,6 +5,7 @@ import Image from "next/image";
 import { memo, useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
+  ArrowLeft,
   BookOpen,
   Bot,
   CalendarDays,
@@ -32,10 +33,11 @@ import {
 } from "lucide-react";
 import { KnowledgeWorkspace } from "@/components/knowledge-workspace";
 import { useI18n } from "@/components/i18n-provider";
+import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { LocalizedContent } from "@/components/localized-content";
-import { Avatar, Badge, Button, ChartContainer, ChatBubble, Dropdown, EmptyState, GlassCard, IconButton, Input, PageHeader, ProgressBar, Table, Tabs, Textarea, TimelineCard } from "@/components/ui";
+import { Avatar, Badge, Button, ChartContainer, ChatBubble, Dropdown, EmptyState, GlassCard, IconButton, Input, PageHeader, ProgressBar, StatusChip, Table, Tabs, Textarea, TimelineCard } from "@/components/ui";
 import { BlueprintOverlay, VillaVisual, VoraVisual } from "@/components/vorqa-official-visuals";
-import type { AnalyticsChartPoint, BudgetCategory, BudgetCategoryInput, BudgetItemStatus, BudgetPriority, DependencyType, Document, DocumentUploadInput, KnowledgeArticle, KnowledgeArticleInput, ProjectBudgetItem, ProjectBudgetItemInput, ProjectDetails, ProjectDocumentCategory, ProjectDocumentInput, Task, TaskDependency, TaskDependencyInput, TaskInput, TaskPriority, TaskStatus, TimelineMilestone, TimelineMilestoneInput, MilestoneStatus } from "@/lib/models";
+import type { AnalyticsChartPoint, BudgetCategory, BudgetCategoryInput, BudgetItemStatus, BudgetPriority, DependencyType, Document, DocumentUploadInput, KnowledgeArticle, KnowledgeArticleInput, Project, ProjectBudgetItem, ProjectBudgetItemInput, ProjectDetails, ProjectDocumentCategory, ProjectDocumentInput, Task, TaskDependency, TaskDependencyInput, TaskInput, TaskPriority, TaskStatus, TimelineMilestone, TimelineMilestoneInput, MilestoneStatus } from "@/lib/models";
 import { budgetRepository, documentRepository, knowledgeRepository, projectRepository, taskRepository, timelineRepository } from "@/lib/repositories";
 import { budgetItemStatuses, budgetPriorities } from "@/lib/repositories/budgetMapper";
 import { useBudgetRepository } from "@/lib/repositories/budgetHooks";
@@ -52,18 +54,10 @@ import { dependencyTypes, milestoneStatuses } from "@/lib/repositories/timelineM
 import { useTimelineRepository } from "@/lib/repositories/timelineHooks";
 import { voraSkills } from "@/lib/vora-ai-skills";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
+import { createProjectOwnerExperience, localizeProjectJourneySystemValue, localizeProjectJourneyTimestamp } from "@/lib/project-owner-journey";
+import { projectTypeIds, type ProjectOwnerExperience } from "@/types/project-journey";
 
-type ProjectWorkspaceProject = {
-  id: string;
-  title: string;
-  type: string;
-  status: string;
-  updatedAt: string;
-  score: number;
-  organizationId?: string;
-  departmentId?: string;
-  projectManagerId?: string;
-};
+type ProjectWorkspaceProject = Project;
 
 type ProjectDetail = Omit<ProjectDetails, "team"> & {
   team: Array<{ name: string; role: string; status: string; workload: number; tasks: number }>;
@@ -99,42 +93,58 @@ const workspaceTabs = [
 ];
 
 export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { project: ProjectWorkspaceProject }) {
-  const { locale } = useI18n();
+  const { locale, translate } = useI18n();
   const [activeTab, setActiveTab] = useState("overview");
   const [documentSection, setDocumentSection] = useState<"documents" | "knowledge">("documents");
   const detail = (projectRepository.getDetails(project.id) as unknown as ProjectDetail | undefined) || emptyProjectDetail;
+  const ownerExperience = useMemo(() => createProjectOwnerExperience(project), [project]);
+  const localizedTabs = useMemo(() => workspaceTabs.map((tab) => ({ ...tab, label: translate(tab.label) })), [translate]);
 
   const projectActivity = useMemo(
     () => [
-      { title: "تم تحديث حالة المشروع", text: `${project.status} · ${project.updatedAt}`, icon: <CheckCircle2 className="h-4 w-4" /> },
-      { title: "VORA راجعت مساحة العمل", text: detail?.aiHistory[0] || "تفاصيل المشروع غير متاحة بعد.", icon: <Bot className="h-4 w-4" /> },
-      { title: "جاهز للخطوة التالية", text: detail?.tasks[0] || "اربط بيانات المشروع قبل متابعة التنفيذ.", icon: <Clock3 className="h-4 w-4" /> }
+      {
+        title: translate("projectJourney.activity.statusUpdated"),
+        text: `${translate(project.status)} · ${localizeProjectJourneyTimestamp(project.updatedAt, locale, translate)}`,
+        icon: <CheckCircle2 className="h-4 w-4" />
+      },
+      {
+        title: translate("projectJourney.activity.voraReviewed"),
+        text: detail?.aiHistory[0]
+          ? localizeProjectJourneySystemValue(detail.aiHistory[0], translate)
+          : translate("projectJourney.activity.noDetails"),
+        icon: <Bot className="h-4 w-4" />
+      },
+      {
+        title: translate("projectJourney.activity.ready"),
+        text: translate("projectJourney.activity.nextDescription"),
+        icon: <Clock3 className="h-4 w-4" />
+      }
     ],
-    [detail?.aiHistory, detail?.tasks, project.status, project.updatedAt]
+    [detail?.aiHistory, locale, project.status, project.updatedAt, translate]
   );
 
   return (
     <LocalizedContent locale={locale}><div className="mx-auto max-w-[1480px] space-y-5">
       <PageHeader
-        eyebrow="Project Workspace"
+        eyebrow={translate("projectJourney.workspace.eyebrow")}
         title={project.title}
-        description={`${project.type} · Updated ${project.updatedAt}`}
+        description={ownerExperience.context.location || translate(`projectJourney.stage.${ownerExperience.context.stage || "not_decided"}`)}
         action={
           <div className="flex flex-wrap gap-2">
             <Link href="/projects">
-              <Button variant="secondary">All projects</Button>
+              <Button variant="secondary">{translate("All projects")}</Button>
             </Link>
-            <Link href={`/projects/${encodeURIComponent(project.id)}/intelligence`}>
-              <Button icon={<Sparkles className="h-4 w-4" />}>Ask VORA</Button>
+            <Link href={`/tools/document?projectId=${encodeURIComponent(project.id)}`}>
+              <Button icon={<Sparkles className="h-4 w-4" />}>{translate("Ask VORA")}</Button>
             </Link>
           </div>
         }
       />
 
       <div className="grid overflow-hidden rounded-ds-lg border border-ds-token-border bg-ds-token-surface sm:grid-cols-3">
-        <WorkspaceSignal label="Project health" value={`${project.score}%`} tone={project.score >= 70 ? "success" : "warning"} />
-        <WorkspaceSignal label="Next milestone" value={detail.tasks[0] || "No milestone available"} />
-        <WorkspaceSignal label="Status" value={project.status} />
+        <WorkspaceSignal label={translate("projectJourney.workspace.currentStage")} value={translate(`projectJourney.stage.${ownerExperience.context.stage || "not_decided"}`)} />
+        <WorkspaceSignal label={translate("projectJourney.workspace.nextStep")} value={translate(ownerExperience.nextStep.titleKey)} tone="warning" />
+        <WorkspaceSignal label={translate("projectJourney.workspace.progress")} value={ownerExperience.progress.evidencePercentage !== undefined ? `${ownerExperience.progress.evidencePercentage}%` : `${ownerExperience.progress.completedSteps} / ${ownerExperience.progress.totalSteps}`} valueDirection="ltr" tone="success" />
       </div>
 
       <section className="hidden">
@@ -180,12 +190,12 @@ export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { pr
 
       <nav aria-label="Project workspace" className="overflow-x-auto border-b border-ds-token-border pb-2">
         <div className="min-w-max">
-          <Tabs tabs={workspaceTabs} active={activeTab} onChange={setActiveTab} />
+          <Tabs tabs={localizedTabs} active={activeTab} onChange={setActiveTab} />
         </div>
       </nav>
 
       {activeTab === "overview" ? (
-        <OverviewTab project={project} activity={projectActivity} />
+        <OverviewTab project={project} activity={projectActivity} experience={ownerExperience} />
       ) : activeTab === "ai" ? (
         <AiWorkspaceTab project={project} />
       ) : activeTab === "documents" ? (
@@ -217,12 +227,12 @@ export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { pr
   );
 });
 
-function WorkspaceSignal({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "success" | "warning" }) {
+function WorkspaceSignal({ label, value, valueDirection, tone = "neutral" }: { label: string; value: string; valueDirection?: "ltr" | "rtl" | "auto"; tone?: "neutral" | "success" | "warning" }) {
   const valueClass = tone === "success" ? "text-ds-token-success" : tone === "warning" ? "text-ds-token-warning" : "text-ds-token-text";
   return (
     <div className="min-w-0 border-b border-ds-token-border px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-e">
       <p className="text-xs font-medium text-ds-token-muted">{label}</p>
-      <p className={`mt-1 truncate text-sm font-semibold ${valueClass}`}>{value}</p>
+      <p dir={valueDirection} className={`mt-1 truncate text-sm font-semibold ${valueClass}`}>{value}</p>
     </div>
   );
 }
@@ -267,11 +277,15 @@ function MissingProjectDetailState({ project }: { project: ProjectWorkspaceProje
   );
 }
 
-function OverviewTab({ project, activity }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }> }) {
-  const { locale } = useI18n();
+function OverviewTab({ project, activity, experience }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience }) {
+  const { locale, translate } = useI18n();
   const detail = projectRepository.getDetails(project.id);
   return (
-    <LocalizedContent locale={locale}><div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+    <LocalizedContent locale={locale}><div className="space-y-5">
+      <OwnerSimpleOverview project={project} activity={activity} experience={experience} />
+      <details className="rounded-ds-lg border border-ds-token-border bg-white/[0.015]">
+        <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-ds-token-text sm:px-5">{translate("projectJourney.workspace.advancedOverview")}</summary>
+        <div className="grid gap-5 border-t border-ds-token-border p-4 xl:grid-cols-[minmax(0,1fr)_340px] sm:p-5">
       <div className="space-y-5">
         <GlassCard className="p-5">
           <div className="flex items-center justify-between gap-3 border-b border-ds-token-border pb-4">
@@ -382,8 +396,125 @@ function OverviewTab({ project, activity }: { project: ProjectWorkspaceProject; 
           </div>
         </GlassCard>
       </aside>
+        </div>
+      </details>
     </div></LocalizedContent>
   );
+}
+
+function OwnerSimpleOverview({ project, activity, experience }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience }) {
+  const { locale, translate } = useI18n();
+  const { context, nextStep, progress, recommendedTeam } = experience;
+  const location = [context.city, context.country].filter(Boolean).join(", ") || context.location || translate("projectJourney.notProvided");
+  const budget = context.budgetAmount !== undefined && context.currency
+    ? new Intl.NumberFormat(locale === "ar" ? "ar-MA" : locale === "fr" ? "fr-MA" : "en-US", { style: "currency", currency: context.currency }).format(context.budgetAmount)
+    : translate("projectJourney.notProvided");
+  const advancedTools = [
+    ["projectJourney.advanced.contract", "/tools/contract-review"],
+    ["projectJourney.advanced.boq", "/tools/boq-review"],
+    ["projectJourney.advanced.risk", "/tools/risk-assessment"],
+    ["projectJourney.advanced.planning", "/tools/planning-review"],
+    ["projectJourney.advanced.site", "/tools/site-report-review"],
+    ["projectJourney.advanced.summary", "/tools/executive-summary"]
+  ] as const;
+
+  return (
+    <div className="space-y-5">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,.85fr)]">
+        <GlassCard className="p-5 sm:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <Badge tone="gold">{translate("projectJourney.workspace.myProject")}</Badge>
+              <h2 className="mt-3 text-2xl font-semibold text-ds-token-text">{project.title}</h2>
+              <p className="mt-1 text-sm text-ds-token-muted">{ownerProjectTypeLabel(context.projectType, translate)} · {location}</p>
+            </div>
+            <StatusChip tone="gold">{translate(`projectJourney.stage.${context.stage || "not_decided"}`)}</StatusChip>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <OwnerContextValue label={translate("projectJourney.field.landArea")} value={context.landArea !== undefined ? `${context.landArea} m²` : translate("projectJourney.notProvided")} />
+            <OwnerContextValue label={translate("projectJourney.field.constructionArea")} value={context.constructionArea !== undefined ? `${context.constructionArea} m²` : translate("projectJourney.notProvided")} />
+            <OwnerContextValue label={translate("projectJourney.field.budget")} value={budget} />
+            <OwnerContextValue label={translate("projectJourney.field.drawings")} value={translate(`projectJourney.answer.${context.drawingsStatus || "unknown"}`)} />
+          </div>
+          {context.description && <p className="mt-5 border-t border-ds-token-border pt-4 text-sm leading-7 text-ds-token-muted">{localizeProjectJourneySystemValue(context.description, translate)}</p>}
+        </GlassCard>
+
+        <GlassCard className="p-5 sm:p-6">
+          <div className="flex items-center gap-3">
+            <span className="grid h-11 w-11 place-items-center rounded-ds-md bg-ds-token-gold/12 text-ds-token-gold"><Lightbulb className="h-5 w-5" /></span>
+            <div><p className="text-xs font-semibold text-ds-token-gold">{translate("projectJourney.workspace.nextStep")}</p><h2 className="mt-1 text-xl font-semibold text-ds-token-text">{translate(nextStep.titleKey)}</h2></div>
+          </div>
+          <p className="mt-4 text-sm leading-7 text-ds-token-muted">{translate(nextStep.descriptionKey)}</p>
+          {nextStep.legalDisclaimerKey && <p className="mt-3 text-xs leading-6 text-ds-token-muted">{translate(nextStep.legalDisclaimerKey)}</p>}
+          <Link href={nextStep.route} className="mt-5 inline-flex">
+            <Button icon={<ArrowLeft className="h-4 w-4 rtl:rotate-180" />}>{translate(nextStep.actionKey)}</Button>
+          </Link>
+        </GlassCard>
+      </div>
+
+      <GlassCard className="p-5 sm:p-6">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div className="flex items-start gap-4">
+            <VoraVisual variant="avatar" className="h-14 w-14 shrink-0 rounded-ds-lg" sizes="56px" />
+            <div><Badge tone="blue">{translate("projectJourney.workspace.askVora")}</Badge><h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectJourney.vora.title")}</h2><p className="mt-1 text-sm leading-6 text-ds-token-muted">{translate("projectJourney.vora.description")}</p></div>
+          </div>
+          <Link href={`/tools/document?projectId=${encodeURIComponent(project.id)}`} className="inline-flex">
+            <Button icon={<MessageSquareText className="h-4 w-4" />}>{translate("projectJourney.vora.action")}</Button>
+          </Link>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {["next", "budget", "professional", "missing"].map((id) => <span key={id} className="rounded-full border border-ds-token-border bg-white/[0.025] px-3 py-2 text-xs text-ds-token-muted">{translate(`projectJourney.vora.question.${id}`)}</span>)}
+        </div>
+      </GlassCard>
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,.78fr)]">
+        <GlassCard className="p-5 sm:p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3"><div><Badge tone="success">{translate("projectJourney.workspace.progress")}</Badge><h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectJourney.progress.title")}</h2></div><bdi dir="ltr" className="text-sm font-semibold text-ds-token-muted">{progress.completedSteps} / {progress.totalSteps}</bdi></div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {progress.steps.map((step, index) => (
+              <div key={step.id} className={`flex min-h-16 items-center gap-3 rounded-ds-md border p-3 ${step.status === "current" ? "border-ds-token-gold/55 bg-ds-token-gold/8" : "border-ds-token-border bg-white/[0.02]"}`}>
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-xs font-semibold ${step.status === "completed" ? "bg-ds-token-success/14 text-ds-token-success" : step.status === "current" ? "bg-ds-token-gold/14 text-ds-token-gold" : "bg-white/5 text-ds-token-muted"}`}>{step.status === "completed" ? <CheckCircle2 className="h-4 w-4" /> : index + 1}</span>
+                <div><p className="text-sm font-semibold text-ds-token-text">{translate(step.labelKey)}</p><p className="mt-0.5 text-xs text-ds-token-muted">{translate(`projectJourney.progress.status.${step.status}`)}</p></div>
+              </div>
+            ))}
+          </div>
+          {progress.evidencePercentage === undefined && <p className="mt-4 text-xs leading-6 text-ds-token-muted">{translate("projectJourney.progress.noPercentage")}</p>}
+        </GlassCard>
+
+        <GlassCard className="p-5 sm:p-6">
+          <div className="flex items-center justify-between gap-3"><div><Badge tone="gold">{translate("projectJourney.workspace.recommendedTeam")}</Badge><h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectJourney.team.title")}</h2></div><UsersRound className="h-6 w-6 text-ds-token-gold" /></div>
+          <div className="mt-4 divide-y divide-ds-token-border">
+            {recommendedTeam.map((professional) => <div key={professional.id} className="py-3"><div className="flex flex-wrap items-center justify-between gap-2"><p className="text-sm font-semibold text-ds-token-text">{translate(professional.labelKey)}</p><Badge tone="neutral">{translate("projectJourney.team.categoryOnly")}</Badge></div><p className="mt-1 text-xs leading-5 text-ds-token-muted">{translate(professional.reasonKey)}</p></div>)}
+          </div>
+          <p className="mt-3 text-xs leading-6 text-ds-token-muted">{translate("projectJourney.team.noMatches")}</p>
+          <Link href="/marketplace" className="mt-4 inline-flex"><Button size="sm" variant="secondary" className="min-h-11 sm:min-h-9">{translate("projectJourney.team.openMarketplace")}</Button></Link>
+        </GlassCard>
+      </div>
+
+      <details className="rounded-ds-lg border border-ds-token-border bg-white/[0.02]">
+        <summary className="cursor-pointer list-none px-5 py-4"><span className="font-semibold text-ds-token-text">{translate("projectJourney.advanced.title")}</span><span className="mt-1 block text-sm text-ds-token-muted">{translate("projectJourney.advanced.description")}</span></summary>
+        <div className="grid gap-3 border-t border-ds-token-border p-4 sm:grid-cols-2 lg:grid-cols-3">
+          {advancedTools.map(([labelKey, route]) => <Link key={route} href={`${route}?projectId=${encodeURIComponent(project.id)}`} className="ds-focusable flex min-h-12 items-center justify-between rounded-ds-md border border-ds-token-border bg-white/[0.025] px-4 text-sm font-semibold text-ds-token-text transition hover:border-ds-token-gold/35"><span>{translate(labelKey)}</span><Sparkles className="h-4 w-4 text-ds-token-gold" /></Link>)}
+        </div>
+      </details>
+
+      <GlassCard className="p-5">
+        <div className="mb-4 flex items-center justify-between gap-3"><h2 className="text-lg font-semibold text-ds-token-text">{translate("Recent Activity")}</h2><Badge tone="neutral">{activity.length}</Badge></div>
+        <div className="grid gap-3 sm:grid-cols-3">{activity.map((item, index) => <TimelineCard key={`${item.title}-${index}`} index={index + 1} title={item.title} text={item.text} icon={item.icon} />)}</div>
+      </GlassCard>
+    </div>
+  );
+}
+
+function ownerProjectTypeLabel(projectType: string | undefined, translate: (key: string) => string) {
+  const normalized = String(projectType || "not_decided").toLowerCase().replaceAll(" ", "_");
+  return projectTypeIds.includes(normalized as (typeof projectTypeIds)[number])
+    ? translate(`projectJourney.type.${normalized}`)
+    : projectType || translate("projectJourney.type.not_decided");
+}
+
+function OwnerContextValue({ label, value }: { label: string; value: string }) {
+  return <div className="min-w-0 rounded-ds-md border border-ds-token-border bg-white/[0.025] p-3"><p className="text-xs text-ds-token-muted">{label}</p><p className="mt-1 truncate text-sm font-semibold text-ds-token-text">{value}</p></div>;
 }
 
 function AiWorkspaceTab({ project }: { project: ProjectWorkspaceProject }) {
@@ -462,11 +593,11 @@ function AiWorkspaceTab({ project }: { project: ProjectWorkspaceProject }) {
               <ChatBubble role="assistant">{demoResponse}</ChatBubble>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Link href="/tools/document">
+              <Link href={`/tools/document?projectId=${encodeURIComponent(project.id)}`}>
                 <Button icon={<Sparkles className="h-4 w-4" />}>فتح مولد الوثائق</Button>
               </Link>
               <Button variant="secondary" onClick={copyResponse} icon={<FileText className="h-4 w-4" />}>{copied ? "تم النسخ" : "نسخ الرد"}</Button>
-              <Link href="/tools">
+              <Link href={`/tools?projectId=${encodeURIComponent(project.id)}`}>
                 <Button variant="secondary" icon={<Bot className="h-4 w-4" />}>كل أدوات VORA</Button>
               </Link>
             </div>
@@ -1076,7 +1207,7 @@ function KnowledgeTab({ project }: { project: ProjectWorkspaceProject }) {
                 </div>
                 <div className="mt-4 grid gap-2 text-xs text-ds-text/55">
                   <span>وثيقة مرتبطة: {article.documentTitle || "غير محددة"}</span>
-                  <span>آخر تحديث: {article.updatedAt ? new Date(article.updatedAt).toLocaleDateString("ar-MA") : "غير محدد"}</span>
+                  <span>آخر تحديث: {article.updatedAt ? formatDate(article.updatedAt, locale) : "غير محدد"}</span>
                 </div>
                 <div className="mt-4 flex gap-2">
                   <Button size="sm" variant="secondary" onClick={() => {
@@ -1184,6 +1315,7 @@ function MetricPanel({ label, value, hint, icon }: { label: string; value: React
 }
 
 function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: ProjectDetail }) {
+  const { locale } = useI18n();
   const organizationId = project.organizationId || "atlas";
   const budgetState = useBudgetRepository(project.id);
   const departmentState = useDepartmentsRepository(organizationId);
@@ -1347,9 +1479,9 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-              <BudgetMetricCard title="الميزانية المخططة" value={formatMoney(stats.planned)} detail="Total planned budget" icon={<Coins className="h-6 w-6" />} tone="gold" />
-              <BudgetMetricCard title="التكلفة الفعلية" value={formatMoney(stats.actual)} detail="Actual paid/captured cost" icon={<Gauge className="h-6 w-6" />} tone="blue" />
-              <BudgetMetricCard title="الميزانية المتبقية" value={formatMoney(stats.remaining)} detail="Remaining after actual and committed" icon={<CheckCircle2 className="h-6 w-6" />} tone="success" />
+              <BudgetMetricCard title="الميزانية المخططة" value={formatMoney(stats.planned, locale)} detail="Total planned budget" icon={<Coins className="h-6 w-6" />} tone="gold" />
+              <BudgetMetricCard title="التكلفة الفعلية" value={formatMoney(stats.actual, locale)} detail="Actual paid/captured cost" icon={<Gauge className="h-6 w-6" />} tone="blue" />
+              <BudgetMetricCard title="الميزانية المتبقية" value={formatMoney(stats.remaining, locale)} detail="Remaining after actual and committed" icon={<CheckCircle2 className="h-6 w-6" />} tone="success" />
             </div>
 
             <div className="mt-5 rounded-[1.75rem] border border-white/10 bg-black/24 p-5">
@@ -1373,11 +1505,11 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <h3 className="mt-3 text-xl font-black text-white">رؤية VORA المالية</h3>
             </div>
           </div>
-          <p className="mt-4 text-sm leading-7 text-ds-text/60">رصدت VORA {stats.overBudget ? `${stats.overBudget} بنداً فوق الميزانية` : "استقراراً في الميزانية الحالية"}، والتوقع الحالي هو {formatMoney(stats.forecast)}.</p>
+          <p className="mt-4 text-sm leading-7 text-ds-text/60">رصدت VORA {stats.overBudget ? `${stats.overBudget} بنداً فوق الميزانية` : "استقراراً في الميزانية الحالية"}، والتوقع الحالي هو {formatMoney(stats.forecast, locale)}.</p>
           <div className="mt-4 grid gap-3">
             <ContextRow label="Cost overrun" value={stats.overBudget ? `${stats.overBudget} items` : "None"} />
-            <ContextRow label="Unused budget" value={formatMoney(stats.remaining)} />
-            <ContextRow label="Forecast" value={formatMoney(stats.forecast)} />
+            <ContextRow label="Unused budget" value={formatMoney(stats.remaining, locale)} />
+            <ContextRow label="Forecast" value={formatMoney(stats.forecast, locale)} />
             <ContextRow label="المشروع" value={project.id} />
           </div>
         </GlassCard>
@@ -1402,7 +1534,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <Badge tone="neutral">{budget.categories.length} فئات</Badge>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              {budget.categories.map((category) => <BudgetCategoryCard key={category.id} category={category} total={stats.topCategories.find((entry) => entry.category.id === category.id)?.total || 0} planned={stats.planned} onUpdate={(input) => void updateCategory(category.id, input)} onArchive={() => void archiveCategory(category.id)} />)}
+              {budget.categories.map((category) => <BudgetCategoryCard key={category.id} category={category} total={stats.topCategories.find((entry) => entry.category.id === category.id)?.total || 0} planned={stats.planned} locale={locale} onUpdate={(input) => void updateCategory(category.id, input)} onArchive={() => void archiveCategory(category.id)} />)}
             </div>
           </GlassCard>
 
@@ -1424,7 +1556,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
               <EmptyState title="لا توجد بنود مطابقة" description="عدّل البحث أو أضف بند ميزانية جديد." />
             ) : (
               <div className="grid gap-3">
-                {filteredItems.map((item) => <BudgetItemRow key={item.id} item={item} categories={budget.categories} departments={departmentState.data} onUpdate={(input) => void updateBudgetItem(item.id, input)} onArchive={() => void archiveBudgetItem(item.id)} />)}
+                {filteredItems.map((item) => <BudgetItemRow key={item.id} item={item} categories={budget.categories} departments={departmentState.data} locale={locale} onUpdate={(input) => void updateBudgetItem(item.id, input)} onArchive={() => void archiveBudgetItem(item.id)} />)}
               </div>
             )}
           </GlassCard>
@@ -1503,7 +1635,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
             <div className="mt-4 grid gap-3">
               <ContextRow label="المصدر" value={budgetState.source} />
               <ContextRow label="Fallback" value={budgetState.isFallback ? "مفعل" : "غير مفعل"} />
-              <ContextRow label="Committed" value={formatMoney(stats.committed)} />
+              <ContextRow label="Committed" value={formatMoney(stats.committed, locale)} />
             </div>
           </GlassCard>
         </aside>
@@ -1512,7 +1644,7 @@ function BudgetTab({ project }: { project: ProjectWorkspaceProject; detail: Proj
   </AutoLocalizedContent>);
 }
 
-function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: { category: BudgetCategory; total: number; planned: number; onUpdate: (input: Partial<BudgetCategoryInput>) => void; onArchive: () => void }) {
+function BudgetCategoryCard({ category, total, planned, locale, onUpdate, onArchive }: { category: BudgetCategory; total: number; planned: number; locale: "ar" | "fr" | "en"; onUpdate: (input: Partial<BudgetCategoryInput>) => void; onArchive: () => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Partial<BudgetCategoryInput>>({ name: category.name, description: category.description, color: category.color });
   const percent = planned ? Math.round((total / planned) * 100) : 0;
@@ -1521,7 +1653,7 @@ function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: {
       <div className="flex items-start justify-between gap-3">
         <div>
           <Badge tone="gold">{category.name}</Badge>
-          <p className="mt-4 text-2xl font-black text-white">{formatMoney(total)}</p>
+          <p className="mt-4 text-2xl font-black text-white">{formatMoney(total, locale)}</p>
           <p className="mt-2 text-xs leading-5 text-ds-text/48">{category.description || "Budget category"}</p>
         </div>
         <span className="h-6 w-6 rounded-full border border-white/20" style={{ backgroundColor: category.color || "#D4AF37" }} />
@@ -1542,7 +1674,7 @@ function BudgetCategoryCard({ category, total, planned, onUpdate, onArchive }: {
   </AutoLocalizedContent>);
 }
 
-function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: { item: ProjectBudgetItem; categories: BudgetCategory[]; departments: Array<{ id: string; name: string }>; onUpdate: (input: Partial<ProjectBudgetItemInput>) => void; onArchive: () => void }) {
+function BudgetItemRow({ item, categories, departments, locale, onUpdate, onArchive }: { item: ProjectBudgetItem; categories: BudgetCategory[]; departments: Array<{ id: string; name: string }>; locale: "ar" | "fr" | "en"; onUpdate: (input: Partial<ProjectBudgetItemInput>) => void; onArchive: () => void }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<Partial<ProjectBudgetItemInput>>({
     categoryId: item.categoryId,
@@ -1568,8 +1700,8 @@ function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: {
           <h3 className="mt-3 text-lg font-black text-white">{item.title}</h3>
           <p className="mt-2 text-xs leading-5 text-ds-text/50">{item.categoryName || "بدون فئة"} · {item.departmentName || "عام"} · {item.endDate || "بدون تاريخ"}</p>
         </div>
-        <ContextRow label="Planned" value={formatMoney(item.plannedCost)} />
-        <ContextRow label="Used" value={formatMoney(used)} />
+        <ContextRow label="Planned" value={formatMoney(item.plannedCost, locale)} />
+        <ContextRow label="Used" value={formatMoney(used, locale)} />
         <div className="flex gap-2">
           <Button type="button" size="sm" variant="secondary" onClick={() => setEditing((current) => !current)}>تعديل</Button>
           <Button type="button" size="sm" variant="danger" onClick={onArchive}>أرشفة</Button>
@@ -1596,8 +1728,8 @@ function BudgetItemRow({ item, categories, departments, onUpdate, onArchive }: {
   </AutoLocalizedContent>);
 }
 
-function formatMoney(value: number) {
-  return `${Math.round(value).toLocaleString("en-US")} MAD`;
+function formatMoney(value: number, locale: "ar" | "fr" | "en") {
+  return formatCurrency(value, "MAD", locale);
 }
 
 function budgetStatusTone(status: BudgetItemStatus): "gold" | "blue" | "success" | "warning" | "danger" | "neutral" {

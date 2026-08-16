@@ -266,5 +266,22 @@ export const tests = [
       assert(rfqPage.includes("rfq.fallback.demoNotice"), "RFQ page must render the semantic fallback key");
       assert(rfqPage.includes('useState("All priorities")'), "RFQ filter must preserve its canonical repository value");
     }
+  },
+  {
+    name: "simple project owner journey has exact Arabic French and English coverage",
+    run: () => {
+      const catalogs = { ar: arCatalog, fr: frCatalog, en: enCatalog } as const;
+      const keys = Object.keys(enCatalog).filter((key) => key.startsWith("projectJourney."));
+      assert(keys.length >= 140, "Project journey catalog is incomplete");
+      locales.forEach((locale) => {
+        const localizedKeys = Object.keys(catalogs[locale]).filter((key) => key.startsWith("projectJourney."));
+        assert(localizedKeys.length === keys.length, `Project journey key parity failed for ${locale}`);
+        keys.forEach((key) => assert(Boolean(catalogs[locale][key as keyof (typeof catalogs)[typeof locale]]?.trim()), `Missing ${locale} project journey translation: ${key}`));
+      });
+      assert(arCatalog["projectJourney.create.title"] !== enCatalog["projectJourney.create.title"], "Arabic journey title leaked English");
+      assert(frCatalog["projectJourney.create.title"] !== enCatalog["projectJourney.create.title"], "French journey title leaked English");
+      assert(localeMeta.ar.dir === "rtl", "Arabic project journey must render RTL");
+      assert(localeMeta.fr.dir === "ltr" && localeMeta.en.dir === "ltr", "French and English project journeys must render LTR");
+    }
   }
 ];
