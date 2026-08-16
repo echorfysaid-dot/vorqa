@@ -245,5 +245,26 @@ export const tests = [
       const projectName = "PRJ-1048 · Luxury Villa Casablanca";
       assert(translateUiText(projectName, "ar") === projectName, "Project data must not be translated implicitly");
     }
+  },
+  {
+    name: "RFQ command center and filters localize without changing canonical filter values",
+    run: () => {
+      const values = [
+        "Request for Quotation command center.",
+        "Create, track, review, and evaluate supplier RFQs connected to projects, organizations, Marketplace suppliers, documents, and VORA procurement intelligence.",
+        "Production RFQ data is unavailable, so Vorqa is showing demo fallback RFQs.",
+        "All priorities"
+      ];
+      values.forEach((value) => {
+        assert(translateUiText(value, "ar") !== value, `Arabic RFQ runtime leaked English: ${value}`);
+        assert(translateUiText(value, "fr") !== value, `French RFQ runtime leaked English: ${value}`);
+        assert(Boolean(translateUiText(value, "en").trim()), `English RFQ runtime is empty: ${value}`);
+      });
+      const rfqPage = fs.readFileSync(path.join(process.cwd(), "app/rfq/page.tsx"), "utf8");
+      assert(rfqPage.includes("rfq.command.title"), "RFQ page must render the semantic title key");
+      assert(rfqPage.includes("rfq.command.description"), "RFQ page must render the semantic description key");
+      assert(rfqPage.includes("rfq.fallback.demoNotice"), "RFQ page must render the semantic fallback key");
+      assert(rfqPage.includes('useState("All priorities")'), "RFQ filter must preserve its canonical repository value");
+    }
   }
 ];

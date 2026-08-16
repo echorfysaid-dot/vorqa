@@ -27,9 +27,9 @@ export default function RfqPage() {
               <Badge tone="blue">Organizations · Projects · Marketplace</Badge>
               <Badge tone={rfqState.source === "supabase" ? "success" : rfqState.isFallback ? "warning" : "neutral"}>{rfqState.source === "supabase" ? "Supabase" : rfqState.isFallback ? "Demo fallback" : "Demo"}</Badge>
             </div>
-            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">Request for Quotation command center.</h1>
+            <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">rfq.command.title</h1>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-ds-text/58">
-              Create, track, review, and evaluate supplier RFQs connected to projects, organizations, Marketplace suppliers, documents, and VORA procurement intelligence.
+              rfq.command.description
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -58,7 +58,7 @@ export default function RfqPage() {
           <RfqFilter value={categoryFilter} onChange={setCategoryFilter} options={["All categories", ...categories]} />
           <RfqFilter value={priorityFilter} onChange={setPriorityFilter} options={["All priorities", "Low", "Medium", "High", "Critical"]} />
         </div>
-        {rfqState.error && rfqState.isFallback && <p className="mt-3 text-sm font-bold text-warning">Production RFQ data is unavailable, so Vorqa is showing demo fallback RFQs.</p>}
+        {rfqState.error && rfqState.isFallback && <p className="mt-3 text-sm font-bold text-warning">rfq.fallback.demoNotice</p>}
       </GlassCard>
 
       {rfqState.loading ? (
