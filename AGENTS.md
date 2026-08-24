@@ -39,6 +39,15 @@ Prioritize a complete, trustworthy owner journey over unrelated feature expansio
 7. Stop if the owner resumes work, another agent is active, the worktree is dirty, the repository head changed, checks fail, or the scope is uncertain.
 8. Never touch the owner's active checkout or unfinished changes.
 
+## Confidentiality: secrets are never accessible
+
+- Never open, read, search inside, copy, modify, print, save, commit, transmit, or expose `.env` files, API keys, access tokens, passwords, private keys, certificates, SSH credentials, service-account files, authentication sessions, cookies, or password-manager data.
+- Never run `env`, `printenv`, secret-listing commands, credential dumps, token-inspection commands, or broad content searches that might reveal confidential values.
+- Never inspect or change protected Supabase, Vercel, GitHub, OpenAI, payment-provider, cloud, production-database, authentication, or deployment settings.
+- Never access, export, alter, or disclose customer records, personal information, billing data, production documents, or confidential business information.
+- Normal task approval never includes secret access. If sensitive material is needed, stop immediately and ask the owner to handle that step.
+- If a tool unexpectedly reveals confidential information, do not repeat or store it; stop and report the incident without exposing any value.
+
 ## Execution workflow
 
 1. After a direct owner command, inspect the relevant files, current branch, existing tests, open pull requests, and task acceptance criteria in read-only mode.
