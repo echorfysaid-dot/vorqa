@@ -14,7 +14,8 @@ Use this board to control what the Vorqa AI agent is allowed to do. The agent ma
 
 ### VQ-001 — Audit the complete pre-construction owner journey
 
-- Status: `READY`
+- Status: `DONE`
+- Result: `docs/PRECONSTRUCTION_OWNER_JOURNEY_AUDIT.md`.
 - Priority: `P0`
 - Scope: inspect the existing routes, project lifecycle, owner workspace, stage gates, role model, documents, and VORA guidance.
 - Deliverable: a concise gap analysis and proposed implementation sequence on an isolated agent branch; do not change application behavior in this task.
@@ -36,11 +37,18 @@ Use this board to control what the Vorqa AI agent is allowed to do. The agent ma
 
 ## P1 — Candidate follow-up tasks
 
-### VQ-002 — Define pre-construction stage vocabulary and UI state
+### VQ-002 — Keep the project context when recommending architects
 
-- Status: `BACKLOG`
-- Scope: propose a typed lifecycle map and status presentation without database migrations.
-- Approval gate: any persistence schema or RLS change requires explicit user approval.
+- Status: `READY`
+- Priority: `P0`
+- Scope: preserve `projectId` and the recommended professional category from the project-owner workspace to the marketplace, professional profile, and existing connection request.
+- Acceptance criteria:
+  - The project owner can reach the relevant registered architect or engineering category without losing the original project context.
+  - Existing marketplace connections receive the supported `projectId` when available.
+  - Arabic, French, and English behavior remains intact, including Arabic RTL.
+  - Existing tests and the production build are run when a project checkout is available.
+  - No authentication, billing, schema, RLS, secret, or deployment change is made.
+- Approval gate: any persistence schema, role, permission, or RLS change requires explicit user approval.
 
 ### VQ-003 — Design architect discovery inside Vorqa
 
