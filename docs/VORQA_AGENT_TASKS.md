@@ -81,5 +81,7 @@ Use this board only to describe possible Vorqa AI tasks. No board status authori
 - Inspect read-only and present the exact files, risks, and proposed changes first.
 - Implement only after the owner explicitly approves that task and confirms they are not working on Vorqa.
 - Start implementation branches from `vorqa-current` only when branch creation was specifically approved.
+- Never open, read, copy, modify, expose, or transmit `.env` files, API keys, tokens, passwords, provider credentials, account secrets, customer data, or production information.
+- If a task requires a secret or protected account access, stop immediately and ask the owner to handle that step.
 - Never merge, deploy, modify secrets, alter authentication, or change protected systems without a separate explicit approval.
 - Stop after one approved task and never automatically start the next task.
