@@ -14,8 +14,8 @@ The platform must support project owners, registered engineers and architects, c
 - Base branch: `vorqa-current` unless the user explicitly chooses another branch.
 - Framework: Next.js, React, TypeScript, and Tailwind CSS.
 - Supported languages: Arabic, French, and English. Preserve Arabic RTL behavior.
-- If available, use the `$vorqa-ai-maintainer` skill for Vorqa AI development work.
-- For autonomous work, read `docs/VORQA_AGENT_TASKS.md` and choose only one task marked `READY`.
+- Invoke `$vorqa-ai-maintainer` only when the project owner explicitly selects or calls it.
+- Treat `docs/VORQA_AGENT_TASKS.md` as a proposal board; no status grants permission to edit.
 
 ## Product priorities
 
@@ -28,14 +28,26 @@ Prioritize a complete, trustworthy owner journey over unrelated feature expansio
 5. Connect approved pre-construction readiness to contractor selection and construction execution.
 6. Give each role a clear next action and ground VORA guidance in actual project data.
 
+## Owner-controlled manual mode
+
+1. Never run automatically, on a schedule, from a webhook, or in the background.
+2. Start only after the owner gives a direct command for a specific Vorqa task.
+3. Begin in read-only mode: inspect and explain, but do not modify files, branches, task boards, pull requests, databases, or external services.
+4. Before any mutation, show the task ID, exact files, planned changes, isolated branch or worktree, checks, risks, and actions that will not be taken.
+5. Require a fresh message explicitly approving that exact task and confirming that the owner is not currently working on Vorqa.
+6. Do not treat `READY`, `APPROVED`, `ok`, `kml`, `continue`, a past approval, or a generic request as permission to change anything.
+7. Stop if the owner resumes work, another agent is active, the worktree is dirty, the repository head changed, checks fail, or the scope is uncertain.
+8. Never touch the owner's active checkout or unfinished changes.
+
 ## Execution workflow
 
-1. Inspect the relevant files, current branch, existing tests, open pull requests, and task acceptance criteria.
-2. Work on a dedicated `agent/<task>-<slug>` feature branch or isolated worktree.
-3. Implement the smallest coherent change required by one approved task.
-4. Preserve existing architecture, design tokens, route behavior, auth flow, and business logic.
-5. Preserve Arabic, French, and English translations for any user-facing change.
-6. Run focused checks first, then the appropriate project commands:
+1. After a direct owner command, inspect the relevant files, current branch, existing tests, open pull requests, and task acceptance criteria in read-only mode.
+2. Present a bounded implementation plan and wait for fresh task-specific approval.
+3. Only if explicitly approved, use a dedicated `agent/<task>-<slug>` feature branch or isolated worktree.
+4. Change only the files and actions covered by the owner's approval.
+5. Preserve existing architecture, design tokens, route behavior, auth flow, and business logic.
+6. Preserve Arabic, French, and English translations for any user-facing change.
+7. Run focused checks first, then the appropriate project commands:
 
 ```sh
 npm test
@@ -44,11 +56,11 @@ npm run build
 
 Additional relevant commands include `npm run test:ai`, `npm run test:i18n`, and `npm run i18n:audit`.
 
-7. Report the outcome, changed files, checks run, blockers, and the next recommended action in the user's language.
+8. Report the outcome, changed files, checks run, blockers, and the next recommended action in the user's language.
 
 ## Safety and approval gates
 
-Always stop and request explicit user approval before:
+Do not change anything without fresh owner approval. Even after implementation approval, stop and request a separate explicit approval before:
 
 - merging into `vorqa-current`, `main`, or another shared branch;
 - deploying, promoting, or modifying production;
@@ -59,10 +71,11 @@ Always stop and request explicit user approval before:
 
 Never claim tests passed, a feature shipped, or a deployment succeeded unless verified directly.
 
-## Autonomous-run behavior
+## Manual-only behavior
 
-- If a `READY` task exists, handle only the highest-priority ready task.
-- If a matching pull request already exists, continue or report on it instead of duplicating work.
-- If no `READY` task exists, perform a read-only health review and propose one next task.
-- Ask for clarification if acceptance criteria or product behavior are ambiguous.
-- Do not modify production systems or merge without explicit approval.
+- Never start from a task-board status, timer, trigger, or background process.
+- Analyze only after the owner asks for an analysis.
+- Implement only after the owner approves the exact task and confirms they are not editing the project.
+- Request separate explicit approval for remote branch changes, commits, pushes, or pull-request updates unless the owner explicitly included those actions.
+- Always request separate approval before merging, deploying, changing a database, changing authentication, or touching another protected system.
+- Stop after the approved task; do not automatically select or start the next task.
