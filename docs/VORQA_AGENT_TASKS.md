@@ -1,16 +1,17 @@
-# Vorqa AI Autonomous Agent Task Board
+# Vorqa AI Owner-Controlled Task Board
 
-Use this board to control what the Vorqa AI agent is allowed to do. The agent may execute only one task whose status is `READY`; tasks marked `BACKLOG` are planning ideas, not implementation approval.
+Use this board only to describe possible Vorqa AI tasks. No board status authorizes any inspection or implementation. The agent starts only when the owner gives a direct command, remains read-only by default, and changes files only after fresh approval for the exact task plus confirmation that the owner is not currently working on Vorqa.
 
 ## Status values
 
-- `READY`: approved for the agent to start within the task's stated boundaries.
+- `PENDING_APPROVAL`: proposed task that must not be implemented.
+- `APPROVED`: an owner-approved task; the status alone is still insufficient without fresh explicit approval in the current conversation.
 - `IN_PROGRESS`: already being handled on a dedicated branch or pull request.
 - `BLOCKED`: requires product clarification, access, or explicit approval.
 - `DONE`: completed and verified; not necessarily merged or deployed.
 - `BACKLOG`: proposed future work and not approved for implementation.
 
-## P0 — Approved next task
+## P0 — Completed inspection
 
 ### VQ-001 — Audit the complete pre-construction owner journey
 
@@ -39,7 +40,7 @@ Use this board to control what the Vorqa AI agent is allowed to do. The agent ma
 
 ### VQ-002 — Keep the project context when recommending architects
 
-- Status: `READY`
+- Status: `PENDING_APPROVAL`
 - Priority: `P0`
 - Scope: preserve `projectId` and the recommended professional category from the project-owner workspace to the marketplace, professional profile, and existing connection request.
 - Acceptance criteria:
@@ -75,6 +76,10 @@ Use this board to control what the Vorqa AI agent is allowed to do. The agent ma
 
 ## Operating notes
 
-- Start all implementation branches from `vorqa-current`.
-- Never merge, deploy, modify secrets, or change protected systems without explicit approval.
-- If this board is not yet present on `vorqa-current`, inspect the open setup pull request before creating duplicate setup work.
+- Never run automatically or from a schedule, webhook, or background process.
+- Start only when the owner directly requests a named task.
+- Inspect read-only and present the exact files, risks, and proposed changes first.
+- Implement only after the owner explicitly approves that task and confirms they are not working on Vorqa.
+- Start implementation branches from `vorqa-current` only when branch creation was specifically approved.
+- Never merge, deploy, modify secrets, alter authentication, or change protected systems without a separate explicit approval.
+- Stop after one approved task and never automatically start the next task.
