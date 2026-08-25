@@ -25,8 +25,7 @@ import {
   Sparkles,
   UploadCloud
 } from "lucide-react";
-import { Badge, Button, EmptyState, GlassCard, ProgressBar, SkeletonCard, ToolCard } from "@/components/ui";
-import { BlueprintOverlay, VoraVisual } from "@/components/vorqa-official-visuals";
+import { Badge, Button, EmptyState, GlassCard, SkeletonCard, ToolCard } from "@/components/ui";
 import { authFetch } from "@/lib/auth-client";
 import { tools } from "@/lib/tools";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
@@ -68,7 +67,6 @@ const memory = [
 export default function ToolsPage() {
   return (<AutoLocalizedContent>
     <div className="space-y-6">
-      <VoraHeader />
       <ConstructionIntelligenceGateway />
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
@@ -79,7 +77,6 @@ export default function ToolsPage() {
         </div>
 
         <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
-          <ContextPanel />
           <AiMemoryPanel />
           <QuickToolsPanel />
         </aside>
@@ -98,12 +95,7 @@ function ConstructionIntelligenceGateway() {
             <BrainCircuit className="h-7 w-7" />
           </span>
           <div>
-            <div className="flex flex-wrap gap-2">
-              <Badge tone="gold">Primary Workspace</Badge>
-              <Badge tone="success">Contract + BOQ + Risk + Planning ready</Badge>
-              <Badge tone="blue">VORA Runtime</Badge>
-            </div>
-            <h2 className="mt-3 text-2xl font-black text-white">Construction Intelligence</h2>
+            <h2 className="text-2xl font-black text-white">Construction Intelligence</h2>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-ds-token-text/58">
               Ù…Ø±ÙƒØ² ÙˆØ§Ø­Ø¯ Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø¹Ù‚ÙˆØ¯ØŒ Ø¬Ø¯Ø§ÙˆÙ„ Ø§Ù„ÙƒÙ…ÙŠØ§ØªØŒ ÙˆØ£Ø¯ÙˆØ§Øª VORA Ø§Ù„Ù…Ø¹Ù…Ø§Ø±ÙŠØ© Ø§Ù„Ù‚Ø§Ø¯Ù…Ø© Ø¯ÙˆÙ† ØªØºÙŠÙŠØ± Ø§Ù„ØªØ¯ÙÙ‚Ø§Øª Ø§Ù„Ø­Ø§Ù„ÙŠØ©.
             </p>
@@ -130,41 +122,6 @@ function ConstructionIntelligenceGateway() {
             <CalendarDays className="h-4 w-4" />
             Planning Review
           </Link>
-        </div>
-      </div>
-    </GlassCard>
-  </AutoLocalizedContent>);
-}
-
-function VoraHeader() {
-  return (<AutoLocalizedContent>
-    <GlassCard className="relative overflow-hidden p-5 sm:p-6">
-      <BlueprintOverlay className="opacity-25" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(215,180,90,.16),transparent_28%),radial-gradient(circle_at_82%_10%,rgba(81,216,255,.16),transparent_30%)]" />
-      <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-start gap-5">
-          <div className="relative">
-            <VoraVisual variant="avatar" className="h-24 w-24 rounded-[2rem]" sizes="96px" priority />
-            <span className="absolute bottom-1 right-1 h-5 w-5 rounded-full border-4 border-[#0B1120] bg-[#22C783] shadow-[0_0_24px_rgba(34,199,131,.72)]" />
-          </div>
-          <div>
-            <div className="flex flex-wrap gap-2">
-              <Badge tone="success">Online</Badge>
-              <Badge tone="blue">AI Status: Ready</Badge>
-              <Badge tone="gold">VORA Enterprise</Badge>
-            </div>
-            <h1 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">VORA AI Workspace</h1>
-            <p className="mt-3 max-w-2xl text-base leading-8 text-ds-text/62">
-              مساحة ذكاء اصطناعي احترافية لتحليل المشاريع، إنشاء الوثائق، قراءة السياق، وتجهيز المخرجات التنفيذية.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[360px]">
-          <HeaderContext label="Workspace context" value="Construction Command Center" />
-          <HeaderContext label="Current project" value="PRJ-1048 · Villa" />
-          <HeaderContext label="Selected language" value="العربية" />
-          <HeaderContext label="AI mode" value="Project-aware" />
         </div>
       </div>
     </GlassCard>
@@ -288,8 +245,7 @@ function SuggestedPrompts() {
     <GlassCard className="p-5">
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
-          <Badge tone="blue">Suggested Prompts</Badge>
-          <h2 className="mt-2 text-2xl font-black text-white">اقتراحات جاهزة</h2>
+          <h2 className="text-2xl font-black text-white">اقتراحات جاهزة</h2>
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -310,31 +266,11 @@ function SuggestedPrompts() {
   </AutoLocalizedContent>);
 }
 
-function ContextPanel() {
-  return (<AutoLocalizedContent>
-    <GlassCard className="p-5">
-      <Badge tone="gold">Context Panel</Badge>
-      <h2 className="mt-3 text-xl font-black text-white">سياق العمل</h2>
-      <div className="mt-5 grid gap-3">
-        <ContextRow label="Current project" value="PRJ-1048 · Villa" />
-        <ContextRow label="Uploaded documents" value="24 files" />
-        <ContextRow label="Active knowledge" value="Enabled" />
-        <ContextRow label="Selected language" value="العربية" />
-        <ContextRow label="AI mode" value="Project-aware" />
-      </div>
-      <div className="mt-5">
-        <ProgressBar value={72} label="Context readiness" tone="blue" />
-      </div>
-    </GlassCard>
-  </AutoLocalizedContent>);
-}
-
 function AiMemoryPanel() {
   return (<AutoLocalizedContent>
     <GlassCard className="p-5">
-      <Badge tone="blue">AI Memory</Badge>
-      <h2 className="mt-3 text-xl font-black text-white">ذاكرة VORA</h2>
-      <div className="mt-5 grid gap-4">
+      <h2 className="text-xl font-black text-white">ذاكرة VORA</h2>
+      <div className="mt-4 grid gap-4">
         {memory.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -360,8 +296,7 @@ function AiMemoryPanel() {
 function QuickToolsPanel() {
   return (<AutoLocalizedContent>
     <GlassCard className="p-5">
-      <Badge tone="gold">Quick Tools</Badge>
-      <div className="mt-4 grid gap-3">
+      <div className="grid gap-3">
         {quickTools.map((tool) => {
           const Icon = tool.icon;
           return (
@@ -383,10 +318,8 @@ function ToolLibrary() {
     <GlassCard className="p-5">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <Badge tone="neutral">Tool Library</Badge>
-          <h2 className="mt-2 text-2xl font-black text-white">مولدات VORA الحالية</h2>
+          <h2 className="text-2xl font-black text-white">مولدات VORA الحالية</h2>
         </div>
-        <Badge tone="success">Existing functionality preserved</Badge>
       </div>
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {cardTools.map((tool, index) => (
@@ -399,23 +332,5 @@ function ToolLibrary() {
         <SkeletonCard />
       </div>
     </GlassCard>
-  </AutoLocalizedContent>);
-}
-
-function HeaderContext({ label, value }: { label: string; value: string }) {
-  return (<AutoLocalizedContent>
-    <div className="rounded-2xl border border-white/10 bg-white/[0.045] p-3">
-      <p className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">{label}</p>
-      <p className="mt-1 truncate font-black text-white">{value}</p>
-    </div>
-  </AutoLocalizedContent>);
-}
-
-function ContextRow({ label, value }: { label: string; value: string }) {
-  return (<AutoLocalizedContent>
-    <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.045] p-3">
-      <span className="text-xs font-black uppercase tracking-[0.1em] text-ds-text/42">{label}</span>
-      <span className="max-w-[55%] truncate text-sm font-black text-white">{value}</span>
-    </div>
   </AutoLocalizedContent>);
 }
