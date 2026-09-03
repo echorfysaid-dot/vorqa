@@ -1,6 +1,7 @@
 import type { Project } from "@/lib/models/project";
 import type { Locale } from "@/lib/i18n";
 import { formatDate } from "@/lib/utils/format";
+import { resolveProjectLifecycleStartingPoint } from "@/lib/project-lifecycle";
 import type {
   ProjectCreationAnswers,
   ProjectJourneyInput,
@@ -72,6 +73,28 @@ function compactRecord(input: Record<string, unknown>) {
   return Object.fromEntries(Object.entries(input).filter(([, value]) => value !== undefined && value !== ""));
 }
 
+function ownerStageFromLifecycle(stageId: ReturnType<typeof resolveProjectLifecycleStartingPoint>["stageId"], landStatus?: string): ProjectOwnerStageId | undefined {
+  switch (stageId) {
+    case "project_preparation": return landStatus === "owned" ? "land_only" : "idea";
+    case "site_property_preparation": return "land_only";
+    case "design_studies":
+    case "technical_studies": return "architectural_plans";
+    case "authorization_preparation":
+    case "construction_authorization": return "permits";
+    case "execution_preparation": return "looking_professionals";
+    case "site_opening":
+    case "excavation_earthworks":
+    case "foundations":
+    case "structural_works":
+    case "secondary_works":
+    case "technical_installations":
+    case "finishing":
+    case "end_of_works":
+    case "occupancy_administrative":
+    case "project_completed": return "under_execution";
+    default: return undefined;
+  }
+}
 export function localizeProjectJourneySystemValue(value: string, translate: (key: string) => string) {
   const key = systemValueKeys[value];
   return key ? translate(key) : value;
@@ -85,13 +108,14 @@ export function localizeProjectJourneyTimestamp(value: string, locale: Locale, t
 }
 
 export function createProjectInputFromJourney(answers: ProjectCreationAnswers): ProjectJourneyInput {
-  const stage = stageStatus[answers.stage];
+  const selectedStage = answers.stage;
   const location = [clean(answers.location), clean(answers.city), clean(answers.country)].filter(Boolean).join(", ");
   const budgetAmount = numberValue(answers.budgetAmount);
   const currency = clean(answers.currency);
   const usableCurrency = currency && /^[A-Z]{3}$/.test(currency) ? currency : undefined;
-  const metadata = compactRecord({
+  const initialMetadata = compactRecord({
     ownerJourneyVersion: 1,
+    lifecycleVersion: 2,
     experienceMode: "simple_owner",
     projectTypeId: answers.projectType,
     projectType: typeLabels[answers.projectType],
@@ -104,9 +128,6 @@ export function createProjectInputFromJourney(answers: ProjectCreationAnswers): 
     budgetAmount,
     budget: budgetAmount !== undefined && usableCurrency ? `${budgetAmount} ${usableCurrency}` : undefined,
     currency: usableCurrency,
-    ownerStage: answers.stage,
-    phase: stage.phase,
-    statusLabel: stage.status,
     landStatus: clean(answers.landStatus),
     permitStatus: clean(answers.permitStatus),
     drawingsStatus: answers.drawingsStatus,
@@ -114,6 +135,12 @@ export function createProjectInputFromJourney(answers: ProjectCreationAnswers): 
     completionTimeframe: clean(answers.completionTimeframe),
     description: clean(answers.description)
   });
+  const inferredStage = selectedStage === "not_decided"
+    ? ownerStageFromLifecycle(resolveProjectLifecycleStartingPoint({ metadata: initialMetadata }).stageId, clean(answers.landStatus))
+    : undefined;
+  const ownerStage = inferredStage || selectedStage;
+  const stage = stageStatus[ownerStage];
+  const metadata = compactRecord({ ...initialMetadata, ownerStage, phase: stage.phase, statusLabel: stage.status });
 
   return {
     organizationId: answers.organizationId,
@@ -126,14 +153,17 @@ export function createProjectInputFromJourney(answers: ProjectCreationAnswers): 
     metadata
   };
 }
-
 export function createProjectOwnerContext(project: Project): ProjectOwnerContext {
   const metadata = project.metadata || {};
   const country = clean(metadata.country);
   const city = clean(metadata.city);
   const location = clean(metadata.location) || clean(project.location);
   const projectType = clean(metadata.projectTypeId) || clean(metadata.projectType) || clean(project.type);
-  const stage = clean(metadata.ownerStage);
+  const storedStage = clean(metadata.ownerStage);
+  const inferredStage = storedStage && storedStage !== "not_decided"
+    ? undefined
+    : ownerStageFromLifecycle(resolveProjectLifecycleStartingPoint(project).stageId, clean(metadata.landStatus));
+  const stage = storedStage && storedStage !== "not_decided" ? storedStage : inferredStage;
   const missingFields = Object.freeze([
     !projectType || projectType === "not_decided" ? "projectType" : undefined,
     !country ? "country" : undefined,

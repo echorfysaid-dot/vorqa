@@ -1,4 +1,6 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
+import { allowedWorkflowActions, isPersistedStageGateReady, workflowVoraGuidanceKey } from "@/lib/project-workflow-ui";
+import type { ProjectWorkflowState } from "@/types/project-workflow";
 import { createAiApplicationContext } from "@/lib/ai-context";
 import { safeAuthRedirect } from "@/lib/auth-client";
 import { friendlyAuthError, friendlyDataError } from "@/lib/supabase-server";
@@ -146,9 +148,14 @@ import { createProfessionalReportTemplate, renderReportPlainText } from "@/lib/r
 import { createAnalysisExportModel, createProjectIntelligenceExportModel, getLatestAnalysisVersion, getSpecificAnalysisVersion } from "@/lib/project-report-export";
 import { classifyProjectDocument, createExecutiveSummaryGate, createProjectIntelligenceWorkflowSnapshot, resolveProjectNextBestAction } from "@/lib/project-intelligence-workflow";
 import { createProjectInputFromJourney, createProjectOwnerContext, createProjectOwnerExperience } from "@/lib/project-owner-journey";
+import { createVoraProjectIntelligence } from "@/lib/vora-project-intelligence";
+import { getRoleRelevantEvidence, projectLifecycleCheckpoints, projectLifecyclePhases, resolveProjectLifecycleStartingPoint, resolveProjectLifecycleState, resolveProjectParticipantRole } from "@/lib/project-lifecycle";
+import { projectLifecycleOperationalStageIds } from "@/types/project-lifecycle";
+import { createProjectStageGate, normalizeProjectDocumentWorkflow } from "@/lib/project-stage-gate";
+import { normalizeWorkflowDocumentStatus, normalizeWorkflowEvidenceStatus, normalizeWorkflowValidationStatus } from "@/lib/project-workflow-normalization";
 import { composeVoraPrompt } from "@/lib/vora-prompt-composer";
 import type { VoraProjectContext } from "@/lib/ai-context-repository";
-import type { Document, Project } from "@/lib/models";
+import type { Document, Project, ProjectMember, Task } from "@/lib/models";
 
 type TestCase = {
   name: string;
@@ -2942,6 +2949,68 @@ export const tests: TestCase[] = [
     }
   },
   {
+    name: "Lifecycle starting point uses reported project information without treating uploads as approval",
+    run() {
+      const preparation = resolveProjectLifecycleStartingPoint({
+        metadata: { projectTypeId: "villa", landStatus: "owned", drawingsStatus: "no" }
+      });
+      const execution = resolveProjectLifecycleStartingPoint({
+        metadata: { projectTypeId: "villa", drawingsStatus: "yes", permitStatus: "approved", contractorSelected: true, constructionStarted: true }
+      });
+      const explicit = resolveProjectLifecycleStartingPoint({
+        metadata: { lifecycleStage: "finishing", constructionStarted: true }
+      });
+      const uploadsOnly = resolveProjectLifecycleState({
+        project: {
+          id: "PRJ-UPLOAD-ONLY",
+          title: "Uploaded document only",
+          type: "Project",
+          status: "",
+          phase: "",
+          updatedAt: fixedNow.toISOString(),
+          score: 0,
+          budget: "",
+          timeline: "",
+          team: 0,
+          documents: 1,
+          knowledgeFiles: 0
+        },
+        documents: [{ id: "DOC-UPLOADED", projectId: "PRJ-UPLOAD-ONLY", title: "plan.pdf", type: "Document", status: "Saved", updatedAt: fixedNow.toISOString() }]
+      });
+
+      assert.equal(preparation.stageId, "site_property_preparation");
+      assert.equal(preparation.source, "reported_project_information");
+      assert.equal(execution.stageId, "site_opening");
+      assert.equal(execution.source, "reported_project_information");
+      assert.equal(explicit.stageId, "finishing");
+      assert.equal(explicit.source, "explicit_stage");
+      assert.equal(uploadsOnly.resolution, "insufficient_data");
+    }
+  },
+  {
+    name: "Project creation derives a clear starting point only when the user leaves stage undecided",
+    run() {
+      const inferred = createProjectInputFromJourney({
+        title: "Study-ready villa",
+        projectType: "villa",
+        stage: "not_decided",
+        drawingsStatus: "yes",
+        currency: "MAD"
+      });
+      const explicit = createProjectInputFromJourney({
+        title: "Owner-selected preparation",
+        projectType: "villa",
+        stage: "idea",
+        drawingsStatus: "yes",
+        currency: "MAD"
+      });
+
+      assert.equal(inferred.metadata.ownerStage, "architectural_plans");
+      assert.equal(inferred.status, "Design Review");
+      assert.equal(explicit.metadata.ownerStage, "idea");
+      assert.equal(explicit.status, "Planning");
+    }
+  },  {
     name: "Project owner journey preserves unknown values without invented defaults",
     run() {
       const input = createProjectInputFromJourney({
@@ -3071,7 +3140,621 @@ export const tests: TestCase[] = [
       assert.equal(experience.nextStep.id, "complete_context");
       assert.equal(experience.progress.evidencePercentage, undefined);
     }
-  }
-];
+  },
+  {
+    name: "VORA Project Intelligence is deterministic for identical project evidence",
+    run() {
+      const project: Project = {
+        id: "PRJ-INTELLIGENCE-STABLE",
+        title: "Stable Villa",
+        type: "Villa",
+        status: "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "villa", ownerStage: "idea", city: "Casablanca", country: "Morocco", budgetAmount: 1800000, currency: "MAD" }
+      };
+      const input = { project, availability: { tasks: true, timeline: true, documents: true, team: true, budget: true } } as const;
 
+      assert.deepEqual(createVoraProjectIntelligence(input), createVoraProjectIntelligence(input));
+      assert.equal(createVoraProjectIntelligence(input).health.state, "on_track");
+      assert.equal(createVoraProjectIntelligence(input).nextAction.destination, "/marketplace");
+    }
+  },
+  {
+    name: "VORA Project Intelligence reports insufficient data without inventing project facts",
+    run() {
+      const project: Project = {
+        id: "PRJ-INTELLIGENCE-EMPTY",
+        title: "Unspecified Project",
+        type: "Project",
+        status: "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "not_decided", ownerStage: "not_decided" }
+      };
+      const intelligence = createVoraProjectIntelligence({ project, availability: { tasks: true, timeline: true, documents: true, team: true, budget: true } });
+
+      assert.equal(intelligence.health.state, "insufficient_data");
+      assert.equal(intelligence.context.project.progress, undefined);
+      assert.equal(intelligence.context.project.desiredStartDate, undefined);
+      assert.equal(intelligence.nextAction.id, "complete_project_information");
+      assert.equal(intelligence.nextAction.destination, "/projects/PRJ-INTELLIGENCE-EMPTY?tab=settings");
+    }
+  },
+  {
+    name: "VORA Project Intelligence prioritizes persisted blockers and exposes a valid action",
+    run() {
+      const project: Project = {
+        id: "PRJ-INTELLIGENCE-BLOCKED",
+        title: "Blocked Project",
+        type: "Commercial",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 1,
+        documents: 1,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "commercial", ownerStage: "under_execution", city: "Rabat", country: "Morocco", budgetAmount: 3000000, currency: "MAD" }
+      };
+      const intelligence = createVoraProjectIntelligence({
+        project,
+        tasks: [{ id: "TASK-BLOCKED", projectId: project.id, title: "Owner decision", status: "Blocked", priority: "Critical" }],
+        availability: { tasks: true, timeline: true, documents: true, team: true, budget: true }
+      });
+
+      assert.equal(intelligence.health.state, "at_risk");
+      assert.equal(intelligence.context.tasks.blocked, 1);
+      assert.equal(intelligence.nextAction.id, "review_blocked_tasks");
+      assert.equal(intelligence.nextAction.destination, "/projects/PRJ-INTELLIGENCE-BLOCKED?tab=execution");
+      assert.equal(intelligence.attention[0]?.evidence, "known");
+    }
+  },
+  {
+    name: "VORA Project Intelligence identifies delayed timeline evidence without an AI provider",
+    run() {
+      const project: Project = {
+        id: "PRJ-INTELLIGENCE-DELAY",
+        title: "Delayed Project",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 1,
+        documents: 1,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "villa", ownerStage: "construction_started", budgetAmount: 2200000, currency: "MAD" }
+      };
+      const intelligence = createVoraProjectIntelligence({
+        project,
+        milestones: [{ id: "MILESTONE-DELAYED", projectId: project.id, title: "Structure", status: "Delayed", progress: 45 }],
+        availability: { tasks: true, timeline: true, documents: true, team: true, budget: true }
+      });
+
+      assert.equal(intelligence.health.state, "at_risk");
+      assert.equal(intelligence.context.timeline.delayed, 1);
+      assert.equal(intelligence.nextAction.id, "review_delayed_milestones");
+      assert.ok(intelligence.suggestedQuestionKeys.includes("projectIntelligence.question.risks"));
+    }
+  },
+  {
+    name: "VORA Project Intelligence never reports on track when core repositories are unavailable",
+    run() {
+      const project: Project = {
+        id: "PRJ-INTELLIGENCE-UNAVAILABLE",
+        title: "Unavailable Context Project",
+        type: "Villa",
+        status: "Planning",
+        phase: "Planning",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { experienceMode: "simple_owner", projectTypeId: "villa", ownerStage: "idea", budgetAmount: 1200000, currency: "MAD" }
+      };
+      const intelligence = createVoraProjectIntelligence({ project });
+
+      assert.equal(intelligence.health.state, "insufficient_data");
+      assert.ok(intelligence.attention.some((item) => item.id === "repository_unavailable"));
+    }
+  }
+,
+  {
+    name: "Sprint 45 keeps one deterministic lifecycle state across participant roles",
+    run() {
+      const project: Project = {
+        id: "PRJ-LIFECYCLE-SHARED",
+        title: "Shared construction project",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 58,
+        budget: "",
+        timeline: "",
+        team: 3,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: {
+          lifecycleStage: "structural_works",
+          lifecycleCompletedStages: ["project_preparation", "studies_design", "construction_authorization", "site_preparation_opening", "excavation_foundations"]
+        }
+      };
+      const owner = createVoraProjectIntelligence({ project, viewer: { userId: "OWNER-1", primaryRole: "project_owner" } });
+      const contractor = createVoraProjectIntelligence({ project, viewer: { userId: "CONTRACTOR-1", primaryRole: "contractor" } });
+
+      assert.deepEqual(owner.lifecycle, contractor.lifecycle);
+      assert.equal(owner.lifecycle.currentStageId, "structural_works");
+      assert.equal(owner.lifecycle.nextStageId, "secondary_works");
+      assert.equal(owner.roleContext.viewerRole, "project_owner");
+      assert.equal(contractor.roleContext.viewerRole, "contractor");
+      assert.notEqual(owner.priorityKey, contractor.priorityKey);
+    }
+  },
+  {
+    name: "Sprint 45 does not invent a detailed stage for generic execution data",
+    run() {
+      const project: Project = {
+        id: "PRJ-LIFECYCLE-UNKNOWN",
+        title: "Execution project",
+        type: "Commercial",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 0,
+        budget: "",
+        timeline: "",
+        team: 0,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { ownerStage: "under_execution" }
+      };
+      const lifecycle = resolveProjectLifecycleState({ project });
+
+      assert.equal(lifecycle.resolution, "resolved");
+      assert.equal(lifecycle.currentStageId, "execution_preparation");
+      assert.equal(lifecycle.progression, "ready");
+    }
+  },
+  {
+    name: "Sprint 45 respects explicitly configured project stage applicability",
+    run() {
+      const project: Project = {
+        id: "PRJ-LIFECYCLE-CONFIGURED",
+        title: "Configured lifecycle",
+        type: "Renovation",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 40,
+        budget: "",
+        timeline: "",
+        team: 2,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: {
+          lifecycleStage: "structural_works",
+          lifecycleApplicableStages: ["project_preparation", "structural_works", "finishing"],
+          lifecycleCompletedStages: ["project_preparation"]
+        }
+      };
+      const lifecycle = resolveProjectLifecycleState({ project });
+
+      assert.deepEqual(lifecycle.applicableStageIds, ["project_preparation", "structural_works", "finishing"]);
+      assert.equal(lifecycle.nextStageId, "finishing");
+      assert.equal(lifecycle.applicabilitySource, "configured");
+    }
+  },
+  {
+    name: "Sprint 45 resolves project membership roles before onboarding defaults",
+    run() {
+      const members: ProjectMember[] = [
+        { id: "MEMBER-CONTROL", projectId: "PRJ-ROLES", employeeId: "USER-CONTROL", role: "inspector", status: "Active", joinedAt: fixedNow.toISOString() },
+        { id: "MEMBER-LAB", projectId: "PRJ-ROLES", employeeId: "USER-LAB", role: "laboratory", status: "Active", joinedAt: fixedNow.toISOString() },
+        { id: "MEMBER-SURVEY", projectId: "PRJ-ROLES", employeeId: "USER-SURVEY", role: "surveyor", status: "Active", joinedAt: fixedNow.toISOString() }
+      ];
+
+      assert.deepEqual(resolveProjectParticipantRole({ members, viewer: { userId: "USER-CONTROL", primaryRole: "contractor" } }), { role: "control_office", source: "project_membership" });
+      assert.equal(resolveProjectParticipantRole({ members, viewer: { userId: "USER-LAB" } }).role, "laboratory");
+      assert.equal(resolveProjectParticipantRole({ members, viewer: { userId: "USER-SURVEY" } }).role, "surveyor");
+      assert.equal(resolveProjectParticipantRole({ viewer: { primaryRole: "engineer" } }).role, "engineer");
+    }
+  },
+  {
+    name: "Sprint 45 filters My Actions and Waiting On without cross-role leakage",
+    run() {
+      const project: Project = {
+        id: "PRJ-ROLE-ACTIONS",
+        title: "Role actions",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 55,
+        budget: "",
+        timeline: "",
+        team: 3,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { lifecycleStage: "structural_works" }
+      };
+      const tasks: Task[] = [
+        {
+          id: "TASK-CONTRACTOR",
+          projectId: project.id,
+          title: "Submit concrete evidence",
+          status: "Review",
+          priority: "High",
+          metadata: { lifecycleStage: "structural_works", assignedRole: "contractor", validationRole: "control_office", requiresValidation: true, validationStatus: "submitted", requiredEvidence: ["concrete_report"] }
+        },
+        {
+          id: "TASK-ENGINEER",
+          projectId: project.id,
+          title: "Review structural calculation",
+          status: "Todo",
+          priority: "Medium",
+          metadata: { lifecycleStage: "structural_works", assignedRole: "engineer" }
+        },
+        {
+          id: "TASK-COMPLETED",
+          projectId: project.id,
+          title: "Completed contractor setup",
+          status: "Done",
+          priority: "Low",
+          metadata: { lifecycleStage: "project_preparation", assignedRole: "contractor" }
+        }
+      ];
+      const owner = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "project_owner" } });
+      const contractor = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "contractor" } });
+      const engineer = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "engineer" } });
+      const controlOffice = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "inspector" } });
+
+      assert.deepEqual(owner.lifecycle, contractor.lifecycle);
+      assert.deepEqual(engineer.lifecycle, contractor.lifecycle);
+      assert.deepEqual(controlOffice.lifecycle, contractor.lifecycle);
+      assert.deepEqual(owner.health, contractor.health);
+      assert.deepEqual(engineer.health, contractor.health);
+      assert.deepEqual(controlOffice.health, contractor.health);
+      assert.deepEqual(owner.roleContext.waitingOn.map((action) => action.id), ["TASK-CONTRACTOR"]);
+      assert.deepEqual(contractor.roleContext.myActions.map((action) => action.id), ["TASK-CONTRACTOR"]);
+      assert.deepEqual(contractor.roleContext.waitingOn.map((action) => action.id), ["TASK-CONTRACTOR"]);
+      assert.equal(contractor.roleContext.myActions.some((action) => action.id === "TASK-COMPLETED"), false);
+      assert.equal(contractor.nextAction.id, "role_waiting");
+      assert.deepEqual(engineer.roleContext.myActions.map((action) => action.id), ["TASK-ENGINEER"]);
+      assert.equal(engineer.roleContext.myActions.some((action) => action.id === "TASK-CONTRACTOR"), false);
+      assert.deepEqual(controlOffice.roleContext.myActions.map((action) => action.id), ["TASK-CONTRACTOR"]);
+      assert.equal(controlOffice.nextAction.id, "role_validation");
+    }
+  },
+  {
+    name: "Sprint 45 keeps uploaded evidence distinct from professional approval",
+    run() {
+      const uploaded: Document = {
+        id: "DOC-UPLOADED",
+        projectId: "PRJ-EVIDENCE",
+        title: "Concrete test file",
+        type: "Report",
+        status: "Saved",
+        category: "Inspection Reports",
+        filename: "concrete-test.pdf",
+        storagePath: "projects/PRJ-EVIDENCE/concrete-test.pdf"
+      };
+      const uploadedEvidence = getRoleRelevantEvidence([uploaded], "control_office");
+      const approvedEvidence = getRoleRelevantEvidence([{ ...uploaded, metadata: { approvalStatus: "approved" } }], "control_office");
+
+      assert.equal(uploadedEvidence.uploaded, 1);
+      assert.equal(uploadedEvidence.approved, 0);
+      assert.equal(approvedEvidence.uploaded, 0);
+      assert.equal(approvedEvidence.approved, 1);
+    }
+  },
+  {
+    name: "Sprint 45 rejected validation blocks the shared lifecycle and role action",
+    run() {
+      const project: Project = {
+        id: "PRJ-REJECTED-VALIDATION",
+        title: "Rejected validation",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 45,
+        budget: "",
+        timeline: "",
+        team: 2,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { lifecycleStage: "excavation_foundations" }
+      };
+      const tasks: Task[] = [{
+        id: "TASK-CORRECTION",
+        projectId: project.id,
+        title: "Correct foundation evidence",
+        status: "Review",
+        priority: "Critical",
+        metadata: { assignedRole: "contractor", validationRole: "control_office", validationStatus: "rejected", requiresValidation: true }
+      }];
+      const intelligence = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "contractor" } });
+
+      assert.equal(intelligence.lifecycle.progression, "blocked");
+      assert.equal(intelligence.roleContext.myActions[0]?.status, "rejected");
+      assert.equal(intelligence.nextAction.id, "role_blocked_action");
+    }
+  },
+  {
+    name: "Sprint 45 VORA context and suggested questions remain role-aware and deterministic",
+    run() {
+      const project: Project = {
+        id: "PRJ-ROLE-VORA",
+        title: "Role aware VORA",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 70,
+        budget: "",
+        timeline: "",
+        team: 4,
+        documents: 0,
+        knowledgeFiles: 0,
+        metadata: { lifecycleStage: "technical_secondary_works" }
+      };
+      const engineer = createVoraProjectIntelligence({ project, viewer: { primaryRole: "engineer" } });
+      const contractor = createVoraProjectIntelligence({ project, viewer: { primaryRole: "contractor" } });
+      const roles = ["project_owner", "contractor", "architect", "engineer", "control_office", "laboratory", "surveyor", "other_project_member"] as const;
+
+      assert.deepEqual(engineer, createVoraProjectIntelligence({ project, viewer: { primaryRole: "engineer" } }));
+      assert(engineer.suggestedQuestionKeys.every((key) => key.startsWith("projectLifecycle.question.engineer.")));
+      assert(contractor.suggestedQuestionKeys.every((key) => key.startsWith("projectLifecycle.question.contractor.")));
+      assert.notEqual(engineer.nextAction.titleKey, contractor.nextAction.titleKey);
+      for (const role of roles) {
+        const intelligence = createVoraProjectIntelligence({ project, viewer: { primaryRole: role } });
+        assert.deepEqual(intelligence.lifecycle, contractor.lifecycle);
+        assert.deepEqual(intelligence.health, contractor.health);
+        assert.equal(intelligence.roleContext.viewerRole, role);
+        assert(intelligence.suggestedQuestionKeys.every((key) => key.startsWith(`projectLifecycle.question.${role}.`)));
+      }
+    }
+  },
+  {
+    name: "Sprint 45 VORA prompt excludes unrelated participant actions and identities",
+    run() {
+      const project: Project = {
+        id: "PRJ-ROLE-PROMPT",
+        title: "Scoped role prompt",
+        type: "Villa",
+        status: "Execution",
+        phase: "Execution",
+        updatedAt: fixedNow.toISOString(),
+        score: 60,
+        budget: "",
+        timeline: "",
+        team: 3,
+        documents: 1,
+        knowledgeFiles: 0,
+        metadata: { lifecycleStage: "structural_works" }
+      };
+      const tasks: Task[] = [
+        { id: "TASK-CONTRACTOR-PROMPT", projectId: project.id, title: "Submit concrete evidence", status: "Review", priority: "High", metadata: { assignedRole: "contractor", validationRole: "control_office", validationStatus: "submitted", requiredEvidence: ["concrete_report"] } },
+        { id: "TASK-ENGINEER-PRIVATE", projectId: project.id, title: "Private structural review", status: "Todo", priority: "Medium", metadata: { assignedRole: "engineer" } }
+      ];
+      const projectIntelligence = createVoraProjectIntelligence({ project, tasks, viewer: { userId: "USER-CONTRACTOR", primaryRole: "contractor" } });
+      const context: VoraProjectContext = {
+        project,
+        projectProfile: createProjectOwnerContext(project),
+        projectIntelligence,
+        members: [{ id: "MEMBER-ENGINEER", employeeId: "USER-ENGINEER", role: "engineer", displayName: "Unrelated Engineer Name" }],
+        departments: [],
+        employees: [{ id: "USER-ENGINEER", name: "Unrelated Engineer Name" }],
+        tasks,
+        timeline: null,
+        milestones: [],
+        budget: null,
+        documents: [{ id: "DOC-PRIVATE", title: "Private engineering note" }],
+        knowledge: [],
+        memory: [],
+        references: [`project:${project.id}`],
+        source: "demo",
+        errors: []
+      };
+      const prompt = composeVoraPrompt("document", { language: "English", subject: "What should I do next?" }, context);
+
+      assert(prompt.contextSummary.includes("Submit concrete evidence"));
+      assert.equal(prompt.contextSummary.includes("Private structural review"), false);
+      assert.equal(prompt.contextSummary.includes("Unrelated Engineer Name"), false);
+      assert.equal(prompt.contextSummary.includes("Private engineering note"), false);
+      assert(prompt.instructions.includes("Current project participant role: contractor"));
+      assert(prompt.instructions.includes("must not claim professional approval"));
+    }
+  },
+  {
+    name: "Canonical lifecycle resolves legacy values and checkpoint gates conservatively",
+    run() {
+      assert.equal(projectLifecycleOperationalStageIds.length, 16);
+      assert.equal(projectLifecyclePhases.length, 10);
+      assert.equal(projectLifecycleCheckpoints.length, 17);
+      assert.equal(resolveProjectLifecycleStartingPoint({ metadata: { lifecycleStage: "studies_design" } }).stageId, "design_studies");
+      assert.equal(resolveProjectLifecycleStartingPoint({ metadata: { lifecycleStage: "studies_design", technicalStudyStatus: "approved" } }).stageId, "technical_studies");
+      assert.equal(resolveProjectLifecycleStartingPoint({ metadata: { lifecycleStage: "construction_authorization" } }).stageId, "authorization_preparation");
+      assert.equal(resolveProjectLifecycleStartingPoint({ metadata: { lifecycleStage: "construction_authorization", lifecycleVersion: 2 } }).stageId, "construction_authorization");
+      assert.equal(resolveProjectLifecycleStartingPoint({ phase: "Execution", metadata: {} }).stageId, "execution_preparation");
+      const project: Project = { id: "PRJ-CHECKPOINT", title: "Foundations", type: "Villa", status: "Execution", phase: "Execution", updatedAt: fixedNow.toISOString(), score: 0, budget: "", timeline: "", team: 0, documents: 0, knowledgeFiles: 0, metadata: { lifecycleStage: "foundations", lifecycleVersion: 2, lifecycleCheckpoints: { foundation_reception: { applicability: "required", status: "missing" } } } };
+      const gate = createProjectStageGate({ project });
+      assert.equal(gate.status, "requirements_missing");
+      assert.equal(gate.checkpoints.some((checkpoint) => checkpoint.id === "foundation_reception"), true);
+      assert.equal(gate.blockingRequirements.some((requirement) => requirement.checkpointId === "foundation_reception"), true);
+    }
+  },  {
+    name: "Sprint 46 stage gates distinguish missing work, validation, corrections, readiness, and insufficient data",
+    run() {
+      const project: Project = {
+        id: "PRJ-STAGE-GATE", title: "Stage gate project", type: "Villa", status: "Execution", phase: "Execution", updatedAt: fixedNow.toISOString(), score: 60, budget: "", timeline: "", team: 3, documents: 0, knowledgeFiles: 0, metadata: { lifecycleStage: "structural_works" }
+      };
+      const baseTask: Task = { id: "TASK-GATE", projectId: project.id, title: "Submit structural evidence", status: "Todo", priority: "High", metadata: { assignedRole: "contractor", validationRole: "control_office", requiresValidation: true, requiredEvidence: ["structural_report"] } };
+      assert.equal(createProjectStageGate({ project, tasks: [baseTask] }).status, "requirements_missing");
+
+      const submitted: Task = { ...baseTask, status: "Review", metadata: { ...baseTask.metadata, validationStatus: "submitted", evidenceStatus: "submitted" } };
+      assert.equal(createProjectStageGate({ project, tasks: [submitted] }).status, "waiting_validation");
+
+      const correction: Task = { ...baseTask, status: "Review", metadata: { ...baseTask.metadata, validationStatus: "rejected", evidenceStatus: "correction_required" } };
+      const correctionGate = createProjectStageGate({ project, tasks: [correction] });
+      assert.equal(correctionGate.status, "correction_required");
+      assert.equal(correctionGate.handoffs[0]?.status, "correction_required");
+
+      const approved: Task = { ...baseTask, status: "Done", metadata: { ...baseTask.metadata, validationStatus: "approved", evidenceStatus: "approved" } };
+      const readyGate = createProjectStageGate({ project, tasks: [approved] });
+      assert.equal(readyGate.status, "ready_to_advance");
+      assert.equal(readyGate.transitionReadiness, "yes");
+      assert.equal(createVoraProjectIntelligence({ project, tasks: [approved], viewer: { primaryRole: "contractor" } }).nextAction.id, "stage_gate_ready");
+      assert.equal(createProjectStageGate({ project }).status, "insufficient_data");
+    }
+  },
+  {
+    name: "Sprint 46 document workflow preserves uploaded, submitted, review, approval, correction, and superseded distinctions",
+    run() {
+      const document = (id: string, metadata: Record<string, unknown> = {}, status = "Saved"): Document => ({ id, title: id, type: "Document", status, metadata });
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-UPLOADED", {})).workflowState, "uploaded");
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-SUBMITTED", { validationStatus: "submitted" })).workflowState, "submitted");
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-REVIEW", { validationStatus: "under_review" })).workflowState, "under_review");
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-APPROVED", { validationStatus: "approved" })).workflowState, "approved");
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-CORRECTION", { validationStatus: "correction_required" })).workflowState, "correction_required");
+      assert.equal(normalizeProjectDocumentWorkflow(document("DOC-SUPERSEDED", { superseded: true })).previousState, "superseded");
+    }
+  },
+  {
+    name: "Lifecycle cleanup centralizes document validation and evidence normalization without changing semantics",
+    run() {
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Saved" }), "uploaded");
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Saved", metadata: { validationStatus: "submitted" } }), "submitted");
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Saved", metadata: { validationStatus: "under_review" } }), "under_review");
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Saved", metadata: { validationStatus: "approved" } }), "approved");
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Saved", metadata: { validationStatus: "correction_required" } }), "correction_required");
+      assert.equal(normalizeWorkflowDocumentStatus({ status: "Archived" }), "superseded");
+      assert.equal(normalizeWorkflowValidationStatus("submitted"), "submitted");
+      assert.equal(normalizeWorkflowValidationStatus("pending_review"), "under_review");
+      assert.equal(normalizeWorkflowEvidenceStatus("in_review"), "waiting_validation");
+      assert.equal(normalizeWorkflowEvidenceStatus("approved"), "approved");
+    }
+  },
+  {
+    name: "Sprint 46 keeps shared gate truth while filtering correction handoffs by current role",
+    run() {
+      const project: Project = { id: "PRJ-GATE-ROLES", title: "Role gate", type: "Villa", status: "Execution", phase: "Execution", updatedAt: fixedNow.toISOString(), score: 65, budget: "", timeline: "", team: 3, documents: 0, knowledgeFiles: 0, metadata: { lifecycleStage: "excavation_foundations" } };
+      const tasks: Task[] = [{ id: "TASK-ROLE-CORRECTION", projectId: project.id, title: "Correct foundation report", status: "Review", priority: "Critical", metadata: { assignedRole: "contractor", validationRole: "control_office", validationStatus: "rejected", evidenceStatus: "correction_required", requiresValidation: true, requiredEvidence: ["test_report"] } }];
+      const owner = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "project_owner" } });
+      const contractor = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "contractor" } });
+      const controlOffice = createVoraProjectIntelligence({ project, tasks, viewer: { primaryRole: "control_office" } });
+      assert.deepEqual(owner.stageGate, contractor.stageGate);
+      assert.deepEqual(contractor.stageGate, controlOffice.stageGate);
+      assert.equal(contractor.roleStageGate.nextActionKey, "projectStageGate.role.correct");
+      assert.equal(controlOffice.roleStageGate.waitingOn.length, 0);
+      assert.equal(owner.stageGate.transitionReadiness, "no");
+      assert.equal(contractor.health.state, "at_risk");
+    }
+  }
+,
+  {
+    name: "Sprint 48 workflow actions enforce role authority self-approval and persisted VORA guidance",
+    run() {
+      const base = {
+        id: "workflow-1", projectId: "project-1", workflowGroupId: "group-1", revision: 1,
+        workflowType: "workspace_review", subjectKind: "technical_submission" as const,
+        lifecycleStage: "design_studies" as const, status: "under_review" as const, isCurrent: true,
+        assignedRole: "architect" as const, assignedUserId: "submitter", reviewerRole: "engineer" as const,
+        reviewerUserId: "reviewer", createdBy: "submitter", createdAt: fixedNow.toISOString(),
+        updatedAt: fixedNow.toISOString(), lockVersion: 2
+      };
+      const state: ProjectWorkflowState = {
+        workflows: [base],
+        events: [{ id: "event-1", workflowId: base.id, actorId: "submitter", eventType: "submitted", createdAt: fixedNow.toISOString() }],
+        participants: [],
+        authority: { viewerRole: "engineer", isProjectOwner: false, canReview: true, canApprove: true, confirmed: true },
+        source: "supabase"
+      };
+      assert.deepEqual(allowedWorkflowActions(base, state, "reviewer"), ["requestCorrection", "approve", "reject", "handoff"]);
+      const selfState = { ...state, events: [{ ...state.events[0], actorId: "reviewer" }] };
+      assert.deepEqual(allowedWorkflowActions(base, selfState, "reviewer"), ["requestCorrection", "handoff"]);
+      assert.equal(workflowVoraGuidanceKey(state, { status: "waiting_validation", transitionReadiness: "unknown", blockingRequirements: [] } as never), "workflow.vora.waitingReview");
+    }
+  },
+  {
+    name: "Sprint 49 enforces the complete role-aware workflow journey",
+    run() {
+      const makeWorkflow = (status: "draft" | "submitted" | "under_review" | "correction_required" | "approved" | "rejected") => ({
+        id: "workflow-role-journey", projectId: "project-role-journey", workflowGroupId: "group-role-journey", revision: status === "correction_required" ? 2 : 1,
+        workflowType: "technical_review", subjectKind: "technical_submission" as const, lifecycleStage: "technical_studies" as const,
+        status, isCurrent: true, assignedRole: "contractor" as const, assignedUserId: "contractor",
+        reviewerRole: "engineer" as const, reviewerUserId: "engineer", createdBy: "contractor",
+        createdAt: fixedNow.toISOString(), updatedAt: fixedNow.toISOString(), lockVersion: 3
+      });
+      const stateFor = (status: Parameters<typeof makeWorkflow>[0], viewerRole: ProjectWorkflowState["authority"]["viewerRole"], options: { owner?: boolean; review?: boolean; approve?: boolean; actor?: string } = {}): ProjectWorkflowState => ({
+        workflows: [makeWorkflow(status)],
+        events: [{ id: "submission", workflowId: "workflow-role-journey", actorId: options.actor || "contractor", eventType: status === "correction_required" ? "resubmitted" : "submitted", createdAt: fixedNow.toISOString() }],
+        participants: [],
+        authority: { viewerRole, isProjectOwner: Boolean(options.owner), canReview: Boolean(options.review), canApprove: Boolean(options.approve), confirmed: true },
+        source: "supabase"
+      });
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("draft"), stateFor("draft", "contractor"), "contractor"), ["submit", "handoff"]);
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("submitted"), stateFor("submitted", "engineer", { review: true, approve: true }), "engineer"), ["startReview", "handoff"]);
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("under_review"), stateFor("under_review", "engineer", { review: true, approve: true }), "engineer"), ["requestCorrection", "approve", "reject", "handoff"]);
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("correction_required"), stateFor("correction_required", "contractor"), "contractor"), ["resubmit", "handoff"]);
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("under_review"), stateFor("under_review", "engineer", { review: true, approve: true, actor: "engineer" }), "engineer"), ["requestCorrection", "handoff"]);
+      for (const role of ["project_owner", "architect", "control_office", "laboratory", "surveyor", "other_project_member"] as const) {
+        const actions = allowedWorkflowActions(makeWorkflow("under_review"), stateFor("under_review", role, { owner: role === "project_owner" }), role);
+        assert(!actions.includes("approve") && !actions.includes("reject"), `${role} received an unauthorized professional decision`);
+      }
+      for (const role of ["architect", "engineer", "control_office", "laboratory", "surveyor"] as const) {
+        const professionalWorkflow = { ...makeWorkflow("under_review"), reviewerRole: role, reviewerUserId: role };
+        const professionalState: ProjectWorkflowState = { ...stateFor("under_review", role, { review: true, approve: true }), workflows: [professionalWorkflow] };
+        assert(allowedWorkflowActions(professionalWorkflow, professionalState, role).includes("approve"), `${role} could not approve an assigned review`);
+      }
+      assert.deepEqual(allowedWorkflowActions(makeWorkflow("approved"), stateFor("approved", "engineer", { review: true, approve: true }), "engineer"), []);
+    }
+  },
+  {
+    name: "Sprint 49 Stage Gate readiness follows persisted checkpoint truth",
+    run() {
+      const approvedCheckpoint = {
+        id: "checkpoint", projectId: "project-gate", workflowGroupId: "group-gate", revision: 1,
+        workflowType: "stage_gate", subjectKind: "lifecycle_checkpoint" as const, lifecycleStage: "design_studies" as const,
+        status: "approved" as const, isCurrent: true, createdAt: fixedNow.toISOString(), updatedAt: fixedNow.toISOString(), lockVersion: 4
+      };
+      const state: ProjectWorkflowState = { workflows: [approvedCheckpoint], events: [], participants: [], authority: { viewerRole: "project_owner", isProjectOwner: true, canReview: false, canApprove: false, confirmed: true }, currentLifecycleStage: "design_studies", source: "supabase" };
+      assert.equal(isPersistedStageGateReady(state, "design_studies"), true);
+      assert.equal(isPersistedStageGateReady({ ...state, workflows: [{ ...approvedCheckpoint, status: "submitted" }] }, "design_studies"), false);
+      assert.equal(isPersistedStageGateReady({ ...state, workflows: [{ ...approvedCheckpoint, subjectKind: "technical_submission" }] }, "design_studies"), false);
+      assert.equal(isPersistedStageGateReady({ ...state, source: "legacy" }, "design_studies"), false);
+    }
+  },
+  {
+    name: "Sprint 49 VORA resolves the latest persisted lifecycle stage without inventing approval",
+    run() {
+      const project: Project = { id: "project-persisted-stage", title: "Synthetic lifecycle", type: "Villa", status: "Execution", phase: "Execution", updatedAt: fixedNow.toISOString(), score: 0, budget: "", timeline: "", team: 0, documents: 0, knowledgeFiles: 0, metadata: { lifecycleStage: "project_preparation" } };
+      const workflowState: ProjectWorkflowState = { workflows: [], events: [], participants: [], authority: { viewerRole: "project_owner", isProjectOwner: true, canReview: false, canApprove: false, confirmed: true }, currentLifecycleStage: "foundations", source: "supabase" };
+      const intelligence = createVoraProjectIntelligence({ project, workflowState, viewer: { userId: "owner", primaryRole: "project_owner" } });
+      assert.equal(intelligence.lifecycle.currentStageId, "foundations");
+      assert.equal(intelligence.workflowState?.currentLifecycleStage, "foundations");
+      assert.notEqual(intelligence.stageGate.transitionReadiness, "yes");
+    }
+  }];
 

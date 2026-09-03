@@ -2,6 +2,9 @@ import { defaultLocale, dictionaries, localeMeta, locales, resolveLocale, transl
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
+import { projectLifecycleMessages, projectLifecycleTranslationCatalog } from "@/lib/locales/project-lifecycle";
+import { projectStageGateMessages, projectStageGateTranslationCatalog } from "@/lib/locales/project-stage-gate";
+import { projectWorkflowTranslationCatalog } from "@/lib/locales/project-workflow";
 import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
@@ -282,6 +285,69 @@ export const tests = [
       assert(frCatalog["projectJourney.create.title"] !== enCatalog["projectJourney.create.title"], "French journey title leaked English");
       assert(localeMeta.ar.dir === "rtl", "Arabic project journey must render RTL");
       assert(localeMeta.fr.dir === "ltr" && localeMeta.en.dir === "ltr", "French and English project journeys must render LTR");
+    }
+  },
+  {
+    name: "construction lifecycle has exact role-aware Arabic French and English coverage",
+    run: () => {
+      const keys = projectLifecycleMessages.map((message) => message.key);
+      assert(new Set(keys).size === keys.length, "Construction lifecycle catalog contains duplicate keys");
+      assert(keys.length >= 130, "Construction lifecycle catalog is incomplete");
+      locales.forEach((locale) => {
+        const localizedKeys = Object.keys(projectLifecycleTranslationCatalog[locale]);
+        assert(localizedKeys.length === keys.length, `Construction lifecycle key parity failed for ${locale}`);
+        keys.forEach((key) => {
+          assert(Boolean(projectLifecycleTranslationCatalog[locale][key]?.trim()), `Missing ${locale} construction lifecycle translation: ${key}`);
+          assert(translateUiText(key, locale) === projectLifecycleTranslationCatalog[locale][key], `Global catalog did not merge lifecycle key: ${key} (${locale})`);
+        });
+      });
+      assert(projectLifecycleTranslationCatalog.ar["projectLifecycle.section.title"] !== projectLifecycleTranslationCatalog.en["projectLifecycle.section.title"], "Arabic lifecycle title leaked English");
+      assert(projectLifecycleTranslationCatalog.fr["projectLifecycle.section.title"] !== projectLifecycleTranslationCatalog.en["projectLifecycle.section.title"], "French lifecycle title leaked English");
+      assert(localeMeta.ar.dir === "rtl", "Arabic construction lifecycle must render RTL");
+      assert(localeMeta.fr.dir === "ltr" && localeMeta.en.dir === "ltr", "French and English construction lifecycle must render LTR");
+
+      const workspace = fs.readFileSync(path.join(process.cwd(), "components/project-workspace.tsx"), "utf8");
+      assert(workspace.includes('translate("projectLifecycle.section.title")'), "Project workspace must use the semantic lifecycle title");
+      assert(workspace.includes("translate(lifecycle.currentStageKey)"), "Project workspace must localize the shared current stage");
+      assert(workspace.includes("roleContext.myActions"), "Project workspace must expose role-filtered My Actions");
+      assert(workspace.includes("roleContext.waitingOn"), "Project workspace must expose role-filtered dependencies");
+      assert(!workspace.includes(">Structural works<") && !workspace.includes(">Gros oeuvre<") && !workspace.includes(">الأشغال الإنشائية<"), "Project workspace must not hardcode lifecycle stage labels");
+    }
+  },
+  {
+    name: "Stage Gate catalog has exact Arabic French and English parity",
+    run: () => {
+      const keys = projectStageGateMessages.map((message) => message.key);
+      assert(new Set(keys).size === keys.length, "Stage Gate catalog contains duplicate keys");
+      locales.forEach((locale) => {
+        assert(Object.keys(projectStageGateTranslationCatalog[locale]).length === keys.length, `Stage Gate key parity failed for ${locale}`);
+        keys.forEach((key) => {
+          assert(Boolean(projectStageGateTranslationCatalog[locale][key]?.trim()), `Missing ${locale} Stage Gate translation: ${key}`);
+          assert(translateUiText(key, locale) === projectStageGateTranslationCatalog[locale][key], `Global catalog did not merge Stage Gate key: ${key} (${locale})`);
+        });
+      });
+      assert(localeMeta.ar.dir === "rtl", "Arabic Stage Gate must render RTL");
+      assert(localeMeta.fr.dir === "ltr" && localeMeta.en.dir === "ltr", "French and English Stage Gate must render LTR");
+      const workspace = fs.readFileSync(path.join(process.cwd(), "components/project-workspace.tsx"), "utf8");
+      assert(workspace.includes('translate("projectStageGate.section.title")'), "Project workspace must use the semantic Stage Gate title");
+      assert(workspace.includes("<StageGatePanel"), "Project workspace must render the Stage Gate panel");
+    }
+  }
+,
+  {
+    name: "Sprint 48 workflow catalog and UI have Arabic French and English parity",
+    run: () => {
+      const keys = Object.keys(projectWorkflowTranslationCatalog.en);
+      locales.forEach((locale) => {
+        assert(Object.keys(projectWorkflowTranslationCatalog[locale]).length === keys.length, `Workflow key parity failed for ${locale}`);
+        keys.forEach((key) => assert(Boolean(projectWorkflowTranslationCatalog[locale][key]?.trim()), `Missing ${locale} workflow translation: ${key}`));
+      });
+      const panel = fs.readFileSync(path.join(process.cwd(), "components/project-workflow-panel.tsx"), "utf8");
+      assert(panel.includes('translate("workflow.section.badge")'), "Workflow panel must localize its section badge");
+      assert(panel.includes("allowedWorkflowActions"), "Workflow panel must derive actions from confirmed authority");
+      assert(panel.includes("p_expected_lock_version"), "Workflow commands must send optimistic concurrency state");
+      const adapter = fs.readFileSync(path.join(process.cwd(), "lib/repositories/workflowSupabaseAdapter.ts"), "utf8");
+      assert(adapter.includes('value.startsWith("workflow_")'), "Persisted workflow event names must be normalized for UI and self-approval checks");
     }
   }
 ];

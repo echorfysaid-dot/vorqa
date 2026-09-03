@@ -10,7 +10,12 @@ import {
 } from "@/lib/repositories";
 import { cachedRepositoryCall } from "@/lib/repositories/repositoryCache";
 import { createProjectOwnerContext } from "@/lib/project-owner-journey";
+import { createVoraProjectIntelligence } from "@/lib/vora-project-intelligence";
+import { workflowSupabaseAdapter } from "@/lib/repositories/workflowSupabaseAdapter";
+import type { Document, Project, ProjectBudget, ProjectMember, Task, TimelineMilestone } from "@/lib/models";
 import type { ProjectOwnerContext } from "@/types/project-journey";
+import type { VoraProjectIntelligence } from "@/types/vora-project-intelligence";
+import type { ProjectLifecycleViewerInput } from "@/types/project-lifecycle";
 
 export type AiConversationMemory = {
   title: string;
@@ -27,6 +32,7 @@ export type VoraProjectContext = {
   organization?: unknown;
   project?: unknown;
   projectProfile?: ProjectOwnerContext;
+  projectIntelligence?: VoraProjectIntelligence;
   members: unknown[];
   departments: unknown[];
   employees: unknown[];
@@ -56,8 +62,9 @@ function resultData<T>(value: unknown, fallback: T): T {
 }
 
 export const aiContextRepository = {
-  async buildProjectContext(projectId: string): Promise<VoraProjectContext> {
-    return cachedRepositoryCall(`ai-context:project:${projectId}`, 30_000, () => buildProjectContextUncached(projectId));
+  async buildProjectContext(projectId: string, viewer?: ProjectLifecycleViewerInput): Promise<VoraProjectContext> {
+    const viewerCacheKey = [viewer?.userId, viewer?.primaryRole, viewer?.organizationType].filter(Boolean).join(":") || "anonymous";
+    return cachedRepositoryCall(`ai-context:project:${projectId}:${viewerCacheKey}`, 30_000, () => buildProjectContextUncached(projectId, viewer));
   },
 
   async buildOrganizationContext(organizationId: string) {
@@ -93,7 +100,7 @@ export const aiContextRepository = {
   }
 };
 
-async function buildProjectContextUncached(projectId: string): Promise<VoraProjectContext> {
+async function buildProjectContextUncached(projectId: string, viewer?: ProjectLifecycleViewerInput): Promise<VoraProjectContext> {
     const errors: string[] = [];
     const projectResult = await projectRepository.getProject(projectId);
     const project = projectResult.data || projectRepository.getById(projectId) || null;
@@ -120,17 +127,39 @@ async function buildProjectContextUncached(projectId: string): Promise<VoraProje
     const documents = resultData<unknown[]>(documentsResult, []);
     const knowledge = resultData<unknown[]>(knowledgeResult, []);
     const tasks = resultData<unknown[]>(tasksResult, []);
+    const members = resultData<unknown[]>(membersResult, []);
+    const milestones = timeline && typeof timeline === "object" && "milestones" in timeline && Array.isArray(timeline.milestones) ? timeline.milestones : [];
+    const workflowResult = project ? await workflowSupabaseAdapter.load(project as Project, viewer?.userId) : undefined;
+    if (workflowResult?.error) errors.push(workflowResult.error);
+    const projectIntelligence = project ? createVoraProjectIntelligence({
+      project: project as Project,
+      tasks: tasks as Task[],
+      milestones: milestones as TimelineMilestone[],
+      documents: documents as Document[],
+      members: members as ProjectMember[],
+      budget: budget as ProjectBudget | null,
+      availability: {
+        tasks: !resultError(tasksResult),
+        timeline: !resultError(timelineResult),
+        documents: !resultError(documentsResult),
+        team: !resultError(membersResult),
+        budget: !resultError(budgetResult)
+      },
+      viewer,
+      workflowState: workflowResult?.data
+    }) : undefined;
 
     return {
       organization: resultData(organizationResult, undefined),
       project,
       ...(project ? { projectProfile: createProjectOwnerContext(project) } : {}),
-      members: resultData(membersResult, []),
+      ...(projectIntelligence ? { projectIntelligence } : {}),
+      members,
       departments: organizationRepository.listDepartments(),
       employees: resultData(employeesResult, []),
       tasks,
       timeline,
-      milestones: timeline && typeof timeline === "object" && "milestones" in timeline && Array.isArray(timeline.milestones) ? timeline.milestones : [],
+      milestones,
       budget,
       budgetStats: budget ? budgetRepository.getBudgetStats(budget) : undefined,
       documents,

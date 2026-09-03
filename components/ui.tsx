@@ -364,7 +364,7 @@ export function Modal({
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
-            className="fixed left-1/2 top-1/2 z-[100] w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-ds-xl border border-ds-token-border bg-ds-token-overlay p-5 shadow-ds-lg"
+            className="fixed inset-4 z-[100] m-auto h-fit max-h-[calc(100dvh-2rem)] w-[min(560px,calc(100vw-2rem))] overflow-y-auto rounded-ds-xl border border-ds-token-border bg-ds-token-overlay p-5 shadow-ds-lg"
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-black text-[#f8efd7]">{title}</h2>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { memo, useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
@@ -32,6 +33,8 @@ import {
   UsersRound
 } from "lucide-react";
 import { KnowledgeWorkspace } from "@/components/knowledge-workspace";
+import { useAiApplicationContext } from "@/components/ai-context-provider";
+import { useAuth } from "@/components/auth/auth-provider";
 import { useI18n } from "@/components/i18n-provider";
 import { formatCurrency, formatDate } from "@/lib/utils/format";
 import { LocalizedContent } from "@/components/localized-content";
@@ -48,6 +51,7 @@ import { useKnowledgeRepository } from "@/lib/repositories/knowledgeHooks";
 import { knowledgeCategories, knowledgeStatuses } from "@/lib/repositories/knowledgeMapper";
 import { useDepartmentsRepository } from "@/lib/repositories/departmentHooks";
 import { useEmployeesRepository } from "@/lib/repositories/employeeHooks";
+import { useProjectMembersRepository } from "@/lib/repositories/projectHooks";
 import { taskPriorities, taskStatuses } from "@/lib/repositories/taskMapper";
 import { useTasksRepository } from "@/lib/repositories/taskHooks";
 import { dependencyTypes, milestoneStatuses } from "@/lib/repositories/timelineMapper";
@@ -55,7 +59,11 @@ import { useTimelineRepository } from "@/lib/repositories/timelineHooks";
 import { voraSkills } from "@/lib/vora-ai-skills";
 import { AutoLocalizedContent } from "@/components/auto-localized-content";
 import { createProjectOwnerExperience, localizeProjectJourneySystemValue, localizeProjectJourneyTimestamp } from "@/lib/project-owner-journey";
+import { createVoraProjectIntelligence } from "@/lib/vora-project-intelligence";
+import { useProjectWorkflow } from "@/lib/repositories/workflowHooks";
+import { ProjectWorkflowPanel } from "@/components/project-workflow-panel";
 import { projectTypeIds, type ProjectOwnerExperience } from "@/types/project-journey";
+import type { VoraProjectIntelligence } from "@/types/vora-project-intelligence";
 
 type ProjectWorkspaceProject = Project;
 
@@ -94,11 +102,69 @@ const workspaceTabs = [
 
 export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { project: ProjectWorkspaceProject }) {
   const { locale, translate } = useI18n();
-  const [activeTab, setActiveTab] = useState("overview");
+  const applicationContext = useAiApplicationContext();
+  const { session } = useAuth();
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState(() => workspaceTabs.some((tab) => tab.value === requestedTab) ? requestedTab || "overview" : "overview");
   const [documentSection, setDocumentSection] = useState<"documents" | "knowledge">("documents");
   const detail = (projectRepository.getDetails(project.id) as unknown as ProjectDetail | undefined) || emptyProjectDetail;
   const ownerExperience = useMemo(() => createProjectOwnerExperience(project), [project]);
+  const intelligenceTasks = useTasksRepository(project.id);
+  const intelligenceTimeline = useTimelineRepository(project.id);
+  const intelligenceBudget = useBudgetRepository(project.id);
+  const intelligenceDocuments = useDocumentsRepository(project.id);
+  const intelligenceMembers = useProjectMembersRepository(project.id);
+  const workflowController = useProjectWorkflow(project, session?.user.id);
+  const projectIntelligence = useMemo(() => createVoraProjectIntelligence({
+    project,
+    ownerContext: ownerExperience.context,
+    tasks: intelligenceTasks.data,
+    milestones: intelligenceTimeline.data.milestones,
+    documents: intelligenceDocuments.data,
+    members: intelligenceMembers.data,
+    budget: intelligenceBudget.data,
+    availability: {
+      tasks: !intelligenceTasks.loading && !intelligenceTasks.error,
+      timeline: !intelligenceTimeline.loading && !intelligenceTimeline.error,
+      documents: !intelligenceDocuments.loading && !intelligenceDocuments.error,
+      team: !intelligenceMembers.loading && !intelligenceMembers.error,
+      budget: !intelligenceBudget.loading && !intelligenceBudget.error
+    },
+    workflowState: workflowController.data,
+    viewer: {
+      userId: session?.user.id,
+      primaryRole: applicationContext.primaryRole,
+      organizationType: applicationContext.organizationType
+    }
+  }), [
+    applicationContext.organizationType,
+    applicationContext.primaryRole,
+    intelligenceBudget.data,
+    intelligenceBudget.error,
+    intelligenceBudget.loading,
+    intelligenceDocuments.data,
+    intelligenceDocuments.error,
+    intelligenceDocuments.loading,
+    intelligenceMembers.data,
+    intelligenceMembers.error,
+    intelligenceMembers.loading,
+    intelligenceTasks.data,
+    intelligenceTasks.error,
+    intelligenceTasks.loading,
+    intelligenceTimeline.data.milestones,
+    intelligenceTimeline.error,
+    intelligenceTimeline.loading,
+    ownerExperience.context,
+    project,
+    session?.user.id,
+    workflowController.data
+  ]);
   const localizedTabs = useMemo(() => workspaceTabs.map((tab) => ({ ...tab, label: translate(tab.label) })), [translate]);
+
+  useEffect(() => {
+    if (requestedTab && workspaceTabs.some((tab) => tab.value === requestedTab)) setActiveTab(requestedTab);
+  }, [requestedTab]);
 
   const projectActivity = useMemo(
     () => [
@@ -143,7 +209,7 @@ export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { pr
 
       <div className="grid overflow-hidden rounded-ds-lg border border-ds-token-border bg-ds-token-surface sm:grid-cols-3">
         <WorkspaceSignal label={translate("projectJourney.workspace.currentStage")} value={translate(`projectJourney.stage.${ownerExperience.context.stage || "not_decided"}`)} />
-        <WorkspaceSignal label={translate("projectJourney.workspace.nextStep")} value={translate(ownerExperience.nextStep.titleKey)} tone="warning" />
+        <WorkspaceSignal label={translate("projectJourney.workspace.nextStep")} value={translate(projectIntelligence.nextAction.titleKey)} tone="warning" />
         <WorkspaceSignal label={translate("projectJourney.workspace.progress")} value={ownerExperience.progress.evidencePercentage !== undefined ? `${ownerExperience.progress.evidencePercentage}%` : `${ownerExperience.progress.completedSteps} / ${ownerExperience.progress.totalSteps}`} valueDirection="ltr" tone="success" />
       </div>
 
@@ -195,7 +261,7 @@ export const ProjectWorkspace = memo(function ProjectWorkspace({ project }: { pr
       </nav>
 
       {activeTab === "overview" ? (
-        <OverviewTab project={project} activity={projectActivity} experience={ownerExperience} />
+        <OverviewTab project={project} activity={projectActivity} experience={ownerExperience} intelligence={projectIntelligence} workflowController={workflowController} userId={session?.user.id} />
       ) : activeTab === "ai" ? (
         <AiWorkspaceTab project={project} />
       ) : activeTab === "documents" ? (
@@ -277,12 +343,13 @@ function MissingProjectDetailState({ project }: { project: ProjectWorkspaceProje
   );
 }
 
-function OverviewTab({ project, activity, experience }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience }) {
+function OverviewTab({ project, activity, experience, intelligence, workflowController, userId }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience; intelligence: VoraProjectIntelligence; workflowController: ReturnType<typeof useProjectWorkflow>; userId?: string }) {
   const { locale, translate } = useI18n();
   const detail = projectRepository.getDetails(project.id);
   return (
     <LocalizedContent locale={locale}><div className="space-y-5">
-      <OwnerSimpleOverview project={project} activity={activity} experience={experience} />
+      <OwnerSimpleOverview project={project} activity={activity} experience={experience} intelligence={intelligence} />
+      <ProjectWorkflowPanel project={project} userId={userId} intelligence={intelligence} controller={workflowController} />
       <details className="rounded-ds-lg border border-ds-token-border bg-white/[0.015]">
         <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-ds-token-text sm:px-5">{translate("projectJourney.workspace.advancedOverview")}</summary>
         <div className="grid gap-5 border-t border-ds-token-border p-4 xl:grid-cols-[minmax(0,1fr)_340px] sm:p-5">
@@ -402,9 +469,10 @@ function OverviewTab({ project, activity, experience }: { project: ProjectWorksp
   );
 }
 
-function OwnerSimpleOverview({ project, activity, experience }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience }) {
+function OwnerSimpleOverview({ project, activity, experience, intelligence }: { project: ProjectWorkspaceProject; activity: Array<{ title: string; text: string; icon: React.ReactNode }>; experience: ProjectOwnerExperience; intelligence: VoraProjectIntelligence }) {
   const { locale, translate } = useI18n();
-  const { context, nextStep, progress, recommendedTeam } = experience;
+  const { context, progress, recommendedTeam } = experience;
+  const { nextAction } = intelligence;
   const location = [context.city, context.country].filter(Boolean).join(", ") || context.location || translate("projectJourney.notProvided");
   const budget = context.budgetAmount !== undefined && context.currency
     ? new Intl.NumberFormat(locale === "ar" ? "ar-MA" : locale === "fr" ? "fr-MA" : "en-US", { style: "currency", currency: context.currency }).format(context.budgetAmount)
@@ -428,7 +496,7 @@ function OwnerSimpleOverview({ project, activity, experience }: { project: Proje
               <h2 className="mt-3 text-2xl font-semibold text-ds-token-text">{project.title}</h2>
               <p className="mt-1 text-sm text-ds-token-muted">{ownerProjectTypeLabel(context.projectType, translate)} · {location}</p>
             </div>
-            <StatusChip tone="gold">{translate(`projectJourney.stage.${context.stage || "not_decided"}`)}</StatusChip>
+            <StatusChip tone="gold">{translate(intelligence.lifecycle.currentStageKey)}</StatusChip>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <OwnerContextValue label={translate("projectJourney.field.landArea")} value={context.landArea !== undefined ? `${context.landArea} m²` : translate("projectJourney.notProvided")} />
@@ -442,30 +510,22 @@ function OwnerSimpleOverview({ project, activity, experience }: { project: Proje
         <GlassCard className="p-5 sm:p-6">
           <div className="flex items-center gap-3">
             <span className="grid h-11 w-11 place-items-center rounded-ds-md bg-ds-token-gold/12 text-ds-token-gold"><Lightbulb className="h-5 w-5" /></span>
-            <div><p className="text-xs font-semibold text-ds-token-gold">{translate("projectJourney.workspace.nextStep")}</p><h2 className="mt-1 text-xl font-semibold text-ds-token-text">{translate(nextStep.titleKey)}</h2></div>
+            <div><p className="text-xs font-semibold text-ds-token-gold">{translate("projectJourney.workspace.nextStep")}</p><h2 className="mt-1 text-xl font-semibold text-ds-token-text">{translate(nextAction.titleKey)}</h2></div>
           </div>
-          <p className="mt-4 text-sm leading-7 text-ds-token-muted">{translate(nextStep.descriptionKey)}</p>
-          {nextStep.legalDisclaimerKey && <p className="mt-3 text-xs leading-6 text-ds-token-muted">{translate(nextStep.legalDisclaimerKey)}</p>}
-          <Link href={nextStep.route} className="mt-5 inline-flex">
-            <Button icon={<ArrowLeft className="h-4 w-4 rtl:rotate-180" />}>{translate(nextStep.actionKey)}</Button>
+          <p className="mt-4 text-sm leading-7 text-ds-token-muted">{translate(nextAction.descriptionKey)}</p>
+          <div className="mt-3 rounded-ds-md border border-ds-token-border bg-white/[0.025] p-3">
+            <p className="text-xs font-semibold text-ds-token-muted">{translate("projectIntelligence.whyItMatters")}</p>
+            <p className="mt-1 text-sm leading-6 text-ds-token-text">{translate(nextAction.whyKey)}</p>
+          </div>
+          <Link href={nextAction.destination} className="mt-5 inline-flex">
+            <Button icon={<ArrowLeft className="h-4 w-4 rtl:rotate-180" />}>{translate(nextAction.actionKey)}</Button>
           </Link>
         </GlassCard>
       </div>
 
-      <GlassCard className="p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-          <div className="flex items-start gap-4">
-            <VoraVisual variant="avatar" className="h-14 w-14 shrink-0 rounded-ds-lg" sizes="56px" />
-            <div><Badge tone="blue">{translate("projectJourney.workspace.askVora")}</Badge><h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectJourney.vora.title")}</h2><p className="mt-1 text-sm leading-6 text-ds-token-muted">{translate("projectJourney.vora.description")}</p></div>
-          </div>
-          <Link href={`/tools/document?projectId=${encodeURIComponent(project.id)}`} className="inline-flex">
-            <Button icon={<MessageSquareText className="h-4 w-4" />}>{translate("projectJourney.vora.action")}</Button>
-          </Link>
-        </div>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {["next", "budget", "professional", "missing"].map((id) => <span key={id} className="rounded-full border border-ds-token-border bg-white/[0.025] px-3 py-2 text-xs text-ds-token-muted">{translate(`projectJourney.vora.question.${id}`)}</span>)}
-        </div>
-      </GlassCard>
+      <VoraProjectSnapshot project={project} intelligence={intelligence} />
+
+      <RoleLifecycleOverview intelligence={intelligence} />
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,.78fr)]">
         <GlassCard className="p-5 sm:p-6">
@@ -481,14 +541,14 @@ function OwnerSimpleOverview({ project, activity, experience }: { project: Proje
           {progress.evidencePercentage === undefined && <p className="mt-4 text-xs leading-6 text-ds-token-muted">{translate("projectJourney.progress.noPercentage")}</p>}
         </GlassCard>
 
-        <GlassCard className="p-5 sm:p-6">
+        {intelligence.roleContext.viewerRole === "project_owner" && <GlassCard className="p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3"><div><Badge tone="gold">{translate("projectJourney.workspace.recommendedTeam")}</Badge><h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectJourney.team.title")}</h2></div><UsersRound className="h-6 w-6 text-ds-token-gold" /></div>
           <div className="mt-4 divide-y divide-ds-token-border">
             {recommendedTeam.map((professional) => <div key={professional.id} className="py-3"><div className="flex flex-wrap items-center justify-between gap-2"><p className="text-sm font-semibold text-ds-token-text">{translate(professional.labelKey)}</p><Badge tone="neutral">{translate("projectJourney.team.categoryOnly")}</Badge></div><p className="mt-1 text-xs leading-5 text-ds-token-muted">{translate(professional.reasonKey)}</p></div>)}
           </div>
           <p className="mt-3 text-xs leading-6 text-ds-token-muted">{translate("projectJourney.team.noMatches")}</p>
           <Link href="/marketplace" className="mt-4 inline-flex"><Button size="sm" variant="secondary" className="min-h-11 sm:min-h-9">{translate("projectJourney.team.openMarketplace")}</Button></Link>
-        </GlassCard>
+        </GlassCard>}
       </div>
 
       <details className="rounded-ds-lg border border-ds-token-border bg-white/[0.02]">
@@ -504,6 +564,254 @@ function OwnerSimpleOverview({ project, activity, experience }: { project: Proje
       </GlassCard>
     </div>
   );
+}
+
+function VoraProjectSnapshot({ project, intelligence }: { project: ProjectWorkspaceProject; intelligence: VoraProjectIntelligence }) {
+  const { translate } = useI18n();
+  const primaryAttention = intelligence.attention[0];
+  const healthTone = intelligence.health.state === "on_track"
+    ? "success"
+    : intelligence.health.state === "at_risk"
+      ? "danger"
+      : intelligence.health.state === "attention_needed"
+        ? "warning"
+        : "neutral";
+  const askVoraBase = `/tools/document?projectId=${encodeURIComponent(project.id)}`;
+
+  return (
+    <GlassCard className="p-5 sm:p-6">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex min-w-0 items-start gap-4">
+          <VoraVisual variant="avatar" className="h-14 w-14 shrink-0 rounded-ds-lg" sizes="56px" />
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="blue">{translate("projectJourney.workspace.askVora")}</Badge>
+              <Badge tone="neutral">{translate(`projectLifecycle.role.${intelligence.roleContext.viewerRole}`)}</Badge>
+            </div>
+            <h2 className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectIntelligence.snapshot.title")}</h2>
+            <p className="mt-1 max-w-3xl text-sm leading-6 text-ds-token-muted">{translate("projectIntelligence.snapshot.description")}</p>
+          </div>
+        </div>
+        <Badge tone={healthTone}>{translate(`projectIntelligence.health.${intelligence.health.state}`)}</Badge>
+      </div>
+
+      <div className="mt-5 grid gap-3 md:grid-cols-3">
+        <IntelligenceValue label={translate("projectIntelligence.snapshot.projectStatus")} value={translate(intelligence.statusKey)} />
+        <IntelligenceValue label={translate("projectIntelligence.snapshot.currentPriority")} value={translate(intelligence.priorityKey)} />
+        <IntelligenceValue
+          label={translate("projectIntelligence.snapshot.attentionRequired")}
+          value={primaryAttention ? translate(primaryAttention.titleKey) : translate("projectIntelligence.attention.none.title")}
+          tone={primaryAttention?.severity === "critical" ? "danger" : primaryAttention ? "warning" : "success"}
+        />
+      </div>
+
+      <p className="mt-3 text-sm leading-6 text-ds-token-muted">{translate(intelligence.roleContext.healthExplanationKey)}</p>
+
+      <div className="mt-4 rounded-ds-md border border-ds-token-border bg-white/[0.025] p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-sm font-semibold text-ds-token-text">{primaryAttention ? translate(primaryAttention.titleKey) : translate("projectIntelligence.attention.none.title")}</p>
+              <Badge tone="neutral">{translate(`projectIntelligence.evidence.${primaryAttention?.evidence || "known"}`)}</Badge>
+            </div>
+            <p className="mt-1 text-sm leading-6 text-ds-token-muted">{primaryAttention ? translate(primaryAttention.descriptionKey) : translate("projectIntelligence.attention.none.description")}</p>
+          </div>
+          {primaryAttention?.destination && primaryAttention.actionKey && (
+            <Link href={primaryAttention.destination} className="inline-flex shrink-0">
+              <Button size="sm" variant="secondary">{translate(primaryAttention.actionKey)}</Button>
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {intelligence.suggestedQuestionKeys.map((key) => (
+          <Link
+            key={key}
+            href={`${askVoraBase}&question=${encodeURIComponent(translate(key))}`}
+            className="ds-focusable rounded-full border border-ds-token-border bg-white/[0.025] px-3 py-2 text-xs text-ds-token-muted transition hover:border-ds-token-gold/35 hover:text-ds-token-text"
+          >
+            {translate(key)}
+          </Link>
+        ))}
+      </div>
+
+      <Link href={askVoraBase} className="mt-5 inline-flex">
+        <Button icon={<MessageSquareText className="h-4 w-4" />}>{translate("projectJourney.vora.action")}</Button>
+      </Link>
+    </GlassCard>
+  );
+}
+
+function RoleLifecycleOverview({ intelligence }: { intelligence: VoraProjectIntelligence }) {
+  const { locale, translate } = useI18n();
+  const { lifecycle, roleContext, stageGate, roleStageGate } = intelligence;
+  const completedApplicableStages = lifecycle.completedStageIds.filter((stageId) => lifecycle.applicableStageIds.includes(stageId)).length;
+  const completion = lifecycle.applicableStageIds.length
+    ? Math.round((completedApplicableStages / lifecycle.applicableStageIds.length) * 100)
+    : 0;
+
+  return (
+    <section aria-labelledby="project-lifecycle-title" className="space-y-4">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <Badge tone="gold">{translate("projectLifecycle.section.sharedProject")}</Badge>
+          <h2 id="project-lifecycle-title" className="mt-2 text-xl font-semibold text-ds-token-text">{translate("projectLifecycle.section.title")}</h2>
+          <p className="mt-1 max-w-3xl text-sm leading-6 text-ds-token-muted">{translate("projectLifecycle.section.description")}</p>
+        </div>
+        <Badge tone="neutral">{translate(`projectLifecycle.role.${roleContext.viewerRole}`)}</Badge>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_minmax(0,.9fr)]">
+        <GlassCard className="p-5">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold text-ds-token-gold">{translate("projectLifecycle.currentStage")}</p>
+              <h3 className="mt-2 text-lg font-semibold text-ds-token-text">{translate(lifecycle.currentStageKey)}</h3>
+            </div>
+            <StatusChip tone={lifecycle.progression === "blocked" ? "danger" : lifecycle.progression === "waiting_validation" ? "warning" : lifecycle.progression === "ready" ? "success" : "neutral"}>
+              {translate(`projectLifecycle.progression.${lifecycle.progression}`)}
+            </StatusChip>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <IntelligenceValue label={translate("projectLifecycle.nextStage")} value={lifecycle.nextStageId ? translate(`projectLifecycle.stage.${lifecycle.nextStageId}`) : translate("projectLifecycle.notAvailable")} />
+            <IntelligenceValue label={translate("projectLifecycle.completedStages")} value={`${completedApplicableStages} / ${lifecycle.applicableStageIds.length}`} />
+          </div>
+          <div className="mt-4">
+            <div className="mb-2 flex items-center justify-between gap-3 text-xs text-ds-token-muted"><span>{translate("projectLifecycle.progressionLabel")}</span><bdi dir="ltr">{completion}%</bdi></div>
+            <ProgressBar value={completion} />
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div><p className="text-xs font-semibold text-ds-token-gold">{translate("projectLifecycle.roleContext")}</p><h3 className="mt-2 text-lg font-semibold text-ds-token-text">{translate("projectLifecycle.myActions")}</h3></div>
+            <Badge tone={roleContext.myActions.length ? "blue" : "neutral"}>{roleContext.myActions.length}</Badge>
+          </div>
+          <div className="mt-4 space-y-3">
+            {roleContext.myActions.slice(0, 4).map((action) => (
+              <LifecycleActionRow key={action.id} action={action} locale={locale} translate={translate} />
+            ))}
+            {!roleContext.myActions.length && (
+              <div className="rounded-ds-md border border-dashed border-ds-token-border p-4">
+                <p className="text-sm font-semibold text-ds-token-text">{translate("projectLifecycle.empty.myActions")}</p>
+                <p className="mt-1 text-xs leading-6 text-ds-token-muted">{translate("projectLifecycle.empty.myActionsDescription")}</p>
+                {!!roleContext.responsibilities.length && <div className="mt-3 flex flex-wrap gap-2">{roleContext.responsibilities.flatMap((item) => item.actionIds).map((actionId) => <Badge key={actionId} tone="neutral">{translate(`projectLifecycle.responsibility.${actionId}`)}</Badge>)}</div>}
+              </div>
+            )}
+          </div>
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div><p className="text-xs font-semibold text-ds-token-gold">{translate("projectLifecycle.dependencies")}</p><h3 className="mt-2 text-lg font-semibold text-ds-token-text">{translate("projectLifecycle.waitingOn")}</h3></div>
+            <Badge tone={roleContext.waitingOn.length ? "warning" : "neutral"}>{roleContext.waitingOn.length}</Badge>
+          </div>
+          <div className="mt-4 space-y-3">
+            {roleContext.waitingOn.slice(0, 3).map((action) => <LifecycleActionRow key={action.id} action={action} locale={locale} translate={translate} />)}
+            {!roleContext.waitingOn.length && <p className="rounded-ds-md border border-dashed border-ds-token-border p-4 text-sm leading-6 text-ds-token-muted">{translate("projectLifecycle.empty.waitingOn")}</p>}
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-2 border-t border-ds-token-border pt-4">
+            <IntelligenceValue label={translate("projectLifecycle.evidence.total")} value={String(roleContext.relevantEvidence.total)} />
+            <IntelligenceValue label={translate("projectLifecycle.evidence.approved")} value={String(roleContext.relevantEvidence.approved)} tone={roleContext.relevantEvidence.approved ? "success" : "neutral"} />
+            <IntelligenceValue label={translate("projectLifecycle.evidence.waiting")} value={String(roleContext.relevantEvidence.waitingValidation)} tone={roleContext.relevantEvidence.waitingValidation ? "warning" : "neutral"} />
+            <IntelligenceValue label={translate("projectLifecycle.evidence.rejected")} value={String(roleContext.relevantEvidence.rejected)} tone={roleContext.relevantEvidence.rejected ? "danger" : "neutral"} />
+          </div>
+        </GlassCard>
+      </div>
+
+      <StageGatePanel gate={stageGate} roleGate={roleStageGate} translate={translate} />
+    </section>
+  );
+}
+
+function StageGatePanel({ gate, roleGate, translate }: {
+  gate: VoraProjectIntelligence["stageGate"];
+  roleGate: VoraProjectIntelligence["roleStageGate"];
+  translate: (key: string) => string;
+}) {
+  const tone = gate.status === "blocked" || gate.status === "correction_required" ? "danger" : gate.status === "ready_to_advance" || gate.status === "completed" ? "success" : gate.status === "waiting_validation" || gate.status === "requirements_missing" ? "warning" : "neutral";
+  const readinessKey = `projectStageGate.readiness.${gate.transitionReadiness}`;
+  const requirementGroups = [
+    { key: "projectStageGate.missing", items: gate.missingRequirements, tone: "danger" as const },
+    { key: "projectStageGate.waiting", items: roleGate.requirements.filter((item) => item.status === "pending" || item.status === "in_progress"), tone: "warning" as const },
+    { key: "projectStageGate.corrections", items: gate.corrections, tone: "danger" as const },
+    { key: "projectStageGate.completed", items: gate.satisfiedRequirements, tone: "success" as const }
+  ].filter((group) => group.items.length);
+
+  return (
+    <GlassCard className="overflow-hidden p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <Badge tone="gold">{translate("projectStageGate.section.badge")}</Badge>
+          <h3 className="mt-2 text-lg font-semibold text-ds-token-text">{translate("projectStageGate.section.title")}</h3>
+          <p className="mt-1 max-w-3xl text-sm leading-6 text-ds-token-muted">{translate(gate.explanationKey)}</p>
+        </div>
+        <StatusChip tone={tone}>{translate(`projectStageGate.status.${gate.status}`)}</StatusChip>
+      </div>
+
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <IntelligenceValue label={translate("projectStageGate.readiness")} value={translate(readinessKey)} tone={gate.transitionReadiness === "yes" ? "success" : gate.transitionReadiness === "no" ? "danger" : "neutral"} />
+        <IntelligenceValue label={translate("projectStageGate.requirements")} value={String(gate.requirements.length)} />
+        <IntelligenceValue label={translate("projectStageGate.waiting")} value={String(gate.pendingValidations.length + gate.dependencies.filter((item) => item.status !== "satisfied").length)} tone={gate.pendingValidations.length ? "warning" : "neutral"} />
+        <IntelligenceValue label={translate("projectStageGate.nextStage")} value={gate.nextStageId ? translate(`projectLifecycle.stage.${gate.nextStageId}`) : translate("projectLifecycle.notAvailable")} />
+      </div>
+
+      {!!requirementGroups.length ? <div className="mt-5 grid gap-3 lg:grid-cols-2">
+        {requirementGroups.map((group) => (
+          <div key={group.key} className="min-w-0 rounded-ds-md border border-ds-token-border bg-white/[0.02] p-4">
+            <div className="flex items-center justify-between gap-3"><h4 className="text-sm font-semibold text-ds-token-text">{translate(group.key)}</h4><Badge tone={group.tone}>{group.items.length}</Badge></div>
+            <div className="mt-3 space-y-2">
+              {group.items.slice(0, 4).map((item) => (
+                <div key={item.id} className="flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-ds-sm border border-ds-token-border/70 px-3 py-2">
+                  <div className="min-w-0"><p className="truncate text-sm font-medium text-ds-token-text">{item.title || translate(item.titleKey)}</p><p className="mt-0.5 text-xs text-ds-token-muted">{translate(item.reasonKey)}</p></div>
+                  <Badge tone={item.status === "correction_required" || item.status === "blocked" || item.status === "missing" ? "danger" : item.status === "pending" || item.status === "in_progress" ? "warning" : "success"}>{translate(`projectStageGate.reason.${item.status}`)}</Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div> : <p className="mt-5 rounded-ds-md border border-dashed border-ds-token-border p-4 text-sm leading-6 text-ds-token-muted">{translate("projectStageGate.empty")}</p>}
+
+      {!!roleGate.waitingOn.length && <div className="mt-5 border-t border-ds-token-border pt-4"><p className="text-xs font-semibold text-ds-token-gold">{translate("projectStageGate.handoffs")}</p><div className="mt-3 flex flex-wrap gap-2">{roleGate.waitingOn.slice(0, 4).map((handoff) => <Badge key={handoff.id} tone={handoff.blocker ? "warning" : "neutral"}>{handoff.toRole ? translate(`projectLifecycle.role.${handoff.toRole}`) : translate("projectLifecycle.notAvailable")} · {translate(handoff.nextActionKey)}</Badge>)}</div></div>}
+    </GlassCard>
+  );
+}
+
+function LifecycleActionRow({ action, locale, translate }: {
+  action: VoraProjectIntelligence["roleContext"]["projectActions"][number];
+  locale: string;
+  translate: (key: string) => string;
+}) {
+  const title = action.titleKey ? translate(action.titleKey) : action.title || translate("projectLifecycle.action.untitled");
+  const roleMetadata = [
+    action.assignedRole ? `${translate("projectLifecycle.assignedRole")}: ${translate(`projectLifecycle.role.${action.assignedRole}`)}` : undefined,
+    action.validationRole ? `${translate("projectLifecycle.validationRole")}: ${translate(`projectLifecycle.role.${action.validationRole}`)}` : undefined,
+    action.requiredEvidence.length ? `${translate("projectLifecycle.evidence.required")}: ${action.requiredEvidence.length}` : undefined
+  ].filter((value): value is string => Boolean(value));
+  const showEvidenceState = action.requiredEvidence.length > 0 || action.evidenceState !== "unavailable";
+  return (
+    <Link href={action.destination} className="ds-focusable block rounded-ds-md border border-ds-token-border bg-white/[0.02] p-3 transition hover:border-ds-token-gold/35">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <p className="min-w-0 break-words text-sm font-semibold leading-6 text-ds-token-text">{title}</p>
+        <Badge tone={action.status === "blocked" || action.status === "rejected" ? "danger" : ["submitted", "waiting_validation"].includes(action.status) ? "warning" : "neutral"}>{translate(`projectLifecycle.status.${action.status}`)}</Badge>
+      </div>
+      {!!roleMetadata.length && <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs leading-5 text-ds-token-muted">{roleMetadata.map((item) => <span key={item}>{item}</span>)}</div>}
+      {showEvidenceState && <p className="mt-1 text-xs leading-5 text-ds-token-muted">{translate("projectLifecycle.evidence.state")}: {translate(`projectLifecycle.evidence.state.${action.evidenceState}`)}</p>}
+      {action.blocker && <p className="mt-1 break-words text-xs leading-5 text-ds-token-danger">{translate("projectLifecycle.blocker")}: {action.blocker}</p>}
+      {action.dueDate && <time dateTime={action.dueDate} className="mt-1 block text-xs text-ds-token-muted">{formatDate(action.dueDate, locale)}</time>}
+    </Link>
+  );
+}
+function IntelligenceValue({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "neutral" | "success" | "warning" | "danger" }) {
+  const valueClass = tone === "success"
+    ? "text-ds-token-success"
+    : tone === "warning"
+      ? "text-ds-token-warning"
+      : tone === "danger"
+        ? "text-ds-token-danger"
+        : "text-ds-token-text";
+  return <div className="min-w-0 rounded-ds-md border border-ds-token-border bg-black/10 p-3"><p className="text-xs text-ds-token-muted">{label}</p><p className={`mt-1 text-sm font-semibold leading-6 ${valueClass}`}>{value}</p></div>;
 }
 
 function ownerProjectTypeLabel(projectType: string | undefined, translate: (key: string) => string) {

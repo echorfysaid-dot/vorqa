@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { AiGenerationError, generateAiOutput, type AiProvider, type ProjectAiContext } from "@/lib/ai-providers";
 import { createAiApplicationContext } from "@/lib/ai-context";
 import { createAiMemory } from "@/lib/ai-memory";
@@ -442,7 +442,7 @@ function parseExecutiveSummaryRequest(value: unknown): ExecutiveSummaryRequest |
   };
 }
 
-async function buildProjectContext({ token, ownerId, projectId }: { token: string; ownerId: string; projectId: string }): Promise<ProjectAiContext | { error: string; status: number; code: string }> {
+async function buildProjectContext({ token, ownerId, projectId, primaryRole, organizationType }: { token: string; ownerId: string; projectId: string; primaryRole?: string; organizationType?: string }): Promise<ProjectAiContext | { error: string; status: number; code: string }> {
   void token;
   void ownerId;
 
@@ -467,7 +467,7 @@ async function buildProjectContext({ token, ownerId, projectId }: { token: strin
     };
   }
 
-  const context = await aiContextRepository.buildProjectContext(projectId);
+  const context = await aiContextRepository.buildProjectContext(projectId, { userId: ownerId, primaryRole, organizationType });
   if (!context.project) {
     return { error: "Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨ ØºÙŠØ± Ù…ÙˆØ¬ÙˆØ¯ Ø£Ùˆ Ù„Ø§ ØªÙ…Ù„Ùƒ ØµÙ„Ø§Ø­ÙŠØ© Ø§Ù„ÙˆØµÙˆÙ„ Ø¥Ù„ÙŠÙ‡.", status: 404, code: "PROJECT_NOT_FOUND" };
   }
@@ -852,7 +852,13 @@ export async function POST(request: Request) {
     return jsonError(sanitized.error, sanitized.status, sanitized.code);
   }
   const projectId = parseProjectId((body as { projectId?: unknown }).projectId || sanitized.payload.projectId);
-  const context = await buildProjectContext({ token, ownerId: user.id, projectId });
+  const context = await buildProjectContext({
+    token,
+    ownerId: user.id,
+    projectId,
+    primaryRole: typeof user.user_metadata?.primary_role === "string" ? user.user_metadata.primary_role : typeof user.user_metadata?.primaryRole === "string" ? user.user_metadata.primaryRole : undefined,
+    organizationType: typeof user.user_metadata?.organization_type === "string" ? user.user_metadata.organization_type : typeof user.user_metadata?.organizationType === "string" ? user.user_metadata.organizationType : undefined
+  });
   if ("error" in context) {
     return jsonError(context.error, context.status, context.code);
   }

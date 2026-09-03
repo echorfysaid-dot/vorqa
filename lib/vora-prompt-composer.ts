@@ -42,20 +42,75 @@ function summarizeArray(label: string, items: unknown[], limit = 8) {
   ].join("\n");
 }
 
+function hasResolvedRoleContext(context?: VoraProjectContext) {
+  return Boolean(context?.projectIntelligence?.roleContext && context.projectIntelligence.roleContext.roleSource !== "unavailable");
+}
+
+function scopedProjectIntelligence(context: VoraProjectContext) {
+  const intelligence = context.projectIntelligence;
+  if (!intelligence || !hasResolvedRoleContext(context)) return intelligence;
+  const roleContext = intelligence.roleContext;
+  return {
+    roleContext: {
+      viewerRole: roleContext.viewerRole,
+      roleSource: roleContext.roleSource,
+      myActions: roleContext.myActions,
+      waitingOn: roleContext.waitingOn,
+      relevantEvidence: roleContext.relevantEvidence,
+      recommendation: roleContext.recommendation,
+      currentPriorityKey: roleContext.currentPriorityKey,
+      healthExplanationKey: roleContext.healthExplanationKey,
+      responsibilities: roleContext.responsibilities,
+      suggestedQuestionKeys: roleContext.suggestedQuestionKeys
+    },
+    lifecycle: intelligence.lifecycle,
+    stageGate: {
+      stageId: intelligence.stageGate.stageId,
+      phaseId: intelligence.lifecycle.currentPhaseId,
+      nextPhaseId: intelligence.lifecycle.nextPhaseId,
+      status: intelligence.stageGate.status,
+      transitionReadiness: intelligence.stageGate.transitionReadiness,
+      nextStageId: intelligence.stageGate.nextStageId,
+      blockingRequirements: intelligence.stageGate.blockingRequirements.map(({ type, status, responsibleRole, validationRole, applicability }) => ({ type, status, responsibleRole, validationRole, applicability })),
+      satisfiedRequirements: intelligence.stageGate.satisfiedRequirements.map(({ type, status }) => ({ type, status })),
+      pendingValidations: intelligence.stageGate.pendingValidations.map(({ status, validationRole, requestedByRole }) => ({ status, validationRole, requestedByRole })),
+      corrections: intelligence.stageGate.corrections.map(({ type, responsibleRole, validationRole }) => ({ type, responsibleRole, validationRole })),
+      checkpoints: intelligence.stageGate.checkpoints.map(({ id, status, applicability, blocking, validationRole }) => ({ id, status, applicability, blocking, validationRole })),
+      pendingCheckpoints: intelligence.stageGate.pendingCheckpoints.map(({ id, status, validationRole }) => ({ id, status, validationRole })),
+      handoffs: intelligence.roleStageGate.waitingOn
+    },
+    roleStageGate: intelligence.roleStageGate,
+    persistedWorkflow: intelligence.workflowState?.source === "supabase" ? {
+      currentLifecycleStage: intelligence.workflowState.currentLifecycleStage,
+      workflows: intelligence.workflowState.workflows.filter((item) => item.isCurrent).map(({ id, workflowType, revision, lifecycleStage, status, assignedRole, reviewerRole, lockVersion }) => ({ id, workflowType, revision, lifecycleStage, status, assignedRole, reviewerRole, lockVersion })),
+      events: intelligence.workflowState.events.slice(0, 12).map(({ workflowId, eventType, fromStatus, toStatus, actorRole, createdAt }) => ({ workflowId, eventType, fromStatus, toStatus, actorRole, createdAt }))
+    } : undefined,
+    health: intelligence.health,
+    statusKey: intelligence.statusKey,
+    priorityKey: intelligence.priorityKey,
+    attention: intelligence.attention
+  };
+}
+
 export function summarizeVoraContext(context?: VoraProjectContext) {
   if (!context) return "No project intelligence context was provided.";
   const projectName = context.project && typeof context.project === "object" && "title" in context.project ? String(context.project.title) : "Unknown project";
-  return [
-    `Project: ${projectName}`,
-    `Persisted project profile: ${stringifyCompact(context.projectProfile, 900)}`,
-    `Context source: ${context.source}`,
-    `References: ${context.references.join(", ")}`,
+  const roleScoped = hasResolvedRoleContext(context);
+  const participantDetails = roleScoped ? [] : [
     summarizeArray("Team members", context.members, 5),
     summarizeArray("Employees", context.employees, 6),
     summarizeArray("Tasks", context.tasks, 8),
+    summarizeArray("Documents", context.documents, 8)
+  ];
+  return [
+    `Project: ${projectName}`,
+    `Persisted project profile: ${stringifyCompact(context.projectProfile, 900)}`,
+    `Deterministic project intelligence: ${stringifyCompact(scopedProjectIntelligence(context), 1400)}`,
+    `Context source: ${context.source}`,
+    `References: ${context.references.join(", ")}`,
+    ...participantDetails,
     summarizeArray("Milestones", context.milestones, 8),
     `Budget stats: ${stringifyCompact(context.budgetStats, 700)}`,
-    summarizeArray("Documents", context.documents, 8),
     summarizeArray("Knowledge articles", context.knowledge, 8),
     summarizeArray("Conversation memory", context.memory, 6),
     context.errors.length ? `Context warnings: ${context.errors.join(" | ")}` : "Context warnings: none"
@@ -116,6 +171,14 @@ export function composeVoraPrompt(tool: ToolSlug, payload: Record<string, string
       `Answer language: ${language}. If Arabic is selected, write natural, polished, professional Arabic with clear RTL-friendly Markdown.`,
       `Tone: ${tone}.`,
       ...(context?.projectProfile?.guidanceMode === "simple_owner" ? ["Use simple owner-friendly language. Explain necessary construction terms briefly and avoid unnecessary professional jargon."] : []),
+      ...(hasResolvedRoleContext(context) ? [
+        `Current project participant role: ${context!.projectIntelligence!.roleContext.viewerRole}.`,
+        "Keep the shared project lifecycle state identical for every participant, but show only actions, dependencies, evidence, and recommendations relevant to the current participant role.",
+        "Do not expose actions assigned to other roles unless they are an explicit dependency for the current participant.",
+        "An uploaded document is evidence only; never describe it as reviewed, approved, validated, or compliant unless the structured validation state explicitly says so.",
+        "Stage-gate readiness is deterministic project data. Do not advance a stage, create an approval, or infer a missing requirement; explain only the recorded gate status, role-relevant action, and explicit handoff.",
+        "VORA provides project guidance and must not claim professional approval, certification, inspection, laboratory validation, or regulatory authorization."
+      ] : []),
       promptTypeGuidance(promptType),
       "Use the provided context. Do not invent inaccessible facts; call out assumptions when context is missing.",
       "Always produce Markdown with clear headings.",

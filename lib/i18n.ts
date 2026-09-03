@@ -1,6 +1,9 @@
 import arCatalog from "@/lib/locales/ar.json";
 import enCatalog from "@/lib/locales/en.json";
 import frCatalog from "@/lib/locales/fr.json";
+import { projectLifecycleTranslationCatalog } from "@/lib/locales/project-lifecycle";
+import { projectStageGateTranslationCatalog } from "@/lib/locales/project-stage-gate";
+import { projectWorkflowTranslationCatalog } from "@/lib/locales/project-workflow";
 
 export const locales = ["ar", "fr", "en"] as const;
 
@@ -718,9 +721,9 @@ function buildTranslationCatalog(): TranslationCatalog {
 }
 
 export const uiTranslationCatalog: TranslationCatalog = {
-  ar: arCatalog,
-  fr: frCatalog,
-  en: enCatalog
+  ar: { ...arCatalog, ...projectLifecycleTranslationCatalog.ar, ...projectStageGateTranslationCatalog.ar, ...projectWorkflowTranslationCatalog.ar },
+  fr: { ...frCatalog, ...projectLifecycleTranslationCatalog.fr, ...projectStageGateTranslationCatalog.fr, ...projectWorkflowTranslationCatalog.fr },
+  en: { ...enCatalog, ...projectLifecycleTranslationCatalog.en, ...projectStageGateTranslationCatalog.en, ...projectWorkflowTranslationCatalog.en }
 };
 
 export function translateUiText(value: string, locale: Locale): string {
